@@ -64,7 +64,7 @@ class Settings extends Model
 
         return str_starts_with($path, 'http')
             ? $path
-            : asset(Storage::url($path));
+            : Storage::disk('public')->url($path);
     }
 
     /**
