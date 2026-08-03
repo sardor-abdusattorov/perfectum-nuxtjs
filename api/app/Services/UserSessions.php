@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Auth;
+namespace App\Services;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;

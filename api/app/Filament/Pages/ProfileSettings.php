@@ -3,7 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Support\ImageUpload;
-use App\Services\Auth\UserSessions;
+use App\Services\UserSessions;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
