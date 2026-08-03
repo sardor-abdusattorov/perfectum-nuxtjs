@@ -5,15 +5,10 @@ use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
 use Illuminate\Support\Facades\Cache;
 
-
 if (! function_exists('settings')) {
     function settings(string $key, mixed $default = null): mixed
     {
-        return Cache::remember("settings.{$key}", 86400, function () use ($key, $default) {
-            $setting = Settings::where('key', $key)->first();
-
-            return $setting?->value ?? $default;
-        });
+        return Settings::get($key, $default);
     }
 }
 
@@ -21,55 +16,52 @@ if (! function_exists('clear_settings_cache')) {
     function clear_settings_cache(?string $key = null): void
     {
         if ($key !== null) {
-            Cache::forget("settings.{$key}");
+            Cache::forget(Settings::cacheKey($key));
 
             return;
         }
 
         Settings::query()->pluck('key')->each(
-            fn (string $k) => Cache::forget("settings.{$k}")
+            fn (string $k) => Cache::forget(Settings::cacheKey($k))
         );
     }
 }
 
 if (! function_exists('site_setting')) {
-    function site_setting(string $key, mixed $default = null): mixed
+    function site_setting(string $name, mixed $default = null): mixed
     {
-        return Cache::remember("site_setting.{$key}", 86400, function () use ($key, $default) {
-            $setting = SiteSettings::query()
-                ->where('name', $key)
-                ->where('is_published', true)
-                ->first();
-
-            return $setting?->value ?? $default;
-        });
+        return SiteSettings::get($name, $default);
     }
 }
 
 if (! function_exists('clear_site_settings_cache')) {
-    function clear_site_settings_cache(?string $key = null): void
+    function clear_site_settings_cache(?string $name = null): void
     {
-        if ($key !== null) {
-            Cache::forget("site_setting.{$key}");
+        if ($name !== null) {
+            Cache::forget(SiteSettings::cacheKey($name));
 
             return;
         }
 
         SiteSettings::query()->pluck('name')->each(
-            fn (string $name) => Cache::forget("site_setting.{$name}")
+            fn (string $n) => Cache::forget(SiteSettings::cacheKey($n))
         );
     }
 }
 
 if (! function_exists('translator')) {
+    /**
+     * Site translation by "category.key" or by separate arguments. Returns the
+     * key itself when nothing is published under it.
+     *
+     * @param  array<string, string|int>  $replace
+     */
     function translator(
         string $category,
         ?string $key = null,
         array $replace = [],
         ?string $locale = null
     ): string {
-        $locale ??= app()->getLocale();
-
         if ($key === null && str_contains($category, '.')) {
             [$category, $key] = explode('.', $category, 2);
         }
@@ -78,62 +70,40 @@ if (! function_exists('translator')) {
             return $category;
         }
 
-        $cacheKey = "translator.{$category}.{$key}.{$locale}";
-
-        $value = Cache::remember($cacheKey, 86400, function () use ($category, $key, $locale) {
-            $row = SiteTranslation::query()
-                ->where('category', $category)
-                ->where('key', $key)
-                ->where('is_published', true)
-                ->first();
-
-            if ($row === null) {
-                return null;
-            }
-
-            $translations = $row->getTranslations('value');
-
-            return $translations[$locale]
-                ?? $translations[config('app.fallback_locale')]
-                ?? (reset($translations) ?: null);
-        });
+        $value = SiteTranslation::get($category, $key, $locale);
 
         if ($value === null) {
             return $key;
         }
 
         foreach ($replace as $k => $v) {
-            $value = str_replace(':'.$k, (string) $v, (string) $value);
+            $value = str_replace(':'.$k, (string) $v, $value);
         }
 
-        return (string) $value;
+        return $value;
     }
 }
 
 if (! function_exists('clear_translator_cache')) {
     function clear_translator_cache(?string $category = null, ?string $key = null): void
     {
-        $locales = config('app.locales', [config('app.locale', 'en')]);
+        $locales = config('app.locales', [config('app.locale')]);
 
-        if ($category && $key) {
-            foreach ($locales as $loc) {
-                Cache::forget("translator.{$category}.{$key}.{$loc}");
+        if ($category !== null && $key !== null) {
+            foreach ($locales as $locale) {
+                Cache::forget(SiteTranslation::cacheKey($category, $key, $locale));
             }
 
             return;
         }
 
-        $query = SiteTranslation::query();
-
-        if ($category) {
-            $query->where('category', $category);
-        }
-
-        $query->select(['category', 'key'])
+        SiteTranslation::query()
+            ->when($category !== null, fn ($query) => $query->where('category', $category))
+            ->select(['category', 'key'])
             ->get()
-            ->each(function ($row) use ($locales) {
-                foreach ($locales as $loc) {
-                    Cache::forget("translator.{$row->category}.{$row->key}.{$loc}");
+            ->each(function (SiteTranslation $row) use ($locales): void {
+                foreach ($locales as $locale) {
+                    Cache::forget(SiteTranslation::cacheKey($row->category, $row->key, $locale));
                 }
             });
     }

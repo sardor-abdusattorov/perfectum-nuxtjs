@@ -51,6 +51,8 @@ return [
         'personal_information_description' => 'Profil maʼlumotlari va elektron pochta manzilini yangilang.',
         'avatar' => 'Avatar',
         'image' => 'Rasm',
+        'document' => 'Hujjat',
+        'media' => 'Media',
         'first_name' => 'Ism',
         'email' => 'Email',
         'email_verified_at' => 'Email tasdiqlangan',

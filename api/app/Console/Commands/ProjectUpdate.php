@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 
 final class ProjectUpdate extends Command
 {
-
     protected $signature = 'project:update';
 
     protected $description = 'Project Update';

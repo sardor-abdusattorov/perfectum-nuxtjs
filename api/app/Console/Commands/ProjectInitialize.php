@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 
 final class ProjectInitialize extends Command
 {
-
     protected $signature = 'project:init';
 
     protected $description = 'Project Initialization';

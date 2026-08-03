@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Activities\Widgets;
 
 use Illuminate\Contracts\Support\Htmlable;
-use MrAdder\FilamentLogger\Support\ActivityAnalytics;
 use MrAdder\FilamentLogger\Widgets\ActivityTrendChartWidget as BaseWidget;
 
 class ActivityTrendChartWidget extends BaseWidget

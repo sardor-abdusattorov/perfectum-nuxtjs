@@ -51,6 +51,8 @@ return [
         'personal_information_description' => 'Update your account profile information and email address.',
         'avatar' => 'Avatar',
         'image' => 'Image',
+        'document' => 'Document',
+        'media' => 'Media',
         'first_name' => 'First name',
         'email' => 'Email',
         'email_verified_at' => 'Email verified at',

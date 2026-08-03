@@ -76,9 +76,6 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([
-
-            ])
             ->plugins([
                 FilamentShieldPlugin::make()
                     ->navigationGroup(fn () => __('app.label.administration'))
@@ -95,7 +92,6 @@ class AdminPanelProvider extends PanelProvider
                     ->passwordReset()
                     ->emailVerification()
                     ->themeToggle(),
-
             ])
             ->middleware([
                 EncryptCookies::class,

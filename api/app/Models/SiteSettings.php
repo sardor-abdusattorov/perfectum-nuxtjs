@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class SiteSettings extends Model
 {
+    public const CACHE_TTL = 86400;
+
     protected $table = 'site_settings';
 
     protected $fillable = ['name', 'value', 'is_published'];
@@ -14,31 +17,33 @@ class SiteSettings extends Model
         'is_published' => 'boolean',
     ];
 
-    public static function get(string $name): ?string
+    public static function cacheKey(string $name): string
     {
-        return static::where('name', $name)->value('value');
+        return "site_setting.{$name}";
     }
 
-    public static function getValue(string $name, bool $onlyPublished = true): ?string
+    /**
+     * Published value of a setting. Unpublished settings resolve to $default.
+     */
+    public static function get(string $name, mixed $default = null): mixed
     {
-        $query = static::query()->where('name', $name);
+        $value = Cache::remember(
+            static::cacheKey($name),
+            static::CACHE_TTL,
+            fn (): ?string => static::query()
+                ->where('name', $name)
+                ->where('is_published', true)
+                ->value('value'),
+        );
 
-        if ($onlyPublished) {
-            $query->where('is_published', true);
-        }
-
-        return $query->value('value');
+        return $value ?? $default;
     }
 
     public static function getEmbedUrl(string $name): ?string
     {
-        $url = static::getValue($name);
+        $url = static::get($name);
 
-        if (!$url) {
-            return null;
-        }
-
-        return static::normalizeEmbedUrl($url);
+        return blank($url) ? null : static::normalizeEmbedUrl($url);
     }
 
     public static function normalizeEmbedUrl(string $url): string
@@ -47,8 +52,8 @@ class SiteSettings extends Model
             return $url;
         }
 
-        if (preg_match('/(?:youtu\.be\/|youtube\.com\/watch\?v=|v=)([^&\n?#]+)/', $url, $m)) {
-            return 'https://www.youtube.com/embed/' . $m[1];
+        if (preg_match('/(?:youtu\.be\/|youtube\.com\/watch\?v=|v=)([^&\n?#]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/'.$matches[1];
         }
 
         return $url;

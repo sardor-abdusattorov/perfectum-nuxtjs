@@ -51,6 +51,8 @@ return [
         'personal_information_description' => 'Обновите данные профиля и адрес электронной почты.',
         'avatar' => 'Аватар',
         'image' => 'Изображение',
+        'document' => 'Документ',
+        'media' => 'Медиа',
         'first_name' => 'Имя',
         'email' => 'Email',
         'email_verified_at' => 'Email подтверждён',

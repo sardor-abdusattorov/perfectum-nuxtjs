@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class Settings extends Model
 {
+    public const CACHE_TTL = 86400;
+
     protected $table = 'settings';
 
     protected $fillable = ['key', 'value'];
 
-    public function getValueAttribute($value)
+    public function getValueAttribute(?string $value): mixed
     {
         if ($value === null) {
             return null;
@@ -20,28 +22,28 @@ class Settings extends Model
 
         $decoded = json_decode($value, true);
 
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-            return $decoded;
-        }
-
-        if (json_last_error() === JSON_ERROR_NONE) {
-            return $decoded;
-        }
-
-        return $value;
+        return json_last_error() === JSON_ERROR_NONE ? $decoded : $value;
     }
 
-    public function setValueAttribute($value)
+    public function setValueAttribute(mixed $value): void
     {
         $this->attributes['value'] = json_encode($value, JSON_UNESCAPED_UNICODE);
     }
+
+    public static function cacheKey(string $key): string
+    {
+        return "settings.{$key}";
+    }
+
     public static function get(string $key, mixed $default = null): mixed
     {
-        return Cache::remember("settings.{$key}", 86400, function () use ($key, $default) {
-            $setting = static::where('key', $key)->first();
+        $value = Cache::remember(
+            static::cacheKey($key),
+            static::CACHE_TTL,
+            fn (): mixed => static::query()->where('key', $key)->first()?->value,
+        );
 
-            return $setting ? $setting->value : $default;
-        });
+        return $value ?? $default;
     }
 
     public static function set(string $key, mixed $value): void
@@ -65,6 +67,9 @@ class Settings extends Model
             : asset(Storage::url($path));
     }
 
+    /**
+     * @return array{title: string, description: string, keywords: string, robots: string, ogImage: ?string}
+     */
     public static function seo(): array
     {
         $locale = app()->getLocale();

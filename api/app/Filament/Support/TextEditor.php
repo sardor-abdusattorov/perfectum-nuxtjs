@@ -7,20 +7,14 @@ use Filament\Forms\Components\RichEditor as FilamentRichEditor;
 class TextEditor
 {
     /**
-     * Pre-configured RichEditor with file attachments stored in public disk.
-     *
-     * Saves to: storage/app/public/attachments/2025/03/
-     * Public URL: /storage/attachments/2025/03/
-     *
-     * Usage:
-     *   TextEditor::make('content')
-     *   TextEditor::make('bio')->extraInputAttributes(['style' => 'min-height: 8rem;'])
+     * Pre-configured RichEditor with attachments stored into
+     * uploads/attachments/{Y}/{m} on the public disk.
      */
     public static function make(string $field): FilamentRichEditor
     {
         return FilamentRichEditor::make($field)
             ->fileAttachmentsDisk('public')
-            ->fileAttachmentsDirectory(fn () => 'uploads/attachments/' . now()->format('Y/m'))
+            ->fileAttachmentsDirectory(fn () => 'uploads/attachments/'.now()->format('Y/m'))
             ->fileAttachmentsVisibility('public')
             ->toolbarButtons([
                 ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
