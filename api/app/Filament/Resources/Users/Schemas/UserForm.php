@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Filament\Support\ImageUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -17,6 +18,11 @@ class UserForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
+                        ImageUpload::make('users', 'avatar_url')
+                            ->label(__('app.label.avatar'))
+                            ->avatar()
+                            ->imageEditorAspectRatios(['1:1']),
+
                         TextInput::make('name')
                             ->label(__('app.label.name'))
                             ->required(),

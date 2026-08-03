@@ -3,6 +3,11 @@
 namespace App\Providers;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use App\Filament\Resources\Activities\Widgets\ActivityOverviewWidget;
+use App\Filament\Resources\Activities\Widgets\ActivityTrendChartWidget;
+use App\Filament\Resources\Activities\Widgets\HighRiskActionsChartWidget;
+use App\Filament\Resources\Activities\Widgets\TopEventsChartWidget;
+use App\Filament\Resources\Activities\Widgets\TopUsersChartWidget;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
@@ -22,6 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -61,6 +67,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDB();
         $this->configureModels();
         $this->configureFilament();
+        $this->configureActivityLogWidgets();
         $this->configureLimit();
         $this->configureLanguageSwitch();
         $this->configureTranslatableTabs();
@@ -101,6 +108,26 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * The activity log widgets are rendered as header widgets of a resource
+     * page rather than panel widgets, so Filament never registers them with
+     * Livewire — the package registers its own the same way.
+     */
+    private function configureActivityLogWidgets(): void
+    {
+        $widgets = [
+            'app.filament.resources.activities.widgets.activity-overview-widget' => ActivityOverviewWidget::class,
+            'app.filament.resources.activities.widgets.activity-trend-chart-widget' => ActivityTrendChartWidget::class,
+            'app.filament.resources.activities.widgets.top-users-chart-widget' => TopUsersChartWidget::class,
+            'app.filament.resources.activities.widgets.top-events-chart-widget' => TopEventsChartWidget::class,
+            'app.filament.resources.activities.widgets.high-risk-actions-chart-widget' => HighRiskActionsChartWidget::class,
+        ];
+
+        foreach ($widgets as $name => $widget) {
+            Livewire::component($name, $widget);
+        }
+    }
+
     private function configureLimit(): void
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
@@ -110,12 +137,8 @@ class AppServiceProvider extends ServiceProvider
     {
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['ru', 'uz', 'en'])
-                ->labels([
-                    'ru' => __('app.label.ru'),
-                    'uz' => __('app.label.uz'),
-                    'en' => __('app.label.en'),
-                ])
+                ->locales($this->locales())
+                ->labels($this->localeLabels())
                 ->visible(outsidePanels: true)
                 ->outsidePanelPlacement(Placement::TopStart, PlacementMode::Pinned)
                 ->outsidePanelRoutes(['auth.']);
@@ -126,15 +149,29 @@ class AppServiceProvider extends ServiceProvider
     {
         TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
             $component
-                ->localesLabels([
-                    'ru' => __('app.label.ru'),
-                    'uz' => __('app.label.uz'),
-                    'en' => __('app.label.en'),
-                ])
-                ->locales(['ru', 'uz', 'en'])
+                ->localesLabels($this->localeLabels())
+                ->locales($this->locales())
                 ->addDirectionByLocale()
                 ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLabel: __('app.label.empty'))
                 ->addSetActiveTabThatHasValue();
         });
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function locales(): array
+    {
+        return config('app.locales', [config('app.locale')]);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function localeLabels(): array
+    {
+        return collect($this->locales())
+            ->mapWithKeys(fn (string $locale): array => [$locale => __("app.label.{$locale}")])
+            ->all();
     }
 }

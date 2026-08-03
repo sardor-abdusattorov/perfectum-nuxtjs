@@ -1,11 +1,8 @@
 <?php
 
-use App\Enums\PageKey;
-use App\Models\ContentBlock;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 
@@ -116,10 +113,7 @@ if (! function_exists('translator')) {
 if (! function_exists('clear_translator_cache')) {
     function clear_translator_cache(?string $category = null, ?string $key = null): void
     {
-        $locales = array_keys(config('laravellocalization.supportedLocales', []));
-        if (empty($locales)) {
-            $locales = [config('app.locale', 'en')];
-        }
+        $locales = config('app.locales', [config('app.locale', 'en')]);
 
         if ($category && $key) {
             foreach ($locales as $loc) {

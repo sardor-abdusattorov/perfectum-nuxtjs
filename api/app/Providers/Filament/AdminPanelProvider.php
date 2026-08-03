@@ -3,8 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\ProfileSettings;
-use App\Models\Role;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use BezhanSalleh\FilamentShield\Support\Utils;
 use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
 use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
 use Filament\Actions\Action;
@@ -83,7 +83,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make()
                     ->navigationGroup(fn () => __('app.label.administration'))
                     ->navigationSort(5)
-                    ->navigationBadge(fn () => (string) Role::count()),
+                    ->navigationBadge(fn (): string => (string) Utils::getRoleModel()::count()),
 
                 AuthDesignerPlugin::make()
                     ->defaults(fn ($config) => $config

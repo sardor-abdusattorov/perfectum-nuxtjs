@@ -86,6 +86,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Supported Locales
+    |--------------------------------------------------------------------------
+    |
+    | Every locale the admin panel and the site content are translated into.
+    | Used by the language switcher, the translatable form tabs and the
+    | translation cache invalidation helpers.
+    |
+    */
+
+    'locales' => ['ru', 'uz', 'en'],
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
