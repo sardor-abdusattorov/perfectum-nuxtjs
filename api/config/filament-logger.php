@@ -187,14 +187,14 @@ return [
 
     'activity_resource' => \MrAdder\FilamentLogger\Resources\ActivityResource::class,
     'scoped_to_tenant' => true,
-    'navigation_sort' => null,
+    'navigation_sort' => 6,
 
     'resources' => [
         'enabled' => true,
         'log_name' => 'Resource',
         'logger' => \MrAdder\FilamentLogger\Loggers\ResourceLogger::class,
         'color' => 'success',
-        
+
         'exclude' => [
             //App\Filament\Resources\UserResource::class,
         ],
@@ -209,7 +209,7 @@ return [
             //App\Filament\Resources\UserResource::class => ['last_seen_at', 'login_count'],
         ],
         'cluster' => null,
-        'navigation_group' =>'Settings',
+        'navigation_group' => 'app.label.administration',
     ],
 
     'access' => [

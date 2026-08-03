@@ -8,10 +8,10 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'nav.group' => 'Boshqaruv',
+    'nav.group' => 'Administratsiya',
     'nav.log.label' => 'Harakatlar logi',
     'nav.log.icon' => 'heroicon-o-clipboard-document-list',
-    'resource.label.log' => 'Harakatlar logi',
+    'resource.label.log' => 'Jurnal yozuvi',
     'resource.label.logs' => 'Faoliyat jurnali',
     'resource.label.user' => 'Foydalanuvchi',
     'resource.label.subject' => 'Obyekt',
@@ -20,5 +20,14 @@ return [
     'resource.label.type' => 'Tur',
     'resource.label.event' => 'Voqea',
     'resource.label.logged_at' => 'Vaqti',
+    'resource.label.search' => 'Qidiruv',
+    'resource.placeholder.search' => 'Tavsif, obyekt, foydalanuvchi yoki teglar boʻyicha qidiruv',
     'resource.label.properties' => 'Xususiyatlar',
+    'resource.label.old' => 'Eski',
+    'resource.label.new' => 'Yangi',
+    'resource.label.old_value' => 'Eski qiymat',
+    'resource.label.new_value' => 'Yangi qiymat',
+    'resource.label.properties_hint' => 'Kalit yoki qiymat boʻlishi mumkin',
+    'resource.label.old_attributes' => 'Eski atribut yoki qiymat: ',
+    'resource.label.new_attributes' => 'Yangi atribut yoki qiymat: ',
 ];

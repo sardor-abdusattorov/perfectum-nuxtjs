@@ -22,6 +22,11 @@ final class ProjectUpdate extends Command
             '--option' => 'policies_and_permissions',
             '--ignore-existing-policies' => true,
         ]);
+        $this->call('shield:super-admin', [
+            '--user' => '1',
+            '--panel' => 'admin',
+        ]);
+
         $this->call('filament:optimize-clear');
         $this->call('optimize:clear');
     }

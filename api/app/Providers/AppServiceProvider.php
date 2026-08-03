@@ -89,6 +89,8 @@ class AppServiceProvider extends ServiceProvider
     {
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
 
+        FilamentShield::enforcePolicies();
+
         Column::configureUsing(fn (Column $column) => $column->toggleable());
 
         Table::configureUsing(fn (Table $table) => $table
