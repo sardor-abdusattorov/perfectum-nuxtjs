@@ -23,19 +23,19 @@
                   </button>
                   <ul class="menu__submenu">
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/tariffs')">Тарифы</NuxtLink>
+                          <a class="menu__submenu-link" href="/tariffs">Тарифы</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/numbers')">Свободные номера</NuxtLink>
+                          <a class="menu__submenu-link" href="/numbers">Свободные номера</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/services')">Услуги</NuxtLink>
+                          <a class="menu__submenu-link" href="/services">Услуги</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/device-catalog')">Каталог устройств</NuxtLink>
+                          <a class="menu__submenu-link" href="/device-catalog">Каталог устройств</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/actions')">Акции</NuxtLink>
+                          <a class="menu__submenu-link" href="/actions">Акции</a>
                       </li>
                   </ul>
               </li>
@@ -58,27 +58,27 @@
                   </button>
                   <ul class="menu__submenu">
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/help')">Помощь</NuxtLink>
+                          <a class="menu__submenu-link" href="/help">Помощь</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/faq')">Вопросы и ответы</NuxtLink>
+                          <a class="menu__submenu-link" href="/faq">Вопросы и ответы</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/coverage-area')">Карта покрытия</NuxtLink>
+                          <a class="menu__submenu-link" href="/coverage-area">Карта покрытия</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/offices')">Офисы продаж</NuxtLink>
+                          <a class="menu__submenu-link" href="/offices">Офисы продаж</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/documents')">Документы</NuxtLink>
+                          <a class="menu__submenu-link" href="/documents">Документы</a>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/contacts')">Контакты</NuxtLink>
+                          <a class="menu__submenu-link" href="/contacts">Контакты</a>
                       </li>
                   </ul>
               </li>
               <li class="menu__item">
-                  <NuxtLink class="menu__link" :to="localePath('/news')">Новости</NuxtLink>
+                  <a class="menu__link" href="/news">Новости</a>
               </li>
           </ul>
           <a href="#" class="menu__account">
