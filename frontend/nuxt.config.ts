@@ -4,10 +4,6 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/i18n'],
 
-  components: [
-    { path: '~/components', pathPrefix: false },
-  ],
-
   app: {
     head: {
       charset: 'utf-8',
@@ -35,9 +31,9 @@ export default defineNuxtConfig({
     strategy: 'prefix',
     baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     locales: [
-      { code: 'ru', language: 'ru-RU', name: 'RU', file: 'ru.json' },
-      { code: 'uz', language: 'uz-UZ', name: 'UZ', file: 'uz.json' },
-      { code: 'en', language: 'en-US', name: 'EN', file: 'en.json' },
+      { code: 'ru', language: 'ru-RU', name: 'RU' },
+      { code: 'uz', language: 'uz-UZ', name: 'UZ' },
+      { code: 'en', language: 'en-US', name: 'EN' },
     ],
     detectBrowserLanguage: {
       useCookie: true,

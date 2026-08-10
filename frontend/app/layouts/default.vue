@@ -10,17 +10,17 @@ useHead({
 
 <template>
   <div class="wrapper">
-    <AppHeader />
+    <LayoutHeader />
 
     <main>
       <slot />
     </main>
 
-    <AppFooter />
+    <LayoutFooter />
   </div>
 
-  <AppMobileMenu />
-  <TariffConnectModal />
+  <LayoutMobileMenu />
+  <LayoutTariffModal />
 
   <div class="overlay" />
 </template>
