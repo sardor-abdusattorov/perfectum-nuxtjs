@@ -8,9 +8,11 @@ use App\Filament\Resources\Activities\Widgets\ActivityTrendChartWidget;
 use App\Filament\Resources\Activities\Widgets\HighRiskActionsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopEventsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopUsersChartWidget;
+use App\Models\ContentBlock;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
+use App\Observers\ContentBlockObserver;
 use App\Observers\SettingsObserver;
 use App\Observers\SiteSettingsObserver;
 use App\Observers\SiteTranslationObserver;
@@ -75,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureObservers(): void
     {
+        ContentBlock::observe(ContentBlockObserver::class);
         Settings::observe(SettingsObserver::class);
         SiteSettings::observe(SiteSettingsObserver::class);
         SiteTranslation::observe(SiteTranslationObserver::class);

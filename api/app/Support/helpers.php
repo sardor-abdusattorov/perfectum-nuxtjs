@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\PageKey;
+use App\Models\ContentBlock;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
@@ -46,6 +48,43 @@ if (! function_exists('clear_site_settings_cache')) {
         SiteSettings::query()->pluck('name')->each(
             fn (string $n) => Cache::forget(SiteSettings::cacheKey($n))
         );
+    }
+}
+
+if (! function_exists('content_blocks')) {
+    /**
+     * Every block of a page keyed by block key, already resolved to the
+     * current locale.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    function content_blocks(PageKey $page): array
+    {
+        $locale = app()->getLocale();
+
+        return Cache::remember(
+            ContentBlock::cacheKey($page, $locale),
+            ContentBlock::CACHE_TTL,
+            fn (): array => ContentBlock::query()
+                ->page($page)
+                ->get()
+                ->mapWithKeys(fn (ContentBlock $block): array => [$block->key->value => $block->data])
+                ->all(),
+        );
+    }
+}
+
+if (! function_exists('clear_content_blocks_cache')) {
+    function clear_content_blocks_cache(?PageKey $page = null): void
+    {
+        $locales = config('app.locales', [config('app.locale')]);
+        $pages = $page !== null ? [$page] : PageKey::cases();
+
+        foreach ($pages as $pageKey) {
+            foreach ($locales as $locale) {
+                Cache::forget(ContentBlock::cacheKey($pageKey, $locale));
+            }
+        }
     }
 }
 
