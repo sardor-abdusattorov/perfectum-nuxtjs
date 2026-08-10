@@ -1,11 +1,13 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
   modules: ['@nuxtjs/i18n'],
 
-  // components/head.blade.php — everything static that used to sit in <head>
+  components: [
+    { path: '~/components', pathPrefix: false },
+  ],
+
   app: {
     head: {
       charset: 'utf-8',
@@ -22,7 +24,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // @vite([...]) — Vite picks these up and injects the built tags itself
   css: [
     'swiper/css/bundle',
     '~/assets/css/settings.css',
@@ -46,10 +47,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    // NUXT_API_BASE — server side only, resolved inside the Docker network
     apiBase: 'http://localhost:8000/api/v1',
     public: {
-      // NUXT_PUBLIC_API_BASE — shipped to the browser
       apiBase: 'http://localhost:8000/api/v1',
       siteUrl: 'http://localhost:3000',
     },
@@ -58,7 +57,6 @@ export default defineNuxtConfig({
   vite: {
     server: {
       watch: {
-        // Bind mounts do not deliver inotify events on macOS and Windows
         usePolling: process.env.VITE_USE_POLLING === 'true',
       },
     },
