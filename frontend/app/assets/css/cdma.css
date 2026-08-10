@@ -1,0 +1,2659 @@
+@charset "UTF-8";
+
+/* ============================================================
+   PERFECTUM — CDMA
+
+   Styles for the CDMA section only. Loaded after main.css on
+   cdma-*.html, so shared blocks (header, footer, select, faq)
+   come from main.css and are only adjusted here.
+
+   1. CDMA INDEX — HERO
+   2. CDMA INDEX — TABS
+   3. CDMA INDEX — SECTION
+   4. CDMA INDEX — CHIPS
+   5. CDMA INDEX — RAIL
+   6. CDMA INDEX — TARIFF CARD
+   7. CDMA INDEX — SERVICE CARD
+   8. CDMA INDEX — NUMBERS
+   9. CDMA INDEX — NEWS
+   10. CDMA INDEX — PROMO
+   11. CDMA INDEX — FAQ
+   12. CDMA INDEX — SUPPORT
+   13. CDMA INDEX — CTA
+   14. CDMA INNER — HERO
+   15. CDMA DEALERS INDEX — REGIONS
+   16. CDMA DEALERS VIEW — TABLE
+   17. CDMA DETAIL — SHARED
+   18. CDMA TARIFF VIEW
+   19. CDMA SERVICE VIEW
+   20. CDMA ARTICLE — ACTION / NEWS
+   21. CDMA FOOTER
+   22. CDMA CONNECT — TABLES
+   23. MEDIA
+   ============================================================ */
+
+:root {
+  --cdma-orange: #ec5901;
+  --cdma-cream: #fbf7ef;
+  --cdma-muted: #93918b;
+  --cdma-border: #e2e2e2;
+  --cdma-tint: #fceaea;
+  --cdma-track: #f5f5f5;
+  --cdma-date: #737373;
+  --cdma-text: #3a3a3a;
+}
+
+/* ============================================================
+   1. CDMA INDEX — HERO
+   ============================================================ */
+
+.cdma-hero {
+  padding: 100px 0 70px;
+  background: linear-gradient(
+    90deg,
+    var(--cdma-orange) 0%,
+    var(--color-red) 100%
+  );
+}
+
+.cdma-hero .cdma-hero__title {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 74px;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.cdma-hero .cdma-hero__subtitle {
+  margin-top: 17px;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--color-white);
+}
+
+/* ============================================================
+   2. CDMA INDEX — TABS
+   ============================================================ */
+
+/* Anchored sections have to clear both sticky bars: the 91px header and the
+   86px tab strip. Without this the heading lands underneath them. */
+.cdma-section[id] {
+  scroll-margin-top: 177px;
+}
+
+.cdma-tabs {
+  position: sticky;
+  top: 91px;
+  z-index: 50;
+  background: var(--cdma-cream);
+}
+
+/* The strip gained a right-aligned CTA: frame 1742:2821 is 177x42 at x1562,
+   vertically centred in the 86px bar, and its label is 16px on a 22px box. */
+.cdma-tabs .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cdma-tabs .cdma-tabs__connect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 177px;
+  height: 42px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: var(--color-white);
+  background: var(--color-red);
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+}
+
+.cdma-tabs .cdma-tabs__connect:hover {
+  background: #ff1a1a;
+}
+
+.cdma-tabs .cdma-tabs__list {
+  display: flex;
+  align-items: stretch;
+  gap: 0 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cdma-tabs .cdma-tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.cdma-tabs .cdma-tabs__item {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.cdma-tabs .cdma-tabs__link {
+  display: flex;
+  align-items: center;
+  height: 86px;
+  font-size: 24px;
+  line-height: normal;
+  white-space: nowrap;
+  color: var(--cdma-muted);
+  border-bottom: 3px solid transparent;
+  transition: var(--transition);
+}
+
+.cdma-tabs .cdma-tabs__link:hover,
+.cdma-tabs .cdma-tabs__link_active {
+  color: var(--color-red);
+}
+
+.cdma-tabs .cdma-tabs__link_active {
+  border-bottom-color: var(--color-red);
+}
+
+/* ============================================================
+   3. CDMA INDEX — SECTION
+   ============================================================ */
+
+.cdma-section {
+  padding-top: 72px;
+}
+
+.cdma-section .cdma-section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cdma-section .cdma-section__title {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+  color: var(--color-black);
+}
+
+.cdma-section .cdma-section__filters {
+  display: flex;
+  gap: 0 16px;
+}
+
+.cdma-section .select_compact {
+  width: 104px;
+}
+
+.cdma-section .select_compact .select__control {
+  height: 39px;
+  padding: 0 32px 0 12px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+/* ============================================================
+   4. CDMA INDEX — CHIPS
+   ============================================================ */
+
+.cdma-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 17px;
+  margin-top: 49px;
+}
+
+.cdma-chips .cdma-chips__btn {
+  padding: 9px 14px;
+  font-family: var(--main-font-family);
+  font-size: 16px;
+  line-height: 19px;
+  white-space: nowrap;
+  color: var(--color-black);
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+}
+
+.cdma-chips .cdma-chips__btn:hover {
+  border-color: var(--color-black);
+}
+
+.cdma-chips .cdma-chips__btn_active {
+  color: var(--color-white);
+  background: var(--color-black);
+  border-color: var(--color-black);
+}
+
+/* ============================================================
+   5. CDMA INDEX — RAIL
+   A Swiper carousel: the track bleeds to the viewport edge so the
+   next card is clipped by the window, not by the 1558px column, and
+   the scrollbar is Swiper's own — draggable, not decorative.
+   ============================================================ */
+
+.cdma-rail {
+  margin-top: 40px;
+}
+
+.cdma-rail .cdma-rail__track {
+  padding-bottom: 32px;
+}
+
+/* The rail runs past the column to the viewport edge so the next card is
+   clipped by the window, as drawn. Swiper measures the .swiper element,
+   so the bleed has to live on the rail itself. */
+
+.cdma-rail.swiper {
+  margin-right: calc(50% - 50vw);
+  padding-right: calc(50vw - 50%);
+}
+
+.cdma-rail.swiper .cdma-rail__bar {
+  margin-right: calc(50vw - 50%);
+}
+
+.cdma-rail .cdma-rail__bar {
+  position: static;
+  width: 100%;
+  height: 8px;
+  background: var(--cdma-track);
+  border-radius: 4px;
+}
+
+.cdma-rail .cdma-rail__bar .swiper-scrollbar-drag {
+  background: var(--color-red);
+  border-radius: 4px;
+}
+
+/* ============================================================
+   6. CDMA INDEX — TARIFF CARD
+   ============================================================ */
+
+.cdma-tariff-card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: auto;
+  min-height: 483px;
+  padding: 40px 40px 48px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-tariff-card .cdma-tariff-card__badge {
+  align-self: flex-start;
+  padding: 7px 11px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+}
+
+.cdma-tariff-card .cdma-tariff-card__name {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 38px;
+  color: var(--color-black);
+  margin-bottom: 24px;
+}
+
+.cdma-tariff-card .cdma-tariff-card__period {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-tariff-card .cdma-tariff-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--cdma-border);
+}
+.cdma-tariff-card .cdma-tariff-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0 8px;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+  color: var(--color-red);
+  margin-bottom: 31px;
+}
+
+.cdma-tariff-card .cdma-tariff-card__feature {
+  position: relative;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 21px;
+  color: var(--color-black);
+}
+
+.cdma-tariff-card .cdma-tariff-card__feature::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--color-red);
+  border-radius: 50%;
+}
+
+.cdma-tariff-card .cdma-tariff-card__more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  margin-top: auto;
+  font-size: 16px;
+  line-height: normal;
+  color: var(--color-black);
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+}
+
+.cdma-tariff-card .cdma-tariff-card__more:hover,
+.cdma-tariff-card .cdma-tariff-card__more_active {
+  color: var(--color-white);
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+/* ============================================================
+   7. CDMA INDEX — SERVICE CARD
+   ============================================================ */
+
+.cdma-service-card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  min-height: 207px;
+  padding: 36px 28px 20px 40px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-service-card .cdma-service-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: 12px;
+}
+
+.cdma-service-card .cdma-service-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cdma-service-card .cdma-service-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cdma-service-card .cdma-service-card__name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  color: var(--color-black);
+}
+
+.cdma-service-card .cdma-service-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+  margin-bottom: 16px;
+}
+
+.cdma-service-card .cdma-service-card__code {
+  align-self: flex-start;
+  padding: 3px 12px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: 8px;
+}
+.cdma-service-card .cdma-service-card__text {
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   8. CDMA INDEX — NUMBERS
+   ============================================================ */
+
+.cdma-numbers {
+  display: flex;
+  align-items: flex-end;
+  gap: 0 17px;
+  margin-top: 20px;
+}
+
+.cdma-numbers .cdma-numbers__field {
+  width: 197px;
+}
+
+.cdma-numbers .cdma-numbers__field .select__control {
+  height: 39px;
+  /* the shared control carries 14px of vertical padding, which clipped the
+     label once the box came down to the frame's 39px */
+  padding: 0 44px 0 16px;
+  border-radius: 8px;
+}
+
+.cdma-numbers .cdma-numbers__field_wide {
+  flex: 1;
+}
+
+.cdma-numbers .cdma-numbers__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-numbers .cdma-numbers__search {
+  position: relative;
+}
+
+.cdma-numbers .cdma-numbers__input {
+  width: 100%;
+  height: 39px;
+  padding: 0 60px 0 16px;
+  font-family: var(--main-font-family);
+  font-size: 16px;
+  color: var(--color-black);
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: 8px;
+}
+
+.cdma-numbers .cdma-numbers__btn {
+  /* The button caps the right end of the field: full height, flush to the
+     edge, square where it meets the input (frame 1515:1108, 49x39 at x1690). */
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 49px;
+  height: 100%;
+  color: var(--color-white);
+  background: var(--color-red);
+  border-radius: 0 8px 8px 0;
+  transition: var(--transition);
+}
+
+.cdma-numbers .cdma-numbers__btn:hover {
+  background: var(--color-black);
+}
+
+.cdma-numbers .cdma-numbers__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cdma-section .cdma-numbers__empty {
+  margin-top: 56px;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: var(--color-red);
+}
+
+/* ============================================================
+   9. CDMA INDEX — NEWS
+   ============================================================ */
+
+.cdma-news {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.cdma-section__head {
+  margin-bottom: 40px;
+}
+
+.cdma-news .cdma-news-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 188px;
+  padding: 24px 40px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-news .cdma-news-card__title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--color-black);
+}
+.cdma-news .cdma-news-card__date {
+  font-size: 14px;
+  line-height: 33px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
+}
+
+.cdma-news .cdma-news-card__link {
+  transition: var(--transition);
+}
+
+.cdma-news .cdma-news-card__link:hover {
+  color: var(--color-red);
+}
+
+.cdma-news .cdma-news-card__cat {
+  margin-top: auto;
+  font-size: 14px;
+  line-height: 33px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   10. CDMA INDEX — PROMO
+   ============================================================ */
+
+.cdma-promo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.cdma-promo .cdma-promo-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 291px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.cdma-promo .cdma-promo-card__cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 159px;
+  font-size: 40px;
+  line-height: 60px;
+  text-align: center;
+  color: var(--color-white);
+}
+
+.cdma-promo .cdma-promo-card__cover_orange {
+  background: linear-gradient(90deg, var(--cdma-orange) 0%, #f07a1e 100%);
+}
+
+.cdma-promo .cdma-promo-card__cover_red {
+  background: linear-gradient(90deg, var(--color-red) 0%, #c90000 100%);
+}
+
+.cdma-promo .cdma-promo-card__cover_sale {
+  background: linear-gradient(
+    90deg,
+    var(--color-red) 0%,
+    var(--cdma-orange) 100%
+  );
+}
+
+.cdma-promo .cdma-promo-card__body {
+  display: flex;
+  flex-direction: column;
+  padding: 17px 40px 14px;
+}
+
+.cdma-promo .cdma-promo-card__date {
+  font-size: 14px;
+  line-height: 33px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-promo .cdma-promo-card__title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 33px;
+  color: var(--color-black);
+}
+
+.cdma-promo .cdma-promo-card__cat {
+  font-size: 14px;
+  line-height: 33px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   11. CDMA INDEX — FAQ
+   Reuses the <details> faq-item block; only the CDMA skin differs:
+   a 60px pill row with a solid black toggle.
+   ============================================================ */
+
+.faq-accordion_cdma {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+  margin-top: 40px;
+}
+
+/* One radius in both states — the frame draws the same rounded rect whether a
+   row is one line, two lines or open, so it must not jump when it expands. */
+.faq-accordion_cdma .faq-item,
+.faq-accordion_cdma .faq-item[open] {
+  border: 1px solid var(--cdma-border);
+  border-radius: 16px;
+}
+
+.faq-accordion_cdma .faq-item__summary {
+  min-height: 58px;
+  padding: 0 12px 0 32px;
+}
+
+.faq-accordion_cdma .faq-item__question {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.faq-accordion_cdma .faq-item__toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.faq-accordion_cdma .faq-item__answer {
+  padding: 0 32px 24px;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* ============================================================
+   12. CDMA INDEX — SUPPORT
+   ============================================================ */
+
+.cdma-support {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.cdma-support .cdma-support-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 189px;
+  padding: 36px 40px 22px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-support .cdma-support-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: 12px;
+}
+
+.cdma-support .cdma-support-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cdma-support .cdma-support-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+}
+
+.cdma-support .cdma-support-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.cdma-support .cdma-support-card__value {
+  margin-top: 15px;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--color-black);
+}
+
+.cdma-support .cdma-support-card__link {
+  transition: var(--transition);
+}
+
+.cdma-support .cdma-support-card__link:hover {
+  color: var(--color-red);
+}
+
+.cdma-support .cdma-support-card__note {
+  margin-top: 21px;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   13. CDMA INDEX — CTA
+   ============================================================ */
+
+.cdma-cta {
+  position: relative;
+  margin-top: 141px;
+  padding: 127px 0 149px;
+  overflow: hidden;
+  text-align: center;
+  background: var(--color-black);
+}
+
+/* The glow sits behind the buttons, matching the 894x277 ellipse. */
+
+.cdma-cta::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -60px;
+  width: 894px;
+  height: 277px;
+  transform: translateX(-50%);
+  background: var(--color-red);
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(150px);
+  pointer-events: none;
+}
+
+.cdma-cta .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inner pages drop the kicker, so the band is 432px instead of 529px. */
+
+.cdma-cta_compact {
+  margin-top: 60px;
+  padding: 67px 0 149px;
+}
+
+.cdma-cta.cdma-cta_compact .cdma-cta__title {
+  margin-top: 0;
+}
+
+.cdma-cta .cdma-cta__kicker {
+  display: block;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cdma-cta .cdma-cta__title {
+  margin-top: 18px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 60px;
+  color: var(--color-white);
+}
+
+.cdma-cta .cdma-cta__text {
+  max-width: 636px;
+  margin: 24px auto 0;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cdma-cta .cdma-cta__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0 16px;
+  margin-top: 48px;
+}
+
+.cdma-cta .cdma-cta__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  font-size: 16px;
+  line-height: normal;
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+}
+
+.cdma-cta .cdma-cta__btn_primary {
+  color: var(--color-white);
+  background: var(--color-red);
+}
+
+.cdma-cta .cdma-cta__btn_primary:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+.cdma-cta .cdma-cta__btn_ghost {
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.cdma-cta .cdma-cta__btn_ghost:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+/* ============================================================
+   14. CDMA INNER — HERO
+   Same 339px orange band as the portal, but with a breadcrumb
+   instead of the strapline.
+   ============================================================ */
+
+.cdma-hero_inner {
+  padding: 40px 0 122px;
+}
+
+.cdma-hero .cdma-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+  height: 24px;
+}
+
+.cdma-hero .cdma-crumbs svg {
+  width: 24px;
+  height: 24px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cdma-hero .cdma-crumbs__link {
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-white);
+  transition: var(--transition);
+}
+
+.cdma-hero .cdma-crumbs__link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cdma-hero .cdma-crumbs__current {
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cdma-hero_inner .cdma-hero__title {
+  margin-top: 65px;
+}
+
+/* ============================================================
+   15. CDMA DEALERS INDEX — REGIONS
+   ============================================================ */
+
+.cdma-regions {
+  padding-top: 56px;
+}
+
+.cdma-regions .cdma-regions__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.cdma-regions .cdma-region-card {
+  display: flex;
+}
+
+.cdma-regions .cdma-region-card__link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 175px;
+  padding: 40px 40px 31px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+
+.cdma-regions .cdma-region-card__link:hover {
+  border-color: #f27f7f;
+  box-shadow: 0 4px 22px 0 rgba(92, 105, 146, 0.25);
+}
+
+.cdma-regions .cdma-region-card__name {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 33px;
+  color: var(--color-black);
+}
+
+.cdma-regions .cdma-region-card__count {
+  margin-top: 36px;
+  font-size: 16px;
+  line-height: 33px;
+  color: #737373;
+}
+
+/* The arrow only appears on the hovered card, as drawn. */
+
+.cdma-regions .cdma-region-card__arrow {
+  position: absolute;
+  right: 40px;
+  bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  color: var(--color-red);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.cdma-regions .cdma-region-card__arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cdma-regions .cdma-region-card__link:hover .cdma-region-card__arrow {
+  opacity: 1;
+}
+
+/* ============================================================
+   16. CDMA DEALERS VIEW — TABLE
+   ============================================================ */
+
+.cdma-dealers {
+  padding-top: 56px;
+  padding-bottom: 186px;
+}
+
+.cdma-dealers .cdma-dealers__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 8px;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-red);
+  transition: var(--transition);
+}
+
+.cdma-dealers .cdma-dealers__back:hover {
+  color: var(--color-black);
+}
+
+.cdma-dealers .cdma-dealers__back svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cdma-dealers .cdma-dealers__table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e1deda;
+  border-radius: var(--radius);
+}
+.cdma-dealers .cdma-dealers__region {
+  margin-top: 26px;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+  color: var(--color-black);
+  margin-bottom: 43px;
+}
+
+/* The table keeps its natural size and the wrapper scrolls. No fixed layout
+   and no column widths: with those the browser squeezed the columns to fit
+   instead of letting the row run past the screen, so addresses wrapped to
+   three lines and the phone column was chopped. */
+.cdma-dealers .cdma-dealers__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cdma-dealers .cdma-dealers__head {
+  background: var(--cdma-cream);
+}
+
+.cdma-dealers .cdma-dealers__th {
+  height: 64px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: middle;
+  text-transform: uppercase;
+  color: #736f6e;
+}
+
+.cdma-dealers .cdma-dealers__th:first-child,
+.cdma-dealers .cdma-dealers__cell:first-child,
+.cdma-dealers .cdma-dealers__group {
+  padding-left: 40px;
+}
+
+.cdma-dealers .cdma-dealers__row {
+  border-top: 1px solid #e1deda;
+}
+
+.cdma-dealers .cdma-dealers__row_group {
+  background: #fcfaf5;
+}
+
+.cdma-dealers .cdma-dealers__group {
+  height: 48px;
+  padding-right: 20px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: middle;
+  color: var(--color-black);
+}
+
+.cdma-dealers .cdma-dealers__cell {
+  height: 48px;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 22px;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--color-black);
+}
+
+/* The first column carries the widest strings, so it is the one that decides
+   how far the row runs; the rest hug their content. */
+.cdma-dealers .cdma-dealers__th {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   17. CDMA DETAIL — SHARED
+   Tariff and service pages share a 195px orange band, a tinted
+   category chip, a lead paragraph and a red back link.
+   ============================================================ */
+
+.cdma-hero_slim {
+  padding: 40px 0 32px;
+}
+
+.cdma-hero_slim .cdma-hero__title {
+  margin-top: 32px;
+  font-size: 48px;
+  line-height: 67px;
+}
+
+.cdma-detail {
+  padding-top: 56px;
+  padding-bottom: 120px;
+}
+
+.cdma-detail .cdma-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 31px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: var(--radius-pill);
+}
+
+.cdma-detail .cdma-detail__lead {
+  max-width: 860px;
+  margin-top: 24px;
+  font-size: 18px;
+  line-height: 30px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.cdma-detail .cdma-detail__subhead {
+  margin-top: 56px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  color: var(--color-black);
+}
+
+.cdma-detail .cdma-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 8px;
+  margin-top: 56px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-red);
+  transition: var(--transition);
+}
+
+.cdma-detail .cdma-back:hover {
+  color: var(--color-black);
+}
+
+.cdma-detail .cdma-back svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================================================
+   18. CDMA TARIFF VIEW
+   ============================================================ */
+
+.cdma-detail .cdma-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 123px;
+  margin-top: 56px;
+  padding: 0 40px;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 14px 0 rgba(93, 108, 140, 0.25);
+}
+
+.cdma-price .cdma-price__value {
+  display: flex;
+  align-items: baseline;
+  gap: 0 12px;
+  font-size: 48px;
+  line-height: 58px;
+  color: var(--color-red);
+}
+
+.cdma-price .cdma-price__period {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-price .cdma-price__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 28px;
+  font-size: 16px;
+  white-space: nowrap;
+  color: var(--color-white);
+  background: var(--color-red);
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+}
+
+.cdma-price .cdma-price__btn:hover {
+  background: var(--color-black);
+}
+
+.cdma-detail .cdma-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.cdma-features .cdma-feature {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  align-items: center;
+  gap: 4px 16px;
+  min-height: 100px;
+  padding: 0 24px;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-features .cdma-feature__icon {
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: 12px;
+}
+
+.cdma-features .cdma-feature__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cdma-features .cdma-feature__label {
+  align-self: end;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-features .cdma-feature__value {
+  align-self: start;
+  font-size: 20px;
+  line-height: 26px;
+  color: var(--color-black);
+}
+
+.cdma-detail .cdma-terms {
+  margin-top: 24px;
+  padding: 24px;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-terms .cdma-terms__list {
+  display: flex;
+  flex-direction: column;
+  gap: 19px 0;
+}
+
+.cdma-terms .cdma-terms__item {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-black);
+}
+
+.cdma-terms .cdma-terms__item::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 4px;
+  width: 5px;
+  height: 5px;
+  background: var(--color-black);
+  border-radius: 50%;
+}
+
+/* ============================================================
+   19. CDMA SERVICE VIEW
+   ============================================================ */
+
+.cdma-detail .cdma-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.cdma-facts .cdma-fact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 0;
+  min-height: 162px;
+  padding: 24px;
+  text-align: center;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-facts .cdma-fact__label {
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-facts .cdma-fact__value {
+  font-size: 28px;
+  line-height: 34px;
+  color: var(--color-red);
+}
+
+.cdma-detail .cdma-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px 0;
+  margin-top: 24px;
+}
+
+.cdma-steps .cdma-step {
+  display: flex;
+  align-items: center;
+  gap: 0 24px;
+  min-height: 100px;
+  padding: 20px 32px;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-steps .cdma-step__num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-white);
+  background: var(--color-red);
+  border-radius: 50%;
+}
+
+.cdma-steps .cdma-step__text {
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-black);
+}
+
+.cdma-steps .cdma-step__code {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 3px 12px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--color-red);
+  background: var(--cdma-tint);
+  border-radius: 8px;
+}
+
+.cdma-detail .cdma-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+  margin-top: 24px;
+}
+
+.cdma-prose .cdma-prose__p {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--color-black);
+}
+
+/* ============================================================
+   20. CDMA ARTICLE — ACTION / NEWS
+   Both article pages run in a 995px column centred in the grid.
+   ============================================================ */
+
+.cdma-detail_article .cdma-article-wrap {
+  max-width: 995px;
+  margin: 0 auto;
+}
+
+.cdma-article-wrap .cdma-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 343px;
+  background: linear-gradient(
+    90deg,
+    var(--color-red) 0%,
+    var(--cdma-orange) 100%
+  );
+  border-radius: var(--radius);
+}
+
+.cdma-cover .cdma-cover__title {
+  font-size: 72px;
+  line-height: 88px;
+  text-align: center;
+  color: var(--color-white);
+}
+
+.cdma-article-wrap .cdma-article {
+  padding: 24px;
+  background: var(--color-white);
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-article-wrap .cdma-cover + .cdma-article {
+  margin-top: 30px;
+}
+
+.cdma-article .cdma-article__meta {
+  display: flex;
+  align-items: center;
+  gap: 0 16px;
+}
+
+.cdma-article .cdma-article__icon {
+  display: flex;
+  color: var(--color-red);
+}
+
+.cdma-article .cdma-article__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.cdma-article .cdma-article__date {
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--cdma-date);
+}
+
+.cdma-article .cdma-badge {
+  font-size: 14px;
+  text-transform: none;
+}
+
+.cdma-article .cdma-article__status {
+  display: inline-flex;
+  align-items: center;
+  height: 31px;
+  padding: 0 20px;
+  font-size: 14px;
+  color: var(--color-white);
+  background: #3f8f5f;
+  border-radius: var(--radius-pill);
+}
+
+/* The news article stacks its chip under the date instead of inline. */
+
+.cdma-article .cdma-article__meta_stacked + .cdma-badge {
+  margin-top: 20px;
+}
+
+.cdma-article .cdma-article__body {
+  margin-top: 24px;
+}
+
+.cdma-article .cdma-article__body p {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 30px;
+  color: var(--color-black);
+}
+
+.cdma-article .cdma-article__body h2 {
+  margin-top: 28px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: var(--color-black);
+}
+
+.cdma-article .cdma-article__body ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px 0;
+  margin-top: 16px;
+}
+
+.cdma-article .cdma-article__body li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 16px;
+  line-height: 30px;
+  color: var(--color-black);
+}
+
+.cdma-article .cdma-article__body li::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 6px;
+  width: 5px;
+  height: 5px;
+  background: var(--color-black);
+  border-radius: 50%;
+}
+
+.cdma-article-wrap .cdma-terms {
+  margin-top: 24px;
+  padding: 24px;
+}
+
+.cdma-article-wrap .cdma-terms__list {
+  gap: 4px 0;
+}
+
+.cdma-article-wrap .cdma-terms__item {
+  line-height: 26px;
+}
+
+.cdma-terms .cdma-terms__title {
+  margin-bottom: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  color: var(--color-black);
+}
+
+.cdma-article-wrap .cdma-share {
+  display: flex;
+  align-items: center;
+  gap: 0 9px;
+  margin-top: 29px;
+}
+
+.cdma-share .cdma-share__label {
+  margin-right: 7px;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cdma-share .cdma-share__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 37px;
+  height: 37px;
+  color: var(--color-black);
+  border: 1px solid var(--cdma-border);
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.cdma-share .cdma-share__btn:hover {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.cdma-share .cdma-share__btn svg {
+  width: 21px;
+  height: 21px;
+}
+
+.cdma-article-wrap .cdma-back {
+  margin-top: 36px;
+}
+
+/* ============================================================
+   21. CDMA FOOTER
+   Every CDMA slide ends on this grey bar instead of the main
+   site footer.
+   ============================================================ */
+
+.cdma-footer {
+  padding: 84px 0 83px;
+  background: #f1f1f1;
+}
+
+.cdma-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cdma-footer .cdma-footer__nav {
+  display: flex;
+  align-items: center;
+  gap: 0 20px;
+  height: 24px;
+}
+
+.cdma-footer .cdma-footer__back {
+  display: flex;
+  color: rgba(0, 0, 0, 0.5);
+  transition: var(--transition);
+}
+
+.cdma-footer .cdma-footer__back:hover {
+  color: var(--color-red);
+}
+
+.cdma-footer .cdma-footer__back svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cdma-footer .cdma-footer__link {
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.5);
+  transition: var(--transition);
+}
+
+.cdma-footer .cdma-footer__link:hover {
+  color: var(--color-red);
+}
+
+.cdma-footer .cdma-footer__copy {
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   22. CDMA CONNECT — TABLES
+   The "Qanday ulanish kerak" page, measured on frame 1742:2824.
+   Its band is the 195px one the tariff and service pages already
+   use, so the page carries cdma-hero_slim and only the stack
+   below it is new: 1558-wide cards 42px apart, then a run of
+   legal paragraphs each closed by a rule. Colours sampled from
+   the render: a #FBFBFB card on a #FEFEFE sheet, an #F2F2F2
+   header band, #3A3A3A body copy against black labels.
+   The card is padded 20px, so the table inside it runs from
+   x=20 to x=1538 and the label column ends on the frame's
+   divider at x=325 without any hand-set widths on the rest.
+   ============================================================ */
+
+.cdma-connect {
+  padding: 56px 0 96px;
+  background: #fefefe;
+}
+
+.cdma-connect .cdma-connect__date {
+  margin-bottom: 42px;
+  font-size: 16px;
+  line-height: 31px;
+  color: var(--cdma-date);
+}
+
+.cdma-connect .cdma-connect__title {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  color: var(--color-black);
+}
+
+.cdma-connect .cdma-table {
+  margin-bottom: 42px;
+  padding: 20px 20px 16px;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-connect .cdma-table__head {
+  margin-bottom: 8px;
+  padding: 15px 20px;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  color: var(--color-black);
+  background: #f2f2f2;
+  border-radius: 20px;
+}
+
+/* a wide table keeps its natural size and the wrapper scrolls, rather than
+   squeezing the columns until the addresses wrap to three lines */
+.cdma-connect .cdma-table__scroll {
+  overflow-x: auto;
+}
+
+.cdma-connect .cdma-table__grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* on the two cards that name their columns the grey band is the header row
+   itself, so it carries the same fill and rounding as cdma-table__head */
+.cdma-connect .cdma-table__col {
+  padding: 15px 20px 15px 34px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+  vertical-align: middle;
+  color: var(--color-black);
+  background: #f2f2f2;
+}
+
+.cdma-connect .cdma-table__col:first-child {
+  padding-left: 17px;
+  border-radius: 20px 0 0 20px;
+}
+
+.cdma-connect .cdma-table__col:last-child {
+  border-radius: 0 20px 20px 0;
+}
+
+.cdma-connect .cdma-table__label {
+  width: 305px;
+  padding: 20px 20px 20px 17px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 29px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--color-black);
+  border-right: 1px solid var(--cdma-border);
+  border-bottom: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-table__grid tr:last-child .cdma-table__label {
+  border-bottom: 0;
+}
+
+.cdma-connect .cdma-table__cell {
+  padding: 20px 20px 20px 34px;
+  font-size: 20px;
+  line-height: 29px;
+  vertical-align: top;
+  color: var(--cdma-text);
+}
+
+.cdma-connect .cdma-table__cell:last-child {
+  padding-right: 44px;
+}
+
+/* the row rule is drawn on the row, not on the cells: the frame runs it under
+   the content only, from just past the divider to 44px short of the card edge,
+   so a cell border would overshoot into the rounded corner on both sides */
+.cdma-connect .cdma-table__grid tr {
+  position: relative;
+}
+
+.cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 44px;
+  bottom: 0;
+  left: 340px;
+  height: 1px;
+  background: var(--cdma-border);
+}
+
+.cdma-connect .cdma-table__cell_time {
+  text-align: right;
+  white-space: nowrap;
+  color: var(--color-red);
+}
+
+.cdma-connect .cdma-table__cell_phone {
+  border-left: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-table__code {
+  color: var(--cdma-date);
+}
+
+.cdma-connect .cdma-table__time {
+  color: var(--color-red);
+}
+
+/* the city list packs thirteen rows into 53px each, half the height the other
+   cards use, and sets its addresses a step smaller than the city names */
+.cdma-connect .cdma-table__grid_regions .cdma-table__label,
+.cdma-connect .cdma-table__grid_regions .cdma-table__cell {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.cdma-connect .cdma-table__grid_regions .cdma-table__cell {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+/* here the rule crosses the city column too and stops at the phone divider, so
+   it goes back onto the cells and the row rule is switched off */
+.cdma-connect .cdma-table__grid_regions tbody tr:not(:last-child)::after {
+  content: none;
+}
+
+.cdma-connect .cdma-table__grid_regions .cdma-table__cell {
+  border-bottom: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-table__grid_regions tr:last-child .cdma-table__cell {
+  border-bottom: 0;
+}
+
+/* one phone number answers for every city, so that column has no rules */
+.cdma-connect .cdma-table__grid_regions .cdma-table__cell_phone {
+  font-size: 20px;
+  line-height: 29px;
+  vertical-align: middle;
+  border-bottom: 0;
+}
+
+.cdma-connect .cdma-table__grid_price .cdma-table__label,
+.cdma-connect .cdma-table__grid_price .cdma-table__cell {
+  vertical-align: middle;
+}
+
+/* one price answers for both rows, so the row rule would strike through it:
+   the frame rules the outer two columns instead */
+.cdma-connect .cdma-table__grid_price tbody tr:not(:last-child)::after {
+  content: none;
+}
+
+.cdma-connect .cdma-table__grid_price .cdma-table__cell:last-child {
+  border-bottom: 1px solid var(--cdma-border);
+  border-left: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-table__grid_price tr:last-child .cdma-table__cell {
+  border-bottom: 0;
+}
+
+.cdma-connect .cdma-connect__note {
+  margin-bottom: 24px;
+  font-size: 20px;
+  line-height: 29px;
+  color: var(--color-black);
+}
+
+/* every legal paragraph is closed by a full-width rule 24px under it */
+.cdma-connect .cdma-connect__legal p {
+  margin-bottom: 16px;
+  padding-bottom: 24px;
+  font-size: 20px;
+  line-height: 30px;
+  color: var(--cdma-text);
+  border-bottom: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-connect__legal p:last-child {
+  margin-bottom: 0;
+}
+
+.cdma-connect .cdma-connect__legal b {
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.cdma-connect .cdma-connect__legal b u {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   23. MEDIA
+   Same breakpoints, in the same order, as main.css.
+   ============================================================ */
+
+@media all and (min-width: 1400px) and (max-width: 1699.98px) {
+  .cdma-tabs .cdma-tabs__list {
+    gap: 0 28px;
+  }
+  .cdma-section {
+    padding-top: 64px;
+  }
+}
+
+@media all and (min-width: 1700px) {
+  .cdma-hero {
+    padding: 129px 0 83px;
+  }
+  .cdma-hero.cdma-hero_inner {
+    padding: 40px 0 122px;
+  }
+  .cdma-hero.cdma-hero_slim {
+    padding: 40px 0 32px;
+  }
+  .cdma-hero.cdma-hero_slim .cdma-hero__title {
+    font-size: 56px;
+    line-height: 67px;
+  }
+  .cdma-hero .cdma-hero__title {
+    font-size: 88px;
+    line-height: 88px;
+    letter-spacing: -0.04em;
+  }
+  .cdma-tabs .cdma-tabs__list {
+    gap: 0 48px;
+  }
+}
+
+@media all and (max-width: 1400px) {
+  .cdma-tabs {
+    top: 80px;
+  }
+  .cdma-tabs .cdma-tabs__list {
+    gap: 0 24px;
+  }
+  .cdma-tabs .cdma-tabs__link {
+    font-size: 20px;
+  }
+  /* the connect tables drop a type step with the content column */
+  .cdma-connect .cdma-table__head,
+  .cdma-connect .cdma-table__col,
+  .cdma-connect .cdma-table__label,
+  .cdma-connect .cdma-table__cell {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .cdma-connect .cdma-connect__note,
+  .cdma-connect .cdma-connect__legal p {
+    font-size: 18px;
+    line-height: 27px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .cdma-tabs {
+    top: 72px;
+  }
+  .cdma-hero {
+    padding: 90px 0 60px;
+  }
+  .cdma-hero .cdma-hero__title {
+    font-size: 54px;
+    line-height: 66px;
+  }
+  /* Three columns only work while the content column is wide. Below 1200 the
+     news, promo and fact cards fall to 156-220px cells, which is narrower than
+     their own text can set, so they drop a column here rather than at 576. */
+  .cdma-support,
+  .cdma-news,
+  .cdma-promo,
+  .cdma-detail .cdma-facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cdma-hero_inner {
+    padding: 32px 0 80px;
+  }
+  .cdma-hero_inner .cdma-hero__title {
+    margin-top: 40px;
+  }
+  .cdma-dealers {
+    padding-bottom: 150px;
+  }
+  /* the label column narrows, and the row rule follows it */
+  .cdma-connect .cdma-table__label {
+    width: 260px;
+  }
+  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
+    left: 295px;
+  }
+}
+
+@media all and (max-width: 992px) {
+  .cdma-tabs {
+    top: 64px;
+  }
+  .cdma-tabs .cdma-tabs__link {
+    height: 68px;
+    font-size: 18px;
+  }
+  .cdma-tabs .cdma-tabs__connect {
+    width: auto;
+    height: 36px;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+  .cdma-section {
+    padding-top: 56px;
+  }
+  .cdma-section .cdma-section__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .cdma-dealers {
+    padding-bottom: 120px;
+  }
+  .cdma-connect {
+    padding: 48px 0 72px;
+  }
+  .cdma-connect .cdma-connect__date {
+    margin-bottom: 32px;
+  }
+  .cdma-connect .cdma-table {
+    margin-bottom: 32px;
+    padding: 16px 16px 12px;
+    border-radius: 20px;
+  }
+  .cdma-connect .cdma-table__head {
+    padding: 12px 16px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 16px;
+  }
+  .cdma-connect .cdma-table__col {
+    padding: 12px 16px 12px 24px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .cdma-connect .cdma-table__col:first-child {
+    padding-left: 13px;
+    border-radius: 16px 0 0 16px;
+  }
+  .cdma-connect .cdma-table__col:last-child {
+    border-radius: 0 16px 16px 0;
+  }
+  .cdma-connect .cdma-table__label {
+    width: 220px;
+    padding: 16px 16px 16px 13px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .cdma-connect .cdma-table__cell {
+    padding: 16px 16px 16px 24px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .cdma-connect .cdma-table__cell:last-child {
+    padding-right: 24px;
+  }
+  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
+    right: 24px;
+    left: 245px;
+  }
+  .cdma-connect .cdma-table__grid_regions .cdma-table__label,
+  .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .cdma-connect .cdma-table__grid_regions .cdma-table__cell_phone {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .cdma-connect .cdma-connect__note,
+  .cdma-connect .cdma-connect__legal p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .cdma-dealers {
+    padding-bottom: 100px;
+  }
+  .cdma-tabs {
+    top: 60px;
+  }
+  .cdma-hero {
+    padding: 64px 0 48px;
+  }
+  .cdma-hero .cdma-hero__title {
+    font-size: 44px;
+    line-height: 54px;
+  }
+  .cdma-numbers {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .cdma-numbers .cdma-numbers__field {
+    width: calc(50% - 8px);
+  }
+  .cdma-numbers .cdma-numbers__field_wide {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  .cdma-connect {
+    padding: 40px 0 64px;
+  }
+  .cdma-connect .cdma-connect__date {
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .cdma-connect .cdma-connect__title {
+    margin-bottom: 16px;
+    font-size: 20px;
+    line-height: 26px;
+  }
+  .cdma-connect .cdma-table {
+    margin-bottom: 24px;
+  }
+  /* below the tablet the row no longer fits: the table keeps a readable width
+     and the wrapper scrolls, rather than squeezing every column to nothing */
+  .cdma-connect .cdma-table__grid {
+    min-width: 640px;
+  }
+  .cdma-connect .cdma-table__label {
+    width: 180px;
+  }
+  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
+    left: 205px;
+  }
+}
+
+@media all and (max-width: 576px) {
+  .cdma-section .cdma-section__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .cdma-dealers .cdma-dealers__region {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .cdma-cta {
+    margin-top: 90px;
+    padding: 76px 0 68px;
+  }
+  .cdma-cta .cdma-cta__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .cdma-cta .cdma-cta__text {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  /* Cards keep a 24px inset on the phone, not the 40px of the desktop grid
+     (measured on frame 1538:1522: card edge x=24, first glyph x=48). */
+  .cdma-news .cdma-news-card {
+    min-height: 0;
+    padding: 24px;
+  }
+  .cdma-promo .cdma-promo-card__body {
+    padding: 17px 24px 14px;
+  }
+  /* --- CDMA phone hero, measured on the six 402px frames ---
+     None of them draws the desktop breadcrumb trail: the hero holds the H1
+     alone (frames 1537:1192, 1538:1522, 1611:5611, 1611:5904, 1611:6104,
+     1612:6316 — the band from the header edge down to the title is bare
+     gradient in every one). */
+  .cdma-hero .cdma-crumbs {
+    display: none;
+  }
+  /* The portal keeps its tagline: a 159px band, title 38px down. */
+  .cdma-hero {
+    padding: 38px 0 37px;
+  }
+  .cdma-hero .cdma-hero__title {
+    font-size: 32px;
+    line-height: 38px;
+  }
+  .cdma-hero .cdma-hero__subtitle {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+  /* The inner pages have no tagline: a 151px band, title 60px down. */
+  .cdma-hero.cdma-hero_inner,
+  .cdma-hero.cdma-hero_slim {
+    min-height: 151px;
+    padding: 60px 0 0;
+  }
+  .cdma-hero.cdma-hero_inner .cdma-hero__title {
+    margin-top: 0;
+  }
+  .cdma-hero.cdma-hero_slim .cdma-hero__title {
+    margin-top: 0;
+    font-size: 26px;
+    line-height: 31px;
+  }
+  /* the sticky tab bar follows the 48px phone header */
+  .cdma-tabs {
+    top: 48px;
+  }
+  .cdma-section[id] {
+    scroll-margin-top: 96px;
+  }
+  /* --- CDMA mobile, built from the iPhone 17 frames (402px) --- */
+  /* chips are one scrolling row, not a wrapped block */
+  .cdma-chips {
+    flex-wrap: nowrap;
+    gap: 0 8px;
+    margin-top: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cdma-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .cdma-chips .cdma-chips__item {
+    flex-shrink: 0;
+  }
+  .cdma-rail {
+    margin-top: 20px;
+  }
+  .cdma-tariff-card .cdma-tariff-card__period {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .cdma-tariff-card .cdma-tariff-card__name {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  /* support tiles keep their 2x2 arrangement on the phone */
+  .cdma-support {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .cdma-support .cdma-support-card {
+    min-height: 0;
+    padding: 12px;
+  }
+  .cdma-support .cdma-support-card__icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+  .cdma-support .cdma-support-card__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .cdma-support .cdma-support-card__title {
+    font-size: 11px;
+    line-height: 14px;
+  }
+  .cdma-support .cdma-support-card__note {
+    margin-top: 6px;
+    font-size: 11px;
+    line-height: 14px;
+  }
+  .cdma-support .cdma-support-card__value {
+    margin-top: 12px;
+    font-size: 13px;
+    gap: 0 4px;
+  }
+  .cdma-support .cdma-support-card__value svg {
+    flex: 0 0 auto;
+  }
+  /* region cards collapse to a compact 78px row */
+  .cdma-regions .cdma-region-card__link {
+    min-height: inherit;
+    padding: 16px;
+    border-radius: 12px;
+    gap: 12px 0;
+    justify-content: space-between;
+  }
+  .cdma-regions .cdma-region-card__name {
+    font-size: 16px;
+    line-height: 21px;
+  }
+  .cdma-regions .cdma-region-card__count {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .cdma-regions .cdma-region-card__arrow {
+    right: 16px;
+    bottom: 16px;
+    width: 24px;
+    height: 24px;
+  }
+  /* article meta stays on one row inside the card */
+  .cdma-article .cdma-article__meta {
+    flex-wrap: nowrap;
+    gap: 0 8px;
+  }
+  .cdma-article .cdma-article__status {
+    height: 24px;
+    padding: 0 10px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .cdma-article-wrap .cdma-article {
+    padding: 16px;
+  }
+  .cdma-article-wrap .cdma-cover {
+    height: 122px;
+  }
+  .cdma-cover .cdma-cover__title {
+    font-size: 26px;
+    line-height: 32px;
+  }
+  /* detail pages run one column on the phone */
+  .cdma-detail .cdma-facts,
+  .cdma-detail .cdma-features {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .cdma-facts .cdma-fact {
+    min-height: 96px;
+    padding: 16px;
+  }
+  .cdma-features .cdma-feature {
+    min-height: 79px;
+    padding: 0 16px;
+    border-radius: 12px;
+  }
+  .cdma-detail .cdma-price {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px 0;
+    min-height: 96px;
+    padding: 16px;
+  }
+  .cdma-price .cdma-price__value {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px 0;
+    flex-wrap: nowrap;
+    font-size: 32px;
+    line-height: 40px;
+    white-space: nowrap;
+  }
+  .cdma-detail .cdma-detail__subhead {
+    margin-top: 32px;
+    font-size: 18px;
+  }
+  .cdma-detail .cdma-terms {
+    padding: 16px;
+  }
+  .cdma-steps .cdma-step {
+    gap: 0 12px;
+    padding: 16px;
+  }
+  .cdma-footer {
+    padding: 48px 0;
+  }
+  .cdma-footer .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px 0;
+  }
+  /* four section links do not fit one phone line, so the bar wraps instead of
+     running off the screen */
+  .cdma-footer .cdma-footer__nav {
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    height: auto;
+  }
+  .cdma-footer .cdma-footer__copy {
+    text-align: left;
+  }
+  .cdma-section .cdma-section__head {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  .cdma-section .cdma-section__filters {
+    gap: 0 8px;
+    margin-left: auto;
+  }
+  .cdma-section .select_compact {
+    width: 98px;
+  }
+  .cdma-support .cdma-support-card__head {
+    gap: 8px 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cdma-news,
+  .cdma-promo,
+  .cdma-regions .cdma-regions__list {
+    grid-template-columns: 1fr;
+    gap: 16px 0;
+  }
+  .cdma-cta .cdma-cta__actions {
+    flex-wrap: wrap;
+    margin-top: 32px;
+    gap: 12px 16px;
+  }
+  .cdma-cta .cdma-cta__btn {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+  .cdma-tariff-card,
+  .cdma-service-card {
+    padding: 24px;
+  }
+  /* Frame 1538:1522: the rail cards are 340 wide and centred so both
+     neighbours peek, the promo cover is 101 tall, and the meta lines are 12px
+     on a 14px box rather than the desktop 33px. */
+  .cdma-tariff-card .cdma-tariff-card__price {
+    flex-wrap: nowrap;
+    font-size: 24px;
+    line-height: 29px;
+    white-space: nowrap;
+  }
+  .cdma-promo .cdma-promo-card__cover {
+    height: 101px;
+    font-size: 32px;
+    line-height: 32px;
+  }
+  .cdma-news .cdma-news-card__date,
+  .cdma-news .cdma-news-card__cat {
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .faq-accordion_cdma .faq-item__summary {
+    min-height: 56px;
+    padding: 0 8px 0 16px;
+  }
+  .faq-accordion_cdma .faq-item__question {
+    font-size: 14px;
+  }
+  .faq-accordion_cdma .faq-item__answer {
+    padding: 0 16px 16px;
+  }
+  .faq-accordion_cdma {
+    gap: 16px 0;
+  }
+  .cdma-numbers .cdma-numbers__field .select__control {
+    font-size: 14px;
+    padding: 0 36px 0 12px;
+  }
+
+  /* --- Detail pages at the frames' phone scale ---
+     1611:5891, 1611:6068, 1612:6480 and the services frame all set running
+     copy at 14/22 and section heads at 16px; the build was carrying the
+     desktop 16/30 and 18-20px heads, which stretched every article card by
+     200-500px and pushed the back link far below the frame. */
+  .cdma-detail {
+    padding-top: 24px;
+  }
+  .cdma-article .cdma-article__body p,
+  .cdma-article .cdma-article__body li,
+  .cdma-detail .cdma-detail__lead,
+  .cdma-prose .cdma-prose__p,
+  .cdma-terms .cdma-terms__item {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .cdma-article .cdma-article__body h2,
+  .cdma-detail .cdma-detail__subhead {
+    margin-top: 24px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .cdma-steps .cdma-step .cdma-step__text {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .cdma-detail .cdma-back {
+    margin-top: 32px;
+    font-size: 14px;
+  }
+  .cdma-article .cdma-article__date {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .cdma-detail .cdma-badge {
+    height: 21px;
+    padding: 0 8px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  /* the fact cards are left-aligned on the 16px card inset, not centred */
+  .cdma-facts .cdma-fact {
+    align-items: flex-start;
+    gap: 0;
+    min-height: 96px;
+    padding: 22px 16px;
+    text-align: left;
+  }
+  .cdma-facts .cdma-fact__label {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .cdma-facts .cdma-fact__value {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .cdma-features .cdma-feature__icon {
+    width: 54px;
+    height: 54px;
+  }
+  .cdma-features .cdma-feature__label {
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .cdma-features .cdma-feature__value {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .cdma-price .cdma-price__period {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+  .cdma-price .cdma-price__btn {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  /* --- Portal rails, from frame 1538:1522 --- */
+  .cdma-tabs {
+    height: 56px;
+  }
+  .cdma-tabs .cdma-tabs__link {
+    height: 56px;
+    font-size: 15px;
+  }
+  /* the phone frame does not draw this CTA, but dropping it would leave the
+     connect page unreachable on a phone, so it stays as a compact pill */
+  .cdma-tabs .container {
+    gap: 12px;
+  }
+  .cdma-tabs .cdma-tabs__connect {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+  .cdma-tabs .cdma-tabs__list {
+    gap: 0 16px;
+  }
+  .cdma-chips {
+    gap: 0 4px;
+  }
+  .cdma-chips .cdma-chips__btn {
+    height: 34px;
+    padding: 0 16px;
+    font-size: 13px;
+    min-width: 80px;
+  }
+  /* the news card is 165 tall with the category a clear 24px under the title */
+  .cdma-news .cdma-news-card {
+    min-height: 165px;
+    padding: 24px 24px 20px;
+  }
+  .cdma-news .cdma-news-card__cat {
+    margin-top: 24px;
+  }
+  /* the promo cover is 101 tall inside a 209 card */
+  .cdma-promo .cdma-promo-card {
+    min-height: 209px;
+  }
+  .cdma-promo .cdma-promo-card__cover-title {
+    font-size: 32px;
+    line-height: 32px;
+  }
+  /* the tariff card's CTA sits 32px under the feature list, not adrift at the
+     bottom of a card 94px taller than the frame */
+  .cdma-tariff-card {
+    min-height: 389px;
+  }
+  .cdma-tariff-card .cdma-tariff-card__more {
+    height: 37px;
+    margin-top: 32px;
+  }
+  /* the free-numbers rows are a 14px label over a 32px control */
+  .cdma-numbers .cdma-numbers__field label {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  .cdma-numbers .cdma-numbers__field .select__control,
+  .cdma-numbers .cdma-numbers__input {
+    height: 32px;
+  }
+  .cdma-section .cdma-numbers__empty {
+    margin-top: 24px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .cdma-connect .cdma-table__grid {
+    min-width: 600px;
+  }
+  .cdma-connect .cdma-table__head,
+  .cdma-connect .cdma-table__col,
+  .cdma-connect .cdma-table__label,
+  .cdma-connect .cdma-table__cell {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .cdma-connect .cdma-table__label {
+    width: 150px;
+  }
+  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
+    left: 175px;
+  }
+  .cdma-connect .cdma-connect__note,
+  .cdma-connect .cdma-connect__legal p {
+    padding-bottom: 16px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .cdma-numbers .cdma-numbers__field {
+    width: 100%;
+  }
+  .cdma-tabs .cdma-tabs__link {
+    font-size: 16px;
+  }
+  .cdma-connect .cdma-table {
+    padding: 12px 12px 8px;
+  }
+  .cdma-connect .cdma-table__label {
+    width: 130px;
+    padding: 12px 12px 12px 8px;
+  }
+  .cdma-connect .cdma-table__cell {
+    padding: 12px 12px 12px 16px;
+  }
+  .cdma-connect .cdma-table__cell:last-child {
+    padding-right: 16px;
+  }
+  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
+    right: 16px;
+    left: 147px;
+  }
+}
