@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const localePath = useLocalePath()
+</script>
+
 <template>
   <footer class="footer">
       <div class="container">

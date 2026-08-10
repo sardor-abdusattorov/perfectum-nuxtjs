@@ -1,15 +1,5 @@
 import Swiper from 'swiper/bundle'
 
-/**
- * The static build's assets/js/main.js, carried over as-is.
- *
- * Two changes were unavoidable: Swiper is imported instead of read off the
- * global scope, and each DOMContentLoaded block became a plain function.
- * DOMContentLoaded fires once per document, so on a route change the markup
- * would be replaced with nothing bound to it — the plugin re-runs the blocks
- * on every navigation via the page:finish hook instead.
- */
-
 function initBlock1() {
   const marquee = document.querySelector(".marquee");
   if (marquee) {

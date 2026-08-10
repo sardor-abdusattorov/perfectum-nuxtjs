@@ -6,11 +6,6 @@ export interface SeoInput {
   ogImage?: string
 }
 
-/**
- * Page level SEO tags — the Nuxt counterpart of components/seo.blade.php.
- * Defaults will come from the API (Settings::seo()) once the endpoint exists;
- * for now the page passes what it has.
- */
 export function useSeo(input: SeoInput = {}) {
   const url = useRequestURL()
   const { locale } = useI18n()
@@ -38,8 +33,6 @@ export function useSeo(input: SeoInput = {}) {
     twitterImage: input.ogImage,
   })
 
-  // hreflang alternates come from useLocaleHead() in the layout; canonical is
-  // not part of that set, so it is declared here without the query string
   useHead({
     link: [{ rel: 'canonical', href: url.origin + url.pathname }],
   })
