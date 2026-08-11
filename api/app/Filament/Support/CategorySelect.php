@@ -8,9 +8,9 @@ use Filament\Forms\Components\Select;
 
 class CategorySelect
 {
-    public static function make(CategoryType $type): Select
+    public static function make(CategoryType $type, string $field = 'category_id'): Select
     {
-        return Select::make('category_id')
+        return Select::make($field)
             ->label(__('app.label.category'))
             ->helperText(__('app.helper.entity_category'))
             ->options(fn (): array => Category::query()

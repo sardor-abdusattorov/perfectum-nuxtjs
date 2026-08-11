@@ -12,6 +12,9 @@ enum CategoryType: string implements HasLabel
     case Action = 'action';
     case Faq = 'faq';
     case Device = 'device';
+    case Tariff = 'tariff';
+    case TariffType = 'tariff_type';
+    case Service = 'service';
 
     public function getLabel(): string
     {
