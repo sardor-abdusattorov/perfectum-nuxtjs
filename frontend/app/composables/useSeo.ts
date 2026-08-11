@@ -7,24 +7,27 @@ export interface SeoInput {
 }
 
 export function useSeo(input: SeoInput = {}) {
-  const title = input.title ?? 'Perfectum'
-  const description = input.description ?? ''
+  const settings = useSiteSettings()
+
+  const title = computed(() => input.title ?? settings.value?.seo.title ?? 'Perfectum')
+  const description = computed(() => input.description ?? settings.value?.seo.description ?? '')
+  const image = computed(() => input.ogImage ?? settings.value?.seo.og_image ?? undefined)
 
   useSeoMeta({
     title,
     description,
-    keywords: input.keywords,
-    robots: input.robots ?? 'index, follow',
+    keywords: () => input.keywords ?? settings.value?.seo.keywords ?? '',
+    robots: () => input.robots ?? settings.value?.seo.robots ?? 'index, follow',
 
     ogTitle: title,
     ogDescription: description,
     ogType: 'website',
     ogSiteName: 'Perfectum',
-    ogImage: input.ogImage,
+    ogImage: image,
 
-    twitterCard: input.ogImage ? 'summary_large_image' : 'summary',
+    twitterCard: () => (image.value ? 'summary_large_image' : 'summary'),
     twitterTitle: title,
     twitterDescription: description,
-    twitterImage: input.ogImage,
+    twitterImage: image,
   })
 }

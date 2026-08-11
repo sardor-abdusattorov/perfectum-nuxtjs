@@ -68,24 +68,25 @@ class Settings extends Model
     }
 
     /**
-     * @return array{title: string, description: string, keywords: string, robots: string, ogImage: ?string}
+     * @return array{title: string, description: string, keywords: string, robots: string, og_image: ?string}
      */
     public static function seo(): array
     {
         $locale = app()->getLocale();
+        $fallback = config('app.fallback_locale');
 
         $titles = self::get('seo.title', []);
         $descriptions = self::get('seo.description', []);
         $keywords = self::get('seo.keywords', []);
 
         return [
-            'title' => $titles[$locale] ?? config('app.name'),
-            'description' => $descriptions[$locale] ?? '',
-            'keywords' => $keywords[$locale] ?? '',
+            'title' => $titles[$locale] ?? $titles[$fallback] ?? config('app.name'),
+            'description' => $descriptions[$locale] ?? $descriptions[$fallback] ?? '',
+            'keywords' => $keywords[$locale] ?? $keywords[$fallback] ?? '',
             'robots' => self::get('seo.indexing_enabled', true)
                 ? 'index, follow'
                 : 'noindex, nofollow',
-            'ogImage' => self::getOgImage(),
+            'og_image' => self::getOgImage(),
         ];
     }
 }

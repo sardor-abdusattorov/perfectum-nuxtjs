@@ -27,6 +27,43 @@ class SiteTranslation extends Model
         return "translator.{$category}.{$key}.{$locale}";
     }
 
+    public static function collectionCacheKey(string $locale): string
+    {
+        return "translations.{$locale}";
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public static function grouped(?string $locale = null): array
+    {
+        $locale ??= app()->getLocale();
+
+        return Cache::remember(
+            static::collectionCacheKey($locale),
+            static::CACHE_TTL,
+            function () use ($locale): array {
+                $fallback = config('app.fallback_locale');
+
+                return static::query()
+                    ->where('is_published', true)
+                    ->get()
+                    ->reduce(function (array $carry, self $row) use ($locale, $fallback): array {
+                        $translations = $row->getTranslations('value');
+                        $value = $translations[$locale]
+                            ?? $translations[$fallback]
+                            ?? (reset($translations) ?: null);
+
+                        if ($value !== null) {
+                            $carry[$row->category][$row->key] = $value;
+                        }
+
+                        return $carry;
+                    }, []);
+            },
+        );
+    }
+
     /**
      * Published translation for the locale, falling back to the application
      * fallback locale and then to any filled translation. Null when the

@@ -21,6 +21,7 @@ useHead({
 
   <LayoutMobileMenu />
   <LayoutTariffModal />
+  <LayoutCookieBanner />
 
   <div class="overlay" />
 </template>

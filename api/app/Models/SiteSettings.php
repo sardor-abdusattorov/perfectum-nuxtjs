@@ -22,6 +22,26 @@ class SiteSettings extends Model
         return "site_setting.{$name}";
     }
 
+    public static function collectionCacheKey(): string
+    {
+        return 'site_settings.published';
+    }
+
+    /**
+     * @return array<string, string|null>
+     */
+    public static function published(): array
+    {
+        return Cache::remember(
+            static::collectionCacheKey(),
+            static::CACHE_TTL,
+            fn (): array => static::query()
+                ->where('is_published', true)
+                ->pluck('value', 'name')
+                ->all(),
+        );
+    }
+
     /**
      * Published value of a setting. Unpublished settings resolve to $default.
      */

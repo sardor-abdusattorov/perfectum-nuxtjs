@@ -1,8 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\MenuController;
+use App\Http\Controllers\Api\V1\MetricsController;
+use App\Http\Controllers\Api\V1\PageController;
+use App\Http\Controllers\Api\V1\SettingsController;
+use App\Http\Controllers\Api\V1\TranslationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::prefix('v1')->name('api.v1.')->group(function (): void {
+    Route::get('settings', SettingsController::class)->name('settings');
+    Route::get('metrics', MetricsController::class)->name('metrics');
+    Route::get('menus', MenuController::class)->name('menus');
+    Route::get('translations', TranslationController::class)->name('translations');
+    Route::get('pages/{page}', PageController::class)->name('pages.show');
+});

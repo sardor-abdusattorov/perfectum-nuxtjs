@@ -1,7 +1,9 @@
 <?php
 
+use App\Enums\MenuLocation;
 use App\Enums\PageKey;
 use App\Models\ContentBlock;
+use App\Models\Menu;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
@@ -39,6 +41,8 @@ if (! function_exists('site_setting')) {
 if (! function_exists('clear_site_settings_cache')) {
     function clear_site_settings_cache(?string $name = null): void
     {
+        Cache::forget(SiteSettings::collectionCacheKey());
+
         if ($name !== null) {
             Cache::forget(SiteSettings::cacheKey($name));
 
@@ -48,6 +52,19 @@ if (! function_exists('clear_site_settings_cache')) {
         SiteSettings::query()->pluck('name')->each(
             fn (string $n) => Cache::forget(SiteSettings::cacheKey($n))
         );
+    }
+}
+
+if (! function_exists('clear_menus_cache')) {
+    function clear_menus_cache(): void
+    {
+        $locales = config('app.locales', [config('app.locale')]);
+
+        foreach (MenuLocation::cases() as $location) {
+            foreach ($locales as $locale) {
+                Cache::forget(Menu::cacheKey($location, $locale));
+            }
+        }
     }
 }
 
@@ -127,6 +144,10 @@ if (! function_exists('clear_translator_cache')) {
     function clear_translator_cache(?string $category = null, ?string $key = null): void
     {
         $locales = config('app.locales', [config('app.locale')]);
+
+        foreach ($locales as $locale) {
+            Cache::forget(SiteTranslation::collectionCacheKey($locale));
+        }
 
         if ($category !== null && $key !== null) {
             foreach ($locales as $locale) {

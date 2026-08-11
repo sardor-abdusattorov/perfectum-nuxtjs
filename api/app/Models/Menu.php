@@ -13,6 +13,8 @@ class Menu extends Model
 {
     use HasTranslations;
 
+    public const CACHE_TTL = 86400;
+
     protected $table = 'menus';
 
     protected $fillable = [
@@ -68,5 +70,10 @@ class Menu extends Model
             ->with(['children' => fn (HasMany $query) => $query->where('status', true)])
             ->orderBy('sort')
             ->get();
+    }
+
+    public static function cacheKey(MenuLocation $location, string $locale): string
+    {
+        return "menus.{$location->value}.{$locale}";
     }
 }
