@@ -1,25 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{ url?: string | null }>()
 
-const localePath = useLocalePath()
-
-const external = computed(() => /^(https?:)?\/\/|^(mailto|tel):/.test(props.url ?? ''))
-
-const to = computed(() => {
-  const url = props.url ?? ''
-
-  if (!url) {
-    return null
-  }
-
-  if (external.value) {
-    return url
-  }
-
-  const [path, hash] = url.split('#')
-
-  return localePath(path || '/') + (hash ? `#${hash}` : '')
-})
+const { external, to } = useLink(() => props.url)
 </script>
 
 <template>

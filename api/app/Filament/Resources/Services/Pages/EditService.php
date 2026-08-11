@@ -14,11 +14,6 @@ class EditService extends EditRecord
 
     protected static string $resource = ServiceResource::class;
 
-    protected function slugSource(): string
-    {
-        return 'name';
-    }
-
     protected function getHeaderActions(): array
     {
         return [

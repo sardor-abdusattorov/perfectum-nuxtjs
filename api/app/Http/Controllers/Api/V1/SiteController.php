@@ -36,7 +36,7 @@ class SiteController
     {
         return [
             'locale' => app()->getLocale(),
-            'locales' => config('app.locales', [config('app.locale')]),
+            'locales' => app_locales(),
             'seo' => Settings::seo(),
             'metrics' => [
                 'enabled' => filled(Settings::get('metrics.yandex'))

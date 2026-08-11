@@ -8,23 +8,43 @@ use BladeUI\Icons\Exceptions\SvgNotFound;
 
 class IconName
 {
+    /** @var array<string, string|null> */
+    private static array $resolved = [];
+
+    /** @var array<string, string|null> */
+    private static array $rendered = [];
+
     /**
      * @param  array<string, string>  $attributes
      */
     public static function svg(?string $name, array $attributes = []): ?string
     {
-        foreach (static::candidates($name) as $candidate) {
-            $svg = static::render($candidate, $attributes);
+        $blade = static::blade($name);
 
-            if ($svg !== null) {
-                return $svg;
-            }
+        if ($blade === null) {
+            return null;
         }
 
-        return null;
+        $key = $blade.'|'.serialize($attributes);
+
+        return static::$rendered[$key] ??= static::render($blade, $attributes);
     }
 
     public static function blade(?string $name): ?string
+    {
+        if (blank($name)) {
+            return null;
+        }
+
+        return static::$resolved[$name] ??= static::resolve($name);
+    }
+
+    public static function exists(?string $name): bool
+    {
+        return static::blade($name) !== null;
+    }
+
+    private static function resolve(string $name): ?string
     {
         foreach (static::candidates($name) as $candidate) {
             if (static::render($candidate) !== null) {
@@ -35,20 +55,11 @@ class IconName
         return null;
     }
 
-    public static function exists(?string $name): bool
-    {
-        return static::blade($name) !== null;
-    }
-
     /**
      * @return array<int, string>
      */
-    private static function candidates(?string $name): array
+    private static function candidates(string $name): array
     {
-        if (blank($name)) {
-            return [];
-        }
-
         $names = [$name];
 
         if (str_contains($name, ':')) {

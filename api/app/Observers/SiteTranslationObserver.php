@@ -10,11 +10,11 @@ class SiteTranslationObserver
 {
     public function saved(SiteTranslation $translation): void
     {
-        clear_translator_cache($translation->category, $translation->key);
+        clear_translator_cache();
     }
 
     public function deleted(SiteTranslation $translation): void
     {
-        clear_translator_cache($translation->category, $translation->key);
+        clear_translator_cache();
     }
 }

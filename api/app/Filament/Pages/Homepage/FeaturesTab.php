@@ -7,6 +7,7 @@ use App\Enums\ContentBlockKey;
 use App\Filament\Support\MultilineText;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -78,9 +79,7 @@ class FeaturesTab extends ContentTab
 
                                 StatusToggle::make(),
                             ])
-                            ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null)
-                                ? (string) reset($state['title'])
-                                : null)
+                            ->itemLabel(Translated::itemLabel('title'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
@@ -133,7 +132,7 @@ class FeaturesTab extends ContentTab
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make('features', self::class),
+                TabSaveAction::make(self::class),
             ]);
     }
 }

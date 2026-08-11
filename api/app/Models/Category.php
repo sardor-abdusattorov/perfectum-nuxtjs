@@ -47,4 +47,21 @@ class Category extends Model
     {
         return "categories.{$type->value}.{$locale}";
     }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function options(CategoryType $type): array
+    {
+        return Cache::remember(
+            static::cacheKey($type, app()->getLocale()),
+            static::CACHE_TTL,
+            fn (): array => static::query()
+                ->type($type)
+                ->orderBy('sort')
+                ->get(['id', 'name'])
+                ->mapWithKeys(fn (self $category): array => [$category->getKey() => $category->name])
+                ->all(),
+        );
+    }
 }

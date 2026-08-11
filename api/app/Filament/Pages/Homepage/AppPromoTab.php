@@ -37,7 +37,7 @@ class AppPromoTab extends ContentTab
                             ->helperText(__('app.helper.watermark')),
                     ]),
 
-                TabSaveAction::make('app_promo', self::class),
+                TabSaveAction::make(self::class),
             ]);
     }
 }

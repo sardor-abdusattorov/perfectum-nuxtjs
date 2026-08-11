@@ -12,11 +12,6 @@ class EditCategory extends EditRecord
 {
     use GeneratesSlug;
 
-    protected function slugSource(): string
-    {
-        return 'name';
-    }
-
     /**
      * @param  array<string, mixed>  $data
      * @return array<string, mixed>

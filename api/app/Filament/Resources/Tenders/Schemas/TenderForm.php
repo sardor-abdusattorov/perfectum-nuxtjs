@@ -13,10 +13,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
 
 class TenderForm
 {
@@ -33,9 +30,7 @@ class TenderForm
                                     ->label(__('app.label.title'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (Set $set, Get $get, ?string $state, string $operation) => $operation === 'create' && blank($get('slug'))
-                                        ? $set('slug', Str::slug($state ?? ''))
-                                        : null),
+                                    ->afterStateUpdated(SlugInput::preview()),
 
                                 TextEditor::make('content')
                                     ->label(__('app.label.content'))

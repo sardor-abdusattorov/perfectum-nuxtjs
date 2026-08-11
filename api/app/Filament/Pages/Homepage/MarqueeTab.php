@@ -7,6 +7,7 @@ use App\Enums\ContentBlockKey;
 use App\Filament\Support\ImageUpload;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -42,15 +43,13 @@ class MarqueeTab extends ContentTab
 
                                 StatusToggle::make(),
                             ])
-                            ->itemLabel(fn (array $state): ?string => is_array($state['text'] ?? null)
-                                ? (string) reset($state['text'])
-                                : null)
+                            ->itemLabel(Translated::itemLabel('text'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make('marquee', self::class),
+                TabSaveAction::make(self::class),
             ]);
     }
 }

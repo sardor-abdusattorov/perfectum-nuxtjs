@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
+    use HasMediaUrl;
     use HasTranslations;
     use Publishable;
 
@@ -45,16 +46,5 @@ class Page extends Model
     public function resolveRouteBinding($value, $field = null): ?Model
     {
         return static::query()->published()->where('slug', $value)->first();
-    }
-
-    public function imageUrl(): ?string
-    {
-        if (blank($this->image)) {
-            return null;
-        }
-
-        return str_starts_with($this->image, 'http')
-            ? $this->image
-            : Storage::disk('public')->url($this->image);
     }
 }

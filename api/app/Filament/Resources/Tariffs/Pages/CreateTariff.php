@@ -11,9 +11,4 @@ class CreateTariff extends CreateRecord
     use GeneratesSlug;
 
     protected static string $resource = TariffResource::class;
-
-    protected function slugSource(): string
-    {
-        return 'name';
-    }
 }

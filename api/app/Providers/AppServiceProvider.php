@@ -149,7 +149,7 @@ class AppServiceProvider extends ServiceProvider
     {
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales($this->locales())
+                ->locales(app_locales())
                 ->labels($this->localeLabels())
                 ->visible(outsidePanels: true)
                 ->outsidePanelPlacement(Placement::TopStart, PlacementMode::Pinned)
@@ -162,7 +162,7 @@ class AppServiceProvider extends ServiceProvider
         TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
             $component
                 ->localesLabels($this->localeLabels())
-                ->locales($this->locales())
+                ->locales(app_locales())
                 ->addDirectionByLocale()
                 ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLabel: __('app.label.empty'))
                 ->addSetActiveTabThatHasValue();
@@ -170,19 +170,11 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return array<int, string>
-     */
-    private function locales(): array
-    {
-        return config('app.locales', [config('app.locale')]);
-    }
-
-    /**
      * @return array<string, string>
      */
     private function localeLabels(): array
     {
-        return collect($this->locales())
+        return collect(app_locales())
             ->mapWithKeys(fn (string $locale): array => [$locale => __("app.label.{$locale}")])
             ->all();
     }

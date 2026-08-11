@@ -10,11 +10,11 @@ class SettingsObserver
 {
     public function saved(Settings $setting): void
     {
-        clear_settings_cache($setting->key);
+        clear_settings_cache();
     }
 
     public function deleted(Settings $setting): void
     {
-        clear_settings_cache($setting->key);
+        clear_settings_cache();
     }
 }

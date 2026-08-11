@@ -11,9 +11,4 @@ class CreateService extends CreateRecord
     use GeneratesSlug;
 
     protected static string $resource = ServiceResource::class;
-
-    protected function slugSource(): string
-    {
-        return 'name';
-    }
 }

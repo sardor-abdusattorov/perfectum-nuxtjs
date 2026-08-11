@@ -34,16 +34,6 @@ enum SocialIcon: string implements HasLabel
     /**
      * @return array<string, string>
      */
-    public static function getOptions(): array
-    {
-        return collect(self::cases())
-            ->mapWithKeys(fn (self $case): array => [$case->value => $case->getLabel()])
-            ->all();
-    }
-
-    /**
-     * @return array<string, string>
-     */
     public static function getIconOptions(): array
     {
         return collect(self::cases())

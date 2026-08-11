@@ -7,6 +7,7 @@ use App\Enums\CategoryType;
 use App\Filament\Support\CategorySelect;
 use App\Filament\Support\ImageUpload;
 use App\Filament\Support\SlugInput;
+use App\Filament\Support\SortInput;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
 use App\Filament\Support\Translated;
@@ -15,10 +16,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
 
 class DeviceForm
 {
@@ -37,9 +35,7 @@ class DeviceForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (Set $set, Get $get, ?string $state, string $operation) => $operation === 'create' && blank($get('slug'))
-                                        ? $set('slug', Str::slug($state ?? ''))
-                                        : null),
+                                    ->afterStateUpdated(SlugInput::preview()),
 
                                 Textarea::make('excerpt')
                                     ->label(__('app.label.excerpt'))
@@ -66,12 +62,7 @@ class DeviceForm
                             ->label(__('app.label.in_stock'))
                             ->default(true),
 
-                        TextInput::make('sort')
-                            ->label(__('app.label.sort'))
-                            ->helperText(__('app.helper.sort'))
-                            ->numeric()
-                            ->default(0)
-                            ->required(),
+                        SortInput::make(),
 
                         StatusToggle::make(),
                     ]),

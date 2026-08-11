@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasCategory;
+use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Device extends Model
 {
     use HasCategory;
+    use HasMediaUrl;
     use HasTranslations;
     use Publishable;
 
@@ -42,10 +43,5 @@ class Device extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
-    }
-
-    public function imageUrl(): ?string
-    {
-        return blank($this->image) ? null : Storage::disk('public')->url($this->image);
     }
 }

@@ -33,12 +33,12 @@ trait HasCategory
         );
     }
 
-    public function scopeInCategory(Builder $query, ?string $slug): Builder
+    public function scopeInCategory(Builder $query, ?string $slug, string $relation = 'category'): Builder
     {
         if (blank($slug)) {
             return $query;
         }
 
-        return $query->whereHas('category', fn (Builder $category) => $category->where('slug', $slug));
+        return $query->whereHas($relation, fn (Builder $category) => $category->where('slug', $slug));
     }
 }

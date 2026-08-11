@@ -3,26 +3,12 @@ import type { MenuItem } from '~/types/api'
 
 const props = defineProps<{ item: MenuItem, linkClass: string }>()
 
-const localePath = useLocalePath()
-
-const external = computed(() => /^(https?:)?\/\/|^(mailto|tel):/.test(props.item.url ?? ''))
-
-const to = computed(() => {
-  const url = props.item.url ?? ''
-
-  if (external.value) {
-    return url
-  }
-
-  const [path, hash] = url.split('#')
-
-  return localePath(path || '/') + (hash ? `#${hash}` : '')
-})
+const { external, to } = useLink(() => props.item.url)
 </script>
 
 <template>
   <a
-    v-if="external"
+    v-if="external && to"
     :class="linkClass"
     :href="to"
     :target="item.target ?? undefined"
@@ -30,7 +16,7 @@ const to = computed(() => {
   >{{ item.name }}</a>
 
   <NuxtLink
-    v-else-if="item.url"
+    v-else-if="to"
     :class="linkClass"
     :to="to"
     :target="item.target ?? undefined"

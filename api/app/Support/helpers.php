@@ -11,6 +11,16 @@ use App\Models\SiteTranslation;
 use App\Models\Social;
 use Illuminate\Support\Facades\Cache;
 
+if (! function_exists('app_locales')) {
+    /**
+     * @return array<int, string>
+     */
+    function app_locales(): array
+    {
+        return config('app.locales', [config('app.locale')]);
+    }
+}
+
 if (! function_exists('settings')) {
     function settings(string $key, mixed $default = null): mixed
     {
@@ -19,17 +29,9 @@ if (! function_exists('settings')) {
 }
 
 if (! function_exists('clear_settings_cache')) {
-    function clear_settings_cache(?string $key = null): void
+    function clear_settings_cache(): void
     {
-        if ($key !== null) {
-            Cache::forget(Settings::cacheKey($key));
-
-            return;
-        }
-
-        Settings::query()->pluck('key')->each(
-            fn (string $k) => Cache::forget(Settings::cacheKey($k))
-        );
+        Cache::forget(Settings::cacheKey());
     }
 }
 
@@ -41,36 +43,22 @@ if (! function_exists('site_setting')) {
 }
 
 if (! function_exists('clear_site_settings_cache')) {
-    function clear_site_settings_cache(?string $name = null): void
+    function clear_site_settings_cache(): void
     {
-        Cache::forget(SiteSettings::collectionCacheKey());
-
-        if ($name !== null) {
-            Cache::forget(SiteSettings::cacheKey($name));
-
-            return;
-        }
-
-        SiteSettings::query()->pluck('name')->each(
-            fn (string $n) => Cache::forget(SiteSettings::cacheKey($n))
-        );
+        Cache::forget(SiteSettings::cacheKey());
     }
 }
 
 if (! function_exists('clear_pages_cache')) {
     function clear_pages_cache(?string $slug = null): void
     {
-        $locales = config('app.locales', [config('app.locale')]);
+        $slugs = $slug !== null ? [$slug] : Page::query()->pluck('slug')->all();
 
-        $slugs = $slug !== null
-            ? collect([$slug])
-            : Page::query()->pluck('slug');
-
-        $slugs->each(function (string $value) use ($locales): void {
-            foreach ($locales as $locale) {
+        foreach ($slugs as $value) {
+            foreach (app_locales() as $locale) {
                 Cache::forget(Page::cacheKey($value, $locale));
             }
-        });
+        }
     }
 }
 
@@ -84,10 +72,8 @@ if (! function_exists('clear_socials_cache')) {
 if (! function_exists('clear_menus_cache')) {
     function clear_menus_cache(): void
     {
-        $locales = config('app.locales', [config('app.locale')]);
-
         foreach (MenuLocation::cases() as $location) {
-            foreach ($locales as $locale) {
+            foreach (app_locales() as $locale) {
                 Cache::forget(Menu::cacheKey($location, $locale));
             }
         }
@@ -117,11 +103,10 @@ if (! function_exists('content_blocks')) {
 if (! function_exists('clear_content_blocks_cache')) {
     function clear_content_blocks_cache(?PageKey $page = null): void
     {
-        $locales = config('app.locales', [config('app.locale')]);
         $pages = $page !== null ? [$page] : PageKey::cases();
 
         foreach ($pages as $pageKey) {
-            foreach ($locales as $locale) {
+            foreach (app_locales() as $locale) {
                 Cache::forget(ContentBlock::cacheKey($pageKey, $locale));
             }
         }
@@ -161,30 +146,10 @@ if (! function_exists('translator')) {
 }
 
 if (! function_exists('clear_translator_cache')) {
-    function clear_translator_cache(?string $category = null, ?string $key = null): void
+    function clear_translator_cache(): void
     {
-        $locales = config('app.locales', [config('app.locale')]);
-
-        foreach ($locales as $locale) {
-            Cache::forget(SiteTranslation::collectionCacheKey($locale));
+        foreach (app_locales() as $locale) {
+            Cache::forget(SiteTranslation::cacheKey($locale));
         }
-
-        if ($category !== null && $key !== null) {
-            foreach ($locales as $locale) {
-                Cache::forget(SiteTranslation::cacheKey($category, $key, $locale));
-            }
-
-            return;
-        }
-
-        SiteTranslation::query()
-            ->when($category !== null, fn ($query) => $query->where('category', $category))
-            ->select(['category', 'key'])
-            ->get()
-            ->each(function (SiteTranslation $row) use ($locales): void {
-                foreach ($locales as $locale) {
-                    Cache::forget(SiteTranslation::cacheKey($row->category, $row->key, $locale));
-                }
-            });
     }
 }

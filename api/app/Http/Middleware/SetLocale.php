@@ -12,7 +12,7 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $locales = config('app.locales', [config('app.locale')]);
+        $locales = app_locales();
 
         $locale = $request->query('locale')
             ?? $request->header('X-Locale')

@@ -91,7 +91,7 @@ class ContentBlock extends Model
             return false;
         }
 
-        $locales = array_flip(config('app.locales', [config('app.locale')]));
+        $locales = array_flip(app_locales());
 
         return array_diff_key($value, $locales) === [];
     }

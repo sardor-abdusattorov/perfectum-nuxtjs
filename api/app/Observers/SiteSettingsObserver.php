@@ -10,11 +10,11 @@ class SiteSettingsObserver
 {
     public function saved(SiteSettings $setting): void
     {
-        clear_site_settings_cache($setting->name);
+        clear_site_settings_cache();
     }
 
     public function deleted(SiteSettings $setting): void
     {
-        clear_site_settings_cache($setting->name);
+        clear_site_settings_cache();
     }
 }

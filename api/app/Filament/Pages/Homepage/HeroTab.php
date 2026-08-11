@@ -8,6 +8,7 @@ use App\Filament\Support\ImageUpload;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TabSaveAction;
 use App\Filament\Support\TextEditor;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -76,9 +77,7 @@ class HeroTab extends ContentTab
 
                                         StatusToggle::make(),
                                     ])
-                                    ->itemLabel(fn (array $state): ?string => is_array($state['label'] ?? null)
-                                        ? (string) reset($state['label'])
-                                        : null)
+                                    ->itemLabel(Translated::itemLabel('label'))
                                     ->defaultItems(0)
                                     ->reorderable()
                                     ->collapsible(),
@@ -99,15 +98,13 @@ class HeroTab extends ContentTab
 
                                 StatusToggle::make(),
                             ])
-                            ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null)
-                                ? strip_tags((string) reset($state['title']))
-                                : null)
+                            ->itemLabel(Translated::itemLabel('title'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make('hero', self::class),
+                TabSaveAction::make(self::class),
             ]);
     }
 }

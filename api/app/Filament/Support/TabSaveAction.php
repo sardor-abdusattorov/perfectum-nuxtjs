@@ -2,6 +2,7 @@
 
 namespace App\Filament\Support;
 
+use App\Filament\Pages\Homepage\ContentTab;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Actions;
@@ -9,13 +10,12 @@ use Filament\Schemas\Components\Actions;
 class TabSaveAction
 {
     /**
-     * Save button for a single tab of a content page.
-     *
-     * @param  string  $key  section key inside $data, e.g. 'hero'
-     * @param  class-string  $tabClass  tab class exposing a static save(array $data)
+     * @param  class-string<ContentTab>  $tabClass
      */
-    public static function make(string $key, string $tabClass): Actions
+    public static function make(string $tabClass): Actions
     {
+        $key = $tabClass::key()->value;
+
         return Actions::make([
             Action::make("save_{$key}")
                 ->label(__('app.action.save'))

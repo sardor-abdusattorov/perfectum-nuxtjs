@@ -1,16 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   link?: { label?: string | null, url?: string | null } | null
   linkClass?: string
 }>()
-
-const label = computed(() => props.link?.label ?? '')
-const url = computed(() => props.link?.url ?? '')
 </script>
 
 <template>
-  <LayoutCardLink v-if="label" :url="url" :class="linkClass">
-    {{ label }}
+  <LayoutCardLink v-if="link?.label" :url="link.url" :class="linkClass">
+    {{ link.label }}
     <slot />
   </LayoutCardLink>
 </template>

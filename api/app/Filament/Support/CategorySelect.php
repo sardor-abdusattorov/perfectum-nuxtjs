@@ -13,13 +13,7 @@ class CategorySelect
         return Select::make($field)
             ->label(__('app.label.category'))
             ->helperText(__('app.helper.entity_category'))
-            ->options(fn (): array => Category::query()
-                ->type($type)
-                ->orderBy('sort')
-                ->get()
-                ->mapWithKeys(fn (Category $category): array => [$category->getKey() => $category->name])
-                ->all())
-            ->searchable()
-            ->preload();
+            ->options(Category::options($type))
+            ->searchable();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Menus\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\MenuLocation;
+use App\Filament\Support\SortInput;
 use App\Filament\Support\Translated;
 use App\Models\Menu;
 use Filament\Forms\Components\Select;
@@ -67,12 +68,7 @@ class MenuForm
                             ->label(__('app.label.open_in_new_tab'))
                             ->default(false),
 
-                        TextInput::make('sort')
-                            ->label(__('app.label.sort'))
-                            ->helperText(__('app.helper.sort'))
-                            ->numeric()
-                            ->default(0)
-                            ->required(),
+                        SortInput::make(),
 
                         Toggle::make('status')
                             ->label(__('app.label.show_on_site'))

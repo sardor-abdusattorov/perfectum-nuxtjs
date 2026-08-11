@@ -34,7 +34,7 @@ class TariffsTab extends ContentTab
                             ]),
                     ]),
 
-                TabSaveAction::make('tariffs', self::class),
+                TabSaveAction::make(self::class),
             ]);
     }
 }

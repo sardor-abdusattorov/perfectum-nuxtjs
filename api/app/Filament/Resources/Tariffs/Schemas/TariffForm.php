@@ -8,6 +8,7 @@ use App\Filament\Support\CategorySelect;
 use App\Filament\Support\ImageUpload;
 use App\Filament\Support\MultilineText;
 use App\Filament\Support\SlugInput;
+use App\Filament\Support\SortInput;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
 use App\Filament\Support\Translated;
@@ -16,10 +17,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
 
 class TariffForm
 {
@@ -42,9 +40,7 @@ class TariffForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (Set $set, Get $get, ?string $state, string $operation) => $operation === 'create' && blank($get('slug'))
-                                        ? $set('slug', Str::slug($state ?? ''))
-                                        : null),
+                                    ->afterStateUpdated(SlugInput::preview()),
 
                                 MultilineText::make('lead')
                                     ->label(__('app.label.lead_text'))
@@ -96,9 +92,7 @@ class TariffForm
                                             ->helperText(__('app.helper.tariff_feature_note')),
                                     ]),
                             ])
-                            ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null)
-                                ? (string) reset($state['title'])
-                                : null)
+                            ->itemLabel(Translated::itemLabel('title'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
@@ -141,9 +135,7 @@ class TariffForm
                                 TextInput::make('url')
                                     ->label(__('app.label.url')),
                             ])
-                            ->itemLabel(fn (array $state): ?string => is_array($state['name'] ?? null)
-                                ? (string) reset($state['name'])
-                                : null)
+                            ->itemLabel(Translated::itemLabel('name'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
@@ -168,12 +160,7 @@ class TariffForm
                             ->label(__('app.label.is_archived'))
                             ->helperText(__('app.helper.is_archived')),
 
-                        TextInput::make('sort')
-                            ->label(__('app.label.sort'))
-                            ->helperText(__('app.helper.sort'))
-                            ->numeric()
-                            ->default(0)
-                            ->required(),
+                        SortInput::make(),
                     ]),
             ]);
     }

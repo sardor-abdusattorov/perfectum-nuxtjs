@@ -7,6 +7,7 @@ use App\Enums\ContentBlockKey;
 use App\Filament\Support\MultilineText;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -69,15 +70,13 @@ class ChooseTab extends ContentTab
 
                                 StatusToggle::make(),
                             ])
-                            ->itemLabel(fn (array $state): ?string => is_array($state['name'] ?? null)
-                                ? (string) reset($state['name'])
-                                : null)
+                            ->itemLabel(Translated::itemLabel('name'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make('choose', self::class),
+                TabSaveAction::make(self::class),
             ]);
     }
 }

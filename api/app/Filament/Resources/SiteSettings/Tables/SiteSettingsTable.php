@@ -3,11 +3,7 @@
 namespace App\Filament\Resources\SiteSettings\Tables;
 
 use App\Enums\PublishedStatus;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
+use App\Filament\Support\CrudActions;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -49,15 +45,7 @@ class SiteSettingsTable
                     ->searchable()
                     ->preload(),
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->recordActions(CrudActions::record())
+            ->toolbarActions(CrudActions::bulk());
     }
 }

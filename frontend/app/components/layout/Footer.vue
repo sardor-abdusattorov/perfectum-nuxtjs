@@ -6,7 +6,7 @@ const setting = useSetting()
 const t = useT()
 
 const phones = computed(() => [setting('phone_primary'), setting('phone_secondary')].filter(Boolean))
-const emails = computed(() => t('footer.emails').split('\n').filter(Boolean))
+const emails = computed(() => lines(t('footer.emails')))
 const telegram = computed(() => setting('telegram_url').replace(/^.*\/(?=[^/]+$)/, '@'))
 
 function telHref(phone: string): string {

@@ -14,11 +14,6 @@ class EditTariff extends EditRecord
 
     protected static string $resource = TariffResource::class;
 
-    protected function slugSource(): string
-    {
-        return 'name';
-    }
-
     protected function getHeaderActions(): array
     {
         return [

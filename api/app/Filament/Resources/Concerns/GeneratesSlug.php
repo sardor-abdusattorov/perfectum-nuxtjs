@@ -38,17 +38,12 @@ trait GeneratesSlug
 
         $data['slug'] = Slug::make(
             static::getResource()::getModel(),
-            $data[$this->slugSource()] ?? null,
+            $data['title'] ?? $data['name'] ?? null,
             $this->record?->getKey(),
             $this->slugScope($data),
         );
 
         return $data;
-    }
-
-    protected function slugSource(): string
-    {
-        return 'title';
     }
 
     /**

@@ -4,15 +4,13 @@ namespace App\Filament\Resources\Vacancies\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\SlugInput;
+use App\Filament\Support\SortInput;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
 
 class VacancyForm
 {
@@ -29,9 +27,7 @@ class VacancyForm
                                     ->label(__('app.label.title'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (Set $set, Get $get, ?string $state, string $operation) => $operation === 'create' && blank($get('slug'))
-                                        ? $set('slug', Str::slug($state ?? ''))
-                                        : null),
+                                    ->afterStateUpdated(SlugInput::preview()),
 
                                 TextInput::make('city')
                                     ->label(__('app.label.city')),
@@ -51,12 +47,7 @@ class VacancyForm
 
                         SlugInput::make(),
 
-                        TextInput::make('sort')
-                            ->label(__('app.label.sort'))
-                            ->helperText(__('app.helper.sort'))
-                            ->numeric()
-                            ->default(0)
-                            ->required(),
+                        SortInput::make(),
 
                         StatusToggle::make(),
                     ]),

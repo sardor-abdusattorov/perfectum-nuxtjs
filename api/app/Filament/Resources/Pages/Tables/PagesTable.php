@@ -2,16 +2,11 @@
 
 namespace App\Filament\Resources\Pages\Tables;
 
-use App\Enums\PublishedStatus;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
+use App\Filament\Support\CrudActions;
+use App\Filament\Support\StatusColumn;
+use App\Filament\Support\StatusFilter;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class PagesTable
@@ -39,13 +34,7 @@ class PagesTable
                     ->copyable()
                     ->searchable(),
 
-                ToggleColumn::make('status')
-                    ->label(__('app.label.show_on_site'))
-                    ->sortable()
-                    ->onIcon('heroicon-m-check-circle')
-                    ->offIcon('heroicon-m-x-circle')
-                    ->onColor('success')
-                    ->offColor('danger'),
+                StatusColumn::make(),
 
                 TextColumn::make('updated_at')
                     ->label(__('app.label.updated_at'))
@@ -53,19 +42,9 @@ class PagesTable
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
-                    ->label(__('app.label.status'))
-                    ->options(PublishedStatus::getStatusOptions()),
+                StatusFilter::make(),
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->recordActions(CrudActions::record())
+            ->toolbarActions(CrudActions::bulk());
     }
 }

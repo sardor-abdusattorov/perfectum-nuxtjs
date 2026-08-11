@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasCategory;
+use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Tariff extends Model
 {
     use HasCategory;
+    use HasMediaUrl;
     use HasTranslations;
     use Publishable;
 
@@ -78,13 +79,8 @@ class Tariff extends Model
         return $query->whereHas('type', fn (Builder $type) => $type->where('slug', $slug));
     }
 
-    public function imageUrl(): ?string
-    {
-        return blank($this->image) ? null : Storage::disk('public')->url($this->image);
-    }
-
     public function modalImageUrl(): ?string
     {
-        return blank($this->modal_image) ? null : Storage::disk('public')->url($this->modal_image);
+        return $this->mediaUrl('modal_image');
     }
 }

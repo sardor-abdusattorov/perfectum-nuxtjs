@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Socials\Schemas;
 
 use App\Filament\Support\IconPicker;
+use App\Filament\Support\SortInput;
 use App\Filament\Support\StatusToggle;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -29,12 +30,7 @@ class SocialForm
                             ->url()
                             ->required(),
 
-                        TextInput::make('sort')
-                            ->label(__('app.label.sort'))
-                            ->helperText(__('app.helper.sort'))
-                            ->numeric()
-                            ->default(0)
-                            ->required(),
+                        SortInput::make(),
 
                         StatusToggle::make(),
                     ]),

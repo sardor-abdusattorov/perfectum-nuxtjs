@@ -4,9 +4,9 @@ export function useNetwork() {
   const route = useRoute()
   const localePath = useLocalePath()
 
-  const cdmaRoot = computed(() => localePath('/cdma'))
+  const cdmaRoot = localePath('/cdma')
 
   return computed<NetworkSection>(() =>
-    route.path === cdmaRoot.value || route.path.startsWith(`${cdmaRoot.value}/`) ? 'cdma' : '5g',
+    route.path === cdmaRoot || route.path.startsWith(`${cdmaRoot}/`) ? 'cdma' : '5g',
   )
 }

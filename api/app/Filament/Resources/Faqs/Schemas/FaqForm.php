@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Faqs\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\CategorySelect;
+use App\Filament\Support\SortInput;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
 use App\Filament\Support\Translated;
@@ -34,12 +35,7 @@ class FaqForm
                                     ->required(Translated::required()),
                             ]),
 
-                        TextInput::make('sort')
-                            ->label(__('app.label.sort'))
-                            ->helperText(__('app.helper.sort'))
-                            ->numeric()
-                            ->default(0)
-                            ->required(),
+                        SortInput::make(),
 
                         StatusToggle::make(),
                     ]),

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 class SiteTranslation extends Model
@@ -22,12 +23,7 @@ class SiteTranslation extends Model
         'is_published' => 'boolean',
     ];
 
-    public static function cacheKey(string $category, string $key, string $locale): string
-    {
-        return "translator.{$category}.{$key}.{$locale}";
-    }
-
-    public static function collectionCacheKey(string $locale): string
+    public static function cacheKey(string $locale): string
     {
         return "translations.{$locale}";
     }
@@ -35,12 +31,12 @@ class SiteTranslation extends Model
     /**
      * @return array<string, string>
      */
-    public static function flat(?string $locale = null): array
+    public static function published(?string $locale = null): array
     {
         $locale ??= app()->getLocale();
 
         return Cache::remember(
-            static::collectionCacheKey($locale),
+            static::cacheKey($locale),
             static::CACHE_TTL,
             function () use ($locale): array {
                 $fallback = config('app.fallback_locale');
@@ -55,7 +51,7 @@ class SiteTranslation extends Model
                             ?? (reset($translations) ?: null);
 
                         if ($value !== null) {
-                            $carry[$row->key] = $value;
+                            $carry[$row->category.'.'.$row->key] = $value;
                         }
 
                         return $carry;
@@ -64,30 +60,22 @@ class SiteTranslation extends Model
         );
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public static function flat(?string $locale = null): array
+    {
+        $flat = [];
+
+        foreach (static::published($locale) as $path => $value) {
+            $flat[Str::after($path, '.')] = $value;
+        }
+
+        return $flat;
+    }
+
     public static function get(string $category, string $key, ?string $locale = null): ?string
     {
-        $locale ??= app()->getLocale();
-
-        return Cache::remember(
-            static::cacheKey($category, $key, $locale),
-            static::CACHE_TTL,
-            function () use ($category, $key, $locale): ?string {
-                $row = static::query()
-                    ->where('category', $category)
-                    ->where('key', $key)
-                    ->where('is_published', true)
-                    ->first();
-
-                if ($row === null) {
-                    return null;
-                }
-
-                $translations = $row->getTranslations('value');
-
-                return $translations[$locale]
-                    ?? $translations[config('app.fallback_locale')]
-                    ?? (reset($translations) ?: null);
-            },
-        );
+        return static::published($locale)["{$category}.{$key}"] ?? null;
     }
 }

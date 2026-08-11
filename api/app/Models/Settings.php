@@ -30,20 +30,28 @@ class Settings extends Model
         $this->attributes['value'] = json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 
-    public static function cacheKey(string $key): string
+    public static function cacheKey(): string
     {
-        return "settings.{$key}";
+        return 'settings.all';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public static function values(): array
+    {
+        return Cache::remember(
+            static::cacheKey(),
+            static::CACHE_TTL,
+            fn (): array => static::query()->get()->mapWithKeys(
+                fn (self $row): array => [$row->key => $row->value]
+            )->all(),
+        );
     }
 
     public static function get(string $key, mixed $default = null): mixed
     {
-        $value = Cache::remember(
-            static::cacheKey($key),
-            static::CACHE_TTL,
-            fn (): mixed => static::query()->where('key', $key)->first()?->value,
-        );
-
-        return $value ?? $default;
+        return static::values()[$key] ?? $default;
     }
 
     public static function set(string $key, mixed $value): void

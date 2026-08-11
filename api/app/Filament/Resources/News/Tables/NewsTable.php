@@ -2,16 +2,13 @@
 
 namespace App\Filament\Resources\News\Tables;
 
-use App\Enums\PublishedStatus;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
+use App\Enums\CategoryType;
+use App\Filament\Support\CategoryFilter;
+use App\Filament\Support\CrudActions;
+use App\Filament\Support\StatusColumn;
+use App\Filament\Support\StatusFilter;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class NewsTable
@@ -42,34 +39,14 @@ class NewsTable
                     ->date()
                     ->sortable(),
 
-
-                ToggleColumn::make('status')
-                    ->label(__('app.label.show_on_site'))
-                    ->sortable()
-                    ->onIcon('heroicon-m-check-circle')
-                    ->offIcon('heroicon-m-x-circle')
-                    ->onColor('success')
-                    ->offColor('danger'),
+                StatusColumn::make(),
             ])
             ->filters([
-                SelectFilter::make('category')
-                    ->label(__('app.label.category'))
-                    ->relationship('category', 'slug'),
+                CategoryFilter::make(CategoryType::News),
 
-
-                SelectFilter::make('status')
-                    ->label(__('app.label.status'))
-                    ->options(PublishedStatus::getStatusOptions()),
+                StatusFilter::make(),
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->recordActions(CrudActions::record())
+            ->toolbarActions(CrudActions::bulk());
     }
 }

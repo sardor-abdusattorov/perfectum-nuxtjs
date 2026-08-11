@@ -1,6 +1,7 @@
 import Swiper from 'swiper/bundle'
 
 const documentHandlers = new Map()
+const teardown = []
 
 function bindDocument(key, type, handler) {
   const previous = documentHandlers.get(key)
@@ -13,6 +14,39 @@ function bindDocument(key, type, handler) {
   document.addEventListener(type, handler)
 }
 
+function onFrame(callback) {
+  let handle = requestAnimationFrame(function step(time) {
+    callback(time)
+    handle = requestAnimationFrame(step)
+  })
+
+  teardown.push(function () {
+    cancelAnimationFrame(handle)
+  })
+}
+
+function observe(observer) {
+  teardown.push(function () {
+    observer.disconnect()
+  })
+
+  return observer
+}
+
+function delay(callback, ms) {
+  const handle = setTimeout(callback, ms)
+
+  teardown.push(function () {
+    clearTimeout(handle)
+  })
+}
+
+function release() {
+  teardown.splice(0).forEach(function (stop) {
+    stop()
+  })
+}
+
 function initBlock1() {
   const marquee = document.querySelector(".marquee");
   if (marquee) {
@@ -20,8 +54,10 @@ function initBlock1() {
     const original = track.innerHTML;
     const setWidth = track.scrollWidth;
 
-    while (track.scrollWidth < marquee.offsetWidth + setWidth) {
-      track.insertAdjacentHTML("beforeend", original);
+    if (!track.dataset.filled && setWidth > 0) {
+      const copies = Math.ceil((marquee.offsetWidth + setWidth) / setWidth) - 1;
+      track.insertAdjacentHTML("beforeend", original.repeat(Math.max(copies, 0)));
+      track.dataset.filled = "1";
     }
 
     let offset = 0;
@@ -47,6 +83,8 @@ function initBlock1() {
       cancelAnimationFrame(raf);
       raf = null;
     }
+
+    teardown.push(stop);
 
     marquee.addEventListener("mouseenter", stop);
     marquee.addEventListener("mouseleave", start);
@@ -204,7 +242,7 @@ function initBlock1() {
     });
 
     if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
+      const observer = observe(new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
             const dial = entry.target;
@@ -217,41 +255,46 @@ function initBlock1() {
           });
         },
         { threshold: 0.3 },
-      );
+      ));
       dials.forEach(function (dial) {
         observer.observe(dial);
+        teardown.push(function () {
+          cancelAnimationFrame(dial._raf);
+          dial._raf = null;
+        });
       });
     }
   }
 
-  const gauges = document.querySelectorAll(".hero__gauge");
-  gauges.forEach(function (gauge) {
-    const needle = gauge.querySelector(".hero__gauge-needle");
-    const value = gauge.querySelector(".hero__gauge-value");
-    if (!needle) return;
-
+  const needles = document.querySelectorAll(".hero__gauge .hero__gauge-needle");
+  if (needles.length) {
+    const readouts = document.querySelectorAll(".hero__gauge .hero__gauge-value");
     const from = 1000;
     const to = 970;
     const maxTilt = -5;
     const duration = 1300;
     let start = null;
 
-    function frame(time) {
+    onFrame(function (time) {
       if (start === null) start = time;
       const elapsed = (time - start) % (duration * 2);
       let p = elapsed < duration ? elapsed / duration : 1 - (elapsed - duration) / duration;
       p = p * p * (3 - 2 * p);
-      needle.style.transform = "rotate(" + maxTilt * p + "deg)";
-      if (value) {
-        value.textContent = String(Math.round(from + (to - from) * p)).replace(
-          /\B(?=(\d{3})+(?!\d))/g,
-          " ",
-        );
-      }
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  });
+
+      const transform = "rotate(" + maxTilt * p + "deg)";
+      needles.forEach(function (needle) {
+        needle.style.transform = transform;
+      });
+
+      const value = String(Math.round(from + (to - from) * p)).replace(
+        /\B(?=(\d{3})+(?!\d))/g,
+        " ",
+      );
+      readouts.forEach(function (readout) {
+        readout.textContent = value;
+      });
+    });
+  }
 
   const maskCells = document.querySelectorAll(".numbers__mask-cell");
   if (maskCells.length) {
@@ -379,7 +422,7 @@ function initBlock2() {
       });
 
       render();
-      setTimeout(function () { map.container.fitToViewport(); }, 250);
+      delay(function () { map.container.fitToViewport(); }, 250);
     }
 
     document.querySelectorAll(".offices .map__zoom-btn").forEach(function (btn) {
@@ -395,7 +438,7 @@ function initBlock2() {
       ymaps.ready(buildMap);
     }
 
-    setTimeout(function () {
+    delay(function () {
       if (map) return;
       mapEl.innerHTML =
         '<p class="map__fallback">Карта временно недоступна.<br />' +
@@ -634,7 +677,7 @@ function initBlock2() {
         }));
       });
 
-      setTimeout(function () { covMap.container.fitToViewport(); }, 250);
+      delay(function () { covMap.container.fitToViewport(); }, 250);
     }
 
     document.querySelectorAll(".map_coverage .map__zoom-btn").forEach(function (btn) {
@@ -650,7 +693,7 @@ function initBlock2() {
       ymaps.ready(buildCoverage);
     }
 
-    setTimeout(function () {
+    delay(function () {
       if (covMap) return;
       covEl.innerHTML =
         '<p class="map__fallback">Карта временно недоступна.<br />' +
@@ -894,6 +937,7 @@ function initBlock4() {
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {
+    release()
     initBlock1()
     initBlock2()
     initBlock3()

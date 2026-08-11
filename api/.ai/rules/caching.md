@@ -33,4 +33,20 @@ payload it builds from the model.
 
 Anything resolved through `HasTranslations` is locale-specific. The key
 carries the locale (`pages.{slug}.{locale}`, `menus.{location}.{locale}`)
-and the matching `clear_*_cache()` helper loops over `config('app.locales')`.
+and the matching `clear_*_cache()` helper loops over `app_locales()` — use
+that helper, not a fresh `config('app.locales', ...)` read.
+
+## One entry per table, not one per key
+
+`Settings`, `SiteSettings` and `SiteTranslation` each cache the whole table
+as a single array (`Settings::values()`, `SiteSettings::published()`,
+`SiteTranslation::published()`); `get()` is an array lookup on top of it.
+
+Two reasons a per-key entry is wrong here. A warm `/site` used to cost
+twelve cache round-trips for tables holding a handful of rows. And
+`Cache::remember()` treats `null` as a miss, so a key that is simply unset
+re-queried the database and rewrote the entry on every single request,
+forever. An array of keys is never null, so it caches correctly.
+
+Invalidation follows: the observers forget the one collection key rather
+than walking the table to forget each key it might have written.
