@@ -1,8 +1,9 @@
-import type { ApiResponse, MenuItem, Menus, Settings, Translations } from '~/types/api'
+import type { ApiResponse, MenuItem, Menus, Settings, Social, Translations } from '~/types/api'
 
 interface Site {
   settings: Settings
   menus: Menus
+  socials: Social[]
   translations: Translations
 }
 
@@ -13,15 +14,17 @@ export function useSite() {
   return useAsyncData<Site>(
     'site',
     async () => {
-      const [settings, menus, translations] = await Promise.all([
+      const [settings, menus, socials, translations] = await Promise.all([
         $api<ApiResponse<Settings>>('/settings'),
         $api<ApiResponse<Menus>>('/menus'),
+        $api<ApiResponse<Social[]>>('/socials'),
         $api<ApiResponse<Translations>>('/translations'),
       ])
 
       return {
         settings: settings.data,
         menus: menus.data,
+        socials: socials.data,
         translations: translations.data,
       }
     },
@@ -39,6 +42,12 @@ export function useMenu(location: keyof Menus) {
   const { data } = useSite()
 
   return computed<MenuItem[]>(() => data.value?.menus[location] ?? [])
+}
+
+export function useSocials() {
+  const { data } = useSite()
+
+  return computed<Social[]>(() => data.value?.socials ?? [])
 }
 
 export function useSetting() {

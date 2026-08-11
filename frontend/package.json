@@ -10,6 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@iconify-json/simple-icons": "^1.2.93",
+    "@nuxt/icon": "^2.5.0",
     "@nuxtjs/i18n": "^10.6.0",
     "nuxt": "^4.5.2",
     "swiper": "^14.1.0",

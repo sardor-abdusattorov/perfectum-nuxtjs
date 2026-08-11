@@ -99,6 +99,9 @@ return [
         'personal_information' => 'Personal information',
         'personal_information_description' => 'Update your account profile information and email address.',
         'avatar' => 'Avatar',
+        'icon' => 'Icon',
+        'social_single' => 'Social network',
+        'social_plural' => 'Social networks',
         'image' => 'Image',
         'document' => 'Document',
         'media' => 'Media',
@@ -122,6 +125,8 @@ return [
     ],
 
     'helper' => [
+        'icon' => 'Type the brand name in latin — telegram, instagram, youtube',
+        'social_name' => 'Visible in the admin panel and to screen readers only',
         'page_slug' => 'Latin letters — the address is built from it: /pages/cookie-policy',
         'page_seo' => 'Leave empty and the values from the main settings are used',
         'if_disabled_not_shown' => 'If disabled — not shown on the site',

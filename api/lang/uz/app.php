@@ -99,6 +99,9 @@ return [
         'personal_information' => 'Shaxsiy maʼlumotlar',
         'personal_information_description' => 'Profil maʼlumotlari va elektron pochta manzilini yangilang.',
         'avatar' => 'Avatar',
+        'icon' => 'Ikonka',
+        'social_single' => 'Ijtimoiy tarmoq',
+        'social_plural' => 'Ijtimoiy tarmoqlar',
         'image' => 'Rasm',
         'document' => 'Hujjat',
         'media' => 'Media',
@@ -122,6 +125,8 @@ return [
     ],
 
     'helper' => [
+        'icon' => 'Brend nomini lotin harflarida yozing — telegram, instagram, youtube',
+        'social_name' => 'Faqat admin panelda va skrinrider uchun koʻrinadi',
         'page_slug' => 'Lotin harflarida — manzil shundan yigʻiladi: /pages/cookie-policy',
         'page_seo' => 'Boʻsh qoldirilsa — asosiy sozlamalardagi qiymatlar olinadi',
         'if_disabled_not_shown' => 'Oʻchirilgan boʻlsa — saytda koʻrsatilmaydi',

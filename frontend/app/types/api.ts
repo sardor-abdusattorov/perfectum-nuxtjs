@@ -43,6 +43,12 @@ export interface PageContent {
   updated_at: string | null
 }
 
+export interface Social {
+  name: string
+  icon: string | null
+  url: string
+}
+
 export interface Metrics {
   yandex?: string
   google?: string

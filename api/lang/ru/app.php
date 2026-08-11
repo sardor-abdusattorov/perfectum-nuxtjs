@@ -99,6 +99,9 @@ return [
         'personal_information' => 'Личные данные',
         'personal_information_description' => 'Обновите данные профиля и адрес электронной почты.',
         'avatar' => 'Аватар',
+        'icon' => 'Иконка',
+        'social_single' => 'Соцсеть',
+        'social_plural' => 'Соцсети',
         'image' => 'Изображение',
         'document' => 'Документ',
         'media' => 'Медиа',
@@ -122,6 +125,8 @@ return [
     ],
 
     'helper' => [
+        'icon' => 'Наберите название бренда латиницей — telegram, instagram, youtube',
+        'social_name' => 'Видно только в админке и в подсказке для скринридера',
         'page_slug' => 'Латиницей — из него складывается адрес: /pages/cookie-policy',
         'page_seo' => 'Если оставить пустым — подставятся значения из основных настроек',
         'if_disabled_not_shown' => 'Если выключено — не показывается на сайте',

@@ -8,6 +8,7 @@ use App\Models\Page;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
+use App\Models\Social;
 use Illuminate\Support\Facades\Cache;
 
 if (! function_exists('settings')) {
@@ -68,6 +69,13 @@ if (! function_exists('clear_pages_cache')) {
         Page::query()->pluck('slug')->each(
             fn (string $value) => Cache::forget(Page::cacheKey($value))
         );
+    }
+}
+
+if (! function_exists('clear_socials_cache')) {
+    function clear_socials_cache(): void
+    {
+        Cache::forget(Social::cacheKey());
     }
 }
 

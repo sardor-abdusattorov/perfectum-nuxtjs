@@ -14,12 +14,14 @@ use App\Models\Page;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
+use App\Models\Social;
 use App\Observers\ContentBlockObserver;
 use App\Observers\MenuObserver;
 use App\Observers\PageObserver;
 use App\Observers\SettingsObserver;
 use App\Observers\SiteSettingsObserver;
 use App\Observers\SiteTranslationObserver;
+use App\Observers\SocialObserver;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use BezhanSalleh\LanguageSwitch\Enums\Placement;
 use BezhanSalleh\LanguageSwitch\Enums\PlacementMode;
@@ -87,6 +89,7 @@ class AppServiceProvider extends ServiceProvider
         Settings::observe(SettingsObserver::class);
         SiteSettings::observe(SiteSettingsObserver::class);
         SiteTranslation::observe(SiteTranslationObserver::class);
+        Social::observe(SocialObserver::class);
     }
 
     private function configureDB(): void
