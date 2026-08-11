@@ -377,6 +377,5 @@ return [
     'menu_location' => [
         'header' => 'Шапка 5G',
         'footer' => 'Подвал 5G',
-        'cdma_footer' => 'Подвал CDMA',
     ],
 ];

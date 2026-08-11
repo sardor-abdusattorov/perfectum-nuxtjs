@@ -127,38 +127,6 @@ class MenuSeeder extends Seeder
                 ],
             ],
 
-            MenuLocation::CdmaFooter->value => [
-                [
-                    'key' => 'cdma',
-                    'name' => ['ru' => 'CDMA', 'uz' => 'CDMA', 'en' => 'CDMA'],
-                    'column' => 1,
-                    'children' => [
-                        ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы', 'uz' => 'Tariflar', 'en' => 'Tariffs'], 'url' => $this->url('/cdma#cdma-tariffs')],
-                        ['key' => 'connect', 'name' => ['ru' => 'Как подключиться', 'uz' => 'Qanday ulanish kerak', 'en' => 'How to connect'], 'url' => $this->url('/cdma/connect')],
-                        ['key' => 'dealers', 'name' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar', 'en' => 'Dealers'], 'url' => $this->url('/cdma/dealers')],
-                    ],
-                ],
-                [
-                    'key' => 'company',
-                    'name' => ['ru' => 'Компания', 'uz' => 'Kompaniya', 'en' => 'Company'],
-                    'column' => 2,
-                    'children' => [
-                        ['key' => 'about', 'name' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida', 'en' => 'About us'], 'url' => $this->url('/about-company')],
-                        ['key' => 'contacts', 'name' => ['ru' => 'Контакты', 'uz' => 'Kontaktlar', 'en' => 'Contacts'], 'url' => $this->url('/contacts')],
-                        ['key' => 'documents', 'name' => ['ru' => 'Юридические документы', 'uz' => 'Yuridik hujjatlar', 'en' => 'Legal documents'], 'url' => $this->url('/documents')],
-                    ],
-                ],
-                [
-                    'key' => 'five-g',
-                    'name' => ['ru' => 'Perfectum 5G', 'uz' => 'Perfectum 5G', 'en' => 'Perfectum 5G'],
-                    'column' => 3,
-                    'children' => [
-                        ['key' => 'home', 'name' => ['ru' => 'Главная 5G', 'uz' => '5G bosh sahifa', 'en' => '5G home'], 'url' => $this->url('/')],
-                        ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы 5G', 'uz' => '5G tariflari', 'en' => '5G tariffs'], 'url' => $this->url('/tariffs')],
-                        ['key' => 'coverage', 'name' => ['ru' => 'Карта покрытия', 'uz' => 'Qamrov xaritasi', 'en' => 'Coverage map'], 'url' => $this->url('/coverage-area')],
-                    ],
-                ],
-            ],
         ];
     }
 

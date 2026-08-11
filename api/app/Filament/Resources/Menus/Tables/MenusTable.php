@@ -39,7 +39,7 @@ class MenusTable
                     ->formatStateUsing(fn (MenuLocation $state): string => $state->getLabel())
                     ->color(fn (MenuLocation $state): string => match ($state) {
                         MenuLocation::Header => 'primary',
-                        MenuLocation::Footer, MenuLocation::CdmaFooter => 'gray',
+                        MenuLocation::Footer => 'gray',
                     }),
 
                 TextColumn::make('key')

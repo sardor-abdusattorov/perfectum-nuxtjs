@@ -1,50 +1,24 @@
+<script setup lang="ts">
+const block = useBlock('home', 'coverage')
+const cities = computed(() => published(block.value.cities))
+</script>
+
 <template>
   <section class="coverage">
       <div class="container">
           <div class="coverage__head">
-              <h2 class="section__title coverage__title">Где работает</h2>
-              <div class="coverage__subtitle">
-                  <p>
-                      5G SA уже развёрнут в крупнейших городах. Подключение и
-                      расширение покрытия — каждый месяц.
-                  </p>
+              <h2 class="section__title coverage__title">{{ block.title }}</h2>
+              <div v-if="block.subtitle" class="coverage__subtitle">
+                  <p>{{ block.subtitle }}</p>
               </div>
           </div>
           <div class="coverage__cities">
               <ul class="coverage__list">
-                                              <li>
+                  <li v-for="(city, index) in cities" :key="index">
                       <div class="coverage__city">
-                          <span class="coverage__pin coverage__pin_active"></span>
-                          <h3 class="coverage__name">Ташкент</h3>
-                          <div class="coverage__status">Полное покрытие</div>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="coverage__city">
-                          <span class="coverage__pin"></span>
-                          <h3 class="coverage__name">Самарканд</h3>
-                          <div class="coverage__status">Скоро</div>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="coverage__city">
-                          <span class="coverage__pin"></span>
-                          <h3 class="coverage__name">Бухара</h3>
-                          <div class="coverage__status">Скоро</div>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="coverage__city">
-                          <span class="coverage__pin"></span>
-                          <h3 class="coverage__name">Наманган</h3>
-                          <div class="coverage__status">Скоро</div>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="coverage__city">
-                          <span class="coverage__pin"></span>
-                          <h3 class="coverage__name">Андижан</h3>
-                          <div class="coverage__status">Скоро</div>
+                          <span class="coverage__pin" :class="city.active && 'coverage__pin_active'"></span>
+                          <h3 class="coverage__name">{{ city.name }}</h3>
+                          <div v-if="city.status_text" class="coverage__status">{{ city.status_text }}</div>
                       </div>
                   </li>
               </ul>

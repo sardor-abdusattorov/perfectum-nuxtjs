@@ -64,6 +64,7 @@ class SiteTranslationSeeder extends Seeder
             'footer.socials_title' => ['ru' => 'Социальные сети', 'uz' => 'Ijtimoiy tarmoqlar', 'en' => 'Social networks'],
 
             'common.back_home' => ['ru' => 'На главную', 'uz' => 'Bosh sahifaga', 'en' => 'To the home page'],
+            'common.store_prefix' => ['ru' => 'скачать в', 'uz' => 'yuklab olish', 'en' => 'download on'],
             'common.read_more' => ['ru' => 'Подробнее', 'uz' => 'Batafsil', 'en' => 'Read more'],
 
             'seo.about' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida', 'en' => 'About the company'],

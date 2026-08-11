@@ -1,4 +1,4 @@
-import type { ApiResponse, MenuItem, Menus, Site, Social } from '~/types/api'
+import type { ApiResponse, MenuItem, MenuLocation, Site, Social } from '~/types/api'
 
 export function useSite() {
   const { locale } = useI18n()
@@ -17,21 +17,10 @@ export function useSiteSettings() {
   return computed(() => data.value?.settings ?? null)
 }
 
-export function useMenu(location: 'header' | 'footer') {
+export function useMenu(location: MenuLocation) {
   const { data } = useSite()
-  const network = useNetwork()
 
-  return computed<MenuItem[]>(() => {
-    const menus = data.value?.menus
-
-    if (!menus) {
-      return []
-    }
-
-    const own = network.value === 'cdma' ? menus[`cdma_${location}`] : undefined
-
-    return own?.length ? own : menus[location] ?? []
-  })
+  return computed<MenuItem[]>(() => data.value?.menus[location] ?? [])
 }
 
 export function useSocials() {

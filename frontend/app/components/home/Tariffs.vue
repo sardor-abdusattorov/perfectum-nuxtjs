@@ -1,12 +1,18 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const block = useBlock('home', 'tariffs')
+const lines = (value: unknown) => String(value ?? '').split('\n')
 </script>
 
 <template>
   <section class="tariffs">
       <div class="container">
-          <span class="section__eyebrow">Собери свой тариф</span>
-          <h2 class="section__title">Только то,<br />что нужно тебе</h2>
+          <span class="section__eyebrow">{{ block.eyebrow }}</span>
+          <h2 class="section__title">
+                  <template v-for="(line, i) in lines(block.title)" :key="i">
+                      <br v-if="i" />{{ line }}
+                  </template>
+              </h2>
 
           <div class="tariffs__content">
               <div class="tariffs__controls">
