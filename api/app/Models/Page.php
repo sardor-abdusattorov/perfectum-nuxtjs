@@ -23,11 +23,10 @@ class Page extends Model
         'image',
         'meta_title',
         'meta_description',
-        'meta_keywords',
         'status',
     ];
 
-    public $translatable = ['title', 'content', 'meta_title', 'meta_description', 'meta_keywords'];
+    public $translatable = ['title', 'content', 'meta_title', 'meta_description'];
 
     protected $casts = [
         'status' => 'boolean',

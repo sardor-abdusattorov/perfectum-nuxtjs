@@ -65,10 +65,6 @@ class PageForm
                                 Textarea::make('meta_description')
                                     ->label(__('app.label.seo_description'))
                                     ->rows(3),
-
-                                Textarea::make('meta_keywords')
-                                    ->label(__('app.label.seo_keywords'))
-                                    ->rows(2),
                             ]),
                     ]),
             ]);

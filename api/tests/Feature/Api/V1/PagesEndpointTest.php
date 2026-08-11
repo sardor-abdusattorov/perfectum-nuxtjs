@@ -45,14 +45,21 @@ it('returns not found for an unknown slug', function (): void {
 
 it('falls back to the page title and the global seo when meta fields are empty', function (): void {
     Settings::set('seo.description', ['ru' => 'Описание сайта']);
-    Settings::set('seo.keywords', ['ru' => 'perfectum']);
     makePage();
 
     $this->getJson(route('api.v1.pages.show', ['slug' => 'cookie-policy']))
         ->assertOk()
         ->assertJsonPath('data.seo.title', 'Политика cookie')
-        ->assertJsonPath('data.seo.description', 'Описание сайта')
-        ->assertJsonPath('data.seo.keywords', 'perfectum');
+        ->assertJsonPath('data.seo.description', 'Описание сайта');
+});
+
+it('always takes the keywords from the main settings', function (): void {
+    Settings::set('seo.keywords', ['ru' => 'perfectum, 5g']);
+    makePage();
+
+    $this->getJson(route('api.v1.pages.show', ['slug' => 'cookie-policy']))
+        ->assertOk()
+        ->assertJsonPath('data.seo.keywords', 'perfectum, 5g');
 });
 
 it('prefers the page meta fields over the global seo', function (): void {

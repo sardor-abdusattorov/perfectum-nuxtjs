@@ -29,7 +29,7 @@ class PageResource extends JsonResource
             'seo' => [
                 'title' => filled($this->meta_title) ? $this->meta_title : $this->title,
                 'description' => filled($this->meta_description) ? $this->meta_description : $defaults['description'],
-                'keywords' => filled($this->meta_keywords) ? $this->meta_keywords : $defaults['keywords'],
+                'keywords' => $defaults['keywords'],
                 'robots' => $defaults['robots'],
                 'og_image' => $this->imageUrl() ?? $defaults['og_image'],
             ],
