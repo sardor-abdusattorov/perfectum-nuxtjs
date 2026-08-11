@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('parent_id')->nullable()->constrained('menus')->cascadeOnDelete();
             $table->string('location', 20);
+            $table->string('key')->nullable();
             $table->unsignedTinyInteger('column_position')->nullable();
             $table->json('name');
             $table->json('url')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['location', 'status', 'sort']);
+            $table->index(['location', 'parent_id', 'key']);
         });
     }
 
