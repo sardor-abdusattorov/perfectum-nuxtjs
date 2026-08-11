@@ -4,9 +4,12 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
+use App\Filament\Support\ImageUpload;
+use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TabSaveAction;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 
 class MarqueeTab extends ContentTab
@@ -20,16 +23,31 @@ class MarqueeTab extends ContentTab
     {
         return Tab::make(__('app.section.marquee'))
             ->schema([
-                TranslatableTabs::make('translations')
+                Section::make(__('app.label.marquee_items'))
+                    ->description(__('app.helper.marquee_items'))
                     ->schema([
                         Repeater::make('marquee.items')
-                            ->label(__('app.label.marquee_items'))
-                            ->helperText(__('app.helper.marquee_items'))
-                            ->simple(
-                                TextInput::make('text')->required(),
-                            )
+                            ->hiddenLabel()
+                            ->addActionLabel(__('app.action.add'))
+                            ->schema([
+                                TranslatableTabs::make('item_translations')
+                                    ->schema([
+                                        TextInput::make('text')
+                                            ->label(__('app.label.text')),
+                                    ]),
+
+                                ImageUpload::make('content-blocks', 'image')
+                                    ->label(__('app.label.image'))
+                                    ->helperText(__('app.helper.marquee_item_image')),
+
+                                StatusToggle::make(),
+                            ])
+                            ->itemLabel(fn (array $state): ?string => is_array($state['text'] ?? null)
+                                ? (string) reset($state['text'])
+                                : null)
                             ->defaultItems(0)
-                            ->reorderable(),
+                            ->reorderable()
+                            ->collapsible(),
                     ]),
 
                 TabSaveAction::make('marquee', self::class),

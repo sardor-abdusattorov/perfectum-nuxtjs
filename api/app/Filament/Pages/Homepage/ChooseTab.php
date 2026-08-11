@@ -4,6 +4,8 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
+use App\Filament\Support\MultilineText;
+use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TabSaveAction;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -22,26 +24,34 @@ class ChooseTab extends ContentTab
     {
         return Tab::make(__('app.section.choose'))
             ->schema([
-                TranslatableTabs::make('translations')
+                Section::make(__('app.label.section_texts'))
                     ->schema([
-                        TextInput::make('choose.title')
-                            ->label(__('app.label.title')),
+                        TranslatableTabs::make('translations')
+                            ->schema([
+                                TextInput::make('choose.title')
+                                    ->label(__('app.label.title')),
 
-                        TextInput::make('choose.all_label')
-                            ->label(__('app.label.all_link_label')),
+                                TextInput::make('choose.link.label')
+                                    ->label(__('app.label.link_label')),
+                            ]),
+
+                        TextInput::make('choose.link.url')
+                            ->label(__('app.label.url'))
+                            ->helperText(__('app.helper.choose_link')),
                     ]),
 
                 Section::make(__('app.label.cards'))
                     ->schema([
                         Repeater::make('choose.cards')
                             ->hiddenLabel()
+                            ->addActionLabel(__('app.action.add'))
                             ->schema([
                                 TranslatableTabs::make('card_translations')
                                     ->schema([
                                         TextInput::make('category')
                                             ->label(__('app.label.category')),
 
-                                        TextInput::make('name')
+                                        MultilineText::make('name')
                                             ->label(__('app.label.name')),
                                     ]),
 
@@ -53,10 +63,16 @@ class ChooseTab extends ContentTab
                                     ->options([
                                         'red' => __('app.color.red'),
                                         'scarlet' => __('app.color.scarlet'),
-                                        'black' => __('app.color.black'),
-                                        'gray' => __('app.color.gray'),
+                                        'dark' => __('app.color.dark'),
+                                        'ruby' => __('app.color.ruby'),
                                     ]),
+
+                                StatusToggle::make(),
                             ])
+                            ->itemLabel(fn (array $state): ?string => is_array($state['name'] ?? null)
+                                ? (string) reset($state['name'])
+                                : null)
+                            ->columns(2)
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

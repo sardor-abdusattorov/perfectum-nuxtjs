@@ -4,9 +4,8 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\ImageUpload;
+use App\Filament\Support\MultilineText;
 use App\Filament\Support\TabSaveAction;
-use App\Filament\Support\TextEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -22,17 +21,21 @@ class AppPromoTab extends ContentTab
     {
         return Tab::make(__('app.section.app_promo'))
             ->schema([
-                TranslatableTabs::make('translations')
+                Section::make(__('app.label.section_texts'))
                     ->schema([
-                        TextInput::make('app_promo.title')
-                            ->label(__('app.label.title')),
+                        TranslatableTabs::make('translations')
+                            ->schema([
+                                MultilineText::make('app_promo.title')
+                                    ->label(__('app.label.title')),
 
-                        TextEditor::make('app_promo.description')
-                            ->label(__('app.label.description')),
+                                MultilineText::make('app_promo.description')
+                                    ->label(__('app.label.description')),
+                            ]),
+
+                        TextInput::make('app_promo.watermark')
+                            ->label(__('app.label.watermark'))
+                            ->helperText(__('app.helper.watermark')),
                     ]),
-
-                ImageUpload::make('content-blocks', 'app_promo.image')
-                    ->label(__('app.label.image')),
 
                 Section::make(__('app.label.app_links'))
                     ->schema([
@@ -41,7 +44,8 @@ class AppPromoTab extends ContentTab
 
                         TextInput::make('app_promo.google_play_url')
                             ->label(__('app.label.google_play_url')),
-                    ]),
+                    ])
+                    ->columns(2),
 
                 TabSaveAction::make('app_promo', self::class),
             ]);
