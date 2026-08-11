@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             SiteTranslationSeeder::class,
             SocialSeeder::class,
             MenuSeeder::class,
+            HomepageSeeder::class,
         ]);
     }
 }
