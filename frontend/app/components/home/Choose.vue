@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const localePath = useLocalePath()
+</script>
+
 <template>
   <section class="choose">
       <div class="container">
@@ -14,7 +18,7 @@
           </div>
 
           <div class="choose__cards">
-              <a class="choose__card choose__card_red" href="/tariffs">
+              <NuxtLink class="choose__card choose__card_red" :to="localePath('/tariffs')">
                   <div class="choose__top">
                       <span class="choose__cat">Мобильная связь</span>
                       <span class="choose__corner">
@@ -26,8 +30,8 @@
                       </span>
                   </div>
                   <span class="choose__name">Тариф<br />Perfectum 5G</span>
-              </a>
-              <a class="choose__card choose__card_scarlet" href="/tariffs">
+              </NuxtLink>
+              <NuxtLink class="choose__card choose__card_scarlet" :to="localePath('/tariffs')">
                   <div class="choose__top">
                       <span class="choose__cat">Домой</span>
                       <span class="choose__corner">
@@ -39,8 +43,8 @@
                       </span>
                   </div>
                   <span class="choose__name">Беспроводной<br />интернет</span>
-              </a>
-              <a class="choose__card choose__card_dark" href="/tariffs">
+              </NuxtLink>
+              <NuxtLink class="choose__card choose__card_dark" :to="localePath('/tariffs')">
                   <div class="choose__top">
                       <span class="choose__cat">Бизнес</span>
                       <span class="choose__corner">
@@ -52,8 +56,8 @@
                       </span>
                   </div>
                   <span class="choose__name">5G для<br />компаний</span>
-              </a>
-              <a class="choose__card choose__card_ruby" href="/device-catalog">
+              </NuxtLink>
+              <NuxtLink class="choose__card choose__card_ruby" :to="localePath('/devices')">
                   <div class="choose__top">
                       <span class="choose__cat">Устройства</span>
                       <span class="choose__corner">
@@ -65,7 +69,7 @@
                       </span>
                   </div>
                   <span class="choose__name">Роутеры<br />и модемы</span>
-              </a>
+              </NuxtLink>
           </div>
 
           <div class="choose__all">

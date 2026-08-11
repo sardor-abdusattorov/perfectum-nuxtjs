@@ -36,7 +36,7 @@ const localePath = useLocalePath()
                           <NuxtLink class="menu__submenu-link" :to="localePath('/services')">Услуги</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <NuxtLink class="menu__submenu-link" :to="localePath('/device-catalog')">Каталог устройств</NuxtLink>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/devices')">Каталог устройств</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
                           <NuxtLink class="menu__submenu-link" :to="localePath('/actions')">Акции</NuxtLink>

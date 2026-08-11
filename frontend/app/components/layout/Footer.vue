@@ -61,7 +61,7 @@ const localePath = useLocalePath()
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/services')">Услуги</NuxtLink></li>
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/numbers')">Свободные номера</NuxtLink>
                           </li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/device-catalog')">Устройства</NuxtLink></li>
+                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/devices')">Устройства</NuxtLink></li>
                           <li class="footer__list-item"><a class="footer__list-link" href="#">Сегодня в
                                   продаже</a></li>
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/coverage-area')">Зона покрытия</NuxtLink>

@@ -11,7 +11,7 @@ const localePath = useLocalePath()
                       <img src="/images/logo.svg" alt="Perfectum 5G" class="header__logo-img" />
                   </NuxtLink>
                   <span class="header__logo-divider" aria-hidden="true"></span>
-                  <NuxtLink :to="localePath('/cdma-index')" class="header__logo-brand">CDMA</NuxtLink>
+                  <NuxtLink :to="localePath('/cdma')" class="header__logo-brand">CDMA</NuxtLink>
               </div>
               <nav class="header__nav">
                   <ul class="header__menu">
@@ -29,7 +29,7 @@ const localePath = useLocalePath()
                                       <NuxtLink class="header__submenu-link" :to="localePath('/services')">Услуги</NuxtLink>
                                   </li>
                                   <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/device-catalog')">Каталог устройств</NuxtLink>
+                                      <NuxtLink class="header__submenu-link" :to="localePath('/devices')">Каталог устройств</NuxtLink>
                                   </li>
                                   <li class="header__submenu-item">
                                       <NuxtLink class="header__submenu-link" :to="localePath('/actions')">Акции</NuxtLink>

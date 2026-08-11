@@ -7,9 +7,6 @@ export interface SeoInput {
 }
 
 export function useSeo(input: SeoInput = {}) {
-  const url = useRequestURL()
-  const { locale } = useI18n()
-
   const title = input.title ?? 'Perfectum'
   const description = input.description ?? ''
 
@@ -22,8 +19,6 @@ export function useSeo(input: SeoInput = {}) {
     ogTitle: title,
     ogDescription: description,
     ogType: 'website',
-    ogUrl: url.href,
-    ogLocale: () => locale.value.replace('-', '_'),
     ogSiteName: 'Perfectum',
     ogImage: input.ogImage,
 
@@ -31,9 +26,5 @@ export function useSeo(input: SeoInput = {}) {
     twitterTitle: title,
     twitterDescription: description,
     twitterImage: input.ogImage,
-  })
-
-  useHead({
-    link: [{ rel: 'canonical', href: url.origin + url.pathname }],
   })
 }

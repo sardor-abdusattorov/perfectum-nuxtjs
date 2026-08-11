@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const localePath = useLocalePath()
+</script>
+
 <template>
   <section class="tariffs">
       <div class="container">
@@ -65,7 +69,7 @@
                                   <li class="tariffs__feat">до 100 Мбит/сек</li>
                               </ul>
 
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -85,7 +89,7 @@
                                   <li class="tariffs__feat">Безлимит</li>
                                   <li class="tariffs__feat">до 1 Гбит/сек</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -105,7 +109,7 @@
                                   <li class="tariffs__feat">Безлимит + Роутер</li>
                                   <li class="tariffs__feat">до 200 Мбит/сек</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -125,7 +129,7 @@
                                   <li class="tariffs__feat">Безлимит</li>
                                   <li class="tariffs__feat">до 50 Мбит/сек</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -145,7 +149,7 @@
                                   <li class="tariffs__feat">25 ГБ интернета</li>
                                   <li class="tariffs__feat">500 минут</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -165,7 +169,7 @@
                                   <li class="tariffs__feat">Безлимит интернет</li>
                                   <li class="tariffs__feat">1000 минут</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -185,7 +189,7 @@
                                   <li class="tariffs__feat">Безлимит интернет</li>
                                   <li class="tariffs__feat">Безлимит минут</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
 
@@ -205,7 +209,7 @@
                                   <li class="tariffs__feat">Безлимит</li>
                                   <li class="tariffs__feat">до 50 SIM-карт</li>
                               </ul>
-                              <a href="/tariff-view" class="tariffs__more">Подробнее</a>
+                              <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                           </article>
                       </div>
                   </div>
