@@ -7,6 +7,7 @@ use App\Enums\PageKey;
 use App\Models\ContentBlock;
 use App\Models\User;
 use App\Support\Content;
+use Database\Seeders\HomepageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
 
@@ -103,4 +104,25 @@ it('keeps the coverage status text and the publish switch apart', function (): v
         ->get('/admin/homepage')
         ->assertOk()
         ->assertSee('status_text');
+});
+
+it('loads the seeded copy back into the forms', function (): void {
+    $this->seed(HomepageSeeder::class);
+
+    $this->actingAs(homepageAdmin())
+        ->get('/admin/homepage')
+        ->assertOk()
+        ->assertSee('Скорость')
+        ->assertSee('Подключиться')
+        ->assertSee('Ташкент')
+        ->assertSee('STANDALONE');
+});
+
+it('seeds every block of the home page', function (): void {
+    $this->seed(HomepageSeeder::class);
+
+    foreach (ContentBlockKey::cases() as $key) {
+        expect(Content::get(PageKey::Home, $key))
+            ->not->toBeEmpty("блок {$key->value} пустой");
+    }
 });
