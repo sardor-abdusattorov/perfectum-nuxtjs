@@ -42,6 +42,13 @@ class MenusTable
                         MenuLocation::Footer, MenuLocation::CdmaFooter => 'gray',
                     }),
 
+                TextColumn::make('key')
+                    ->label(__('app.label.key'))
+                    ->badge()
+                    ->color('gray')
+                    ->placeholder('—')
+                    ->searchable(),
+
                 TextColumn::make('url')
                     ->label(__('app.label.url'))
                     ->placeholder('—')

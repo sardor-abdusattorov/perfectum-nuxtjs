@@ -159,6 +159,7 @@ return [
     ],
 
     'helper' => [
+        'menu_key' => 'Lotin harflarida — sider qayta ishga tushganda bandni shu orqali topadi. Oʻz bandlaringizni kalitsiz qoldirsa ham boʻladi',
         'slug' => 'Lotin harflarida — yozuv manzili shundan yigʻiladi',
         'entity_category' => 'Yozuv shu orqali kerakli boʻlim va tarmoqqa tushadi',
         'category_type' => 'Turkum qaysi roʻyxatda chiqishini belgilaydi',

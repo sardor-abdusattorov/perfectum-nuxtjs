@@ -29,6 +29,11 @@ class MenuForm
                             ->required()
                             ->live(),
 
+                        TextInput::make('key')
+                            ->label(__('app.label.key'))
+                            ->helperText(__('app.helper.menu_key'))
+                            ->alphaDash(),
+
                         Select::make('parent_id')
                             ->label(__('app.label.parent_item'))
                             ->helperText(__('app.helper.leave_empty_for_top_level'))
