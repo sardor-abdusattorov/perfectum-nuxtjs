@@ -23,7 +23,7 @@ export interface MenuItem {
   children: MenuItem[]
 }
 
-export type MenuLocation = 'header' | 'footer' | 'cdma_header' | 'cdma_footer'
+export type MenuLocation = 'header' | 'footer' | 'cdma_footer'
 
 export type Menus = Partial<Record<MenuLocation, MenuItem[]>>
 

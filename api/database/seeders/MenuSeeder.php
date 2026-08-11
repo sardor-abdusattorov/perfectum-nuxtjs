@@ -127,17 +127,6 @@ class MenuSeeder extends Seeder
                 ],
             ],
 
-            MenuLocation::CdmaHeader->value => [
-                ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы', 'uz' => 'Tariflar', 'en' => 'Tariffs'], 'url' => $this->url('/cdma#cdma-tariffs')],
-                ['key' => 'services', 'name' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar', 'en' => 'Services'], 'url' => $this->url('/cdma#cdma-services')],
-                ['key' => 'numbers', 'name' => ['ru' => 'Номера', 'uz' => 'Raqamlar', 'en' => 'Numbers'], 'url' => $this->url('/cdma#cdma-numbers')],
-                ['key' => 'faq', 'name' => ['ru' => 'FAQ', 'uz' => 'FAQ', 'en' => 'FAQ'], 'url' => $this->url('/cdma#cdma-faq')],
-                ['key' => 'support', 'name' => ['ru' => 'Поддержка', 'uz' => 'Qoʻllab-quvvatlash', 'en' => 'Support'], 'url' => $this->url('/cdma#cdma-support')],
-                ['key' => 'news', 'name' => ['ru' => 'Новости', 'uz' => 'Yangiliklar', 'en' => 'News'], 'url' => $this->url('/cdma#cdma-news')],
-                ['key' => 'actions', 'name' => ['ru' => 'Акции', 'uz' => 'Aksiyalar', 'en' => 'Promotions'], 'url' => $this->url('/cdma/actions')],
-                ['key' => 'dealers', 'name' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar', 'en' => 'Dealers'], 'url' => $this->url('/cdma/dealers')],
-            ],
-
             MenuLocation::CdmaFooter->value => [
                 [
                     'key' => 'cdma',

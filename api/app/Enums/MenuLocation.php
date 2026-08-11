@@ -8,7 +8,6 @@ enum MenuLocation: string
 {
     case Header = 'header';
     case Footer = 'footer';
-    case CdmaHeader = 'cdma_header';
     case CdmaFooter = 'cdma_footer';
 
     public function getLabel(): string

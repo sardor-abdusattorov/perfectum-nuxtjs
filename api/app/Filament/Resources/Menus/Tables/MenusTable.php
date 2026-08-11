@@ -38,7 +38,7 @@ class MenusTable
                     ->badge()
                     ->formatStateUsing(fn (MenuLocation $state): string => $state->getLabel())
                     ->color(fn (MenuLocation $state): string => match ($state) {
-                        MenuLocation::Header, MenuLocation::CdmaHeader => 'primary',
+                        MenuLocation::Header => 'primary',
                         MenuLocation::Footer, MenuLocation::CdmaFooter => 'gray',
                     }),
 

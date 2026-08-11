@@ -324,7 +324,6 @@ return [
     'menu_location' => [
         'header' => '5G header',
         'footer' => '5G footer',
-        'cdma_header' => 'CDMA header',
         'cdma_footer' => 'CDMA footer',
     ],
 ];
