@@ -13,7 +13,10 @@ return [
     'label' => [
         'section_texts' => 'Section texts',
         'slides' => 'Slides',
+        'slug' => 'Page address',
         'content' => 'Content',
+        'page_single' => 'Page',
+        'page_plural' => 'Pages',
         'homepage' => 'Home page',
         'title' => 'Title',
         'title_accent' => 'Title — highlighted part',
@@ -119,6 +122,8 @@ return [
     ],
 
     'helper' => [
+        'page_slug' => 'Latin letters — the address is built from it: /pages/cookie-policy',
+        'page_seo' => 'Leave empty and the values from the main settings are used',
         'if_disabled_not_shown' => 'If disabled — not shown on the site',
         'line_breaks' => 'Every new line becomes a line break on the site',
         'hero_slides' => 'Slides rotate as a carousel, drag to reorder them',

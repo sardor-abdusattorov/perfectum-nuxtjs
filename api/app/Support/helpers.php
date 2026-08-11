@@ -4,6 +4,7 @@ use App\Enums\MenuLocation;
 use App\Enums\PageKey;
 use App\Models\ContentBlock;
 use App\Models\Menu;
+use App\Models\Page;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
@@ -51,6 +52,21 @@ if (! function_exists('clear_site_settings_cache')) {
 
         SiteSettings::query()->pluck('name')->each(
             fn (string $n) => Cache::forget(SiteSettings::cacheKey($n))
+        );
+    }
+}
+
+if (! function_exists('clear_pages_cache')) {
+    function clear_pages_cache(?string $slug = null): void
+    {
+        if ($slug !== null) {
+            Cache::forget(Page::cacheKey($slug));
+
+            return;
+        }
+
+        Page::query()->pluck('slug')->each(
+            fn (string $value) => Cache::forget(Page::cacheKey($value))
         );
     }
 }

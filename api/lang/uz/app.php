@@ -13,7 +13,10 @@ return [
     'label' => [
         'section_texts' => 'Boʻlim matnlari',
         'slides' => 'Slaydlar',
+        'slug' => 'Sahifa manzili',
         'content' => 'Kontent',
+        'page_single' => 'Sahifa',
+        'page_plural' => 'Sahifalar',
         'homepage' => 'Bosh sahifa',
         'title' => 'Sarlavha',
         'title_accent' => 'Sarlavha — ajratilgan qism',
@@ -119,6 +122,8 @@ return [
     ],
 
     'helper' => [
+        'page_slug' => 'Lotin harflarida — manzil shundan yigʻiladi: /pages/cookie-policy',
+        'page_seo' => 'Boʻsh qoldirilsa — asosiy sozlamalardagi qiymatlar olinadi',
         'if_disabled_not_shown' => 'Oʻchirilgan boʻlsa — saytda koʻrsatilmaydi',
         'line_breaks' => 'Har bir yangi qator saytda ham yangi qatordan boshlanadi',
         'hero_slides' => 'Slaydlar karusel boʻlib aylanadi, tartibini surib oʻzgartirish mumkin',

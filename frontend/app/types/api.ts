@@ -29,10 +29,18 @@ export type Menus = Record<MenuLocation, MenuItem[]>
 
 export type Translations = Record<string, Record<string, string>>
 
-export interface Page {
+export interface PageBlocks {
   page: string
-  seo: Seo
   blocks: Record<string, Record<string, unknown>>
+}
+
+export interface PageContent {
+  slug: string
+  title: string
+  content: string
+  image: string | null
+  seo: Seo
+  updated_at: string | null
 }
 
 export interface Metrics {
