@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useSeo({ title: "Perfectum | Numbers" })
+useSeo({ titleKey: 'seo.numbers' })
 </script>
 
 <template>

@@ -45,7 +45,7 @@ export interface PageContent {
 
 export interface Social {
   name: string
-  icon: string | null
+  svg: string | null
   url: string
 }
 

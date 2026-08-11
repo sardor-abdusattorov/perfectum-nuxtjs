@@ -1,5 +1,18 @@
 import Swiper from 'swiper/bundle'
 
+const documentHandlers = new Map()
+
+function bindDocument(key, type, handler) {
+  const previous = documentHandlers.get(key)
+
+  if (previous) {
+    document.removeEventListener(type, previous)
+  }
+
+  documentHandlers.set(key, handler)
+  document.addEventListener(type, handler)
+}
+
 function initBlock1() {
   const marquee = document.querySelector(".marquee");
   if (marquee) {
@@ -612,7 +625,7 @@ function initBlock2() {
       );
     }
     if (locateBtn) locateBtn.addEventListener("click", locateMe);
-    document.addEventListener("click", function (e) {
+    bindDocument("map-locate", "click", function (e) {
       if (e.target.closest && e.target.closest("[data-locate]")) locateMe();
     });
 
@@ -732,7 +745,7 @@ function initBlock2() {
       covInput.addEventListener("keydown", function (e) {
         if (e.key === "Escape") closeFind();
       });
-      document.addEventListener("click", function (e) {
+      bindDocument("coverage-outside", "click", function (e) {
         if (!covFind.contains(e.target) && !covInput.value) closeFind();
       });
     }
@@ -946,10 +959,13 @@ function initBlock4() {
       openTariffModal(btn);
     });
   });
-  tariffModal.querySelectorAll("[data-modal-close]").forEach(function (el) {
-    el.addEventListener("click", closeTariffModal);
-  });
-  document.addEventListener("keydown", function (event) {
+  if (!tariffModal.dataset.bound) {
+    tariffModal.dataset.bound = "1";
+    tariffModal.querySelectorAll("[data-modal-close]").forEach(function (el) {
+      el.addEventListener("click", closeTariffModal);
+    });
+  }
+  bindDocument("tariff-escape", "keydown", function (event) {
     if (event.key === "Escape" && tariffModal.classList.contains("tariff-modal_open")) {
       closeTariffModal();
     }

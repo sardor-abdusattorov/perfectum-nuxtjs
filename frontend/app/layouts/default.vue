@@ -2,11 +2,11 @@
 const head = useLocaleHead({ lang: true, dir: false, seo: true })
 const mobileMenu = useMobileMenu()
 
-useHead({
+useHead(() => ({
   htmlAttrs: { lang: head.value.htmlAttrs?.lang },
   link: head.value.link,
   meta: head.value.meta,
-})
+}))
 </script>
 
 <template>

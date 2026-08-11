@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useSeo({ title: 'Perfectum 5G', description: 'Первая 5G SA сеть в центральной Азии' })
+useSeo()
 </script>
 
 <template>

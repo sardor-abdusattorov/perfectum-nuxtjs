@@ -130,11 +130,12 @@ it('returns published networks in the configured order', function (): void {
     Social::create(['name' => 'Telegram', 'icon' => 'si-telegram', 'url' => 'https://t.me/x', 'sort' => 1]);
     Social::create(['name' => 'Draft', 'icon' => 'si-x', 'url' => 'https://x.com/x', 'status' => false]);
 
-    $this->getJson(route('api.v1.site'))
+    $response = $this->getJson(route('api.v1.site'))
         ->assertOk()
         ->assertJsonCount(2, 'data.socials')
-        ->assertJsonPath('data.socials.0.name', 'Telegram')
-        ->assertJsonPath('data.socials.0.icon', 'simple-icons:telegram');
+        ->assertJsonPath('data.socials.0.name', 'Telegram');
+
+    expect($response->json('data.socials.0.svg'))->toContain('<svg');
 });
 
 it('returns published translations keyed by key', function (): void {

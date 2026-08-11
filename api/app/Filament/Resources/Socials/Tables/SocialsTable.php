@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Socials\Tables;
 
 use App\Enums\PublishedStatus;
+use App\Support\IconName;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -23,7 +24,7 @@ class SocialsTable
             ->columns([
                 IconColumn::make('icon')
                     ->label(__('app.label.icon'))
-                    ->icon(fn (?string $state): ?string => $state),
+                    ->icon(fn (?string $state): ?string => IconName::exists($state) ? $state : null),
 
                 TextColumn::make('name')
                     ->label(__('app.label.name'))

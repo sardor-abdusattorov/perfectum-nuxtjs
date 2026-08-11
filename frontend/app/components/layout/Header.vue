@@ -4,6 +4,21 @@ const menu = useMenu('header')
 const setting = useSetting()
 const t = useT()
 const mobileMenu = useMobileMenu()
+const route = useRoute()
+
+const submenuClosed = ref(false)
+
+function releaseSubmenu() {
+  submenuClosed.value = false
+}
+
+watch(() => route.fullPath, () => {
+  submenuClosed.value = true
+
+  if (import.meta.client) {
+    window.addEventListener('pointermove', releaseSubmenu, { passive: true, once: true })
+  }
+})
 </script>
 
 <template>
@@ -23,7 +38,10 @@ const mobileMenu = useMobileMenu()
                           v-for="item in menu"
                           :key="item.id"
                           class="header__menu-item"
-                          :class="item.children.length && 'header__menu-item_has-submenu'"
+                          :class="[
+                              item.children.length && 'header__menu-item_has-submenu',
+                              submenuClosed && 'header__menu-item_closed',
+                          ]"
                       >
                           <LayoutMenuLink :item="item" link-class="header__link" />
 

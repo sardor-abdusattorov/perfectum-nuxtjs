@@ -135,10 +135,18 @@ strong {
   z-index: 70;
 }
 
-.header .header__menu-item_has-submenu:hover .header__submenu {
+.header .header__menu-item_has-submenu:has(:focus-visible) .header__submenu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .header .header__menu-item_has-submenu:not(.header__menu-item_closed):hover .header__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 }
 
 .header .header__submenu-list {

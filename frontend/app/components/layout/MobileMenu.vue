@@ -4,8 +4,13 @@ const menu = useMenu('header')
 const setting = useSetting()
 const t = useT()
 const mobileMenu = useMobileMenu()
+const route = useRoute()
 
 const expanded = ref<number | null>(null)
+
+watch(() => route.fullPath, () => {
+  expanded.value = null
+})
 </script>
 
 <template>

@@ -4,35 +4,30 @@ declare(strict_types=1);
 
 namespace App\Support;
 
+use BladeUI\Icons\Exceptions\SvgNotFound;
+
 class IconName
 {
     /**
-     * Blade Icons names are what the admin picker stores, Iconify names are
-     * what the site renders. Both address the same sets, only the prefix
-     * differs.
+     * The picker stores a Blade Icons name and the site renders inline SVG, so
+     * the markup is resolved here instead of asking the frontend to carry a
+     * second icon library that has to stay in sync with this one.
      */
-    public static function toIconify(?string $name): ?string
+    public static function svg(?string $name): ?string
     {
         if (blank($name)) {
             return null;
         }
 
-        if (str_contains($name, ':')) {
-            return $name;
+        try {
+            return svg($name, '', ['aria-hidden' => 'true', 'focusable' => 'false'])->toHtml();
+        } catch (SvgNotFound) {
+            return null;
         }
+    }
 
-        if (str_starts_with($name, 'si-')) {
-            return 'simple-icons:'.substr($name, 3);
-        }
-
-        if (preg_match('/^heroicon-([osm])-(.+)$/', $name, $matches) === 1) {
-            return 'heroicons:'.$matches[2].match ($matches[1]) {
-                'o' => '',
-                's' => '-solid',
-                'm' => '-16-solid',
-            };
-        }
-
-        return $name;
+    public static function exists(?string $name): bool
+    {
+        return static::svg($name) !== null;
     }
 }

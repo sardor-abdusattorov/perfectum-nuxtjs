@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxt/icon', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n'],
 
   app: {
     head: {
@@ -26,28 +26,6 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
   ],
 
-  icon: {
-    mode: 'svg',
-    clientBundle: {
-      scan: true,
-      icons: [
-        'simple-icons:telegram',
-        'simple-icons:instagram',
-        'simple-icons:facebook',
-        'simple-icons:youtube',
-        'simple-icons:tiktok',
-        'simple-icons:x',
-        'simple-icons:linkedin',
-        'simple-icons:threads',
-        'simple-icons:whatsapp',
-        'simple-icons:viber',
-        'simple-icons:odnoklassniki',
-        'simple-icons:vk',
-      ],
-      sizeLimitKb: 512,
-    },
-    serverBundle: { collections: ['simple-icons'] },
-  },
 
   i18n: {
     defaultLocale: 'ru',

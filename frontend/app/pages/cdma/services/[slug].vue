@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 definePageMeta({ layout: 'cdma' })
-useSeo({ title: "Perfectum | Услуга Автоплатёж" })
+useSeo({ titleKey: 'seo.cdma_service' })
 </script>
 
 <template>

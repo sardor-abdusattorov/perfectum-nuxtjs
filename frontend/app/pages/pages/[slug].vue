@@ -20,11 +20,11 @@ if (!page.value) {
 }
 
 useSeo({
-  title: page.value.seo.title,
-  description: page.value.seo.description,
-  keywords: page.value.seo.keywords,
-  robots: page.value.seo.robots,
-  ogImage: page.value.seo.og_image ?? undefined,
+  title: () => page.value?.seo.title,
+  description: () => page.value?.seo.description,
+  keywords: () => page.value?.seo.keywords,
+  robots: () => page.value?.seo.robots,
+  ogImage: () => page.value?.seo.og_image ?? undefined,
 })
 </script>
 

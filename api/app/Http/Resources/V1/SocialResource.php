@@ -23,7 +23,7 @@ class SocialResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'icon' => IconName::toIconify($this->icon),
+            'svg' => IconName::svg($this->icon),
             'url' => $this->url,
         ];
     }

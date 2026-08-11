@@ -32,22 +32,22 @@ class SocialSeeder extends Seeder
         return [
             [
                 'name' => 'Facebook',
-                'icon' => 'simple-icons:facebook',
+                'icon' => 'si-facebook',
                 'url' => 'https://www.facebook.com/Perfectum.Uzbekistan',
             ],
             [
                 'name' => 'Instagram',
-                'icon' => 'simple-icons:instagram',
+                'icon' => 'si-instagram',
                 'url' => 'https://www.instagram.com/perfectum_5g_uz',
             ],
             [
                 'name' => 'Telegram',
-                'icon' => 'simple-icons:telegram',
+                'icon' => 'si-telegram',
                 'url' => 'https://t.me/PerfectumUZ',
             ],
             [
                 'name' => 'LinkedIn',
-                'icon' => 'simple-icons:linkedin',
+                'icon' => 'brand-linkedin',
                 'url' => 'https://www.linkedin.com/company/perfectum-mob',
             ],
         ];

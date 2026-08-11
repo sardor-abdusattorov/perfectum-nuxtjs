@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-useSeo({ title: "Perfectum | Помощь — связь с нами" })
+useSeo({ titleKey: 'seo.help_contact' })
 </script>
 
 <template>

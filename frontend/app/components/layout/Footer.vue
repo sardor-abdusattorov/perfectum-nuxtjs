@@ -98,9 +98,8 @@ function telHref(phone: string): string {
                                   target="_blank"
                                   rel="noopener"
                                   :aria-label="social.name"
-                              >
-                                  <Icon v-if="social.icon" :name="social.icon" size="21" />
-                              </a>
+                                  v-html="social.svg ?? ''"
+                              />
                           </div>
                       </div>
                   </div>
