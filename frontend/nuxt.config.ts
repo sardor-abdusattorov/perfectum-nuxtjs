@@ -50,6 +50,14 @@ export default defineNuxtConfig({
     },
   },
 
+  typescript: {
+    nodeTsConfig: {
+      compilerOptions: {
+        types: ['node'],
+      },
+    },
+  },
+
   vite: {
     server: {
       watch: {
