@@ -1,8 +1,10 @@
 export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
 
+  const baseURL = (import.meta.server && config.apiBase) || config.public.apiBase
+
   const api = $fetch.create({
-    baseURL: import.meta.server ? config.apiBase : config.public.apiBase,
+    baseURL,
     retry: 1,
     timeout: 5000,
     headers: { Accept: 'application/json' },
@@ -13,6 +15,12 @@ export default defineNuxtPlugin(nuxtApp => {
       if (value) {
         options.headers.set('X-Locale', value)
       }
+    },
+    onRequestError({ request, error }) {
+      console.error(`[api] ${import.meta.server ? 'SSR' : 'браузер'} не достучался до ${request}: ${error.message}`)
+    },
+    onResponseError({ request, response }) {
+      console.error(`[api] ${request} ответил ${response.status}`)
     },
   })
 

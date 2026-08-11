@@ -1,4 +1,6 @@
 <script setup lang="ts">
+await useBlocks('home')
+
 useSeo()
 </script>
 
