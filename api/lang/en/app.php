@@ -11,6 +11,7 @@ return [
     ],
 
     'label' => [
+        'slides' => 'Slides',
         'content' => 'Content',
         'homepage' => 'Home page',
         'title' => 'Title',
@@ -109,6 +110,8 @@ return [
     ],
 
     'helper' => [
+        'hero_slides' => 'Slides rotate as a carousel, drag to reorder them',
+        'hero_shared_parts' => 'The button and app links are shared across all slides',
         'section_texts_only' => 'Only the texts are edited here — the records themselves live in their own section',
         'marquee_items' => 'The line loops, drag to reorder the words',
         'dials' => 'The needle swings between «from» and «to», the scale ends at the maximum',

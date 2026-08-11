@@ -11,6 +11,7 @@ return [
     ],
 
     'label' => [
+        'slides' => 'Slaydlar',
         'content' => 'Kontent',
         'homepage' => 'Bosh sahifa',
         'title' => 'Sarlavha',
@@ -109,6 +110,8 @@ return [
     ],
 
     'helper' => [
+        'hero_slides' => 'Slaydlar karusel boʻlib aylanadi, tartibini surib oʻzgartirish mumkin',
+        'hero_shared_parts' => 'Tugma va ilova havolalari barcha slaydlar uchun umumiy',
         'section_texts_only' => 'Bu boʻlimda faqat matnlar tahrirlanadi — yozuvlar oʻz boʻlimida yuritiladi',
         'marquee_items' => 'Satr aylanib takrorlanadi, soʻzlar tartibini surib oʻzgartirish mumkin',
         'dials' => 'Strelka «dan» va «gacha» orasida tebranadi, shkala maksimumda tugaydi',
