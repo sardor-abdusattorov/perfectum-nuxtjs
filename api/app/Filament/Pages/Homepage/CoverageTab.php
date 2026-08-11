@@ -48,8 +48,9 @@ class CoverageTab extends ContentTab
                                         TextInput::make('name')
                                             ->label(__('app.label.name')),
 
-                                        TextInput::make('status')
-                                            ->label(__('app.label.coverage_status')),
+                                        TextInput::make('status_text')
+                                            ->label(__('app.label.coverage_status'))
+                                            ->helperText(__('app.helper.coverage_status')),
                                     ]),
 
                                 Toggle::make('active')

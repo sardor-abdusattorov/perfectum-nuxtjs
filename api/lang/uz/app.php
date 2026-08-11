@@ -191,6 +191,7 @@ return [
         'marquee_items' => 'Satr aylanib takrorlanadi, soʻzlar tartibini surib oʻzgartirish mumkin',
         'marquee_item_image' => 'Rasm yuklansa — matn oʻrniga oʻsha koʻrsatiladi',
         'coverage_cities' => 'Shaharlar roʻyxat boʻlib chiqadi, tartibini surib oʻzgartirish mumkin',
+        'coverage_status' => 'Shahar ostidagi yozuv — «Toʻliq qamrov», «Tez orada»',
         'coverage_active' => 'Shahar belgisi qizil yonadi',
         'features_link' => '«Barcha imkoniyatlar» havolasi — kartochkalar ustida va ostida koʻrinadi',
         'choose_link' => '«Barcha xizmatlar» havolasi — kartochkalar ustida va ostida koʻrinadi',

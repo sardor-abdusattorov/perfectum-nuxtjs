@@ -191,6 +191,7 @@ return [
         'marquee_items' => 'The line loops, drag to reorder the words',
         'marquee_item_image' => 'Upload an image and it replaces the text',
         'coverage_cities' => 'Cities are listed in order, drag to reorder them',
+        'coverage_status' => 'The line under the city — “Full coverage”, “Coming soon”',
         'coverage_active' => 'The city pin lights up red',
         'features_link' => 'The «All features» link — shown above and below the cards',
         'choose_link' => 'The «All services» link — shown above and below the cards',

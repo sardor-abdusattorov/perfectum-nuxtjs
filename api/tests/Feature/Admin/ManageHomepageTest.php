@@ -81,3 +81,26 @@ it('keeps buttons and the two hero switches inside a slide', function (): void {
 
     expect(ContentBlock::query()->where('key', ContentBlockKey::Hero)->exists())->toBeTrue();
 });
+
+it('keeps the coverage status text and the publish switch apart', function (): void {
+    Content::save(PageKey::Home, ContentBlockKey::Coverage, [
+        'cities' => [
+            [
+                'name' => ['ru' => 'Ташкент'],
+                'status_text' => ['ru' => 'Полное покрытие'],
+                'active' => true,
+                'status' => false,
+            ],
+        ],
+    ]);
+
+    $city = Content::get(PageKey::Home, ContentBlockKey::Coverage)['cities'][0];
+
+    expect($city['status_text']['ru'])->toBe('Полное покрытие')
+        ->and($city['status'])->toBeFalse();
+
+    $this->actingAs(homepageAdmin())
+        ->get('/admin/homepage')
+        ->assertOk()
+        ->assertSee('status_text');
+});
