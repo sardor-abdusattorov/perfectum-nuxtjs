@@ -24,7 +24,7 @@ class SocialsTable
             ->columns([
                 IconColumn::make('icon')
                     ->label(__('app.label.icon'))
-                    ->icon(fn (?string $state): ?string => IconName::exists($state) ? $state : null),
+                    ->icon(fn (?string $state): ?string => IconName::blade($state)),
 
                 TextColumn::make('name')
                     ->label(__('app.label.name'))

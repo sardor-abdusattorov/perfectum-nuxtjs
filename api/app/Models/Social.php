@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\IconName;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,11 @@ class Social extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public function setIconAttribute(?string $value): void
+    {
+        $this->attributes['icon'] = IconName::blade($value) ?? $value;
+    }
 
     public function scopePublished(Builder $query): Builder
     {

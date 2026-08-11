@@ -11,23 +11,71 @@ class IconName
     /**
      * The picker stores a Blade Icons name and the site renders inline SVG, so
      * the markup is resolved here instead of asking the frontend to carry a
-     * second icon library that has to stay in sync with this one.
+     * second icon library that has to stay in sync with this one. Iconify
+     * names are accepted too — earlier records were seeded with them, and a
+     * set that dropped an icon upstream falls through to the local brand set.
      */
     public static function svg(?string $name): ?string
     {
-        if (blank($name)) {
-            return null;
+        foreach (static::candidates($name) as $candidate) {
+            $svg = static::render($candidate);
+
+            if ($svg !== null) {
+                return $svg;
+            }
         }
 
+        return null;
+    }
+
+    public static function blade(?string $name): ?string
+    {
+        foreach (static::candidates($name) as $candidate) {
+            if (static::render($candidate) !== null) {
+                return $candidate;
+            }
+        }
+
+        return null;
+    }
+
+    public static function exists(?string $name): bool
+    {
+        return static::blade($name) !== null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private static function candidates(?string $name): array
+    {
+        if (blank($name)) {
+            return [];
+        }
+
+        $names = [$name];
+
+        if (str_contains($name, ':')) {
+            [$set, $icon] = explode(':', $name, 2);
+
+            $names[] = match ($set) {
+                'simple-icons' => 'si-'.$icon,
+                'heroicons' => 'heroicon-o-'.$icon,
+                default => $set.'-'.$icon,
+            };
+
+            $names[] = 'brand-'.$icon;
+        }
+
+        return array_values(array_unique($names));
+    }
+
+    private static function render(string $name): ?string
+    {
         try {
             return svg($name, '', ['aria-hidden' => 'true', 'focusable' => 'false'])->toHtml();
         } catch (SvgNotFound) {
             return null;
         }
-    }
-
-    public static function exists(?string $name): bool
-    {
-        return static::svg($name) !== null;
     }
 }
