@@ -22,8 +22,8 @@ class SiteSettingsSeeder extends Seeder
     private function values(): array
     {
         return [
-            'account_url' => 'https://my.perfectum.uz',
-            'cdma_account_url' => 'https://my.perfectum.uz/cdma',
+            'account_url' => 'https://lk.perfectum.uz',
+            'cdma_account_url' => 'https://my.perfectum.uz',
 
             'phone_primary' => '+998 98 127 0077',
             'phone_secondary' => '+998 98 305 1111',

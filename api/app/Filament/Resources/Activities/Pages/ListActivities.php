@@ -9,6 +9,7 @@ use App\Filament\Resources\Activities\Widgets\ActivityTrendChartWidget;
 use App\Filament\Resources\Activities\Widgets\HighRiskActionsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopEventsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopUsersChartWidget;
+use Filament\Schemas\Schema;
 use MrAdder\FilamentLogger\Resources\ActivityResource\Pages\ListActivities as BasePage;
 use MrAdder\FilamentLogger\Support\ActivityFilterPresetManager;
 
@@ -34,6 +35,27 @@ class ListActivities extends BasePage
         }
 
         return $tabs;
+    }
+
+    /**
+     * Filament builds the "headerWidgets" schema by first calling
+     * defaultHeaderWidgets() and feeding the result back into
+     * headerWidgets(). The logger package owns a method of that name that
+     * returns an array of widgets, so the schema would arrive as an array and
+     * blow up on the type hint. This one skips that step; the widgets
+     * themselves still come from getHeaderWidgets() below.
+     */
+    public function getSchema(string $name): ?Schema
+    {
+        if ($name !== 'headerWidgets') {
+            return parent::getSchema($name);
+        }
+
+        if (! in_array($name, $this->discoveredSchemaNames, true)) {
+            $this->discoveredSchemaNames[] = $name;
+        }
+
+        return $this->cachedSchemas[$name] ??= $this->headerWidgets($this->makeSchema())->key($name);
     }
 
     protected function getHeaderWidgets(): array
