@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Vacancies\Pages;
 
+use App\Filament\Resources\Concerns\GeneratesSlug;
 use App\Filament\Resources\Vacancies\VacancyResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
@@ -9,6 +10,8 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditVacancy extends EditRecord
 {
+    use GeneratesSlug;
+
     protected static string $resource = VacancyResource::class;
 
     protected function getHeaderActions(): array

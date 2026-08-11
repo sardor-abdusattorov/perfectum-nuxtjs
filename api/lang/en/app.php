@@ -160,7 +160,7 @@ return [
 
     'helper' => [
         'menu_key' => 'Latin letters — the seeder finds the item by it on a re-run. Your own items can stay without a key',
-        'slug' => 'Latin letters — the record address is built from it',
+        'slug' => 'Latin letters. Leave it empty and it is built from the title',
         'entity_category' => 'Puts the record into the right tab and the right section of the site',
         'category_type' => 'Decides which list the category shows up in',
         'category_slug' => 'Latin letters — the front end filters the list by it',

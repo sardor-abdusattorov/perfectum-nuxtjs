@@ -9,9 +9,10 @@ use App\Filament\Support\ImageUpload;
 use App\Filament\Support\SlugInput;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -32,7 +33,7 @@ class ActionForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required()
+                                    ->required(Translated::required())
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (Set $set, ?string $state, string $operation) => $operation === 'create'
                                         ? $set('slug', Str::slug($state ?? ''))
@@ -49,7 +50,7 @@ class ActionForm
 
                                 TextEditor::make('content')
                                     ->label(__('app.label.content'))
-                                    ->required(),
+                                    ->required(Translated::required()),
                             ]),
 
                         SlugInput::make(),

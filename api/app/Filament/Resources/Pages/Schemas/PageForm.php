@@ -4,9 +4,11 @@ namespace App\Filament\Resources\Pages\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\ImageUpload;
+use App\Filament\Support\SlugInput;
 use App\Filament\Support\TextEditor;
-use Filament\Forms\Components\TextInput;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
@@ -26,7 +28,7 @@ class PageForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required()
+                                    ->required(Translated::required())
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (Set $set, ?string $state, string $operation) => $operation === 'create'
                                         ? $set('slug', Str::slug($state ?? ''))
@@ -34,15 +36,11 @@ class PageForm
 
                                 TextEditor::make('content')
                                     ->label(__('app.label.content'))
-                                    ->required(),
+                                    ->required(Translated::required()),
                             ]),
 
-                        TextInput::make('slug')
-                            ->label(__('app.label.slug'))
-                            ->helperText(__('app.helper.page_slug'))
-                            ->required()
-                            ->unique(ignoreRecord: true)
-                            ->alphaDash(),
+                        SlugInput::make()
+                            ->helperText(__('app.helper.page_slug')),
 
                         ImageUpload::make('pages')
                             ->label(__('app.label.image')),

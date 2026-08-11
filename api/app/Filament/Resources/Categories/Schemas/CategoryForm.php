@@ -5,13 +5,17 @@ namespace App\Filament\Resources\Categories\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Enums\Network;
+use App\Filament\Support\SlugInput;
 use App\Filament\Support\StatusToggle;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Unique;
 
 class CategoryForm
 {
@@ -39,18 +43,17 @@ class CategoryForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required()
+                                    ->required(Translated::required())
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (Set $set, ?string $state, string $operation) => $operation === 'create'
                                         ? $set('slug', Str::slug($state ?? ''))
                                         : null),
                             ]),
 
-                        TextInput::make('slug')
+                        SlugInput::make()
                             ->label(__('app.label.key'))
                             ->helperText(__('app.helper.category_slug'))
-                            ->required()
-                            ->alphaDash(),
+                            ->unique(ignoreRecord: true, modifyRuleUsing: fn (Unique $rule, Get $get): Unique => $rule->where('type', $get('type'))),
 
                         TextInput::make('sort')
                             ->label(__('app.label.sort'))

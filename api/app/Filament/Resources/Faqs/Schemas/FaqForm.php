@@ -7,6 +7,7 @@ use App\Enums\CategoryType;
 use App\Filament\Support\CategorySelect;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -26,11 +27,11 @@ class FaqForm
                             ->schema([
                                 TextInput::make('question')
                                     ->label(__('app.label.question'))
-                                    ->required(),
+                                    ->required(Translated::required()),
 
                                 TextEditor::make('answer')
                                     ->label(__('app.label.answer'))
-                                    ->required(),
+                                    ->required(Translated::required()),
                             ]),
 
                         TextInput::make('sort')

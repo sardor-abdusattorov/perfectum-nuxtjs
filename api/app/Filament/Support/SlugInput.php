@@ -11,7 +11,6 @@ class SlugInput
         return TextInput::make($field)
             ->label(__('app.label.slug'))
             ->helperText(__('app.helper.slug'))
-            ->required()
             ->unique(ignoreRecord: true)
             ->alphaDash();
     }

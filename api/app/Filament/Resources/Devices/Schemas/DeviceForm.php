@@ -9,9 +9,10 @@ use App\Filament\Support\ImageUpload;
 use App\Filament\Support\SlugInput;
 use App\Filament\Support\StatusToggle;
 use App\Filament\Support\TextEditor;
+use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
@@ -33,7 +34,7 @@ class DeviceForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required()
+                                    ->required(Translated::required())
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (Set $set, ?string $state, string $operation) => $operation === 'create'
                                         ? $set('slug', Str::slug($state ?? ''))
