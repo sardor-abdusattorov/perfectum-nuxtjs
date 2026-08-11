@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const localePath = useLocalePath()
+</script>
+
 <template>
   <div class="menu">
       <div class="menu__panel">
@@ -23,19 +27,19 @@
                   </button>
                   <ul class="menu__submenu">
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/tariffs">Тарифы</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/tariffs')">Тарифы</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/numbers">Свободные номера</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/numbers')">Свободные номера</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/services">Услуги</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/services')">Услуги</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/device-catalog">Каталог устройств</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/device-catalog')">Каталог устройств</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/actions">Акции</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/actions')">Акции</NuxtLink>
                       </li>
                   </ul>
               </li>
@@ -58,27 +62,27 @@
                   </button>
                   <ul class="menu__submenu">
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/help">Помощь</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/help')">Помощь</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/faq">Вопросы и ответы</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/faq')">Вопросы и ответы</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/coverage-area">Карта покрытия</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/coverage-area')">Карта покрытия</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/offices">Офисы продаж</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/offices')">Офисы продаж</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/documents">Документы</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/documents')">Документы</NuxtLink>
                       </li>
                       <li class="menu__submenu-item">
-                          <a class="menu__submenu-link" href="/contacts">Контакты</a>
+                          <NuxtLink class="menu__submenu-link" :to="localePath('/contacts')">Контакты</NuxtLink>
                       </li>
                   </ul>
               </li>
               <li class="menu__item">
-                  <a class="menu__link" href="/news">Новости</a>
+                  <NuxtLink class="menu__link" :to="localePath('/news')">Новости</NuxtLink>
               </li>
           </ul>
           <a href="#" class="menu__account">

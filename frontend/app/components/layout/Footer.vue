@@ -10,15 +10,14 @@ const localePath = useLocalePath()
                   <a href="#" class="footer__logo">
                       <img src="/images/logo.svg" alt="Perfectum 5G" />
                   </a>
-                  <NuxtLink class="footer__about" :to="localePath('/about-company')">Подробнее о нас</NuxtLink>
                   <div class="footer__contacts">
                       <div class="footer__contact">
-                          <h5 class="footer__contact-title">Головной офис</h5>
+                          <h2 class="footer__contact-title">Головной офис</h2>
                           <p class="footer__contact-text">Узбекистан, Ташкент, ул. Тараса Шевченко 21</p>
                           <a class="footer__contact-link" href="#">Показать на карте</a>
                       </div>
                       <div class="footer__contact">
-                          <h5 class="footer__contact-title">Телефоны поддержки</h5>
+                          <h2 class="footer__contact-title">Телефоны поддержки</h2>
                           <ul class="footer__contact-list">
                               <li><a class="footer__contact-phone" href="#">+998 98 127 0077</a></li>
                               <li><a class="footer__contact-phone" href="#">+998 98 305 1111</a></li>
@@ -27,11 +26,11 @@ const localePath = useLocalePath()
                                   class="footer__contact-phone" href="#">077</a></p>
                       </div>
                       <div class="footer__contact">
-                          <h5 class="footer__contact-title">Чат с оператором в Telegram</h5>
+                          <h2 class="footer__contact-title">Чат с оператором в Telegram</h2>
                           <a class="footer__contact-link" href="#">@Perfectum_Support</a>
                       </div>
                       <div class="footer__contact footer__contact_email">
-                          <h5 class="footer__contact-title">Email</h5>
+                          <h2 class="footer__contact-title">Email</h2>
                           <p class="footer__contact-text">Для получения информации —
                               info@perfectum.uz<br />Горячая линия для жалоб и обращений — hotline@perfectum.uz
                           </p>
@@ -43,7 +42,7 @@ const localePath = useLocalePath()
 
               <div class="footer__nav">
                   <div class="footer__menu">
-                      <h6 class="footer__heading">Домашний интернет</h6>
+                      <h2 class="footer__heading">Домашний интернет</h2>
                       <ul class="footer__list">
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/coverage-area')">Карта покрытия</NuxtLink>
                           </li>
@@ -54,7 +53,7 @@ const localePath = useLocalePath()
                       </ul>
                   </div>
                   <div class="footer__menu">
-                      <h6 class="footer__heading">Мобильная связь</h6>
+                      <h2 class="footer__heading">Мобильная связь</h2>
                       <ul class="footer__list">
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/tariffs')">Тарифы</NuxtLink></li>
                           <li class="footer__list-item"><a class="footer__list-link" href="#">Корпоративным
@@ -70,7 +69,7 @@ const localePath = useLocalePath()
                       </ul>
                   </div>
                   <div class="footer__menu">
-                      <h6 class="footer__heading">Полезное</h6>
+                      <h2 class="footer__heading">Полезное</h2>
                       <ul class="footer__list">
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/actions')">Акции</NuxtLink></li>
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/news')">Новости</NuxtLink></li>
@@ -83,7 +82,7 @@ const localePath = useLocalePath()
                       </ul>
                   </div>
                   <div class="footer__menu">
-                      <h6 class="footer__heading">Информация</h6>
+                      <h2 class="footer__heading">Информация</h2>
                       <ul class="footer__list">
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/procurement')">Закупки</NuxtLink></li>
                           <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/careers')">Карьера</NuxtLink></li>
@@ -94,7 +93,7 @@ const localePath = useLocalePath()
                   </div>
                   <div class="footer__widgets">
                       <div class="footer__widget">
-                          <h6 class="footer__heading">Мобильное приложение</h6>
+                          <h2 class="footer__heading">Мобильное приложение</h2>
                           <div class="footer__stores">
                               <a class="store store_small" href="#">
                                   <img src="/images/google_play.svg" alt="Google Play" />
@@ -105,7 +104,7 @@ const localePath = useLocalePath()
                           </div>
                       </div>
                       <div class="footer__widget">
-                          <h6 class="footer__heading">Социальные сети</h6>
+                          <h2 class="footer__heading">Социальные сети</h2>
                           <div class="footer__social">
                               <a class="footer__social-link" href="#" aria-label="Facebook">
                                   <svg width="21" height="21" viewBox="0 0 21 21" fill="none"

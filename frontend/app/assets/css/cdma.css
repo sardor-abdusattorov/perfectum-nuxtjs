@@ -75,8 +75,6 @@
    2. CDMA INDEX — TABS
    ============================================================ */
 
-/* Anchored sections have to clear both sticky bars: the 91px header and the
-   86px tab strip. Without this the heading lands underneath them. */
 .cdma-section[id] {
   scroll-margin-top: 177px;
 }
@@ -88,8 +86,6 @@
   background: var(--cdma-cream);
 }
 
-/* The strip gained a right-aligned CTA: frame 1742:2821 is 177x42 at x1562,
-   vertically centred in the 86px bar, and its label is 16px on a 22px box. */
 .cdma-tabs .container {
   display: flex;
   align-items: center;
@@ -242,10 +238,6 @@
   padding-bottom: 32px;
 }
 
-/* The rail runs past the column to the viewport edge so the next card is
-   clipped by the window, as drawn. Swiper measures the .swiper element,
-   so the bleed has to live on the rail itself. */
-
 .cdma-rail.swiper {
   margin-right: calc(50% - 50vw);
   padding-right: calc(50vw - 50%);
@@ -282,6 +274,7 @@
   background: var(--color-white);
   border: 1px solid var(--cdma-border);
   border-radius: var(--radius);
+  justify-content: space-between;
 }
 
 .cdma-tariff-card .cdma-tariff-card__badge {
@@ -323,6 +316,7 @@
 .cdma-tariff-card .cdma-tariff-card__price {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: 0 8px;
   font-size: 40px;
   font-weight: 700;
@@ -355,7 +349,7 @@
   align-items: center;
   justify-content: center;
   height: 42px;
-  margin-top: auto;
+  margin-top: 40px;
   font-size: 16px;
   line-height: normal;
   color: var(--color-black);
@@ -363,6 +357,7 @@
   border: 1px solid var(--cdma-border);
   border-radius: var(--radius-pill);
   transition: var(--transition);
+  box-shadow: 0 2px 12px 0 rgba(87, 96, 141, 0.22);
 }
 
 .cdma-tariff-card .cdma-tariff-card__more:hover,
@@ -458,8 +453,6 @@
 
 .cdma-numbers .cdma-numbers__field .select__control {
   height: 39px;
-  /* the shared control carries 14px of vertical padding, which clipped the
-     label once the box came down to the frame's 39px */
   padding: 0 44px 0 16px;
   border-radius: 8px;
 }
@@ -493,8 +486,6 @@
 }
 
 .cdma-numbers .cdma-numbers__btn {
-  /* The button caps the right end of the field: full height, flush to the
-     edge, square where it meets the input (frame 1515:1108, 49x39 at x1690). */
   position: absolute;
   top: 0;
   right: 0;
@@ -664,8 +655,6 @@
   margin-top: 40px;
 }
 
-/* One radius in both states — the frame draws the same rounded rect whether a
-   row is one line, two lines or open, so it must not jump when it expands. */
 .faq-accordion_cdma .faq-item,
 .faq-accordion_cdma .faq-item[open] {
   border: 1px solid var(--cdma-border);
@@ -782,8 +771,6 @@
   background: var(--color-black);
 }
 
-/* The glow sits behind the buttons, matching the 894x277 ellipse. */
-
 .cdma-cta::after {
   content: "";
   position: absolute;
@@ -803,8 +790,6 @@
   position: relative;
   z-index: 1;
 }
-
-/* Inner pages drop the kicker, so the band is 432px instead of 529px. */
 
 .cdma-cta_compact {
   margin-top: 60px;
@@ -973,8 +958,6 @@
   color: #737373;
 }
 
-/* The arrow only appears on the hovered card, as drawn. */
-
 .cdma-regions .cdma-region-card__arrow {
   position: absolute;
   right: 40px;
@@ -1040,10 +1023,6 @@
   margin-bottom: 43px;
 }
 
-/* The table keeps its natural size and the wrapper scrolls. No fixed layout
-   and no column widths: with those the browser squeezed the columns to fit
-   instead of letting the row run past the screen, so addresses wrapped to
-   three lines and the phone column was chopped. */
 .cdma-dealers .cdma-dealers__table {
   width: 100%;
   border-collapse: collapse;
@@ -1098,8 +1077,6 @@
   color: var(--color-black);
 }
 
-/* The first column carries the widest strings, so it is the one that decides
-   how far the row runs; the rest hug their content. */
 .cdma-dealers .cdma-dealers__th {
   white-space: nowrap;
 }
@@ -1488,8 +1465,6 @@
   border-radius: var(--radius-pill);
 }
 
-/* The news article stacks its chip under the date instead of inline. */
-
 .cdma-article .cdma-article__meta_stacked + .cdma-badge {
   margin-top: 20px;
 }
@@ -1712,8 +1687,6 @@
   border-radius: 20px;
 }
 
-/* a wide table keeps its natural size and the wrapper scrolls, rather than
-   squeezing the columns until the addresses wrap to three lines */
 .cdma-connect .cdma-table__scroll {
   overflow-x: auto;
 }
@@ -1723,8 +1696,6 @@
   border-collapse: collapse;
 }
 
-/* on the two cards that name their columns the grey band is the header row
-   itself, so it carries the same fill and rounding as cdma-table__head */
 .cdma-connect .cdma-table__col {
   padding: 15px 20px 15px 34px;
   font-size: 20px;
@@ -1774,9 +1745,6 @@
   padding-right: 44px;
 }
 
-/* the row rule is drawn on the row, not on the cells: the frame runs it under
-   the content only, from just past the divider to 44px short of the card edge,
-   so a cell border would overshoot into the rounded corner on both sides */
 .cdma-connect .cdma-table__grid tr {
   position: relative;
 }
@@ -1809,8 +1777,6 @@
   color: var(--color-red);
 }
 
-/* the city list packs thirteen rows into 53px each, half the height the other
-   cards use, and sets its addresses a step smaller than the city names */
 .cdma-connect .cdma-table__grid_regions .cdma-table__label,
 .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
   padding-top: 12px;
@@ -1822,8 +1788,6 @@
   line-height: 26px;
 }
 
-/* here the rule crosses the city column too and stops at the phone divider, so
-   it goes back onto the cells and the row rule is switched off */
 .cdma-connect .cdma-table__grid_regions tbody tr:not(:last-child)::after {
   content: none;
 }
@@ -1836,7 +1800,6 @@
   border-bottom: 0;
 }
 
-/* one phone number answers for every city, so that column has no rules */
 .cdma-connect .cdma-table__grid_regions .cdma-table__cell_phone {
   font-size: 20px;
   line-height: 29px;
@@ -1849,8 +1812,6 @@
   vertical-align: middle;
 }
 
-/* one price answers for both rows, so the row rule would strike through it:
-   the frame rules the outer two columns instead */
 .cdma-connect .cdma-table__grid_price tbody tr:not(:last-child)::after {
   content: none;
 }
@@ -1871,7 +1832,6 @@
   color: var(--color-black);
 }
 
-/* every legal paragraph is closed by a full-width rule 24px under it */
 .cdma-connect .cdma-connect__legal p {
   margin-bottom: 16px;
   padding-bottom: 24px;
@@ -1942,7 +1902,6 @@
   .cdma-tabs .cdma-tabs__link {
     font-size: 20px;
   }
-  /* the connect tables drop a type step with the content column */
   .cdma-connect .cdma-table__head,
   .cdma-connect .cdma-table__col,
   .cdma-connect .cdma-table__label,
@@ -1972,9 +1931,6 @@
     font-size: 54px;
     line-height: 66px;
   }
-  /* Three columns only work while the content column is wide. Below 1200 the
-     news, promo and fact cards fall to 156-220px cells, which is narrower than
-     their own text can set, so they drop a column here rather than at 576. */
   .cdma-support,
   .cdma-news,
   .cdma-promo,
@@ -1990,7 +1946,6 @@
   .cdma-dealers {
     padding-bottom: 150px;
   }
-  /* the label column narrows, and the row rule follows it */
   .cdma-connect .cdma-table__label {
     width: 260px;
   }
@@ -2131,8 +2086,6 @@
   .cdma-connect .cdma-table {
     margin-bottom: 24px;
   }
-  /* below the tablet the row no longer fits: the table keeps a readable width
-     and the wrapper scrolls, rather than squeezing every column to nothing */
   .cdma-connect .cdma-table__grid {
     min-width: 640px;
   }
@@ -2166,8 +2119,6 @@
     font-size: 14px;
     line-height: 18px;
   }
-  /* Cards keep a 24px inset on the phone, not the 40px of the desktop grid
-     (measured on frame 1538:1522: card edge x=24, first glyph x=48). */
   .cdma-news .cdma-news-card {
     min-height: 0;
     padding: 24px;
@@ -2175,15 +2126,9 @@
   .cdma-promo .cdma-promo-card__body {
     padding: 17px 24px 14px;
   }
-  /* --- CDMA phone hero, measured on the six 402px frames ---
-     None of them draws the desktop breadcrumb trail: the hero holds the H1
-     alone (frames 1537:1192, 1538:1522, 1611:5611, 1611:5904, 1611:6104,
-     1612:6316 — the band from the header edge down to the title is bare
-     gradient in every one). */
   .cdma-hero .cdma-crumbs {
     display: none;
   }
-  /* The portal keeps its tagline: a 159px band, title 38px down. */
   .cdma-hero {
     padding: 38px 0 37px;
   }
@@ -2196,7 +2141,6 @@
     font-size: 14px;
     line-height: 17px;
   }
-  /* The inner pages have no tagline: a 151px band, title 60px down. */
   .cdma-hero.cdma-hero_inner,
   .cdma-hero.cdma-hero_slim {
     min-height: 151px;
@@ -2210,15 +2154,12 @@
     font-size: 26px;
     line-height: 31px;
   }
-  /* the sticky tab bar follows the 48px phone header */
   .cdma-tabs {
     top: 48px;
   }
   .cdma-section[id] {
     scroll-margin-top: 96px;
   }
-  /* --- CDMA mobile, built from the iPhone 17 frames (402px) --- */
-  /* chips are one scrolling row, not a wrapped block */
   .cdma-chips {
     flex-wrap: nowrap;
     gap: 0 8px;
@@ -2243,7 +2184,6 @@
     font-size: 24px;
     line-height: 30px;
   }
-  /* support tiles keep their 2x2 arrangement on the phone */
   .cdma-support {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
@@ -2278,7 +2218,6 @@
   .cdma-support .cdma-support-card__value svg {
     flex: 0 0 auto;
   }
-  /* region cards collapse to a compact 78px row */
   .cdma-regions .cdma-region-card__link {
     min-height: inherit;
     padding: 16px;
@@ -2301,7 +2240,6 @@
     width: 24px;
     height: 24px;
   }
-  /* article meta stays on one row inside the card */
   .cdma-article .cdma-article__meta {
     flex-wrap: nowrap;
     gap: 0 8px;
@@ -2322,7 +2260,6 @@
     font-size: 26px;
     line-height: 32px;
   }
-  /* detail pages run one column on the phone */
   .cdma-detail .cdma-facts,
   .cdma-detail .cdma-features {
     grid-template-columns: 1fr;
@@ -2373,8 +2310,6 @@
     align-items: flex-start;
     gap: 20px 0;
   }
-  /* four section links do not fit one phone line, so the bar wraps instead of
-     running off the screen */
   .cdma-footer .cdma-footer__nav {
     flex-wrap: wrap;
     gap: 8px 20px;
@@ -2420,9 +2355,6 @@
   .cdma-service-card {
     padding: 24px;
   }
-  /* Frame 1538:1522: the rail cards are 340 wide and centred so both
-     neighbours peek, the promo cover is 101 tall, and the meta lines are 12px
-     on a 14px box rather than the desktop 33px. */
   .cdma-tariff-card .cdma-tariff-card__price {
     flex-wrap: nowrap;
     font-size: 24px;
@@ -2457,11 +2389,6 @@
     padding: 0 36px 0 12px;
   }
 
-  /* --- Detail pages at the frames' phone scale ---
-     1611:5891, 1611:6068, 1612:6480 and the services frame all set running
-     copy at 14/22 and section heads at 16px; the build was carrying the
-     desktop 16/30 and 18-20px heads, which stretched every article card by
-     200-500px and pushed the back link far below the frame. */
   .cdma-detail {
     padding-top: 24px;
   }
@@ -2497,7 +2424,6 @@
     font-size: 10px;
     white-space: nowrap;
   }
-  /* the fact cards are left-aligned on the 16px card inset, not centred */
   .cdma-facts .cdma-fact {
     align-items: flex-start;
     gap: 0;
@@ -2539,7 +2465,6 @@
     font-size: 13px;
   }
 
-  /* --- Portal rails, from frame 1538:1522 --- */
   .cdma-tabs {
     height: 56px;
   }
@@ -2547,8 +2472,6 @@
     height: 56px;
     font-size: 15px;
   }
-  /* the phone frame does not draw this CTA, but dropping it would leave the
-     connect page unreachable on a phone, so it stays as a compact pill */
   .cdma-tabs .container {
     gap: 12px;
   }
@@ -2569,7 +2492,6 @@
     font-size: 13px;
     min-width: 80px;
   }
-  /* the news card is 165 tall with the category a clear 24px under the title */
   .cdma-news .cdma-news-card {
     min-height: 165px;
     padding: 24px 24px 20px;
@@ -2577,7 +2499,6 @@
   .cdma-news .cdma-news-card__cat {
     margin-top: 24px;
   }
-  /* the promo cover is 101 tall inside a 209 card */
   .cdma-promo .cdma-promo-card {
     min-height: 209px;
   }
@@ -2585,8 +2506,6 @@
     font-size: 32px;
     line-height: 32px;
   }
-  /* the tariff card's CTA sits 32px under the feature list, not adrift at the
-     bottom of a card 94px taller than the frame */
   .cdma-tariff-card {
     min-height: 389px;
   }
@@ -2594,7 +2513,6 @@
     height: 37px;
     margin-top: 32px;
   }
-  /* the free-numbers rows are a 14px label over a 32px control */
   .cdma-numbers .cdma-numbers__field label {
     font-size: 14px;
     line-height: 14px;

@@ -107,7 +107,7 @@ const localePath = useLocalePath()
                       Личный кабинет
                   </a>
                   <div class="header__hamburger">
-                      <button type="button" class="header__hamburger-button">
+                      <button type="button" class="header__hamburger-button" aria-label="Открыть меню" aria-expanded="false">
                           <span class="header__hamburger-line"></span>
                           <span class="header__hamburger-line"></span>
                           <span class="header__hamburger-line"></span>

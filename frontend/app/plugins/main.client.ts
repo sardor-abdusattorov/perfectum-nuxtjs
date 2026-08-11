@@ -40,6 +40,33 @@ function initBlock1() {
     start();
   }
 
+  /* Frame 440 on slide 253:83 draws four pagination bullets under the hero, so
+     the band is a carousel. Swiper hides the pagination on its own while there
+     is only one slide, and reduced-motion readers never get the autoplay. */
+  const heroSlider = document.querySelector(".hero__slider");
+  if (heroSlider && typeof Swiper !== "undefined") {
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    new Swiper(heroSlider, {
+      slidesPerView: 1,
+      loop: true,
+      speed: 700,
+      watchOverflow: true,
+      autoHeight: false,
+      autoplay: still ? false : { delay: 6000, disableOnInteraction: false },
+      pagination: {
+        el: ".hero__pagination",
+        clickable: true,
+        bulletElement: "button",
+      },
+      a11y: {
+        containerMessage: "Главный баннер",
+        prevSlideMessage: "Предыдущий слайд",
+        nextSlideMessage: "Следующий слайд",
+        paginationBulletMessage: "Перейти к слайду {{index}}",
+      },
+    });
+  }
+
   const tariffsSwiper = document.querySelector(".tariffs__swiper");
   if (tariffsSwiper && typeof Swiper !== "undefined") {
     const slider = new Swiper(tariffsSwiper, {
@@ -140,11 +167,13 @@ function initBlock1() {
       menu.classList.add("menu_open");
       if (overlay) overlay.classList.add("overlay_open");
       document.body.classList.add("overflow__hidden");
+      burger.setAttribute("aria-expanded", "true");
     }
     function closeMenu() {
       menu.classList.remove("menu_open");
       if (overlay) overlay.classList.remove("overlay_open");
       document.body.classList.remove("overflow__hidden");
+      burger.setAttribute("aria-expanded", "false");
     }
 
     burger.addEventListener("click", openMenu);
@@ -309,7 +338,6 @@ function initBlock2() {
   // OFFICES — interactive locator (Yandex map + filter + list)
   // ==========================================================
   const mapEl = document.getElementById("offices-map");
-  const hasMap = mapEl && typeof ymaps !== "undefined";
   if (mapEl) {
     const POINTS = [
       { id: 1, type: "office", title: "Центральный офис", address: "г. Ташкент, ул. Шевченко, 21", hours: "Пн–Вс 09:00–21:00", region: "Ташкент", city: "Ташкент", lat: 41.311, lng: 69.24 },
@@ -367,15 +395,8 @@ function initBlock2() {
     fillSelect(regionSelect, uniq(POINTS.map(function (p) { return p.region; })), "Все регионы");
     fillSelect(citySelect, uniq(POINTS.map(function (p) { return p.city; })), "Все города");
 
-    // --- map (only when the Yandex API loaded) ---
-    const map = hasMap
-      ? new ymaps.Map(mapEl, {
-          center: [41.6, 64.5],
-          zoom: 6,
-          controls: ["zoomControl"],
-        }, { suppressMapOpenBlock: true })
-      : null;
-    if (map) map.behaviors.disable("scrollZoom");
+    let map = null;
+    let meMark = null;
 
     const PIN =
       '<svg viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
@@ -384,6 +405,7 @@ function initBlock2() {
 
     function popupHtml(p) {
       return (
+        '<div class="map__balloon">' +
         '<span class="map__popup-tag' + (p.type === "dealer" ? " map__popup-tag_dealer" : "") + '">' +
         (p.type === "dealer" ? "Дилер" : "Офис") + "</span>" +
         '<h3 class="map__popup-title">' + p.title + "</h3>" +
@@ -391,21 +413,70 @@ function initBlock2() {
         '<button type="button" class="map__popup-btn" data-locate>' +
         '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
         '<path d="M12 21s7-6.4 7-11a7 7 0 10-14 0c0 4.6 7 11 7 11z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>' +
-        '<circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>Определить меня</button>'
+        '<circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>Определить меня</button>' +
+        "</div>"
       );
     }
 
     const markers = {};
-    if (hasMap) POINTS.forEach(function (p) {
-      const m = new ymaps.Placemark([p.lat, p.lng], { balloonContent: popupHtml(p) }, {
-        iconLayout: ymaps.templateLayoutFactory.createClass('<div class="map-pin">' + PIN + "</div>"),
-        iconShape: { type: "Rectangle", coordinates: [[-16, -40], [16, 0]] },
+
+    /* ymaps.ready fires only once the API has really initialised. Testing
+       `typeof ymaps` is not enough: the script defines the global before it
+       validates the key, so a rejected key left ymaps.Map undefined and the
+       constructor threw, taking the filter and the list down with it. */
+    function buildMap() {
+      map = new ymaps.Map(mapEl, {
+        center: [41.6, 64.5],
+        zoom: 6,
+        controls: [],
+      }, {
+        suppressMapOpenBlock: true,
+        /* Below this map area the balloon docks along the bottom edge instead
+           of floating over the pin. On a phone the map is ~353x372 and the
+           card does not fit above it: the API clipped it against the map's
+           overflow and gave the content its own scrollbar. A desktop map is
+           far larger than the threshold and keeps the bubble. */
+        balloonPanelMaxMapArea: 400 * 400,
       });
-      m.events.add("click", function () {
-        highlightCard(p.id);
+      map.behaviors.disable("scrollZoom");
+
+      POINTS.forEach(function (p) {
+        const m = new ymaps.Placemark([p.lat, p.lng], { balloonContent: popupHtml(p) }, {
+          iconLayout: ymaps.templateLayoutFactory.createClass('<div class="map-pin">' + PIN + "</div>"),
+          iconShape: { type: "Rectangle", coordinates: [[-16, -40], [16, 0]] },
+        });
+        m.events.add("click", function () {
+          highlightCard(p.id);
+        });
+        markers[p.id] = m;
       });
-      markers[p.id] = m;
+
+      render();
+      setTimeout(function () { map.container.fitToViewport(); }, 250);
+    }
+
+    /* the frame draws its own 39x82 control instead of the Yandex one */
+    document.querySelectorAll(".offices .map__zoom-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!map) return;
+        map.setZoom(map.getZoom() + (btn.dataset.zoom === "in" ? 1 : -1), {
+          duration: 200,
+        });
+      });
     });
+
+    if (typeof ymaps !== "undefined" && typeof ymaps.ready === "function") {
+      ymaps.ready(buildMap);
+    }
+
+    /* A rejected key never calls back at all, so the canvas would sit blank
+       with no explanation. */
+    setTimeout(function () {
+      if (map) return;
+      mapEl.innerHTML =
+        '<p class="map__fallback">Карта временно недоступна.<br />' +
+        "Список офисов и дилеров ниже работает как обычно.</p>";
+    }, 8000);
 
     // --- rendering ---
     function plural(n, one, few, many) {
@@ -448,9 +519,10 @@ function initBlock2() {
 
     function pagerHtml(total) {
       if (total <= 1) return "";
-      const item = function (label, cls, target) {
+      const item = function (label, cls, target, name) {
         return '<button type="button" class="vac-pagination__item' + cls +
-          '" data-page="' + target + '">' + label + "</button>";
+          '" data-page="' + target + '" aria-label="' + (name || "Страница " + label) +
+          '">' + label + "</button>";
       };
       const arrow = function (dir) {
         return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M' +
@@ -463,13 +535,13 @@ function initBlock2() {
         else if (pages[pages.length - 1] !== "…") pages.push("…");
       }
       return (
-        item(arrow("prev"), page === 1 ? " vac-pagination__item_disabled" : "", page - 1) +
+        item(arrow("prev"), page === 1 ? " vac-pagination__item_disabled" : "", page - 1, "Предыдущая страница") +
         pages.map(function (i) {
           return i === "…"
             ? '<span class="vac-pagination__ellipsis">…</span>'
             : item(i, i === page ? " vac-pagination__item_active" : "", i);
         }).join("") +
-        item(arrow("next"), page === total ? " vac-pagination__item_disabled" : "", page + 1)
+        item(arrow("next"), page === total ? " vac-pagination__item_disabled" : "", page + 1, "Следующая страница")
       );
     }
 
@@ -581,11 +653,20 @@ function initBlock2() {
       navigator.geolocation.getCurrentPosition(
         function (pos) {
           const lat = pos.coords.latitude, lng = pos.coords.longitude;
-          L.circleMarker([lat, lng], { radius: 8, color: "#fff", weight: 3, fillColor: "#e60000", fillOpacity: 1 }).addTo(map);
           const nearest = POINTS.slice().sort(function (a, b) {
             return (a.lat - lat) ** 2 + (a.lng - lng) ** 2 - ((b.lat - lat) ** 2 + (b.lng - lng) ** 2);
           })[0];
-          map.flyTo([lat, lng], 10, { duration: 0.8 });
+          if (map) {
+            if (meMark) map.geoObjects.remove(meMark);
+            meMark = new ymaps.Circle([[lat, lng], 300], { hintContent: "Вы здесь" }, {
+              strokeColor: "#ffffff",
+              strokeWidth: 3,
+              fillColor: "#e60000",
+              fillOpacity: 1,
+            });
+            map.geoObjects.add(meMark);
+            map.setCenter([lat, lng], 10, { duration: 800 });
+          }
           if (hintEl) hintEl.textContent = "Показаны ближайшие к вам точки.";
           if (nearest) highlightCard(nearest.id);
         },
@@ -600,15 +681,13 @@ function initBlock2() {
     });
 
     render();
-    // ensure correct sizing after the layout settles
-    if (map) setTimeout(function () { map.container.fitToViewport(); }, 250);
   }
 
   // ==========================================================
   // COVERAGE — live map + city selector
   // ==========================================================
   const covEl = document.getElementById("coverage-map");
-  if (covEl && typeof ymaps !== "undefined") {
+  if (covEl) {
     const CITIES = {
       "Ташкент": [41.311, 69.24],
       "Самарканд": [39.654, 66.96],
@@ -616,66 +695,119 @@ function initBlock2() {
       "Нукус": [42.46, 59.617],
       "Ургенч": [41.55, 60.631],
     };
-    const covMap = new ymaps.Map(covEl, {
-      center: [41.6, 64.5],
-      zoom: 6,
-      controls: ["zoomControl"],
-    }, { suppressMapOpenBlock: true });
-    covMap.behaviors.disable("scrollZoom");
+    let covMap = null;
 
-    // coverage zones — semi-transparent red circles over covered cities
-    Object.keys(CITIES).forEach(function (name) {
-      covMap.geoObjects.add(new ymaps.Circle([CITIES[name], 26000], {
-        hintContent: "Зона покрытия · " + name,
+    /* same as the offices map: wait for ymaps.ready, and keep the city
+       selector below outside the guard so it still answers when the map
+       cannot load */
+    function buildCoverage() {
+      covMap = new ymaps.Map(covEl, {
+        center: [41.6, 64.5],
+        zoom: 6,
+        controls: [],
       }, {
-        strokeColor: "#e60000",
-        strokeWidth: 1.5,
-        fillColor: "#e60000",
-        fillOpacity: 0.18,
-      }));
+        suppressMapOpenBlock: true,
+        balloonPanelMaxMapArea: 400 * 400,
+      });
+      covMap.behaviors.disable("scrollZoom");
+
+      Object.keys(CITIES).forEach(function (name) {
+        covMap.geoObjects.add(new ymaps.Circle([CITIES[name], 26000], {
+          hintContent: "Зона покрытия · " + name,
+        }, {
+          strokeColor: "#e60000",
+          strokeWidth: 1.5,
+          fillColor: "#e60000",
+          fillOpacity: 0.18,
+        }));
+      });
+
+      setTimeout(function () { covMap.container.fitToViewport(); }, 250);
+    }
+
+    /* the frame draws its own 39x82 control instead of the Yandex one */
+    document.querySelectorAll(".map_coverage .map__zoom-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!covMap) return;
+        covMap.setZoom(covMap.getZoom() + (btn.dataset.zoom === "in" ? 1 : -1), {
+          duration: 200,
+        });
+      });
     });
+
+    if (typeof ymaps !== "undefined" && typeof ymaps.ready === "function") {
+      ymaps.ready(buildCoverage);
+    }
+
+    setTimeout(function () {
+      if (covMap) return;
+      covEl.innerHTML =
+        '<p class="map__fallback">Карта временно недоступна.<br />' +
+        "Проверить покрытие можно у оператора поддержки.</p>";
+    }, 8000);
 
     const covForm = document.querySelector(".coverage-search");
     const covSelect = covForm ? covForm.querySelector(".select__control") : null;
     function flyToCity() {
       const c = covSelect && CITIES[covSelect.value];
-      if (c) covMap.setCenter(c, 10, { duration: 800 });
+      if (c && covMap) covMap.setCenter(c, 10, { duration: 800 });
     }
     if (covSelect) covSelect.addEventListener("change", flyToCity);
     if (covForm) covForm.addEventListener("submit", function (e) { e.preventDefault(); flyToCity(); });
 
-    setTimeout(function () { covMap.container.fitToViewport(); }, 250);
+    /* The address field opens out of the search button, the way production
+       does it. Pointers that support hover get it on hover from CSS alone;
+       this only has to handle the click path and the ways out of it. */
+    const covFind = covForm && covForm.querySelector(".coverage-search__find");
+    if (covFind) {
+      const covField = covFind.querySelector(".coverage-search__field");
+      const covInput = covFind.querySelector(".coverage-search__input");
+      const covBtn = covFind.querySelector(".coverage-search__btn");
+      const covClose = covFind.querySelector(".coverage-search__close");
+
+      function openFind() {
+        covFind.classList.add("coverage-search__find_open");
+        covForm.classList.add("coverage-search_searching");
+        covInput.focus();
+      }
+      function closeFind() {
+        covFind.classList.remove("coverage-search__find_open");
+        covForm.classList.remove("coverage-search_searching");
+        covInput.value = "";
+        /* the close button keeps focus after its own click, and :focus-within
+           would hold the field open — drop focus wherever it sits inside */
+        if (covFind.contains(document.activeElement)) document.activeElement.blur();
+      }
+
+      covBtn.addEventListener("click", function (e) {
+        /* closed, the button is the opener; open, it submits the search. Hover
+           opens the field without the class, so ask the field, not the class. */
+        const shown = getComputedStyle(covField).visibility === "visible";
+        if (!shown) {
+          e.preventDefault();
+          openFind();
+          return;
+        }
+        covFind.classList.add("coverage-search__find_open");
+        covForm.classList.add("coverage-search_searching");
+        covInput.focus();
+      });
+      covClose.addEventListener("click", closeFind);
+      covInput.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeFind();
+      });
+      document.addEventListener("click", function (e) {
+        if (!covFind.contains(e.target) && !covInput.value) closeFind();
+      });
+    }
   }
 
   // ==========================================================
-  // HELP HUB (частые вопросы) — tabs, mobile drawer, char counter
+  // HELP HUB (частые вопросы) — mobile drawer, char counter
   // ==========================================================
   const helpSection = document.querySelector(".help");
   if (helpSection) {
-    const navItems = helpSection.querySelectorAll(".help__nav-item");
-    const tabs = helpSection.querySelectorAll(".help__tab");
     const toggle = helpSection.querySelector(".help__aside-tab");
-
-    function activateTab(name) {
-      navItems.forEach(function (b) {
-        const on = b.dataset.helpTab === name;
-        b.classList.toggle("help__nav-item_active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      tabs.forEach(function (t) {
-        const on = t.dataset.helpPanel === name;
-        t.classList.toggle("help__tab_active", on);
-        if (on) t.removeAttribute("hidden");
-        else t.setAttribute("hidden", "");
-      });
-    }
-
-    navItems.forEach(function (b) {
-      b.addEventListener("click", function () {
-        activateTab(b.dataset.helpTab);
-        helpSection.classList.remove("help_drawer-open");
-      });
-    });
 
     if (toggle) {
       toggle.addEventListener("click", function () {
@@ -891,9 +1023,9 @@ function initBlock4() {
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {
-  initBlock1()
-  initBlock2()
-  initBlock3()
-  initBlock4()
+    initBlock1()
+    initBlock2()
+    initBlock3()
+    initBlock4()
   })
 })

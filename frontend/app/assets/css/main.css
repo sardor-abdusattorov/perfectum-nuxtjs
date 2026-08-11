@@ -202,21 +202,32 @@ strong {
   justify-content: center;
 }
 
-/* The three lines stay 18x12; the button around them grows to a size a finger
-   can actually hit — below 1200px this is the only navigation control. */
 .header .header__hamburger-button {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px 0;
-  width: 44px;
-  height: 44px;
-  margin-right: -10px;
+}
+
+/* The frames draw a 24px icon and nothing around it, so the button keeps that
+   box. The tap area is grown by a pseudo-element instead of by width/height:
+   sizing the button to 44 pushed it past the container's gutter and needed a
+   negative margin to pull the icon back. */
+.header .header__hamburger-button::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  right: -10px;
+  bottom: -16px;
+  left: -10px;
 }
 
 .header .header__hamburger-button .header__hamburger-line {
-  width: 18px;
+  /* the frames draw a 24px icon flush with the 24px gutter (menu at x=354 in
+     the 402 frames); the 44px button keeps the tap target around it */
+  width: 24px;
 }
 
 .header .header__hamburger-line {
@@ -233,7 +244,6 @@ strong {
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 10px;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -317,7 +327,21 @@ strong {
   display: flex;
   flex-direction: column;
   gap: 6px 0;
-  background: #0c0c0e;
+  /* the glow the dark bands carry, laid over the panel colour so it fades out
+     instead of ending on flat black */
+  background-color: #0c0c0e;
+  background-image: radial-gradient(
+    88% 200px at 98% 44%,
+    rgba(230, 0, 0, 0.44) 0%,
+    rgba(230, 0, 0, 0.42) 17%,
+    rgba(230, 0, 0, 0.38) 28%,
+    rgba(230, 0, 0, 0.33) 39%,
+    rgba(230, 0, 0, 0.25) 50%,
+    rgba(230, 0, 0, 0.17) 61%,
+    rgba(230, 0, 0, 0.08) 72%,
+    rgba(230, 0, 0, 0.03) 83%,
+    rgba(230, 0, 0, 0) 100%
+  );
   padding: 16px;
   transform: translateX(100%);
   transition: var(--transition);
@@ -457,11 +481,11 @@ strong {
   inset: 0;
   z-index: 115;
   background: rgba(0, 0, 0, 0.6);
-  /* Без backdrop-filter: на iOS полноэкранный blur пересчитывается каждый
-     кадр при открытии меню и сильно тормозит. Тёмной заливки достаточно. */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .overlay_open {
@@ -480,6 +504,7 @@ strong {
 
 .page-hero.page-hero_numbers .page-hero__title {
   font-size: 64px;
+  line-height: 77px;
 }
 
 .page-hero {
@@ -512,6 +537,7 @@ strong {
   font-style: normal;
   font-weight: 700;
   line-height: 1;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
 }
 
@@ -544,8 +570,20 @@ strong {
   padding: 84px 0 46px;
 }
 
+/* Frame 1201:792: band 91-441, crumbs 131 h24, eyebrow 175, H1 207 on a
+   132 box, card 382 lapping the band by 59 */
 .page-hero.page-hero_single_tariff {
   padding: 40px 0 102px;
+}
+
+.page-hero.page-hero_single_tariff .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 20px;
+}
+
+.page-hero.page-hero_single_tariff .page-hero__title {
+  margin-bottom: 0;
+  line-height: 132px;
 }
 
 .page-hero.page-hero_tariffs::after,
@@ -621,8 +659,30 @@ strong {
   padding: 45px 0 60px;
 }
 
-/* Frame 1719:1462 / 1273:735: the band runs y91-579 = 488px, crumbs at 131,
-   eyebrow at 175, H1 at 220 (2 lines of 88) and the subtitle at 413. */
+.page-hero.page-hero_services {
+  padding: 40px 0 92px;
+}
+
+/* Frame 1238:693: crumbs 131 on a 24px row, eyebrow 175, H1 220 (2 lines of
+   79), subtitle 399, band closing at 579. */
+.page-hero.page-hero_services .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 20px;
+}
+
+.page-hero.page-hero_services .page-hero__eyebrow {
+  margin-bottom: 23px;
+}
+
+.page-hero.page-hero_services .page-hero__title {
+  margin-bottom: 21px;
+  line-height: 79px;
+}
+
+.page-hero.page-hero_company {
+  padding-bottom: 86px;
+}
+
 .page-hero.page-hero_devices {
   padding: 40px 0 122px;
 }
@@ -642,15 +702,15 @@ strong {
 .page-hero::before {
   content: "";
   position: absolute;
-  top: 44%;
-  right: 2%;
+  top: 40.9%;
+  right: -6.87vw;
+  width: 46.56vw;
+  height: 81.7%;
   transform: translateY(-50%);
-  width: 894px;
-  height: 300px;
   border-radius: 50%;
   background: var(--color-red);
-  opacity: 0.34;
-  filter: blur(150px);
+  opacity: 0.56;
+  filter: blur(7.92vw);
   pointer-events: none;
   z-index: 0;
 }
@@ -661,11 +721,12 @@ strong {
   max-width: 1250px;
 }
 
-/* Figma keeps the inner-hero paragraph to a 566px column (устройства frame,
-   text node 1273:901), so it wraps in three or four lines, not two. */
-
 .page-hero.page-hero_inner .page-hero__subtitle {
   max-width: 566px;
+}
+
+.page-hero.page-hero_services .page-hero__subtitle {
+  max-width: 504px;
 }
 
 /* ==========================================================
@@ -753,10 +814,12 @@ strong {
   border-color: rgba(0, 0, 0, 0.3);
 }
 
+/* the glyph is a 12x8 chevron - drawing it in a square box stretches it and
+   thickens the stroke with it */
 .select__chevron {
   position: absolute;
   top: 50%;
-  right: 16px;
+  right: 10px;
   width: 16px;
   height: 16px;
   transform: translateY(-50%);
@@ -802,23 +865,22 @@ strong {
 }
 
 .filter-search__heading {
-  padding-bottom: 20px;
-  margin-bottom: 24px;
+  margin: 0 -40px 30px;
+  padding: 0 40px 33px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
+  line-height: 29px;
   color: var(--color-black);
 }
 
 .filter-search {
   position: relative;
   z-index: 1;
-  /* the panel straddles the band's bottom edge: the frame puts it at y527
-     against a band ending at 579, and insets its content by 40px */
   margin-top: -84px;
   margin-bottom: 40px;
   padding: 28px 40px;
-  background: var(--color-white);
+  background: #f8f8f8;
   border-radius: var(--radius);
   box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
 }
@@ -830,17 +892,17 @@ strong {
 
 .filter-search__input {
   width: 100%;
-  padding: 16px 48px 16px 22px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: var(--radius-pill);
+  padding: 16px 44px 16px 12px;
+  border: 0.5px solid #cbd5e1;
+  border-radius: 88px;
   font-family: inherit;
   font-size: 16px;
-  background: #fbfbfb;
+  background: var(--color-white);
   transition: var(--transition);
 }
 
 .filter-search__input::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.44);
 }
 
 .filter-search__input:focus {
@@ -852,9 +914,9 @@ strong {
 .filter-search__btn {
   position: absolute;
   top: 50%;
-  right: 18px;
-  width: 22px;
-  height: 22px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
   transform: translateY(-50%);
   color: rgba(0, 0, 0, 0.4);
 }
@@ -868,11 +930,11 @@ strong {
 .filter-search__chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   height: 44px;
-  padding: 0 18px;
-  border: 1px solid rgba(0, 0, 0, 0.14);
-  border-radius: var(--radius-pill);
+  padding: 0 10px;
+  border: 0.5px solid rgba(0, 0, 0, 0.16);
+  border-radius: 55px;
   font-size: 16px;
   font-weight: 500;
   color: var(--color-black);
@@ -884,9 +946,6 @@ strong {
   color: var(--color-red);
 }
 
-/* The count is a pill badge, not loose text: grey on the plain chips and
-   white on the black active chip. */
-
 .filter-search__chip-count {
   display: inline-flex;
   align-items: center;
@@ -897,7 +956,7 @@ strong {
   font-size: 14px;
   color: var(--color-black);
   background: #f2f2f2;
-  border-radius: var(--radius-pill);
+  border-radius: 20px;
 }
 
 .filter-search__chip_active,
@@ -963,7 +1022,13 @@ strong {
   padding: 78px 80px;
   overflow: hidden;
   border-radius: var(--radius);
-  background: radial-gradient(60% 120% at 100% 100%, rgba(236, 89, 1, 0.85) 0%, rgba(120, 30, 0, 0.4) 45%, rgba(0, 0, 0, 0) 75%),
+  background:
+    radial-gradient(
+      60% 120% at 100% 100%,
+      rgba(236, 89, 1, 0.85) 0%,
+      rgba(120, 30, 0, 0.4) 45%,
+      rgba(0, 0, 0, 0) 75%
+    ),
     var(--color-black);
   margin-bottom: 40px;
 }
@@ -1009,8 +1074,8 @@ strong {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--color-red);
   color: var(--color-white);
@@ -1030,7 +1095,7 @@ strong {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px;
+  padding: 4px;
   background: var(--color-black);
   border-radius: var(--radius-pill);
 }
@@ -1039,8 +1104,8 @@ strong {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 36px;
-  height: 36px;
+  min-width: 32px;
+  height: 32px;
   padding: 0 8px;
   border-radius: 99px;
   font-size: 15px;
@@ -1061,24 +1126,14 @@ strong {
 .callout {
   position: relative;
   max-width: 1020px;
-  padding: 24px 20px 24px 40px;
-  background: #f6f6f6;
+  padding: 16px 20px 16px 37px;
+  background: rgba(236, 236, 236, 0.44);
+  border-left: 3px solid var(--color-red);
   border-radius: var(--radius);
 }
 
-.callout::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 16px;
-  bottom: 16px;
-  width: 4px;
-  border-radius: 4px;
-  background: var(--color-red);
-}
-
 .callout p {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 33px;
   color: rgba(0, 0, 0, 0.65);
 }
@@ -1096,7 +1151,12 @@ strong {
   margin-top: 56px;
   padding: 56px;
   background:
-    radial-gradient(52% 150% at 85% 45%, #4a0000 0%, #2a0000 45%, rgba(0, 0, 0, 0) 85%),
+    radial-gradient(
+      52% 150% at 85% 45%,
+      #4a0000 0%,
+      #2a0000 45%,
+      rgba(0, 0, 0, 0) 85%
+    ),
     var(--color-black);
   border-radius: var(--radius);
 }
@@ -1133,10 +1193,11 @@ strong {
 .company-nav {
   position: relative;
   z-index: 1;
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: -34px;
+  margin-top: -61px;
   margin-bottom: 48px;
   padding: 9px 8px;
   background: var(--color-white);
@@ -1159,8 +1220,8 @@ strong {
 
 .company-nav__tab svg {
   flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   color: var(--color-red);
 }
 
@@ -1171,10 +1232,6 @@ strong {
 .company-nav__tab_active,
 .company-nav__tab_active:hover {
   background: var(--color-black);
-  color: var(--color-white);
-}
-
-.company-nav__tab_active svg {
   color: var(--color-white);
 }
 
@@ -1192,10 +1249,13 @@ strong {
   display: block;
 }
 
+/* Group 2131332450 in frames 1277:1998 and 1360:1123: 39x82, inset 32 on the
+   desktop map and 24 on the phone */
 .map__zoom {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  z-index: 1;
+  top: 32px;
+  left: 32px;
   display: flex;
   flex-direction: column;
   border-radius: 12px;
@@ -1208,8 +1268,8 @@ strong {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 39px;
+  height: 41px;
   font-size: 22px;
   color: var(--color-black);
   transition: var(--transition);
@@ -1304,6 +1364,81 @@ strong {
   height: 100%;
 }
 
+/* The API draws its own balloon around our content — a white box with a
+   border, a shadow and a tail — so the card ended up outlined twice. Its
+   class names carry the build number (ymaps-2-1-79-balloon…), hence the
+   substring match. The close button keeps its own chrome. */
+.map [class*="-balloon"]:not([class*="close"]),
+.map [class*="-balloon__layout"],
+.map [class*="-balloon__content"],
+.map [class*="-balloon__content-holder"],
+.map [class*="-balloon-panel"],
+.map [class*="-balloon-panel__layout"],
+.map [class*="-balloon-panel__content"] {
+  width: auto;
+  max-width: none;
+  /* the API caps the content box and hands it its own scrollbar; our card is
+     short enough to show whole, so let it size itself */
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.map [class*="-balloon__tail"] {
+  display: none;
+}
+
+.map [class*="-balloon__layout"] {
+  position: relative;
+}
+
+.map [class*="-balloon__close"] {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  opacity: 0.4;
+  transition: var(--transition);
+}
+
+.map [class*="-balloon__close"]:hover {
+  opacity: 1;
+}
+
+.map__balloon {
+  width: 268px;
+  max-width: 100%;
+  padding: 20px;
+  background: var(--color-white);
+  border-radius: 20px;
+  box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
+}
+
+/* On a phone-sized map the API docks the balloon along the bottom instead of
+   floating it, so it can never be clipped by the map's rounded corners. */
+.map [class*="-balloon-panel"] .map__balloon {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.map__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+  font-size: 16px;
+  line-height: normal;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  background: #f4f4f4;
+}
+
 .map-pin {
   color: var(--color-red);
 }
@@ -1325,7 +1460,7 @@ strong {
 }
 
 .map_coverage {
-  height: 900px;
+  height: 870px;
 }
 
 .section-head {
@@ -1344,9 +1479,10 @@ strong {
 
 .section-head__count {
   flex: 0 0 auto;
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--color-black);
 }
 
 .faq-accordion {
@@ -1430,6 +1566,27 @@ strong {
 .hero {
   overflow: hidden;
   background: var(--color-black);
+}
+
+/* Frame 440 on slide 253:83: four bullets 11 tall, 16 apart, white at 44%,
+   the active one a 64-wide pill, centred 24 above the band's bottom edge */
+.hero .hero__slider {
+  --swiper-pagination-bottom: 24px;
+  --swiper-pagination-bullet-width: 11px;
+  --swiper-pagination-bullet-height: 11px;
+  --swiper-pagination-bullet-horizontal-gap: 8px;
+  --swiper-pagination-color: var(--color-white);
+  --swiper-pagination-bullet-inactive-color: var(--color-white);
+  --swiper-pagination-bullet-inactive-opacity: 0.44;
+}
+
+.hero .hero__pagination .swiper-pagination-bullet {
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+}
+
+.hero .hero__pagination .swiper-pagination-bullet-active {
+  width: 64px;
 }
 
 .hero .hero__row {
@@ -1525,7 +1682,9 @@ strong {
   border-radius: 12px;
   background: #e8e8e8;
   text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.15s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
   min-width: 0;
 }
 
@@ -1636,7 +1795,7 @@ strong {
   right: 160px;
 }
 
-.hero .hero__visual .hero__image{
+.hero .hero__visual .hero__image {
   pointer-events: none;
 }
 
@@ -1670,8 +1829,6 @@ strong {
   line-height: 24px;
 }
 
-/* Scoped to the paragraph: this used to catch .hero__store-text too and paint
-   the store captions white on the light grey buttons. */
 .hero .hero__aside p span {
   color: var(--color-white);
   font-weight: 500;
@@ -1763,7 +1920,18 @@ strong {
   width: 24px;
   height: 24px;
   background: rgba(255, 255, 255, 0.4);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
 }
 
 /* ==========================================================
@@ -2199,8 +2367,6 @@ strong {
   color: var(--color-red);
 }
 
-/* The break only fires on the phone: the desktop frame keeps the heading on
-   one line, the 402px frame puts "5G SA" on its own. */
 .features .features__title-break {
   display: none;
 }
@@ -2520,8 +2686,6 @@ strong {
   border-top: 1px solid rgba(255, 255, 255, 0.44);
 }
 
-/* Five cities, so a 25% track built a 125% row: the fifth cell ran past the
-   content column and was clipped by the viewport with no way to reach it. */
 .coverage .coverage__list li {
   flex: 1 1 0;
   min-width: 0;
@@ -2599,11 +2763,30 @@ strong {
   text-transform: uppercase;
 }
 
+/* Frame 1277:1998: band 91-579, eyebrow 175, bar 527 lapping the band by 52,
+   map 683 h870 */
+.page-hero.page-hero_coverage {
+  padding: 40px 0 100px;
+}
+
+.page-hero.page-hero_coverage .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 20px;
+}
+
+.page-hero.page-hero_coverage .page-hero__eyebrow {
+  margin-bottom: 23px;
+}
+
+.page-hero.page-hero_coverage .page-hero__title {
+  margin-bottom: 17px;
+}
+
 .coverage.coverage_map {
   position: relative;
   z-index: 1;
   padding: 0;
-  margin-top: -44px;
+  margin-top: -84px;
   margin-bottom: 80px;
   background: transparent;
 }
@@ -2699,9 +2882,10 @@ strong {
   margin-bottom: 80px;
 }
 
+/* Frame 1029:7063 runs the eight price chips on one auto-width row */
 .numbers .numbers__prices {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   margin-bottom: 40px;
 }
@@ -2866,13 +3050,13 @@ strong {
 }
 
 .numbers
-.numbers__mode:not(:checked)
-~ .numbers__toggle
-.numbers__toggle-text:first-of-type,
+  .numbers__mode:not(:checked)
+  ~ .numbers__toggle
+  .numbers__toggle-text:first-of-type,
 .numbers
-.numbers__mode:checked
-~ .numbers__toggle
-.numbers__toggle-text:last-of-type {
+  .numbers__mode:checked
+  ~ .numbers__toggle
+  .numbers__toggle-text:last-of-type {
   color: var(--color-black);
 }
 
@@ -3165,8 +3349,6 @@ strong {
   margin-bottom: 56px;
 }
 
-/* Bottom switch between the tariff list and this tariff, from production:
-   a black pill holding two buttons, the current page filled red. */
 .tariff-detail .tariff-detail__switch {
   display: flex;
   gap: 8px;
@@ -3344,7 +3526,7 @@ strong {
    ========================================================== */
 
 .tariff-detail {
-  margin-top: -80px;
+  margin-top: -91px;
   margin-bottom: 80px;
 }
 
@@ -3369,13 +3551,13 @@ strong {
   padding: 1px;
   border-radius: 24px 24px 0 0;
   background: linear-gradient(
-  180deg,
-  rgba(255, 255, 255, 0.9) 0%,
-  rgba(255, 255, 255, 0) 100%
-);
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   -webkit-mask:
-  linear-gradient(#fff 0 0) content-box,
-  linear-gradient(#fff 0 0);
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -3512,8 +3694,6 @@ strong {
   text-decoration: underline;
 }
 
-/* TARIFF CONNECT MODAL */
-
 body.overflow__hidden {
   overflow: hidden;
 }
@@ -3527,7 +3707,9 @@ body.overflow__hidden {
   padding: 70px 20px 40px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
 }
 
 .tariff-modal.tariff-modal_open {
@@ -3682,8 +3864,6 @@ body.overflow__hidden {
   object-fit: contain;
 }
 
-/* ARCHIVE TARIFFS */
-
 .tariffs-archive {
   padding: 40px 0 80px;
 }
@@ -3782,9 +3962,6 @@ body.overflow__hidden {
   padding: 40px 0 80px 0;
 }
 
-/* Подзаголовок офиса по макету: Medium 500, плотный line-height, opacity .58
-   (перебивает общее мобильное правило .page-hero .page-hero__subtitle) */
-
 .page-hero.page-hero_office .page-hero__subtitle {
   font-weight: 500;
   line-height: normal;
@@ -3802,19 +3979,23 @@ body.overflow__hidden {
   margin-bottom: 80px;
 }
 
+/* Frame 1199:597 off the 1920 slide: a 405x676 panel at 181 next to a 1129
+   map, 24 apart. Inside the panel everything is 24 apart and every control is
+   55 tall — search 429, tabs 508, region 587, city 698, locate 809, hint 888,
+   the three stat cards 932. */
 .offices__layout {
   display: grid;
   grid-template-columns: 405px 1fr;
-  gap: 32px;
+  gap: 24px;
   align-items: stretch;
-  margin-bottom: 56px;
+  margin-bottom: 42px;
 }
 
 .offices-filter {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
+  min-height: 676px;
   padding: 24px;
   background: #f8f8f8;
   border-radius: var(--radius);
@@ -3827,8 +4008,9 @@ body.overflow__hidden {
 
 .offices-filter__search-input {
   width: 100%;
-  padding: 14px 46px 14px 20px;
-  border: 1px solid rgba(0, 0, 0, 0.14);
+  height: 55px;
+  padding: 0 44px 0 12px;
+  border: 0.5px solid #cbd5e1;
   border-radius: var(--radius-pill);
   font-family: inherit;
   font-size: 16px;
@@ -3838,7 +4020,7 @@ body.overflow__hidden {
 }
 
 .offices-filter__search-input::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.44);
 }
 
 .offices-filter__search-input:focus {
@@ -3849,37 +4031,44 @@ body.overflow__hidden {
 .offices-filter__search-btn {
   position: absolute;
   top: 50%;
-  right: 8px;
+  right: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   transform: translateY(-50%);
   color: rgba(0, 0, 0, 0.55);
 }
 
 .offices-filter__search-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .offices-filter__tabs {
   display: flex;
-  gap: 4px;
-  padding: 6px;
+  gap: 8px;
+  padding: 8px;
   background: rgba(255, 255, 255, 1);
   border-radius: var(--radius-pill);
 }
 
 .offices-filter__tab {
-  flex: 1;
-  padding: 10px 12px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px;
   border-radius: var(--radius-pill);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
+  line-height: 19px;
   color: rgba(0, 0, 0, 0.55);
   transition: var(--transition);
+}
+
+/* Frame 195 hugs "все" at 83 and splits the rest between the other two */
+.offices-filter__tab:first-child {
+  flex: 0 0 83px;
 }
 
 .offices-filter__tab:hover {
@@ -3892,17 +4081,34 @@ body.overflow__hidden {
   color: var(--color-white);
 }
 
+.offices-filter .field__label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: normal;
+  color: rgba(0, 0, 0, 0.44);
+}
+
+/* _Input Field Base as the offices frame sizes it: 55 tall, 12 of side
+   padding, a hairline #cbd5e1 outline */
+.offices-filter .select__control {
+  height: 55px;
+  padding: 0 44px 0 12px;
+  border: 0.5px solid #cbd5e1;
+}
+
 .offices-filter__locate {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 16px 24px;
+  gap: 8px;
+  height: 55px;
+  padding: 0 12px;
   border-radius: 12px;
   background: var(--color-black);
   color: var(--color-white);
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   transition: var(--transition);
 }
 
@@ -3912,13 +4118,17 @@ body.overflow__hidden {
 
 .offices-filter__locate svg {
   flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
+/* the one gap the panel does not set at 24: the frame leaves 20 between the
+   hint and the stat row */
 .offices-filter__hint {
+  margin-bottom: -4px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.44);
 }
 
 .offices-filter__stats {
@@ -3931,48 +4141,48 @@ body.overflow__hidden {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 16px 6px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
+  justify-content: center;
+  gap: 14px;
+  min-height: 107px;
+  padding: 8px 6px;
+  border-radius: var(--radius);
+  background: var(--color-white);
+  box-shadow: 0 1px 11px rgba(38, 63, 118, 0.08);
   text-align: center;
 }
 
 .offices-filter__stat b {
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 24px;
   color: var(--color-black);
 }
 
 .offices-filter__stat span {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(0, 0, 0, 0.55);
 }
 
 .offices__heading {
   margin-bottom: 24px;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
+  line-height: 24px;
   color: var(--color-black);
 }
 
-/* Production shows the whole page of points and pages through them, rather
-   than putting the list in an inner scroller. */
+/* Group 2131332450 sits 24 into the offices map, not the 32 the coverage map
+   insets it by */
+.offices .map__zoom {
+  top: 24px;
+  left: 24px;
+}
+
 .offices__list {
   margin-bottom: 8px;
-}
-
-.offices__list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.offices__list::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.18);
-  border-radius: 99px;
 }
 
 .offices__grid {
@@ -3980,12 +4190,26 @@ body.overflow__hidden {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
 }
+/* the ring is an inset shadow, not a border, so it cannot push the 18 padding
+   the frame measures off the card edge */
+.office-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 143px;
+  padding: 18px;
+  border-radius: 24px;
+  background: rgba(230, 0, 0, 0.06);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
 .office-card:hover {
-  border-color: rgba(230, 0, 0, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(230, 0, 0, 0.35);
 }
 
 .office-card_active {
-  border-color: var(--color-red);
+  box-shadow: inset 0 0 0 1px var(--color-red);
 }
 
 .office-card_dealer {
@@ -3993,16 +4217,17 @@ body.overflow__hidden {
 }
 
 .office-card_dealer:hover {
-  border-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
 
 .office-card__tag {
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 8px;
   background: var(--color-red);
   color: var(--color-white);
   font-size: 16px;
   font-weight: 500;
+  line-height: 19px;
   margin-bottom: 20px;
 }
 
@@ -4013,7 +4238,8 @@ body.overflow__hidden {
 .office-card__title {
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 10px;
+  line-height: 24px;
+  margin-bottom: 8px;
   color: var(--color-black);
 }
 
@@ -4037,25 +4263,72 @@ body.overflow__hidden {
 .offices__result {
   display: none;
 }
-.office-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 143px;
-  padding: 18px;
-  border: 1px solid transparent;
-  border-radius: 24px;
-  background: rgba(230, 0, 0, 0.06);
-  cursor: pointer;
-  transition: var(--transition);
-}
-
 /* ==========================================================
    SERVICES
    ========================================================== */
 
 .services {
   margin-bottom: 80px;
+}
+
+/* Everything below is frame 1238:693 measured off the 1920 slide, kept under
+   .services so the blocks it shares with actions, news and faq do not move.
+   Card 527-876 (349) lapping the band by 52; section title 932 (2 lines of
+   60) with the count on its last line at 1023; service cards 1092-1438; the
+   support panel 1494-1885. */
+.services .filter-search {
+  margin-bottom: 56px;
+  padding: 40px 40px 27px;
+}
+
+.services .filter-search .filter-search__heading {
+  margin: 0 -40px 30px;
+  padding: 0 40px 33px;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.services .filter-search .filter-search__field {
+  margin-bottom: 29px;
+}
+
+.services .filter-search .filter-search__input {
+  height: 55px;
+  padding: 0 48px 0 22px;
+}
+
+.services .filter-search .filter-search__chips {
+  gap: 18px 8px;
+}
+
+.services .section-head {
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+
+.services .section-head .section-head__title,
+.services .section-head .section-head__title_upper {
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.services .support-cta {
+  min-height: 391px;
+  padding: 86px 105px 85px 80px;
+}
+
+.services .support-cta .support-cta__title {
+  max-width: 672px;
+  font-size: 36px;
+  line-height: 44px;
+}
+
+.services .support-cta .support-cta__btn {
+  justify-content: center;
+  width: 253px;
+  max-width: 100%;
+  height: 56px;
+  padding: 0 16px;
 }
 
 .services__grid {
@@ -4066,15 +4339,22 @@ body.overflow__hidden {
 }
 
 .service-card {
-  display: flex;
-  flex-direction: column;
-  padding: 32px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--radius);
   transition: var(--transition);
 }
 
-.service-card:hover {
+/* the whole card is the link, the way news-card and cdma-service-card are */
+.service-card .service-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 40px 40px 27px;
+  color: inherit;
+}
+
+.service-card:hover,
+.service-card:focus-within {
   border-color: rgba(230, 0, 0, 0.35);
 }
 
@@ -4082,9 +4362,10 @@ body.overflow__hidden {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  margin-bottom: 56px;
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
   border: 1.5px solid var(--color-red);
   border-radius: 50%;
   color: var(--color-red);
@@ -4096,16 +4377,16 @@ body.overflow__hidden {
 }
 
 .service-card__title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 29px;
   color: var(--color-black);
 }
 
 .service-card__text {
-  margin-top: 14px;
-  font-size: 15px;
-  line-height: 1.5;
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 22px;
   color: rgba(0, 0, 0, 0.55);
 }
 
@@ -4114,8 +4395,10 @@ body.overflow__hidden {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  height: 40px;
   margin-top: auto;
-  padding-top: 28px;
+  padding-top: 17px;
+  box-sizing: content-box;
 }
 
 .service-card__cat {
@@ -4141,7 +4424,8 @@ body.overflow__hidden {
   height: 18px;
 }
 
-.service-card:hover .service-card__arrow {
+.service-card:hover .service-card__arrow,
+.service-card:focus-within .service-card__arrow {
   background: var(--color-red);
   color: var(--color-white);
 }
@@ -4150,11 +4434,16 @@ body.overflow__hidden {
    DEVICE CATALOG
    ========================================================== */
 
+/* Rectangle 5095 on frame 1719:1628 is rounded 88 — the card is only 100 tall
+   there, so it reads as a pill; services keeps the 24 of its own frame. */
+.devices .filter-search {
+  border-radius: 88px;
+}
+
 .devices {
   margin-bottom: 80px;
 }
 
-/* frame 1273:735: the catalog callout ends 848 and the brand grid opens 880 */
 .devices .callout {
   margin-bottom: 32px;
 }
@@ -4193,9 +4482,11 @@ body.overflow__hidden {
 }
 
 .brand-card__name {
+  max-width: 100%;
   font-size: 34px;
   font-weight: 800;
   letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
   text-align: center;
   color: var(--color-black);
 }
@@ -4224,7 +4515,6 @@ body.overflow__hidden {
    1558 content column.
    ========================================================== */
 
-/* frame 1719:1462: the callout ends 848 and the device block opens 904 */
 .device-view .callout {
   margin-bottom: 56px;
 }
@@ -4237,9 +4527,6 @@ body.overflow__hidden {
   margin-bottom: 40px;
 }
 
-/* the render and the panel it stands on are one picture, exactly as the frame
-   draws them, so the card is just the 433:562 window that holds it. The ratio
-   rather than a height keeps it in shape as the column narrows. */
 .device-view .device-view__media {
   aspect-ratio: 433 / 562;
   overflow: hidden;
@@ -4253,7 +4540,6 @@ body.overflow__hidden {
   object-fit: cover;
 }
 
-/* the card's copy is centred on the card, not ranged left */
 .device-view .device-view__aside {
   text-align: center;
 }
@@ -4313,7 +4599,6 @@ body.overflow__hidden {
   background: #ff1a1a;
 }
 
-/* the frame draws this as a plain text link with a chevron, not a second pill */
 .device-view .device-view__link {
   display: inline-flex;
   align-items: center;
@@ -4343,8 +4628,6 @@ body.overflow__hidden {
   color: var(--color-black);
 }
 
-/* the specification list is a description list so a term and its value stay
-   paired for a screen reader; the row is the grid, not the <dl> */
 .spec-list {
   display: flex;
   flex-direction: column;
@@ -4374,7 +4657,6 @@ body.overflow__hidden {
   color: var(--color-black);
 }
 
-/* the pager is centred on the page, under both columns */
 .device-view .device-view__foot {
   display: flex;
   justify-content: center;
@@ -4405,7 +4687,6 @@ body.overflow__hidden {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* the hairlines that split the three cells are the pager's own border colour */
 .device-view .device-view__arrow_prev {
   border-right: 1px solid #384857;
 }
@@ -4438,6 +4719,80 @@ body.overflow__hidden {
    ACTIONS
    ========================================================== */
 
+/* Frame 1273:1103 on the 1920 slide: band 91-429, crumbs 131, H1 220 on a 79
+   line; the search card at 355 h200 lapping the band by 74; "Все акции" 611
+   at 48/60; cards 711 h418 with a 145 media strip. Scoped to .actions so news
+   and faq, which share these blocks, do not move. */
+.page-hero.page-hero_actions {
+  padding: 40px 0 130px;
+}
+
+.page-hero.page-hero_actions .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 65px;
+}
+
+.page-hero.page-hero_actions .page-hero__title {
+  margin-bottom: 0;
+  line-height: 79px;
+}
+
+/* Frames 1273:1103 and 1275:1502 draw the same search card: 355 h200, input
+   389 h55, chips 473 h44. */
+.actions .filter-search,
+.news .filter-search {
+  margin-top: -106px;
+  margin-bottom: 56px;
+  padding: 34px 40px 38px;
+}
+
+.actions .filter-search .filter-search__field,
+.news .filter-search .filter-search__field {
+  margin-bottom: 29px;
+}
+
+.actions .filter-search .filter-search__input,
+.news .filter-search .filter-search__input {
+  height: 55px;
+  padding: 0 44px 0 12px;
+}
+
+.actions .section-head {
+  margin-bottom: 40px;
+}
+
+.actions .section-head .section-head__title {
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.actions .promo-card {
+  min-height: 418px;
+}
+
+.actions .promo-card .promo-card__media {
+  min-height: 145px;
+  padding: 23px 40px 27px;
+}
+
+.actions .promo-card .promo-card__cat {
+  left: 40px;
+  bottom: 27px;
+}
+
+.actions .promo-card .promo-card__body {
+  padding: 24px 40px 26px;
+}
+
+.actions .promo-card .promo-card__title {
+  margin-bottom: 24px;
+}
+
+.actions .promo-card .promo-card__title,
+.actions .promo-card .promo-card__text {
+  max-width: 414px;
+}
+
 .actions {
   margin-bottom: 80px;
 }
@@ -4454,9 +4809,8 @@ body.overflow__hidden {
   flex-direction: column;
   overflow: hidden;
   background: var(--color-white);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 0.5px solid rgba(0, 0, 0, 0.22);
   border-radius: var(--radius);
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.09);
   transition: var(--transition);
 }
 
@@ -4481,14 +4835,24 @@ body.overflow__hidden {
   overflow: hidden;
   min-height: 150px;
   padding: 24px;
-  background: radial-gradient(120% 140% at 90% 20%, rgba(230, 0, 0, 0.75) 0%, #1a0202 55%, #000 100%);
+  background: radial-gradient(68.4% 171.3% at 85.7% 90.3%, var(--media-glow));
 }
 
-.promo-card__media_home {
-  background: radial-gradient(120% 140% at 90% 20%, rgba(60, 60, 60, 0.8) 0%, #141414 55%, #000 100%);
+.promo-card__media::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -1.6%;
+  top: -19.3%;
+  width: 28.4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--media-disc);
 }
 
 .promo-card__badge {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   padding: 6px 14px;
   background: var(--color-white);
@@ -4502,6 +4866,7 @@ body.overflow__hidden {
 
 .promo-card__cat {
   position: absolute;
+  z-index: 1;
   left: 24px;
   bottom: 24px;
   padding: 6px 12px;
@@ -4619,9 +4984,6 @@ body.overflow__hidden {
   background: rgba(230, 0, 0, 0.08);
 }
 
-/* The action banner and the news cover are the same 995x348 black panel with
-   the same two decorations, so they share one implementation. */
-
 .article__hero,
 .article__cover {
   position: relative;
@@ -4631,27 +4993,14 @@ body.overflow__hidden {
   background: var(--color-black);
 }
 
-/* Ellipse 81 — the warm glow anchored to the bottom-right corner. */
-
 .article__hero::before,
 .article__cover::before {
   content: "";
   position: absolute;
   z-index: 0;
-  right: -14.2%;
-  top: 30%;
-  width: 47.3%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgb(150, 25, 0) 0%,
-    rgba(150, 25, 0, 0.55) 45%,
-    rgba(150, 25, 0, 0) 78%
-  );
+  inset: 0;
+  background: radial-gradient(45% 128.9% at 90.5% 98%, var(--media-glow-warm));
 }
-
-/* Ellipse 5819 — the translucent disc that overlaps the top-right corner. */
 
 .article__hero::after,
 .article__cover::after {
@@ -4663,11 +5012,7 @@ body.overflow__hidden {
   width: 27.6%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 120, 90, 0.3) 0%,
-    rgba(255, 120, 90, 0) 70%
-  );
+  background: var(--media-disc);
 }
 
 .article__hero-cat {
@@ -4817,13 +5162,29 @@ body.overflow__hidden {
    NEWS
    ========================================================== */
 
+/* Frame 1275:1502 on the 1920 slide: band 91-429 with the glow ellipse, crumbs
+   131, H1 220 on a 79 line, the search card at 355 lapping the band by 74. */
+.page-hero.page-hero_news {
+  padding: 40px 0 130px;
+}
+
+.page-hero.page-hero_news .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 65px;
+}
+
+.page-hero.page-hero_news .page-hero__title {
+  margin-bottom: 0;
+  line-height: 79px;
+}
+
 .news {
   margin-bottom: 80px;
 }
 
 .news-feature {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 895fr 663fr;
   margin-bottom: 56px;
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius);
@@ -4839,10 +5200,24 @@ body.overflow__hidden {
   overflow: hidden;
   min-height: 320px;
   padding: 36px;
-  background: radial-gradient(120% 140% at 88% 18%, rgba(230, 0, 0, 0.7) 0%, #1a0202 55%, #000 100%);
+  background: radial-gradient(57.9% 120.8% at 88.6% 80.7%, var(--media-glow));
+}
+
+.news-feature__media::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -3.4%;
+  top: -17.3%;
+  width: 24.8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--media-disc);
 }
 
 .news-feature__cat {
+  position: relative;
+  z-index: 1;
   align-self: flex-start;
   margin-bottom: 16px;
   padding: 6px 12px;
@@ -4856,6 +5231,8 @@ body.overflow__hidden {
 }
 
 .news-feature__title {
+  position: relative;
+  z-index: 1;
   font-size: 30px;
   font-weight: 700;
   line-height: 1.2;
@@ -4924,8 +5301,6 @@ body.overflow__hidden {
   box-shadow: 0 26px 52px rgba(0, 0, 0, 0.13);
 }
 
-/* The whole card is the link — the "Читать полностью" row is only an
-   affordance the phone layout shows, not a second destination. */
 .news-card .news-card__link {
   display: flex;
   flex-direction: column;
@@ -4934,16 +5309,16 @@ body.overflow__hidden {
 }
 
 .news-card__media {
-  min-height: 170px;
+  position: relative;
+  overflow: hidden;
+  min-height: 185px;
   padding: 20px;
-  background: radial-gradient(120% 150% at 88% 12%, rgba(230, 0, 0, 0.62) 0%, #170202 55%, #000 100%);
-}
-
-.news-card__media_dark {
-  background: radial-gradient(120% 150% at 88% 12%, rgba(70, 70, 70, 0.7) 0%, #121212 55%, #000 100%);
+  background: radial-gradient(68.4% 171.3% at 85.7% 90.3%, var(--media-glow));
 }
 
 .news-card__cat {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   padding: 6px 12px;
   background: rgba(255, 255, 255, 0.16);
@@ -4962,9 +5337,6 @@ body.overflow__hidden {
   padding: 24px;
 }
 
-/* The phone frame pairs the date with the read-more link on one bottom row.
-   Wider widths keep the date above the headline, so the wrapper dissolves and
-   the date is ordered back to the top of the body. */
 .news-card__foot {
   display: contents;
 }
@@ -4974,7 +5346,7 @@ body.overflow__hidden {
   margin-bottom: 14px;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.44);
 }
 
 .news-card__title {
@@ -5015,33 +5387,152 @@ body.overflow__hidden {
    COVERAGE AREA
    ========================================================== */
 
+/* Frames 1277:1998 and 1360:1371: bar 1558x100, label at 40, the city select
+   is a 55px pill on #f0f0f0, the search button a 48px black disc at 26. */
 .coverage-search {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px 24px;
-  padding: 20px 28px;
-  margin-bottom: 32px;
+  padding: 26px 26px 26px 40px;
+  margin-bottom: 56px;
   background: var(--color-white);
   border-radius: var(--radius);
   box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
 }
 
 .coverage-search__label {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
   color: var(--color-black);
 }
 
 .coverage-search__controls {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 40px;
 }
 
 .coverage-search__select {
-  min-width: 260px;
+  width: 333px;
+  min-width: 0;
+}
+
+.coverage-search__select .select__control {
+  height: 48px;
+  padding: 0 46px 0 16px;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+  background: #f0f0f0;
+  border: 0.5px solid rgba(0, 0, 0, 0.22);
+  border-radius: 55px;
+}
+
+.coverage-search__select .select__chevron {
+  right: 27.5px;
+  width: 12px;
+  height: 8px;
+  color: var(--color-black);
+}
+
+/* prod opens an address field out of the search button. Collapsed it is a
+   zero-width sliver, so the bar still reads exactly as the frame draws it;
+   the three switches live on the group so there is one place to set them. */
+.coverage-search__find {
+  --field-width: 0px;
+  --field-padding: 0;
+  --field-border: 0;
+  --field-opacity: 0;
+  --field-visibility: hidden;
+  --field-gap: 0px;
+  display: flex;
+  align-items: center;
+  gap: var(--field-gap);
+  min-width: 0;
+}
+
+/* padding and border collapse with the width — a border-box cannot go below
+   them, and the leftover sliver would push the button off its frame position */
+.coverage-search__find_open,
+.coverage-search__find:focus-within {
+  --field-width: 333px;
+  --field-padding: 0 4px 0 14px;
+  --field-border: 0.5px;
+  --field-opacity: 1;
+  --field-visibility: visible;
+  --field-gap: 12px;
+}
+
+/* hover only opens it on the wide bar — the compact pill below 768 has no room
+   for the field beside the select, so there it waits for a deliberate tap */
+@media (hover: hover) and (pointer: fine) and (min-width: 768.02px) {
+  .coverage-search__find:hover {
+    --field-width: 333px;
+    --field-padding: 0 4px 0 14px;
+    --field-border: 0.5px;
+    --field-opacity: 1;
+    --field-visibility: visible;
+    --field-gap: 12px;
+  }
+}
+
+.coverage-search__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: var(--field-width);
+  min-width: 0;
+  height: 48px;
+  padding: var(--field-padding);
+  overflow: hidden;
+  visibility: var(--field-visibility);
+  opacity: var(--field-opacity);
+  background: #f0f0f0;
+  border: var(--field-border) solid rgba(0, 0, 0, 0.22);
+  border-radius: 55px;
+  transition: width 0.35s ease, padding 0.35s ease, opacity 0.25s ease;
+}
+
+.coverage-search__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  color: rgba(0, 0, 0, 0.5);
+  transition: var(--transition);
+}
+
+.coverage-search__close:hover {
+  color: var(--color-black);
+}
+
+.coverage-search__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.coverage-search__input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+.coverage-search__input::placeholder {
+  color: rgba(0, 0, 0, 0.44);
+}
+
+.coverage-search__input:focus {
+  outline: none;
 }
 
 .coverage-search__btn {
@@ -5049,26 +5540,32 @@ body.overflow__hidden {
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: var(--color-black);
   color: var(--color-white);
   transition: var(--transition);
 }
 
-.coverage-search__btn:hover {
+.coverage-search__btn:hover,
+.coverage-search__find_open .coverage-search__btn {
   background: var(--color-red);
 }
 
 .coverage-search__btn svg {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
 }
 
 /* ==========================================================
    FAQ
    ========================================================== */
+
+/* the search card laps the band, so leave the frame's 16px under the copy */
+.page-hero.page-hero_faq {
+  padding-bottom: 90px;
+}
 
 .faq {
   margin-bottom: 80px;
@@ -5126,9 +5623,27 @@ body.overflow__hidden {
 }
 
 .timeline {
+  position: relative;
   display: flex;
   flex-direction: column;
+  padding-bottom: 47px;
   padding-left: 40px;
+}
+
+/* Line 48 runs the whole column and past the last dot, fading out on the way */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 47.5px;
+  top: 12px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(230, 0, 0, 0.91) 0%,
+    rgba(230, 0, 0, 0.14) 83%,
+    rgba(230, 0, 0, 0.14) 100%
+  );
 }
 
 .timeline__item {
@@ -5150,16 +5665,6 @@ body.overflow__hidden {
   height: 16px;
   border-radius: 50%;
   background: var(--color-red);
-}
-
-.timeline__item:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 22px;
-  bottom: 0;
-  width: 2px;
-  background: rgba(230, 0, 0, 0.6);
 }
 
 .timeline__text {
@@ -5195,8 +5700,8 @@ body.overflow__hidden {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   margin-bottom: 40px;
   border: 1.5px solid var(--color-red);
   border-radius: 50%;
@@ -5204,8 +5709,8 @@ body.overflow__hidden {
 }
 
 .contact-card__icon svg {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
 }
 
 .contact-card__title {
@@ -5233,23 +5738,26 @@ body.overflow__hidden {
   color: var(--color-black);
 }
 
-/* nowrap here set a ~378px min-content floor on the card, and because the grid
-   track is sized from its content that one card came out 34% wider than the
-   three beside it. Let the row wrap instead. */
+/* Frame 289: a white pill 10 in from every edge, carrying the three brand
+   badges at 26 with a 12 label beside each. It runs the full 315 the card
+   gives it, so the row is spread rather than gapped. */
 .contact-card__socials {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  justify-content: center;
+  gap: 10px 15px;
   margin-top: 16px;
+  padding: 10px;
+  background: var(--color-white);
+  border-radius: var(--radius-pill);
 }
 
 .contact-card__social {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-black);
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.77);
   transition: var(--transition);
 }
 
@@ -5257,14 +5765,13 @@ body.overflow__hidden {
   color: var(--color-red);
 }
 
-.contact-card__social svg {
+/* the facebook badge exports 26x25.84 — contain keeps that, and keeps the
+   three glyphs on one baseline */
+.contact-card__social-icon {
   flex: 0 0 auto;
   width: 26px;
   height: 26px;
-  padding: 5px;
-  background: var(--color-red);
-  border-radius: 50%;
-  color: var(--color-white);
+  object-fit: contain;
 }
 
 .contacts-note {
@@ -5641,8 +6148,18 @@ body.overflow__hidden {
   padding: 40px;
   overflow: hidden;
   border-radius: var(--radius);
-  background: radial-gradient(46% 80% at 88% 30%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%),
-    radial-gradient(55% 100% at 100% 100%, rgba(230, 0, 0, 0.75) 0%, rgba(90, 10, 0, 0.35) 45%, rgba(0, 0, 0, 0) 78%),
+  background:
+    radial-gradient(
+      46% 80% at 88% 30%,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0) 70%
+    ),
+    radial-gradient(
+      55% 100% at 100% 100%,
+      rgba(230, 0, 0, 0.75) 0%,
+      rgba(90, 10, 0, 0.35) 45%,
+      rgba(0, 0, 0, 0) 78%
+    ),
     var(--color-black);
   margin-bottom: 30px;
 }
@@ -5843,35 +6360,9 @@ body.overflow__hidden {
 }
 
 .doc-item__icon {
-  position: relative;
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
-  width: 50px;
-  height: 58px;
-  padding-bottom: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  background: linear-gradient(#ffffff 0 60%, var(--color-red) 60% 100%);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  color: var(--color-white);
-}
-
-.doc-item__icon::before {
-  content: "";
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 12px solid var(--color-red);
 }
 
 .doc-item__body {
@@ -5916,7 +6407,22 @@ body.overflow__hidden {
    PROCUREMENT
    ========================================================== */
 
+/* Frame 1376:1030: band 91-430, crumbs 131, H1 220 h88, cards 486 503x250 */
+.page-hero.page-hero_procurement {
+  padding: 40px 0 122px;
+}
+
+.page-hero.page-hero_procurement .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 65px;
+}
+
+.page-hero.page-hero_procurement .page-hero__title {
+  margin-bottom: 0;
+}
+
 .tenders {
+  padding-top: 24px;
   padding-bottom: 120px;
 }
 
@@ -5939,16 +6445,22 @@ body.overflow__hidden {
 }
 
 .tender-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  min-height: 210px;
-  padding: 32px;
+  min-height: 250px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--radius);
   background: var(--color-white);
   transition: var(--transition);
+}
+
+/* the whole card is the link, the way news-card and service-card are */
+.tender-card .tender-card__link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  height: 100%;
+  padding: 36px 40px 31px;
+  color: inherit;
 }
 
 .tender-card:hover {
@@ -5957,9 +6469,9 @@ body.overflow__hidden {
 }
 
 .tender-card__title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 33px;
   color: var(--color-black);
 }
 
@@ -5968,11 +6480,12 @@ body.overflow__hidden {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 9px 18px;
+  height: 36px;
+  padding: 0 10px;
   border-radius: 8px;
   background: var(--color-black);
   color: var(--color-white);
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 500;
   line-height: normal;
 }
@@ -5985,10 +6498,25 @@ body.overflow__hidden {
    HELP
    ========================================================== */
 
+/* Frame 1376:1427: band 91-430, panel 372 lapping by 58, aside 422 wide with
+   a 56 gutter, nav items 58 on a 16 gap, rows 80 on a 24 gap */
+.page-hero.page-hero_help {
+  padding: 40px 0 122px;
+}
+
+.page-hero.page-hero_help .page-hero__crumbs {
+  height: 24px;
+  margin-bottom: 65px;
+}
+
+.page-hero.page-hero_help .page-hero__title {
+  margin-bottom: 0;
+}
+
 .help {
   position: relative;
   z-index: 1;
-  margin-top: -60px;
+  margin-top: -90px;
   margin-bottom: 100px;
 }
 
@@ -6003,32 +6531,31 @@ body.overflow__hidden {
 }
 
 .help__aside {
-  flex: 0 0 340px;
-  padding: 32px 24px;
+  flex: 0 0 422px;
+  padding: 40px 56px;
   background: #f4f4f4;
 }
 
 .help__aside-title {
-  margin-bottom: 24px;
-  font-size: 15px;
+  margin-bottom: 53px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: rgba(0, 0, 0, 0.45);
 }
 
 .help__nav {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .help__nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
-  padding: 15px 18px;
+  min-height: 58px;
+  padding: 0 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 14px;
   background: var(--color-white);
@@ -6065,7 +6592,7 @@ body.overflow__hidden {
 .help__content {
   flex: 1;
   min-width: 0;
-  padding: 32px 40px;
+  padding: 40px;
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -6265,32 +6792,12 @@ body.overflow__hidden {
 .footer .footer__logo {
   display: flex;
   width: fit-content;
-  margin-bottom: 42px;
+  margin-bottom: 40px;
 }
 
 .footer .footer__logo img {
   height: 30px;
   width: auto;
-}
-
-.footer .footer__about {
-  display: inline-flex;
-  align-items: center;
-  height: 60px;
-  padding: 0 32px;
-  margin-bottom: 38px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: normal;
-  color: var(--color-black);
-  background: #f2f3f7;
-  border-radius: var(--radius);
-  transition: var(--transition);
-}
-
-.footer .footer__about:hover {
-  color: var(--color-white);
-  background: var(--color-red);
 }
 
 .footer .footer__contacts {
@@ -6447,19 +6954,6 @@ body.overflow__hidden {
   }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #fff;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #E60000;
-}
-
 @keyframes numbers-spin {
   to {
     transform: rotate(360deg);
@@ -6483,10 +6977,15 @@ select {
    ========================================================== */
 
 @media all and (min-width: 1400px) and (max-width: 1699.98px) {
+  .numbers .numbers__card {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
   .container {
     max-width: 1348px;
   }
-  .features .features__dial{
+  .features .features__dial {
     width: 420px;
     height: 420px;
   }
@@ -6568,6 +7067,11 @@ select {
   .container {
     max-width: 1606px;
   }
+  /* only here is the card wide enough for the row to span its full 295 the
+     way Frame 289 lays it out; below this it centres and wraps instead */
+  .contact-card__socials {
+    justify-content: space-between;
+  }
 }
 
 @media all and (max-width: 1400px) {
@@ -6580,8 +7084,6 @@ select {
   .hero__visual .hero__image {
     max-height: 660px;
   }
-  /* "auto" is not valid for max-width, so the browser dropped this and the
-     50% above it is what has always applied. Written out properly. */
   .hero .hero__content {
     max-width: 50%;
   }
@@ -6738,7 +7240,7 @@ select {
     font-size: 16px;
     line-height: normal;
   }
-  .hero .hero__visual .hero__gauge_desktop{
+  .hero .hero__visual .hero__gauge_desktop {
     width: 160px;
   }
   .page-hero.page-hero_tariffs .page-hero__title,
@@ -6765,6 +7267,15 @@ select {
 }
 
 @media all and (max-width: 1200px) {
+  /* the card drops to 216 here, and AUDIOVOX needs 183 at 34px */
+  .brand-card__name {
+    font-size: 28px;
+  }
+  .numbers .numbers__card {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
   .device-view .device-view__item {
     grid-template-columns: 360px minmax(0, 1fr);
     gap: 0 40px;
@@ -6782,7 +7293,7 @@ select {
   .page-hero .page-hero__watermark {
     font-size: 220px;
   }
-  .hero .hero__visual .hero__gauge_desktop{
+  .hero .hero__visual .hero__gauge_desktop {
     width: 145px;
   }
 
@@ -7138,6 +7649,11 @@ select {
   .offices__layout {
     grid-template-columns: 360px 1fr;
   }
+  /* a 360 column leaves the stat cards 96 wide, and "показано" does not fit
+     across them at 16 */
+  .offices-filter__stat span {
+    font-size: 14px;
+  }
   .offices__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -7323,7 +7839,7 @@ select {
   .arrow-link {
     font-size: 18px;
   }
-  .header .header__lang-toggle {
+  .header .header__lang .header__lang-toggle {
     gap: 0 8px;
   }
   .section__title {
@@ -7424,21 +7940,10 @@ select {
   .footer .footer__nav {
     display: contents;
   }
-  /* .footer__brand is display:contents here, so every child needs an explicit
-     order or the button floats above the logo. */
   .footer .footer__logo {
     grid-column: 1 / -1;
     order: 1;
-    margin-bottom: 16px;
-  }
-  .footer .footer__about {
-    grid-column: 1 / -1;
-    order: 2;
-    height: 40px;
-    padding: 0 16px;
     margin-bottom: 32px;
-    font-size: 14px;
-    width: fit-content;
   }
   .footer .footer__list-item {
     line-height: 21px;
@@ -7502,8 +8007,9 @@ select {
   .offices__layout {
     grid-template-columns: 1fr;
   }
-  /* single column drops the stretch height the map used to inherit from the
-     filter card, so it has to carry its own or it collapses to nothing */
+  .offices-filter {
+    min-height: 0;
+  }
   .map {
     height: 420px;
   }
@@ -7513,14 +8019,11 @@ select {
   .brand-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  /* below this the two columns leave the specification values too narrow to
-     read, so the photo panel goes full width and the list follows it */
   .device-view .device-view__item {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px 0;
   }
   .device-view .device-view__media {
-    /* stacked, the panel would otherwise run the column's full width */
     width: 100%;
     max-width: 433px;
   }
@@ -7542,11 +8045,15 @@ select {
   .news-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .tariffs-list .tariffs-list__tab,
+  .tariffs-list .tariffs-list__filter,
+  .tariff-detail .tariff-detail__switch-btn {
+    font-size: 14px;
+    line-height: normal;
+  }
 }
 
 @media all and (max-width: 768px) {
-  /* 564 left 102px gutters at 768 and dropped a 180px step across one pixel
-     against the 744 column at 769; below 720 the viewport governs anyway */
   .container {
     max-width: 720px;
   }
@@ -7608,7 +8115,7 @@ select {
   .numbers .numbers__pager-current {
     font-size: 12px;
   }
-    .hero .hero__title {
+  .hero .hero__title {
     font-size: 40px;
     max-width: 90%;
   }
@@ -7674,9 +8181,6 @@ select {
     padding: 16px;
     min-height: 224px;
   }
-  /* The phone frame runs the cards in DOM order: the big card full width, then
-     "Сотни устройств" and "Интернет без проводов" paired, then the wide card.
-     The 768px block reorders them, so the order is reset here. */
   .features .features__card.features__card_lag,
   .features .features__card.features__card_pro {
     order: 0;
@@ -7687,8 +8191,6 @@ select {
     order: 0;
     width: calc(50% - 7px);
   }
-  /* On the phone the red card is "Интернет без проводов" and the wide one is
-     light — the opposite of the desktop frame. */
   .features .features__card.features__card_wire {
     background: var(--color-red);
   }
@@ -7706,16 +8208,6 @@ select {
   .features .features__card.features__card_pro .features__link {
     color: var(--color-black);
   }
-  /* The 894px ellipse anchored at right:2% actually centres off to the LEFT on
-     a 402px screen, mirroring the design. Frame 1360:1123 puts Ellipse 80 at
-     x=182..465, so it is sized and anchored to that here. */
-  .page-hero::before {
-    width: 420px;
-    height: 220px;
-    right: -120px;
-    opacity: 0.8;
-    filter: blur(95px);
-  }
   .numbers .numbers__card {
     padding: 7px 14px 8px;
     gap: 6px;
@@ -7730,21 +8222,17 @@ select {
     gap: 12px;
     justify-content: center;
   }
-  /* the subtitle used to run the full gutter and sit on top of the grey "5G"
-     watermark; the frame caps it at a 223px column */
   .page-hero.page-hero_numbers .page-hero__subtitle {
     max-width: 223px;
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
-  /* the frame leaves 16px between the hero and the price chips, not 72 */
   .page-hero.page-hero_numbers {
     margin-bottom: 0;
   }
   .numbers .numbers__body {
     padding-top: 16px;
   }
-  /* the tariffs eyebrow is 12px in the frame, not the desktop 18px */
   .tariffs .section__eyebrow {
     font-size: 12px;
   }
@@ -7898,7 +8386,7 @@ select {
   .coverage .coverage__name,
   .coverage .coverage__status {
     font-size: 12px;
-    line-height: 16px;
+    line-height: normal;
     font-style: normal;
   }
   .tariffs {
@@ -8034,31 +8522,32 @@ select {
   .faq-item__question {
     font-size: 15px;
   }
-  .support-cta {
+  .support-cta,
+  .services .support-cta {
     padding: 32px 24px;
   }
-  .support-cta__title {
+  .support-cta__title,
+  .services .support-cta .support-cta__title {
     font-size: 24px;
   }
   .section-head__title.section-head__title_upper {
     font-size: 30px;
   }
-  /* Frame 1360:1123: a 57px card with 10px padding; the caption is small and
-     light so the 170px city select keeps its width and the name is readable. */
+  /* Frame 1360:1371: bar 354x57 on a 77px radius, label 84 wide at 16 */
   .coverage-search {
     flex-wrap: nowrap;
     gap: 8px;
     padding: 10px;
+    border-radius: 77px;
   }
-  /* Frame 1360:1123 gives the caption an 84px column on two lines, so it must
-     not be allowed to shrink into four. */
   .coverage-search__label {
     flex: 0 0 auto;
-    width: 96px;
-    font-size: 9px;
-    font-weight: 400;
-    line-height: 11px;
-    color: rgba(0, 0, 0, 0.5);
+    width: 84px;
+    margin-left: 6px;
+    font-size: 8px;
+    font-weight: 500;
+    line-height: normal;
+    color: rgba(0, 0, 0, 0.66);
   }
   .coverage-search__controls {
     flex: 0 0 auto;
@@ -8068,29 +8557,46 @@ select {
   .coverage-search__select {
     flex: 0 0 auto;
     width: 170px;
-    min-width: 0;
   }
   .coverage-search__select .select__control {
     height: 37px;
-    padding: 0 32px 0 12px;
-    font-size: 13px;
-    background: #eeeeee;
-    border-color: transparent;
+    padding: 0 30px 0 16px;
+    font-size: 12px;
+  }
+  .coverage-search__select .select__chevron {
+    right: 10.5px;
   }
   .coverage-search__btn {
     width: 37px;
     height: 37px;
   }
-  .coverage-search__btn svg {
-    width: 16px;
-    height: 16px;
+  /* the compact bar is a single 57-tall pill with no room for both, so the
+     address field takes the city select's place while the search is open */
+  .coverage-search_searching .coverage-search__select {
+    display: none;
   }
-  /* the map card is 372px in the frame, not 480 */
+  .coverage-search_searching .coverage-search__find {
+    --field-width: 100%;
+    flex: 1 1 auto;
+    gap: 8px;
+  }
+  .coverage-search_searching .coverage-search__field {
+    --field-padding: 0 2px 0 10px;
+  }
+  .coverage-search__field {
+    height: 37px;
+  }
+  .coverage-search__input {
+    font-size: 12px;
+  }
+  .map .map__zoom {
+    top: 24px;
+    left: 24px;
+  }
   .map,
   .map.map_coverage {
     height: 372px;
   }
-  /* the eyebrow rule is white on this hero, and the copy sits in a 310px column */
   .page-hero .page-hero__eyebrow_silver::before {
     background: var(--color-white);
   }
@@ -8115,10 +8621,6 @@ select {
   .vac-detail__title {
     font-size: 26px;
   }
-  /* --- Phone pass: the design keeps a 24px inset on cards and panels, and
-     fits all three company tabs inside the 354px column. Desktop paddings of
-     28-80px were making blocks wider than the screen. Selectors mirror the
-     base rules so they actually win. --- */
   .company .company-nav,
   .company-nav {
     display: flex;
@@ -8127,8 +8629,6 @@ select {
     justify-content: flex-start;
     gap: 4px;
     padding: 5px;
-    /* sized to fit all three tabs at 402px; narrower phones scroll rather
-       than clip the last one */
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -8155,7 +8655,7 @@ select {
   }
   .vac-row .vac-row__title {
     font-size: 17px;
-    line-height: 22px;
+    line-height: normal;
   }
   .vac-row .vac-row__meta {
     flex-wrap: wrap;
@@ -8184,7 +8684,6 @@ select {
     width: 48px;
     height: 48px;
   }
-  /* three cities across the row, as the frame shows, instead of two */
   .coverage .coverage__city {
     padding: 0 14px;
   }
@@ -8201,8 +8700,6 @@ select {
   .coverage .coverage__status {
     font-size: 11px;
   }
-  /* The tag is absolutely positioned at the card's top, so the content has to
-     clear it: frame 620:241 puts the tag at +16 (h=27) and the title at +59. */
   .features__card .features__card-content {
     display: flex;
     flex-direction: column;
@@ -8214,8 +8711,6 @@ select {
     margin-bottom: 12px;
     gap: 16px;
   }
-  /* the frame's pair is 224px and its text sits at the bottom of the card;
-     the light card underneath is 163px and carries only a title and a link */
   .features .features__card.features__card_smart,
   .features .features__card.features__card_wire {
     width: calc(50% - 8px);
@@ -8229,7 +8724,6 @@ select {
     justify-content: space-between;
     min-height: 163px;
   }
-  /* the email block is the only footer text still on the desktop 16px */
   .footer .footer__contact_email .footer__contact-text {
     font-size: 14px;
   }
@@ -8240,9 +8734,6 @@ select {
   .features .features__card_pro .features__text {
     display: none;
   }
-  /* .tariffs__card .tariffs__connect carries padding-top:32px at a higher
-     specificity; with height:32px and border-box that collapses the content
-     box to zero and drops the label out of the pill. */
   .tariffs .tariffs__card .tariffs__connect,
   .tariffs .tariffs__connect {
     display: inline-flex;
@@ -8261,8 +8752,6 @@ select {
   .tariffs .tariffs__tab {
     white-space: nowrap;
     flex: 0 0 auto;
-    /* 29px was under the 32px a finger can reliably hit; the pill keeps its
-       type and grows through padding */
     min-height: 32px;
     padding: 6px 14px;
     font-size: 14px;
@@ -8274,11 +8763,8 @@ select {
     min-height: 198px;
   }
   .contact-card .contact-card__socials {
-    flex-wrap: wrap;
+    justify-content: flex-start;
     gap: 8px;
-  }
-  .contact-card .contact-card__social {
-    font-size: 13px;
   }
   .about-intro {
     padding: 28px 24px;
@@ -8292,14 +8778,15 @@ select {
   .news-feature .news-feature__media {
     padding: 24px;
   }
-  .service-card {
+  .service-card .service-card__link {
     padding: 24px;
   }
   .timeline {
     padding-left: 0;
   }
-  .footer .footer__about {
-    padding: 0 24px;
+  /* the dot column moves with the padding, so the line has to follow */
+  .timeline::before {
+    left: 7.5px;
   }
   .btn-pill-outline,
   .support-cta .support-cta__btn,
@@ -8364,6 +8851,8 @@ select {
   }
   .tender-card {
     min-height: 0;
+  }
+  .tender-card .tender-card__link {
     gap: 20px;
     padding: 24px;
   }
@@ -8373,8 +8862,6 @@ select {
   .help {
     margin-bottom: 60px;
   }
-  /* Frame 1393:1119 runs the panel edge to edge in white; the cards inside
-     keep the page's 24px gutter rather than sitting in an inset card. */
   .help__panel {
     display: block;
     overflow: visible;
@@ -8388,43 +8875,65 @@ select {
     padding: 24px 0;
     border-left: 0;
   }
-  /* red drawer, fixed vertically centered; only its curved right edge
-     peeks when closed */
+  /* Frame 1393:907: drawer 268 wide on a 344 box, label at 24, nav items
+     220x40 on a 16 gap */
+  /* frames 1392:1741 and 1393:907 hang the panel off the content, not the
+     viewport: its box starts at the first block under the tab title and runs
+     344 down. Vector 190 puts the panel edge at 11.28 on 7px corners, so
+     collapsed it shows an 11.3px sliver. */
   .help__aside {
     position: fixed;
-    top: 50%;
+    top: 0;
+    bottom: 0;
     left: 0;
-    transform: translate(-100%, -50%);
-    width: 286px;
+    margin: auto;
+    transform: translateX(calc(-100% + 11.3px));
+    width: 268px;
+    height: 344px;
     background: var(--color-red);
-    border-radius: 0 22px 22px 0;
-    padding: 30px 22px;
+    border-radius: 0 7px 7px 0;
+    padding: 24px;
     z-index: 124;
-    box-shadow: 9px 7px 19px rgba(73, 75, 92, 0.28);
     transition: transform 0.35s ease;
   }
   .help_drawer-open .help__aside {
-    transform: translate(0, -50%);
+    transform: translateX(0);
   }
   .help__aside-title {
+    margin-bottom: 36px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.9);
   }
-  /* curved tab bump on the drawer's right edge, vertically centered */
+  .help .help__nav-item {
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .help .help__nav-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  /* the nub, cut to the curve Vector 190 draws between y 141.613 and 202.931:
+     it hugs the panel edge, peaks 6.7 out and comes back, so a radius cannot
+     express it - the path is the segment rebased into this 24x61.32 box */
   .help__aside-tab {
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
     top: 50%;
-    right: -18px;
+    right: -8px;
     transform: translateY(-50%);
-    width: 22px;
-    height: 84px;
-    padding-left: 3px;
+    width: 24px;
+    height: 61.32px;
+    padding: 0 0 0 3.4px;
     background: var(--color-red);
-    border-radius: 0 60px 60px 0;
+    border-radius: 0;
+    clip-path: path(
+      "M16 0 C16 6.52 17.38 12.96 20.05 18.91 L21.16 21.38 C24.35 28.49 24.08 36.67 20.42 43.56 C17.52 49.03 16 55.13 16 61.32 L0 61.32 L0 0 Z"
+    );
     color: var(--color-white);
-    box-shadow: 5px 0 14px rgba(0, 0, 0, 0.12);
+    box-shadow: none;
   }
   .help__aside-tab svg {
     width: 16px;
@@ -8470,47 +8979,40 @@ select {
   .container {
     max-width: 100%;
   }
-  /* The phone frames draw the glow as one small ellipse pinned to the right —
-     1250:761 is 283x113 sitting at x=182 in a 402x159 band — so the left third
-     of the band stays pure black. The tablet ellipse was three times that size
-     and lifted the whole band off black. */
   .page-hero::before {
     top: 55%;
     right: -63px;
     width: 283px;
-    height: 113px;
-    opacity: 0.6;
-    filter: blur(48px);
+    height: 71.1%;
+    opacity: 0.65;
+    filter: blur(53px);
   }
-  /* the frames draw one ellipse, not two — the second layer was what lifted the
-     left third of the band off black */
   .page-hero.page-hero_tariffs::after,
   .page-hero.page-hero_single_tariff::after {
     display: none;
   }
-  /* Frame 1037:8649 draws the watermark as a 178x106 box whose right edge runs
-     23px past the screen; 110px only reached a 80px glyph. */
+  .page-hero.page-hero_single_tariff {
+    margin-bottom: 32px;
+  }
+  .page-hero.page-hero_single_tariff .page-hero__title {
+    line-height: 38px;
+  }
   .page-hero .page-hero__watermark {
     font-size: 132px;
     right: -23px;
   }
-  /* every phone frame butts the next block straight onto the band, or floats
-     it over the band's bottom edge — the 32px desktop gap is never drawn */
   .page-hero {
     margin-bottom: 0;
   }
   .page-hero .page-hero__eyebrow {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
     margin-bottom: 8px;
   }
 
-  /* numbers: 219px band, then a 24px step between every control row.
-     Measured on 1037:8649 — band 0-219, prices 235, toggle 289, mask 345,
-     button 400, cards 512 in a 169x61 two-column grid. */
   .page-hero.page-hero_numbers {
     padding: 40px 0 31px;
-    margin-bottom: 0;   /* .numbers__body already carries the frame's 16px */
+    margin-bottom: 0;
   }
   .numbers .numbers__prices {
     margin-bottom: 24px;
@@ -8529,8 +9031,6 @@ select {
     height: 32px;
     padding: 0 14px;
   }
-  /* prefix 54, seven 36px cells on a 2px gap, 16px before the 4th and 6th:
-     54 + 8 + 7x36 + 4x2 + 2x16 = 354 */
   .numbers .numbers__mask {
     flex-wrap: wrap;
     row-gap: 24px;
@@ -8579,6 +9079,11 @@ select {
     font-size: 30px;
     max-width: 90%;
   }
+  /* frame 620:241 runs the phone hero straight into the marquee with no
+     bullets under it — on touch the band is swiped, not clicked */
+  .hero .hero__pagination {
+    display: none;
+  }
   .hero .hero__store {
     flex: 1;
   }
@@ -8623,7 +9128,7 @@ select {
   }
   .page-hero .page-hero__eyebrow_silver {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
     margin-bottom: 8px;
   }
   .page-hero .page-hero__eyebrow_silver::before {
@@ -8635,12 +9140,11 @@ select {
   }
   .tariff-detail .tariff-detail__switch-btn {
     flex: 1;
+    min-width: 0;
     padding: 10px 12px;
+    font-size: 14px;
     text-align: center;
   }
-  /* tariffs, from frame 1250:678 (build y = frame y - 44): band 48-207, the
-     tab strip floating on its bottom edge at 181, filters at 241, card at 317
-     and 483 tall, archive button at 824. */
   .page-hero.page-hero_tariffs {
     padding: 40px 0 59px;
     margin-bottom: 0;
@@ -8648,7 +9152,6 @@ select {
   .page-hero.page-hero_tariffs .page-hero__title {
     margin-bottom: 0;
   }
-  /* the white tab strip floats on the band's bottom edge, 26px over the red */
   .tariffs-list {
     margin-top: -26px;
   }
@@ -8686,19 +9189,16 @@ select {
   }
   .tariffs-list .tariffs-list__price-value {
     font-size: 32px;
-    line-height: 38px;
+    line-height: normal;
   }
   .tariffs-list .tariffs-list__price-period {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .tariffs-list .tariffs-list__feats {
     gap: 8px;
     margin-bottom: 24px;
   }
-  /* rows are 49px for one line and 66px for two. The frame wraps each row in a
-     6px frame around a 10px-inset text box, so the text carries 20px of the
-     inset and the 24px icon never drives the height. */
   .tariffs-list .tariff-feat {
     align-items: center;
     gap: 12px;
@@ -8711,11 +9211,11 @@ select {
   .tariffs-list .tariff-feat .tariff-feat__text {
     padding: 10px 0;
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
   }
   .tariffs-list .tariff-feat .tariff-feat__muted {
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
   }
   .tariffs-list .tariffs-list__actions {
     flex-direction: row;
@@ -8736,31 +9236,27 @@ select {
     padding: 0 24px;
     font-size: 14px;
   }
-    
-  /* The phone frames all draw a 48px header bar (index 620:241 y44-91 and
-     every CDMA frame), not the 60px the tablet rule leaves behind. */
+
   .header .header__row {
     height: 48px;
   }
   .page-hero.page-hero_inner {
     padding: 40px 0 40px;
   }
-  /* no phone frame draws the breadcrumb row inside the hero */
   .page-hero .page-hero__crumbs {
     display: none;
   }
   .news-feature__title {
-    font-size: 24px;
+    font-size: 18px;
+    line-height: normal;
   }
   .news-feature__text {
-    font-size: 17px;
+    font-size: 14px;
+    line-height: normal;
   }
   .news-feature__body {
     padding: 28px 24px;
   }
-  /* offices, from frame 1251:1023 (build y = frame y - 44): band 48-225, the
-     filter card floating 21px over it at 204 and 492 tall, every control 40px
-     on a 16px step, then the map at 720 and 173x94 point cards from 1156. */
   .page-hero.page-hero_office {
     padding: 40px 0 37px;
     margin-bottom: 0;
@@ -8781,6 +9277,7 @@ select {
   }
   .offices .offices-filter {
     gap: 16px;
+    min-height: 0;
     padding: 20px 24px 16px;
   }
   .offices .offices-filter__search-input {
@@ -8790,7 +9287,7 @@ select {
   }
   .offices .offices-filter__tabs {
     gap: 8px;
-    padding: 5px 7px;
+    padding: 6px 8px;
   }
   .offices .offices-filter__tab {
     flex: 0 0 auto;
@@ -8822,21 +9319,19 @@ select {
   }
   .offices .offices-filter__hint {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .offices .offices-filter__stats {
     gap: 8px;
   }
   .offices .offices-filter__stat {
-    justify-content: center;
-    min-height: 94px;
-    padding: 19px 6px;
-    background: var(--color-white);
-    border: 0;
+    gap: 10px;
+    min-height: 92px;
+    padding: 17px 6px;
   }
   .offices .offices-filter__stat b {
     font-size: 20px;
-    line-height: 24px;
+    line-height: normal;
   }
   .offices .offices-filter__stat span {
     font-size: 12px;
@@ -8852,13 +9347,6 @@ select {
     flex-wrap: wrap;
     gap: 10px;
   }
-  /* device view: the phone keeps the frame's 16px card inset, and the
-     specification rows stack the value under its label so long values stop
-     being squeezed into a 120px column */
-  /* device view. This page has no 402px frame, so it takes the scale the other
-     phone frames set: the 354 column, a 16px card inset, 18/12 headings and a
-     24px rhythm — and each specification value sits under its own label rather
-     than being squeezed into a 120px column. */
   .device-view .callout {
     margin-bottom: 24px;
   }
@@ -8915,40 +9403,84 @@ select {
   .spec-list .spec-list__term,
   .spec-list .spec-list__value {
     font-size: 12px;
-    line-height: 16px;
+    line-height: normal;
   }
 
-  /* device catalog, from frame 1353:4572: a 98px chip card, a 184px callout on
-     a 24px/22px inset, then 173x78 brand tiles on an 8px gutter. */
+  /* Frame 1353:4572: eyebrow 88, H1 110 on a 33px line, subtitle 183 and the
+     band closing at 273, where the chip card laps it by 32. */
   .page-hero.page-hero_devices {
-    padding-bottom: 22px;
+    padding-bottom: 45px;
+  }
+  .page-hero.page-hero_devices .page-hero__eyebrow {
+    margin-bottom: 7px;
   }
   .page-hero.page-hero_devices .page-hero__title {
     line-height: 33px;
     margin-bottom: 7px;
   }
-  /* this card holds only the chip rows — no heading, no field — so it keeps
-     the frame's 16px inset rather than the 24px the services panel needs */
   .devices .filter-search {
-    margin-top: -6px;
+    margin-top: -32px;
     padding: 16px;
+    background: var(--color-white);
+    border-radius: 16px;
+    box-shadow: 0 4px 11px rgba(0, 0, 0, 0.11);
   }
   .callout,
   .devices .callout {
     margin-bottom: 24px;
-    padding: 22px 24px;
+    padding: 22px 17px 22px 22px;
+    background: #f8f8f8;
+    border-left-width: 2px;
+    border-radius: 16px;
   }
   .brand-grid {
     gap: 8px;
   }
+  /* Rectangle 5068: 173x78 on a 12px radius and a 0.5px rgba(0,0,0,.22)
+     hairline, with no shadow at all */
   .brand-card {
     min-height: 78px;
     padding: 12px;
+    border: 0.5px solid rgba(0, 0, 0, 0.22);
+    border-radius: 12px;
+    box-shadow: none;
   }
-  /* the frame draws each logo at its own size rather than in a common box */
+
+  /* The phone frames draw every content card as a plain 0.5px rgba(0,0,0,.22)
+     hairline with no shadow — 1359:942 for news, 1353:5393 for a promo. The
+     drop shadows are a desktop thing. */
+  .news-card,
+  .news-feature,
+  .promo-card {
+    border: 0.5px solid rgba(0, 0, 0, 0.22);
+    box-shadow: none;
+  }
+
+  /* 1368:2490 blurs the tab pill 27.5, not 55 */
+  .company .company-nav,
+  .company-nav {
+    box-shadow: 0 8px 27.5px rgba(0, 0, 0, 0.11);
+  }
+
+  /* 1251:1249: the offices panel is a flat #F8F8F8 card, no shadow */
+  .offices .offices-filter,
+  .offices-filter {
+    box-shadow: none;
+  }
+
+  /* 1360:1371: the coverage bar is white on a 4/5.5 shadow, not 31/55 */
+  .coverage .coverage-search,
+  .coverage-search {
+    box-shadow: 0 4px 5.5px rgba(0, 0, 0, 0.11);
+  }
+  /* the wordmarks run 18-31 tall in the frame — artel 27, BlackBerry 23 — and
+     only the apple glyph is tall at 48, so it keeps its own cap */
   .brand-card .brand-card__logo {
     width: auto;
-    max-width: 131px;
+    max-width: 100%;
+    max-height: 30px;
+  }
+  .brand-card .brand-card__logo[alt="Apple"] {
     max-height: 48px;
   }
   .brand-card__name {
@@ -8956,12 +9488,15 @@ select {
   }
   .devices__note {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
-  /* coverage: a 213px band with the search card floating 29px over its bottom
-     edge and the map 48px below the card */
   .page-hero.page-hero_coverage {
     padding: 40px 0 45px;
+  }
+  /* frame 1360:1123 stacks eyebrow 88, H1 110, subtitle 174 */
+  .page-hero.page-hero_coverage .page-hero__eyebrow,
+  .page-hero.page-hero_coverage .page-hero__title {
+    margin-bottom: 8px;
   }
   .page-hero.page-hero_coverage .page-hero__title {
     line-height: 28px;
@@ -8972,12 +9507,7 @@ select {
   .coverage-search {
     margin-bottom: 48px;
   }
-  .coverage-search .coverage-search__label {
-    color: rgba(0, 0, 0, 0.85);
-  }
 
-  /* procurement: a 151px band with a red H1, then 16px-inset tender cards on a
-     16px gutter whose height follows a two-line title plus the status chip */
   .page-hero.page-hero_procurement {
     padding: 62px 0 43px;
   }
@@ -8989,30 +9519,23 @@ select {
     gap: 16px;
   }
   .tender-card {
-    gap: 16px;
     min-height: 0;
-    padding: 16px;
     border-radius: 12px;
+  }
+  .tender-card .tender-card__link {
+    gap: 16px;
+    padding: 16px;
   }
   .tender-card .tender-card__title {
     font-size: 16px;
-    line-height: 21px;
+    line-height: normal;
   }
   .tender-card .tender-card__status {
     height: 28px;
     padding: 0 16px;
     font-size: 12px;
   }
-  /* --- Page blocks at the frames' phone scale ---
-     Measured on 1251:1023 (offices), 1368:1759 (about), 1368:2062 (contacts),
-     1368:2630 (documents), 1393:1119 (help) and 1538:1522 (cdma). --- */
 
-  /* company tab strip: the frames keep full-size tabs and let the row scroll,
-     rather than shrinking four tabs to fit */
-  /* Frame 1368:1923: a 354x56 pill floating 24px over the band, holding 40px
-     tabs sized to their own labels (123 / 107 / 93) on a 4px gap. The fourth
-     tab runs past the mask, which is why the strip scrolls and the script
-     brings the active one into view. */
   .company .company-nav,
   .company-nav {
     margin-top: -25px;
@@ -9033,15 +9556,10 @@ select {
     height: 24px;
   }
 
-  /* All four company frames put the white sheet at y=225 and the tab pill at
-     y=200, whatever their own band rect measures, so the band runs to the seam
-     and the pill sits 25px over it. */
   .page-hero.page-hero_company {
     padding: 40px 0 41px;
   }
 
-  /* contacts, from frame 1368:2062: red H1, then four 354x150 cards on a 16px
-     gutter. */
   .page-hero.page-hero_contacts .page-hero__title {
     color: var(--color-red);
   }
@@ -9077,40 +9595,35 @@ select {
     grid-column: 1 / -1;
   }
   .contact-card .contact-card__text {
-    font-size: 14px;
-    line-height: 17px;
+    font-size: 13px;
+    line-height: normal;
   }
   .contact-card .contact-card__text + .contact-card__text {
     margin-top: 12px;
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .contact-card .contact-card__socials {
     gap: 10px;
     margin-top: 12px;
     padding: 5px 10px;
-    background: var(--color-white);
-    border-radius: var(--radius-pill);
   }
   .contact-card .contact-card__social {
-    font-size: 12px;
     gap: 5px;
   }
-  .contact-card .contact-card__social svg {
+  .contact-card .contact-card__social-icon {
     width: 24px;
     height: 24px;
   }
   .contacts-note {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .contacts-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
 
-  /* about, from frame 1368:1759: 173x78 tiles with their text centred so the
-     wide labels stay on one line, a 12/18 intro card and an 84px timeline. */
   .about-stats {
     gap: 8px;
     margin-bottom: 24px;
@@ -9144,19 +9657,16 @@ select {
   }
   .timeline .timeline__text {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .timeline .timeline__year {
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 18px;
+    line-height: normal;
   }
   .timeline .timeline__item {
     padding-bottom: 29px;
   }
 
-  /* careers: the frame draws text-only vacancy rows — 81px tall, white on the
-     near-white sheet, title on one line and the three tags on a single row —
-     with no arrow button and no highlighted row. */
   .company .careers-intro {
     min-height: 196px;
     margin-top: 0;
@@ -9164,12 +9674,12 @@ select {
   }
   .careers-intro .careers-intro__title {
     font-size: 20px;
-    line-height: 24px;
+    line-height: normal;
   }
   .careers-intro .careers-intro__text {
     margin-top: 16px;
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .vac-list .vac-row,
   .vac-list .vac-row_active {
@@ -9178,14 +9688,14 @@ select {
     padding: 16px;
     background: var(--color-white);
     border-color: transparent;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 20px rgba(148, 163, 184, 0.2);
   }
   .vac-row .vac-row__arrow {
     display: none;
   }
   .vac-row .vac-row__title {
-    font-size: 14px;
-    line-height: 17px;
+    font-size: 16px;
+    line-height: normal;
   }
   .vac-row .vac-row__meta {
     flex-wrap: nowrap;
@@ -9198,12 +9708,9 @@ select {
     white-space: nowrap;
   }
 
-  /* documents, from frame 1368:2630: uniform 76px rows with no PDF tile, the
-     title in a 213px column and the file size stacked over the download pill
-     in an 84px right column. */
   .doc-item {
     display: grid;
-    grid-template-columns: 213px 84px;
+    grid-template-columns: minmax(0, 213px) auto;
     justify-content: space-between;
     align-content: center;
     row-gap: 8px;
@@ -9221,14 +9728,14 @@ select {
     grid-row: 1 / span 2;
     align-self: center;
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
   }
   .doc-item .doc-item__size {
     grid-column: 2;
     grid-row: 1;
     margin-top: 0;
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
     text-align: right;
   }
   .doc-item .doc-item__download {
@@ -9257,8 +9764,16 @@ select {
     gap: 16px;
   }
 
-  /* help, from frame 1393:1119: a 151px band with the white panel starting on
-     its bottom edge, a 148px intro note and number pills three to a row. */
+  /* Frame 1360:1382: band 48-277, H1 on a 28 line, card 232 lapping by 45 */
+  .page-hero.page-hero_faq {
+    padding: 40px 0 61px;
+  }
+  .page-hero.page-hero_faq .page-hero__title {
+    line-height: 28px;
+  }
+  .faq .filter-search {
+    margin-top: -45px;
+  }
   .page-hero.page-hero_help {
     padding: 62px 0 43px;
   }
@@ -9270,7 +9785,7 @@ select {
   }
   .help .help__tab-title {
     font-size: 18px;
-    line-height: 22px;
+    line-height: normal;
   }
   .help .help__note {
     min-height: 148px;
@@ -9294,44 +9809,48 @@ select {
   }
   .numbers-group .numbers-group__title {
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
   }
-  /* the frame's drawer handle is a tall rail, not a small nub */
-  .help .help__aside-tab {
-    height: 344px;
+  .help .faq-item .faq-item__summary {
+    min-height: 56px;
+    padding: 8px 8px 8px 16px;
   }
 
-  /* --- Phone type scale, taken from the 402px frames ---
-     The frames use a distinctly smaller scale than a shrunk desktop: 32px
-     page titles, 12/14 hero copy, 24/29 section heads, 40px controls, 28px
-     chips and a 16px inset on cards. Values measured on 620:241, 1037:8649,
-     1250:678, 1251:1023, 1260:1416, 1353:4572, 1353:5187 and 1359:767. */
-  /* 32px on a 38px box. The frames set the H1 boxes at 38 per line — 1037:8653
-     is 213x76 for two lines — and at 28 the two lines of "СВОБОДНЫЕ НОМЕРА"
-     were 2px apart and read as one smudged block. */
+  /* the phone frames set the H1 solid, without the desktop -0.04em track */
   .page-hero .page-hero__title,
   .page-hero.page-hero_numbers .page-hero__title {
     font-size: 32px;
     line-height: 38px;
     margin-bottom: 8px;
+    letter-spacing: normal;
   }
   .page-hero .page-hero__subtitle {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
-  .section-head {
+  .section-head,
+  .services .section-head {
     margin-bottom: 24px;
+  }
+  /* Frames 1353:5187 and 1359:767: head bottom 417, first card 449 */
+  .actions .section-head,
+  .news .section-head {
+    margin-bottom: 32px;
   }
   .section-head .section-head__title {
     font-size: 24px;
-    line-height: 29px;
+    line-height: normal;
   }
   .section-head .section-head__count {
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
-  /* only the services frame stacks the count under the title — the actions and
-     news frames keep it right-aligned on the title row */
+  .services .section-head .section-head__title,
+  .services .section-head .section-head__title_upper,
+  .actions .section-head .section-head__title {
+    font-size: 24px;
+    line-height: normal;
+  }
   .services .section-head {
     display: block;
   }
@@ -9339,23 +9858,29 @@ select {
     display: block;
     margin-top: 12px;
   }
-  /* search + chips panel. The default is the actions/news card from frame
-     1353:5187: 16px inset, a 40px field and chip rows on a 10px step, floating
-     37px over the band. Services adds a heading and a 24px inset. */
-  .filter-search {
+  .filter-search,
+  .actions .filter-search,
+  .news .filter-search {
     margin-top: -37px;
     margin-bottom: 24px;
     padding: 16px;
+    box-shadow: none;
   }
   .filter-search .filter-search__field,
-  .filter-search .filter-search__input {
+  .filter-search .filter-search__input,
+  .actions .filter-search .filter-search__input,
+  .news .filter-search .filter-search__input {
     height: 40px;
   }
-  .filter-search .filter-search__input {
+  .filter-search .filter-search__input,
+  .actions .filter-search .filter-search__input,
+  .news .filter-search .filter-search__input {
     padding-left: 12px;
     font-size: 12px;
   }
-  .filter-search .filter-search__field {
+  .filter-search .filter-search__field,
+  .actions .filter-search .filter-search__field,
+  .news .filter-search .filter-search__field {
     margin-bottom: 10px;
   }
   .filter-search .filter-search__chips {
@@ -9363,7 +9888,12 @@ select {
   }
   .services .filter-search {
     margin-top: -21px;
+    margin-bottom: 24px;
     padding: 24px 16px;
+  }
+  .services .filter-search .filter-search__input {
+    height: 40px;
+    padding-left: 12px;
   }
   .services .filter-search .filter-search__heading {
     margin: 0 -16px 22px;
@@ -9386,12 +9916,11 @@ select {
   .filter-search .filter-search__chip-count {
     min-width: 19px;
     height: 18px;
-    font-size: 11px;
+    padding: 0 3px;
+    font-size: 10px;
   }
-  /* services, from frame 1260:1416: 354x168 cards with a 42px icon and the
-     title set beside it, the body and the category/arrow foot below. */
   .page-hero.page-hero_services {
-    padding-bottom: 14px;
+    padding-bottom: 33px;
   }
   .page-hero.page-hero_services .page-hero__title {
     line-height: 28px;
@@ -9401,11 +9930,13 @@ select {
     gap: 12px;
   }
   .services .service-card {
+    min-height: 168px;
+  }
+  .services .service-card .service-card__link {
     display: grid;
     grid-template-columns: 42px 1fr;
     grid-column-gap: 12px;
     align-content: start;
-    min-height: 168px;
     padding: 16px 12px 8px 16px;
   }
   .services .service-card .service-card__icon {
@@ -9420,14 +9951,14 @@ select {
   .services .service-card .service-card__title {
     align-self: center;
     margin: 0;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 18px;
   }
   .services .service-card .service-card__text {
     grid-column: 1 / -1;
     margin: 24px 0 0;
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
   }
   .services .service-card .service-card__foot {
     grid-column: 1 / -1;
@@ -9448,16 +9979,30 @@ select {
     height: 19px;
   }
 
-  /* content cards take a 16px inset and the frame's type */
   .news-card .news-card__media,
-  .promo-card .promo-card__media {
+  .promo-card .promo-card__media,
+  .news-feature .news-feature__media {
     min-height: 101px;
     padding: 16px;
+    background: radial-gradient(
+      71.9% 100.7% at 93.6% 59.9%,
+      var(--media-glow-sm)
+    );
+  }
+  .news-card .news-card__media::after,
+  .promo-card .promo-card__media::after,
+  .news-feature .news-feature__media::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    right: -4.2%;
+    top: -38.6%;
+    width: 32.5%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--media-disc);
   }
 
-  /* news, from frame 1359:767: 354x296 cards whose category chip sits on the
-     bottom of the 101px media band and whose date shares the closing row with
-     the read-more link and its 32px arrow. */
   .page-hero.page-hero_news {
     padding: 41px 0 62px;
   }
@@ -9516,12 +10061,6 @@ select {
     padding: 6px;
   }
 
-  /* the featured story has no separate frame at 402px, so it takes the same
-     card language as the grid rather than its desktop banner proportions */
-  .news-feature .news-feature__media {
-    min-height: 101px;
-    padding: 16px;
-  }
   .news-feature .news-feature__body {
     padding: 15px 16px 16px;
   }
@@ -9532,14 +10071,32 @@ select {
   .news-feature .news-feature__link {
     font-size: 12px;
   }
-  /* actions, from frame 1353:5187: a 141px band with a 28px H1 and no eyebrow,
-     the filter card 37px over it, then 354x269 promo cards on a 16px gutter
-     with the badge and category sitting on the 101px media band. */
   .page-hero.page-hero_actions {
     padding: 62px 0 61px;
   }
   .page-hero.page-hero_actions .page-hero__title {
     line-height: 28px;
+  }
+  .actions .promo-card {
+    min-height: 269px;
+  }
+  .actions .promo-card .promo-card__media {
+    min-height: 101px;
+    padding: 16px;
+  }
+  .actions .promo-card .promo-card__cat {
+    left: 16px;
+    bottom: 16px;
+  }
+  .actions .promo-card .promo-card__body {
+    padding: 15px 16px 16px;
+  }
+  .actions .promo-card .promo-card__title {
+    margin-bottom: 16px;
+  }
+  .actions .promo-card .promo-card__title,
+  .actions .promo-card .promo-card__text {
+    max-width: none;
   }
   .promo-card .promo-card__media {
     display: flex;
@@ -9590,80 +10147,113 @@ select {
   .news-card .news-card__title,
   .promo-card .promo-card__title {
     font-size: 18px;
-    line-height: 22px;
+    line-height: normal;
   }
   .news-card .news-card__text,
   .promo-card .promo-card__text,
   .service-card .service-card__text {
     font-size: 14px;
-    line-height: 17px;
+    line-height: normal;
   }
   .callout p {
     font-size: 12px;
     line-height: 20px;
   }
-  /* support banner: 16px inset, 20/24 title, the button pinned bottom-right */
-  .support-cta {
+  .support-cta,
+  .services .support-cta {
     display: block;
+    min-height: auto;
     margin-top: 24px;
     padding: 16px;
     text-align: right;
   }
-  .support-cta .support-cta__title {
+  .support-cta .support-cta__title,
+  .services .support-cta .support-cta__title {
     text-align: left;
     font-size: 20px;
-    line-height: 24px;
+    line-height: normal;
   }
-  .support-cta .support-cta__btn {
+  .support-cta .support-cta__btn,
+  .services .support-cta .support-cta__btn {
     height: 32px;
     margin-top: 15px;
     padding: 0 16px;
     font-size: 12px;
   }
-  /* offices */
+  .tariffs-archive .tariffs-archive__item {
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    padding: 16px;
+  }
+  .tariffs-archive .tariffs-archive__name {
+    flex: 1 1 160px;
+  }
+  .tariffs-archive .tariffs-archive__download {
+    margin-left: auto;
+  }
   .offices .offices__heading {
     font-size: 16px;
     line-height: 24px;
   }
   .office-card {
-    min-height: 94px;
+    min-height: 88px;
     padding: 12px;
   }
   .office-card .office-card__tag {
     margin-bottom: 10px;
     padding: 3px 8px;
     font-size: 10px;
+    line-height: normal;
   }
   .office-card .office-card__title {
     margin-bottom: 6px;
     font-size: 12px;
-    line-height: 14px;
+    line-height: normal;
   }
   .office-card .office-card__address {
     font-size: 10px;
-    line-height: 12px;
+    line-height: normal;
   }
   .offices__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    gap: 14px 8px;
   }
-  /* pagination */
   .pagination .pagination__page,
   .pagination .pagination__arrow {
     width: 28px;
     height: 28px;
     font-size: 12px;
   }
+  .header .header__logo .header__logo-brand {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .header .header__logo .header__logo-divider {
+    width: 2px;
+    height: 24px;
+  }
+  .header .header__logo .header__logo-img {
+    width: 97px;
+    height: auto;
+  }
+  .header .header__row .header__logo {
+    gap: 10px;
+  }
 }
 
 @media all and (max-width: 400px) {
-  /* Below 400px the lockup collides with the language switch, so the CDMA
-     suffix drops out and the wordmark alone carries the brand. */
-  .header .header__logo .header__logo-divider,
-  .header .header__logo .header__logo-brand {
-    display: none;
-  }
   .tariffs .tariffs__tabs {
     width: 100%;
+  }
+
+  .coverage-search__controls {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+  .coverage-search__select {
+    flex: 0 1 170px;
+    width: auto;
+    min-width: 0;
   }
 }
