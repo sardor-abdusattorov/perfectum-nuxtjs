@@ -96,9 +96,6 @@ if (! function_exists('clear_menus_cache')) {
 
 if (! function_exists('content_blocks')) {
     /**
-     * Every block of a page keyed by block key, already resolved to the
-     * current locale.
-     *
      * @return array<string, array<string, mixed>>
      */
     function content_blocks(PageKey $page): array
@@ -133,9 +130,6 @@ if (! function_exists('clear_content_blocks_cache')) {
 
 if (! function_exists('translator')) {
     /**
-     * Site translation by "category.key" or by separate arguments. Returns the
-     * key itself when nothing is published under it.
-     *
      * @param  array<string, string|int>  $replace
      */
     function translator(

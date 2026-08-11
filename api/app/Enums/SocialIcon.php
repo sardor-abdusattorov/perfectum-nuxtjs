@@ -42,8 +42,6 @@ enum SocialIcon: string implements HasLabel
     }
 
     /**
-     * Option labels carrying the icon itself, for a Select with allowHtml().
-     *
      * @return array<string, string>
      */
     public static function getIconOptions(): array

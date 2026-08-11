@@ -12,8 +12,6 @@ class Slug
     public const MAX_LENGTH = 96;
 
     /**
-     * A slug free of collisions for the table behind $model.
-     *
      * @param  class-string<Model>  $model
      * @param  array<string, string|null>|string|null  $source
      * @param  array<string, mixed>  $scope
@@ -52,9 +50,6 @@ class Slug
     }
 
     /**
-     * The first filled translation, English first because it reads best in a
-     * URL and Cyrillic has to be transliterated anyway.
-     *
      * @param  array<string, string|null>|string|null  $source
      */
     public static function text(mixed $source): string

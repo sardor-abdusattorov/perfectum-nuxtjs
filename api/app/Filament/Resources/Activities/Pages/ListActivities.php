@@ -15,11 +15,6 @@ use MrAdder\FilamentLogger\Support\ActivityFilterPresetManager;
 
 class ListActivities extends BasePage
 {
-    /**
-     * Tab labels live in `filament-logger.activity_filters.saved` as plain
-     * strings, so they cannot be translated in config — the config value is
-     * kept as the fallback and the label is resolved per request instead.
-     */
     public function getTabs(): array
     {
         $tabs = [];
@@ -37,14 +32,6 @@ class ListActivities extends BasePage
         return $tabs;
     }
 
-    /**
-     * Filament builds the "headerWidgets" schema by first calling
-     * defaultHeaderWidgets() and feeding the result back into
-     * headerWidgets(). The logger package owns a method of that name that
-     * returns an array of widgets, so the schema would arrive as an array and
-     * blow up on the type hint. This one skips that step; the widgets
-     * themselves still come from getHeaderWidgets() below.
-     */
     public function getSchema(string $name): ?Schema
     {
         if ($name !== 'headerWidgets') {

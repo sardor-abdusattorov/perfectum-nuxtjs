@@ -49,11 +49,6 @@ class Tariff extends Model
         'status' => 'boolean',
     ];
 
-    /**
-     * The chip a card is filtered by and the badge it wears — "Тариф 5G",
-     * "Qulay ежемесячные". A second row of the same categories table, kept
-     * apart from the section by its type.
-     */
     public function type(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'type_id');

@@ -83,9 +83,6 @@ class MenuForm
     }
 
     /**
-     * Top level items of the same menu, excluding the record being edited so an
-     * item cannot become its own parent.
-     *
      * @return array<int, string>
      */
     private static function parentOptions(?string $location, ?Menu $record): array

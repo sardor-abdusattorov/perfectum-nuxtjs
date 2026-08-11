@@ -64,11 +64,6 @@ class SiteTranslation extends Model
         );
     }
 
-    /**
-     * Published translation for the locale, falling back to the application
-     * fallback locale and then to any filled translation. Null when the
-     * translation does not exist or is unpublished.
-     */
     public static function get(string $category, string $key, ?string $locale = null): ?string
     {
         $locale ??= app()->getLocale();

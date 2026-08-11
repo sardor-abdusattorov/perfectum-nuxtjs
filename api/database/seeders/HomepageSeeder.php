@@ -19,10 +19,6 @@ class HomepageSeeder extends Seeder
     }
 
     /**
-     * Copy taken straight from the design components. Images stay empty: the
-     * design ships them in the frontend's public folder, not in this app's
-     * storage, so they are uploaded once from the panel.
-     *
      * @return array<string, array<string, mixed>>
      */
     private function blocks(): array

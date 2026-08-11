@@ -53,9 +53,6 @@ function initBlock1() {
     start();
   }
 
-  /* Frame 440 on slide 253:83 draws four pagination bullets under the hero, so
-     the band is a carousel. Swiper hides the pagination on its own while there
-     is only one slide, and reduced-motion readers never get the autoplay. */
   const heroSlider = document.querySelector(".hero__slider");
   if (heroSlider && typeof Swiper !== "undefined") {
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -91,7 +88,6 @@ function initBlock1() {
         nextEl: ".tariffs .slider-arrow_next",
       },
       breakpoints: {
-        // the phone frame fits two compact cards side by side, not one
         0: { slidesPerView: 2, spaceBetween: 12 },
         768: { slidesPerView: 2, spaceBetween: 16 },
         1200: { slidesPerView: 3, spaceBetween: 20 },
@@ -257,7 +253,6 @@ function initBlock1() {
     requestAnimationFrame(frame);
   });
 
-  // Numbers page — phone-number mask: one digit per cell, auto-advance
   const maskCells = document.querySelectorAll(".numbers__mask-cell");
   if (maskCells.length) {
     maskCells.forEach(function (cell, i) {
@@ -278,14 +273,7 @@ function initBlock1() {
   }
 }
 
-/* ============================================================
-   Merged from custom.js — kept in its original order.
-   ============================================================ */
-
 function initBlock2() {
-  // ==========================================================
-  // OFFICES — interactive locator (Yandex map + filter + list)
-  // ==========================================================
   const mapEl = document.getElementById("offices-map");
   if (mapEl) {
     const POINTS = [
@@ -329,7 +317,6 @@ function initBlock2() {
     let filterCity = "";
     let query = "";
 
-    // populate region / city selects from the data
     function fillSelect(sel, values, allLabel) {
       if (!sel) return;
       sel.innerHTML = "";
@@ -369,10 +356,6 @@ function initBlock2() {
 
     const markers = {};
 
-    /* ymaps.ready fires only once the API has really initialised. Testing
-       `typeof ymaps` is not enough: the script defines the global before it
-       validates the key, so a rejected key left ymaps.Map undefined and the
-       constructor threw, taking the filter and the list down with it. */
     function buildMap() {
       map = new ymaps.Map(mapEl, {
         center: [41.6, 64.5],
@@ -380,11 +363,6 @@ function initBlock2() {
         controls: [],
       }, {
         suppressMapOpenBlock: true,
-        /* Below this map area the balloon docks along the bottom edge instead
-           of floating over the pin. On a phone the map is ~353x372 and the
-           card does not fit above it: the API clipped it against the map's
-           overflow and gave the content its own scrollbar. A desktop map is
-           far larger than the threshold and keeps the bubble. */
         balloonPanelMaxMapArea: 400 * 400,
       });
       map.behaviors.disable("scrollZoom");
@@ -404,7 +382,6 @@ function initBlock2() {
       setTimeout(function () { map.container.fitToViewport(); }, 250);
     }
 
-    /* the frame draws its own 39x82 control instead of the Yandex one */
     document.querySelectorAll(".offices .map__zoom-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
         if (!map) return;
@@ -418,8 +395,6 @@ function initBlock2() {
       ymaps.ready(buildMap);
     }
 
-    /* A rejected key never calls back at all, so the canvas would sit blank
-       with no explanation. */
     setTimeout(function () {
       if (map) return;
       mapEl.innerHTML =
@@ -427,7 +402,6 @@ function initBlock2() {
         "Список офисов и дилеров ниже работает как обычно.</p>";
     }, 8000);
 
-    // --- rendering ---
     function plural(n, one, few, many) {
       const m10 = n % 10, m100 = n % 100;
       if (m10 === 1 && m100 !== 11) return one;
@@ -461,7 +435,6 @@ function initBlock2() {
       );
     }
 
-    // Production pages through the found points instead of scrolling the list.
     const pagerEl = document.getElementById("offices-pagination");
     const PER_PAGE = 16;
     let page = 1;
@@ -551,7 +524,6 @@ function initBlock2() {
       if (active) active.scrollIntoView({ block: "nearest", behavior: "smooth" });
     }
 
-    // --- filter tabs ---
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
         tabs.forEach(function (t) {
@@ -567,7 +539,6 @@ function initBlock2() {
       });
     });
 
-    // --- search ---
     if (searchInput) {
       searchInput.addEventListener("input", function () {
         query = searchInput.value.trim();
@@ -576,7 +547,6 @@ function initBlock2() {
       });
     }
 
-    // --- region / city selects ---
     if (regionSelect) {
       regionSelect.addEventListener("change", function () {
         filterRegion = regionSelect.selectedIndex === 0 ? "" : regionSelect.value;
@@ -592,7 +562,6 @@ function initBlock2() {
       });
     }
 
-    // --- geolocation ---
     function locateMe() {
       if (!navigator.geolocation) {
         if (hintEl) hintEl.textContent = "Геолокация не поддерживается вашим браузером.";
@@ -632,9 +601,6 @@ function initBlock2() {
     render();
   }
 
-  // ==========================================================
-  // COVERAGE — live map + city selector
-  // ==========================================================
   const covEl = document.getElementById("coverage-map");
   if (covEl) {
     const CITIES = {
@@ -646,9 +612,6 @@ function initBlock2() {
     };
     let covMap = null;
 
-    /* same as the offices map: wait for ymaps.ready, and keep the city
-       selector below outside the guard so it still answers when the map
-       cannot load */
     function buildCoverage() {
       covMap = new ymaps.Map(covEl, {
         center: [41.6, 64.5],
@@ -674,7 +637,6 @@ function initBlock2() {
       setTimeout(function () { covMap.container.fitToViewport(); }, 250);
     }
 
-    /* the frame draws its own 39x82 control instead of the Yandex one */
     document.querySelectorAll(".map_coverage .map__zoom-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
         if (!covMap) return;
@@ -704,9 +666,6 @@ function initBlock2() {
     if (covSelect) covSelect.addEventListener("change", flyToCity);
     if (covForm) covForm.addEventListener("submit", function (e) { e.preventDefault(); flyToCity(); });
 
-    /* The address field opens out of the search button, the way production
-       does it. Pointers that support hover get it on hover from CSS alone;
-       this only has to handle the click path and the ways out of it. */
     const covFind = covForm && covForm.querySelector(".coverage-search__find");
     if (covFind) {
       const covField = covFind.querySelector(".coverage-search__field");
@@ -723,14 +682,10 @@ function initBlock2() {
         covFind.classList.remove("coverage-search__find_open");
         covForm.classList.remove("coverage-search_searching");
         covInput.value = "";
-        /* the close button keeps focus after its own click, and :focus-within
-           would hold the field open — drop focus wherever it sits inside */
         if (covFind.contains(document.activeElement)) document.activeElement.blur();
       }
 
       covBtn.addEventListener("click", function (e) {
-        /* closed, the button is the opener; open, it submits the search. Hover
-           opens the field without the class, so ask the field, not the class. */
         const shown = getComputedStyle(covField).visibility === "visible";
         if (!shown) {
           e.preventDefault();
@@ -751,9 +706,6 @@ function initBlock2() {
     }
   }
 
-  // ==========================================================
-  // HELP HUB (частые вопросы) — mobile drawer, char counter
-  // ==========================================================
   const helpSection = document.querySelector(".help");
   if (helpSection) {
     const toggle = helpSection.querySelector(".help__aside-tab");
@@ -775,13 +727,6 @@ function initBlock2() {
     }
   }
 
-
-  // ==========================================================
-  // SHARED — company tab strip
-  // The strip scrolls on a phone because four tabs are wider than the 354px
-  // pill. The frame for each page shows its own tab in view, so bring the
-  // active one into the mask instead of leaving it off-screen.
-  // ==========================================================
   document.querySelectorAll(".company-nav").forEach(function (nav) {
     const active = nav.querySelector(".company-nav__tab_active");
     if (!active) return;
@@ -792,10 +737,6 @@ function initBlock2() {
     nav.scrollLeft = Math.max(0, Math.min(centred, overflow));
   });
 
-  // ==========================================================
-  // SHARED — filter-search (chips + text search) for
-  // actions / news / services / faq / devices catalogs
-  // ==========================================================
   document.querySelectorAll(".filter-search").forEach(function (fs) {
     const section = fs.closest("section") || document;
     const grid = section.querySelector(
@@ -847,9 +788,6 @@ function initBlock2() {
     }
   });
 
-  // ==========================================================
-  // VACANCIES — category filter chips
-  // ==========================================================
   const vacFilter = document.querySelector(".vac-filter");
   const vacGrid = document.querySelector(".vac-grid");
   if (vacFilter && vacGrid) {
@@ -885,22 +823,9 @@ function initBlock2() {
   }
 }
 
-/* ============================================================
-   CDMA — tariff and service rails
-   Real Swiper carousels with a draggable scrollbar; the cards keep
-   their drawn 372px width, so slidesPerView is "auto".
-   ============================================================ */
 function initBlock3() {
   if (typeof Swiper === "undefined") return;
 
-  // Card width is Swiper's job: slidesPerView per breakpoint replaces the
-  // fixed widths the stylesheet used to carry.
-  //
-  // The card stays around the 340-370px the frames draw at every width and the
-  // number of visible cards changes instead. The rail bleeds to the viewport
-  // edge while .container steps its max-width, so its width does not grow
-  // evenly with the screen — hence a step wherever that jump happens, rather
-  // than four round numbers that leave 194px cards in the middle range.
   document.querySelectorAll(".cdma-rail").forEach(function (rail) {
     new Swiper(rail, {
       spaceBetween: 16,
@@ -926,11 +851,6 @@ function initBlock3() {
   });
 }
 
-/* ============================================================
-   TARIFF CONNECT MODAL (from production)
-   Triggers carry their data on data-* attributes; the static
-   build ships fixed buttons instead of the CMS-driven list.
-   ============================================================ */
 function initBlock4() {
   const tariffModal = document.getElementById("tariffConnectModal");
   if (!tariffModal) return;
@@ -971,7 +891,6 @@ function initBlock4() {
     }
   });
 }
-
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {

@@ -8,11 +8,6 @@ use Filament\Forms\Components\Select;
 
 class IconPicker
 {
-    /**
-     * A fixed list of the networks the site actually links to, rather than a
-     * browser over every icon set installed. Records seeded with an Iconify
-     * name are mapped onto the matching option when the form loads.
-     */
     public static function make(string $field = 'icon'): Select
     {
         return Select::make($field)

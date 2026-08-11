@@ -2,11 +2,6 @@ import type { ApiResponse, MenuItem, MenuLocation, Site, Social } from '~/types/
 
 const KEY = 'site'
 
-/**
- * The one fetch, made from app.vue. Everything below reads what it left in the
- * payload instead of asking again, so a slow API is hit once per page rather
- * than once per component that needs a menu or a phone number.
- */
 export function useSite() {
   const { locale } = useI18n()
   const { $api } = useNuxtApp()

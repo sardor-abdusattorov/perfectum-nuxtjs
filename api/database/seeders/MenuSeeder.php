@@ -131,9 +131,6 @@ class MenuSeeder extends Seeder
     }
 
     /**
-     * The same address in every language — the locale prefix is added by the
-     * site, not stored here.
-     *
      * @return array<string, string>
      */
     private function url(string $path): array

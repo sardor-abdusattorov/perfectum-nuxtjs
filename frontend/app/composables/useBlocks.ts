@@ -13,19 +13,12 @@ export function useBlocks(page: string) {
   )
 }
 
-/**
- * One block of a page. Returns an empty object until the payload arrives, so
- * a component reads `block.value.title` without guarding every access.
- */
 export function useBlock(page: string, key: string) {
   const { data } = useNuxtData<PageBlocks>(`blocks:${page}`)
 
   return computed<Block>(() => data.value?.blocks?.[key] ?? {})
 }
 
-/**
- * A repeatable inside a block, with the items an editor switched off removed.
- */
 export function published(items: unknown): Block[] {
   if (!Array.isArray(items)) {
     return []
