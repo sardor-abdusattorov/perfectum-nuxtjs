@@ -21,9 +21,6 @@ class TabSaveAction
                 ->label(__('app.action.save'))
                 ->keyBindings(['mod+s'])
                 ->action(function ($livewire) use ($key, $tabClass): void {
-                    // Dehydrated state, not the raw Livewire property: rich
-                    // text fields hold an editor document until dehydration
-                    // turns them into HTML strings.
                     $state = $livewire->form->getState();
 
                     $tabClass::save($state[$key] ?? []);

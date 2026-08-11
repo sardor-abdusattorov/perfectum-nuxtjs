@@ -25,8 +25,7 @@ class TextEditor
                 ['details', 'horizontalRule', 'lead', 'small', 'code'],
                 ['table', 'attachFiles'],
                 ['grid'],
-                ['undo', 'redo'],
-                ['fullscreen'],
+                ['undo', 'redo']
             ]);
     }
 }
