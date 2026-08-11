@@ -7,7 +7,7 @@ export function useBlocks(page: string) {
   const { $api } = useNuxtApp()
 
   return useAsyncData<PageBlocks>(
-    () => `blocks:${page}`,
+    `blocks:${page}`,
     () => $api<ApiResponse<PageBlocks>>(`/blocks/${page}`).then(response => response.data),
     { watch: [locale] },
   )
@@ -18,7 +18,7 @@ export function useBlocks(page: string) {
  * a component reads `block.value.title` without guarding every access.
  */
 export function useBlock(page: string, key: string) {
-  const { data } = useBlocks(page)
+  const { data } = useNuxtData<PageBlocks>(`blocks:${page}`)
 
   return computed<Block>(() => data.value?.blocks?.[key] ?? {})
 }

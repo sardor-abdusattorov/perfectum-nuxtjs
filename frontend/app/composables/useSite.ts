@@ -1,53 +1,64 @@
 import type { ApiResponse, MenuItem, MenuLocation, Site, Social } from '~/types/api'
 
+const KEY = 'site'
+
+/**
+ * The one fetch, made from app.vue. Everything below reads what it left in the
+ * payload instead of asking again, so a slow API is hit once per page rather
+ * than once per component that needs a menu or a phone number.
+ */
 export function useSite() {
   const { locale } = useI18n()
   const { $api } = useNuxtApp()
 
   return useAsyncData<Site>(
-    'site',
+    KEY,
     () => $api<ApiResponse<Site>>('/site').then(response => response.data),
     { watch: [locale] },
   )
 }
 
+function site() {
+  return useNuxtData<Site>(KEY).data
+}
+
 export function useSiteSettings() {
-  const { data } = useSite()
+  const data = site()
 
   return computed(() => data.value?.settings ?? null)
 }
 
 export function useMenu(location: MenuLocation) {
-  const { data } = useSite()
+  const data = site()
 
-  return computed<MenuItem[]>(() => data.value?.menus[location] ?? [])
+  return computed<MenuItem[]>(() => data.value?.menus?.[location] ?? [])
 }
 
 export function useSocials() {
-  const { data } = useSite()
+  const data = site()
 
   return computed<Social[]>(() => data.value?.socials ?? [])
 }
 
 export function useSetting() {
-  const { data } = useSite()
+  const data = site()
   const network = useNetwork()
 
   return (name: string, fallback = ''): string => {
-    const site = data.value?.settings.site
+    const settings = data.value?.settings.site
 
-    if (!site) {
+    if (!settings) {
       return fallback
     }
 
-    const own = network.value === 'cdma' ? site[`cdma_${name}`] : null
+    const own = network.value === 'cdma' ? settings[`cdma_${name}`] : null
 
-    return own ?? site[name] ?? fallback
+    return own ?? settings[name] ?? fallback
   }
 }
 
 export function useT() {
-  const { data } = useSite()
+  const data = site()
 
   return (key: string, fallback?: string): string => data.value?.translations[key] ?? fallback ?? key
 }

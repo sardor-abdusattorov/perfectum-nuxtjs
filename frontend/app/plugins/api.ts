@@ -6,7 +6,7 @@ export default defineNuxtPlugin(nuxtApp => {
   const api = $fetch.create({
     baseURL,
     retry: 1,
-    timeout: 5000,
+    timeout: import.meta.server ? 20000 : 8000,
     headers: { Accept: 'application/json' },
     onRequest({ options }) {
       const locale = nuxtApp.$i18n?.locale
