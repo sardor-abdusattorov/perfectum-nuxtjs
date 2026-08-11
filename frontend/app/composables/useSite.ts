@@ -17,10 +17,21 @@ export function useSiteSettings() {
   return computed(() => data.value?.settings ?? null)
 }
 
-export function useMenu(location: keyof Menus) {
+export function useMenu(location: 'header' | 'footer') {
   const { data } = useSite()
+  const network = useNetwork()
 
-  return computed<MenuItem[]>(() => data.value?.menus[location] ?? [])
+  return computed<MenuItem[]>(() => {
+    const menus = data.value?.menus
+
+    if (!menus) {
+      return []
+    }
+
+    const own = network.value === 'cdma' ? menus[`cdma_${location}`] : undefined
+
+    return own?.length ? own : menus[location] ?? []
+  })
 }
 
 export function useSocials() {
@@ -31,9 +42,19 @@ export function useSocials() {
 
 export function useSetting() {
   const { data } = useSite()
+  const network = useNetwork()
 
-  return (name: string, fallback = ''): string =>
-    data.value?.settings.site[name] ?? fallback
+  return (name: string, fallback = ''): string => {
+    const site = data.value?.settings.site
+
+    if (!site) {
+      return fallback
+    }
+
+    const own = network.value === 'cdma' ? site[`cdma_${name}`] : null
+
+    return own ?? site[name] ?? fallback
+  }
 }
 
 export function useT() {

@@ -43,7 +43,7 @@ class MenuForm
                             ->numeric()
                             ->minValue(1)
                             ->maxValue(4)
-                            ->visible(fn (Get $get): bool => $get('location') === MenuLocation::Footer->value
+                            ->visible(fn (Get $get): bool => in_array($get('location'), [MenuLocation::Footer->value, MenuLocation::CdmaFooter->value], true)
                                 && blank($get('parent_id'))),
 
                         TranslatableTabs::make('translations')

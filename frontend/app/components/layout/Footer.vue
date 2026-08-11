@@ -1,6 +1,15 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const menu = useMenu('footer')
 const socials = useSocials()
+const setting = useSetting()
+const t = useT()
+
+const phones = computed(() => [setting('phone_primary'), setting('phone_secondary')].filter(Boolean))
+
+function telHref(phone: string): string {
+  return `tel:${phone.replace(/[^+\d]/g, '')}`
+}
 </script>
 
 <template>
@@ -8,104 +17,77 @@ const socials = useSocials()
       <div class="container">
           <div class="footer__row">
               <div class="footer__brand">
-                  <a href="#" class="footer__logo">
+                  <NuxtLink :to="localePath('/')" class="footer__logo">
                       <img src="/images/logo.svg" alt="Perfectum 5G" />
-                  </a>
+                  </NuxtLink>
                   <div class="footer__contacts">
                       <div class="footer__contact">
-                          <h2 class="footer__contact-title">Головной офис</h2>
-                          <p class="footer__contact-text">Узбекистан, Ташкент, ул. Тараса Шевченко 21</p>
-                          <a class="footer__contact-link" href="#">Показать на карте</a>
+                          <h2 class="footer__contact-title">{{ t('footer.office_title', 'Головной офис') }}</h2>
+                          <p class="footer__contact-text">{{ t('footer.address') }}</p>
+                          <a
+                              v-if="setting('map_url')"
+                              class="footer__contact-link"
+                              :href="setting('map_url')"
+                              target="_blank"
+                              rel="noopener"
+                          >{{ t('footer.map_link', 'Показать на карте') }}</a>
                       </div>
                       <div class="footer__contact">
-                          <h2 class="footer__contact-title">Телефоны поддержки</h2>
+                          <h2 class="footer__contact-title">{{ t('footer.phones_title', 'Телефоны поддержки') }}</h2>
                           <ul class="footer__contact-list">
-                              <li><a class="footer__contact-phone" href="#">+998 98 127 0077</a></li>
-                              <li><a class="footer__contact-phone" href="#">+998 98 305 1111</a></li>
+                              <li v-for="phone in phones" :key="phone">
+                                  <a class="footer__contact-phone" :href="telHref(phone)">{{ phone }}</a>
+                              </li>
                           </ul>
-                          <p class="footer__contact-text">Для абонентов Perfectum — <a
-                                  class="footer__contact-phone" href="#">077</a></p>
+                          <p v-if="setting('phone_short')" class="footer__contact-text">
+                              {{ t('footer.phone_short_note') }} —
+                              <a class="footer__contact-phone" :href="telHref(setting('phone_short'))">{{ setting('phone_short') }}</a>
+                          </p>
                       </div>
                       <div class="footer__contact">
-                          <h2 class="footer__contact-title">Чат с оператором в Telegram</h2>
-                          <a class="footer__contact-link" href="#">@Perfectum_Support</a>
+                          <h2 class="footer__contact-title">{{ t('footer.telegram_title', 'Чат с оператором в Telegram') }}</h2>
+                          <a
+                              class="footer__contact-link"
+                              :href="setting('telegram_url', '#')"
+                              target="_blank"
+                              rel="noopener"
+                          >{{ setting('telegram') }}</a>
                       </div>
                       <div class="footer__contact footer__contact_email">
-                          <h2 class="footer__contact-title">Email</h2>
-                          <p class="footer__contact-text">Для получения информации —
-                              info@perfectum.uz<br />Горячая линия для жалоб и обращений — hotline@perfectum.uz
+                          <h2 class="footer__contact-title">{{ t('footer.email_title', 'Email') }}</h2>
+                          <p class="footer__contact-text">
+                              {{ t('footer.email_info_note') }} —
+                              <a :href="`mailto:${setting('email_info')}`">{{ setting('email_info') }}</a><br />
+                              {{ t('footer.email_hotline_note') }} —
+                              <a :href="`mailto:${setting('email_hotline')}`">{{ setting('email_hotline') }}</a>
                           </p>
-                          <p class="footer__contact-text">ООО "RWC" (Торговая марка Perfectum) | Все права
-                              защищены | Услуги лицензированы | Цены указаны с учетом всех налогов.</p>
+                          <p class="footer__contact-text">{{ t('footer.copyright') }}</p>
                       </div>
                   </div>
               </div>
-
               <div class="footer__nav">
-                  <div class="footer__menu">
-                      <h2 class="footer__heading">Домашний интернет</h2>
+                  <div v-for="column in menu" :key="column.id" class="footer__menu">
+                      <h2 class="footer__heading">{{ column.name }}</h2>
                       <ul class="footer__list">
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/coverage-area')">Карта покрытия</NuxtLink>
+                          <li v-for="item in column.children" :key="item.id" class="footer__list-item">
+                              <LayoutMenuLink :item="item" link-class="footer__list-link" />
                           </li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/offices')">Офисы продаж</NuxtLink>
-                          </li>
-                          <li class="footer__list-item"><a class="footer__list-link" href="#">Личный кабинет</a>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="footer__menu">
-                      <h2 class="footer__heading">Мобильная связь</h2>
-                      <ul class="footer__list">
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/tariffs')">Тарифы</NuxtLink></li>
-                          <li class="footer__list-item"><a class="footer__list-link" href="#">Корпоративным
-                                  клиентам</a></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/services')">Услуги</NuxtLink></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/numbers')">Свободные номера</NuxtLink>
-                          </li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/devices')">Устройства</NuxtLink></li>
-                          <li class="footer__list-item"><a class="footer__list-link" href="#">Сегодня в
-                                  продаже</a></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/coverage-area')">Зона покрытия</NuxtLink>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="footer__menu">
-                      <h2 class="footer__heading">Полезное</h2>
-                      <ul class="footer__list">
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/actions')">Акции</NuxtLink></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/news')">Новости</NuxtLink></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/offices')">Офисы</NuxtLink></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/offices')">Дилеры</NuxtLink></li>
-                          <li class="footer__list-item"><a class="footer__list-link" href="#">Как подключиться</a>
-                          </li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/faq')">Полезно знать</NuxtLink>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="footer__menu">
-                      <h2 class="footer__heading">Информация</h2>
-                      <ul class="footer__list">
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/procurement')">Закупки</NuxtLink></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/careers')">Карьера</NuxtLink></li>
-                          <li class="footer__list-item"><NuxtLink class="footer__list-link" :to="localePath('/contacts')">Контакты</NuxtLink></li>
-                          <li class="footer__list-item"><a class="footer__list-link" href="#">Юридические
-                                  документы</a></li>
                       </ul>
                   </div>
                   <div class="footer__widgets">
                       <div class="footer__widget">
-                          <h2 class="footer__heading">Мобильное приложение</h2>
+                          <h2 class="footer__heading">{{ t('footer.app_title', 'Мобильное приложение') }}</h2>
                           <div class="footer__stores">
-                              <a class="store store_small" href="#">
+                              <a class="store store_small" :href="setting('google_play_url', '#')" target="_blank" rel="noopener">
                                   <img src="/images/google_play.svg" alt="Google Play" />
                               </a>
-                              <a class="store store_small" href="#">
+                              <a class="store store_small" :href="setting('app_store_url', '#')" target="_blank" rel="noopener">
                                   <img src="/images/apple.svg" alt="App Store" />
                               </a>
                           </div>
                       </div>
                       <div class="footer__widget">
-                          <h2 class="footer__heading">Социальные сети</h2>
+                          <h2 class="footer__heading">{{ t('footer.socials_title', 'Социальные сети') }}</h2>
                           <div class="footer__social">
                               <a
                                   v-for="social in socials"

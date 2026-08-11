@@ -316,4 +316,11 @@ return [
         'open' => 'Ochiq',
         'closed' => 'Yopiq',
     ],
+
+    'menu_location' => [
+        'header' => '5G yuqori panel',
+        'footer' => '5G pastki panel',
+        'cdma_header' => 'CDMA yuqori panel',
+        'cdma_footer' => 'CDMA pastki panel',
+    ],
 ];

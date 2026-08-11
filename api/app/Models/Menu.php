@@ -20,6 +20,7 @@ class Menu extends Model
     protected $fillable = [
         'parent_id',
         'location',
+        'key',
         'column_position',
         'name',
         'url',

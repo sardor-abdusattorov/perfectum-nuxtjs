@@ -23,9 +23,9 @@ export interface MenuItem {
   children: MenuItem[]
 }
 
-export type MenuLocation = 'header' | 'footer'
+export type MenuLocation = 'header' | 'footer' | 'cdma_header' | 'cdma_footer'
 
-export type Menus = Record<MenuLocation, MenuItem[]>
+export type Menus = Partial<Record<MenuLocation, MenuItem[]>>
 
 export type Translations = Record<string, Record<string, string>>
 

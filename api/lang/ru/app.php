@@ -316,4 +316,11 @@ return [
         'open' => 'Открыта',
         'closed' => 'Закрыта',
     ],
+
+    'menu_location' => [
+        'header' => 'Шапка 5G',
+        'footer' => 'Подвал 5G',
+        'cdma_header' => 'Шапка CDMA',
+        'cdma_footer' => 'Подвал CDMA',
+    ],
 ];

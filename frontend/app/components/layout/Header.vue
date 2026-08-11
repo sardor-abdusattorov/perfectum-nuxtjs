@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const menu = useMenu('header')
+const setting = useSetting()
+const t = useT()
 </script>
 
 <template>
@@ -15,99 +18,37 @@ const localePath = useLocalePath()
               </div>
               <nav class="header__nav">
                   <ul class="header__menu">
-                      <li class="header__menu-item header__menu-item_has-submenu">
-                          <a class="header__link" href="#">Мобильная связь</a>
-                          <div class="header__submenu">
+                      <li
+                          v-for="item in menu"
+                          :key="item.id"
+                          class="header__menu-item"
+                          :class="item.children.length && 'header__menu-item_has-submenu'"
+                      >
+                          <LayoutMenuLink :item="item" link-class="header__link" />
+
+                          <div v-if="item.children.length" class="header__submenu">
                               <ul class="header__submenu-list">
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/tariffs')">Тарифы</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/numbers')">Свободные номера</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/services')">Услуги</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/devices')">Каталог устройств</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/actions')">Акции</NuxtLink>
+                                  <li v-for="child in item.children" :key="child.id" class="header__submenu-item">
+                                      <LayoutMenuLink :item="child" link-class="header__submenu-link" />
                                   </li>
                               </ul>
                           </div>
-                      </li>
-                      <li class="header__menu-item">
-                          <a class="header__link" href="#">Интернет</a>
-                      </li>
-                      <li class="header__menu-item">
-                          <a class="header__link" href="#">Для Дома и офиса</a>
-                      </li>
-                      <li class="header__menu-item">
-                          <a class="header__link" href="#">Онлайн-сервисы</a>
-                      </li>
-                      <li class="header__menu-item header__menu-item_has-submenu">
-                          <a class="header__link" href="#">Поддержка</a>
-                          <div class="header__submenu">
-                              <ul class="header__submenu-list">
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/help')">Помощь</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/faq')">Вопросы и ответы</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/coverage-area')">Карта покрытия</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/offices')">Офисы продаж</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/documents')">Документы</NuxtLink>
-                                  </li>
-                                  <li class="header__submenu-item">
-                                      <NuxtLink class="header__submenu-link" :to="localePath('/contacts')">Контакты</NuxtLink>
-                                  </li>
-                              </ul>
-                          </div>
-                      </li>
-                      <li class="header__menu-item">
-                          <NuxtLink class="header__link" :to="localePath('/news')">Новости</NuxtLink>
                       </li>
                   </ul>
               </nav>
               <div class="header__info">
-                  <div class="header__lang">
-                      <button type="button" class="header__lang-toggle">
-                          <span class="header__lang-current">RU</span>
-                          <svg viewBox="0 0 24 24" fill="none">
-                              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
-                                  stroke-linecap="round" stroke-linejoin="round" />
-                          </svg>
-                      </button>
-                      <div class="header__lang-menu">
-                          <button type="button" class="header__lang-option header__lang-option_active">
-                              RU
-                          </button>
-                          <button type="button" class="header__lang-option">UZ</button>
-                          <button type="button" class="header__lang-option">EN</button>
-                      </div>
-                  </div>
-                  <a href="#" class="header__account">
+                  <LayoutLangSwitcher />
+
+                  <a :href="setting('account_url', '#')" class="header__account" target="_blank" rel="noopener">
                       <span class="header__account-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none">
-                              <path
-                                  d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471"
-                                  stroke="white" stroke-width="2" stroke-linecap="round" />
-                              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                           </svg>
                       </span>
-                      Личный кабинет
+                      {{ t('header.account', 'Личный кабинет') }}
                   </a>
                   <div class="header__hamburger">
-                      <button type="button" class="header__hamburger-button" aria-label="Открыть меню" aria-expanded="false">
+                      <button type="button" class="header__hamburger-button" :aria-label="t('header.open_menu', 'Открыть меню')" aria-expanded="false">
                           <span class="header__hamburger-line"></span>
                           <span class="header__hamburger-line"></span>
                           <span class="header__hamburger-line"></span>

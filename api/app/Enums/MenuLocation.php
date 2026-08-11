@@ -8,13 +8,12 @@ enum MenuLocation: string
 {
     case Header = 'header';
     case Footer = 'footer';
+    case CdmaHeader = 'cdma_header';
+    case CdmaFooter = 'cdma_footer';
 
     public function getLabel(): string
     {
-        return match ($this) {
-            self::Header => __('app.label.menu_header'),
-            self::Footer => __('app.label.menu_footer'),
-        };
+        return __("app.menu_location.{$this->value}");
     }
 
     /**
