@@ -11,6 +11,7 @@ return [
     ],
 
     'label' => [
+        'section_texts' => 'Тексты секции',
         'slides' => 'Слайды',
         'content' => 'Контент',
         'homepage' => 'Главная страница',

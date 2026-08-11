@@ -11,6 +11,7 @@ return [
     ],
 
     'label' => [
+        'section_texts' => 'Boʻlim matnlari',
         'slides' => 'Slaydlar',
         'content' => 'Kontent',
         'homepage' => 'Bosh sahifa',

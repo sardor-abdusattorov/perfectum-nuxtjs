@@ -11,6 +11,7 @@ return [
     ],
 
     'label' => [
+        'section_texts' => 'Section texts',
         'slides' => 'Slides',
         'content' => 'Content',
         'homepage' => 'Home page',

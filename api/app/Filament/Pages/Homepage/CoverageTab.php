@@ -7,6 +7,7 @@ use App\Enums\ContentBlockKey;
 use App\Filament\Support\ImageUpload;
 use App\Filament\Support\TabSaveAction;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 
 class CoverageTab extends ContentTab
@@ -19,22 +20,25 @@ class CoverageTab extends ContentTab
     public static function make(): Tab
     {
         return Tab::make(__('app.section.coverage'))
-            ->description(__('app.helper.section_texts_only'))
             ->schema([
-                TranslatableTabs::make('translations')
+                Section::make(__('app.label.section_texts'))
+                    ->description(__('app.helper.section_texts_only'))
                     ->schema([
-                        TextInput::make('coverage.title')
-                            ->label(__('app.label.title')),
+                        TranslatableTabs::make('translations')
+                            ->schema([
+                                TextInput::make('coverage.title')
+                                    ->label(__('app.label.title')),
 
-                        TextInput::make('coverage.subtitle')
-                            ->label(__('app.label.subtitle')),
+                                TextInput::make('coverage.subtitle')
+                                    ->label(__('app.label.subtitle')),
 
-                        TextInput::make('coverage.all_label')
-                            ->label(__('app.label.all_link_label')),
+                                TextInput::make('coverage.all_label')
+                                    ->label(__('app.label.all_link_label')),
+                            ]),
+
+                        ImageUpload::make('content-blocks', 'coverage.map')
+                            ->label(__('app.label.map_image')),
                     ]),
-
-                ImageUpload::make('content-blocks', 'coverage.map')
-                    ->label(__('app.label.map_image')),
 
                 TabSaveAction::make('coverage', self::class),
             ]);
