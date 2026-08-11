@@ -175,7 +175,7 @@ return [
         'tender_files' => 'Tender documents, up to 20 MB per file',
         'price' => 'In soum, no spaces or signs',
         'specs' => '«Spec — value» pairs for the device page',
-        'icon' => 'Type the brand name in latin — telegram, instagram, youtube',
+        'icon' => 'Pick a network from the list',
         'social_name' => 'Visible in the admin panel and to screen readers only',
         'page_slug' => 'Latin letters — the address is built from it: /pages/cookie-policy',
         'page_seo' => 'Leave empty and the values from the main settings are used',

@@ -14,11 +14,13 @@ class IconName
      * second icon library that has to stay in sync with this one. Iconify
      * names are accepted too — earlier records were seeded with them, and a
      * set that dropped an icon upstream falls through to the local brand set.
+     *
+     * @param  array<string, string>  $attributes
      */
-    public static function svg(?string $name): ?string
+    public static function svg(?string $name, array $attributes = []): ?string
     {
         foreach (static::candidates($name) as $candidate) {
-            $svg = static::render($candidate);
+            $svg = static::render($candidate, $attributes);
 
             if ($svg !== null) {
                 return $svg;
@@ -70,10 +72,17 @@ class IconName
         return array_values(array_unique($names));
     }
 
-    private static function render(string $name): ?string
+    /**
+     * @param  array<string, string>  $attributes
+     */
+    private static function render(string $name, array $attributes = []): ?string
     {
         try {
-            return svg($name, '', ['aria-hidden' => 'true', 'focusable' => 'false'])->toHtml();
+            return svg($name, '', [
+                'aria-hidden' => 'true',
+                'focusable' => 'false',
+                ...$attributes,
+            ])->toHtml();
         } catch (SvgNotFound) {
             return null;
         }

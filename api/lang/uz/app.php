@@ -175,7 +175,7 @@ return [
         'tender_files' => 'Tender hujjatlari, fayliga 20 MB gacha',
         'price' => 'Soʻmda, boʻshliq va belgilarsiz',
         'specs' => 'Qurilma sahifasi uchun «xususiyat — qiymat» juftliklari',
-        'icon' => 'Brend nomini lotin harflarida yozing — telegram, instagram, youtube',
+        'icon' => 'Roʻyxatdan ijtimoiy tarmoqni tanlang',
         'social_name' => 'Faqat admin panelda va skrinrider uchun koʻrinadi',
         'page_slug' => 'Lotin harflarida — manzil shundan yigʻiladi: /pages/cookie-policy',
         'page_seo' => 'Boʻsh qoldirilsa — asosiy sozlamalardagi qiymatlar olinadi',

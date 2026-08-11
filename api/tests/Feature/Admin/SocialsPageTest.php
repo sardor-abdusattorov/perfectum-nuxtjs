@@ -43,3 +43,29 @@ it('survives an icon no installed set provides', function (): void {
         ->assertOk()
         ->assertSee('Broken');
 });
+
+it('offers a fixed list of networks instead of every icon set', function (): void {
+    $this->actingAs(socialsAdmin())
+        ->get('/admin/socials/create')
+        ->assertOk()
+        ->assertSee('si-instagram')
+        ->assertSee('brand-linkedin')
+        ->assertDontSee('heroicon-o-academic-cap');
+});
+
+it('shows an old iconify value as the matching option', function (): void {
+    $social = Social::create([
+        'name' => 'Instagram',
+        'icon' => 'simple-icons:instagram',
+        'url' => 'https://instagram.com/x',
+        'sort' => 1,
+    ]);
+
+    Social::withoutEvents(fn () => $social->newQuery()->whereKey($social->getKey())
+        ->update(['icon' => 'simple-icons:instagram']));
+
+    $this->actingAs(socialsAdmin())
+        ->get('/admin/socials/'.$social->getKey().'/edit')
+        ->assertOk()
+        ->assertSee('si-instagram');
+});

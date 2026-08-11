@@ -2,19 +2,27 @@
 
 namespace App\Filament\Support;
 
-use Guava\IconPicker\Forms\Components\IconPicker as GuavaIconPicker;
+use App\Enums\SocialIcon;
+use App\Support\IconName;
+use Filament\Forms\Components\Select;
 
 class IconPicker
 {
     /**
-     * Icon field storing a Blade Icons name. Kept behind this class so the
-     * whole panel switches pickers from one place.
+     * A fixed list of the networks the site actually links to, rather than a
+     * browser over every icon set installed. Records seeded with an Iconify
+     * name are mapped onto the matching option when the form loads.
      */
-    public static function make(string $field = 'icon'): GuavaIconPicker
+    public static function make(string $field = 'icon'): Select
     {
-        return GuavaIconPicker::make($field)
+        return Select::make($field)
             ->label(__('app.label.icon'))
             ->helperText(__('app.helper.icon'))
-            ->required();
+            ->options(SocialIcon::getIconOptions())
+            ->allowHtml()
+            ->searchable()
+            ->native(false)
+            ->required()
+            ->afterStateHydrated(fn (Select $component, ?string $state) => $component->state(IconName::blade($state)));
     }
 }
