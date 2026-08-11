@@ -45,7 +45,7 @@ class CategoryForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (Set $set, ?string $state, string $operation) => $operation === 'create'
+                                    ->afterStateUpdated(fn (Set $set, Get $get, ?string $state, string $operation) => $operation === 'create' && blank($get('slug'))
                                         ? $set('slug', Str::slug($state ?? ''))
                                         : null),
                             ]),

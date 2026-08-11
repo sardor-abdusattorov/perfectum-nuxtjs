@@ -12,6 +12,7 @@ class SlugInput
             ->label(__('app.label.slug'))
             ->helperText(__('app.helper.slug'))
             ->unique(ignoreRecord: true)
-            ->alphaDash();
+            ->alphaDash()
+            ->maxLength(255);
     }
 }
