@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class Social extends Model
 {
@@ -29,23 +28,13 @@ class Social extends Model
         return $query->where('status', true);
     }
 
+    public function scopeOrdered(Builder $query): Builder
+    {
+        return $query->orderBy('sort')->orderBy('id');
+    }
+
     public static function cacheKey(): string
     {
         return 'socials.published';
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, self>
-     */
-    public static function published(): \Illuminate\Database\Eloquent\Collection
-    {
-        return Cache::remember(
-            static::cacheKey(),
-            static::CACHE_TTL,
-            fn (): \Illuminate\Database\Eloquent\Collection => static::query()
-                ->published()
-                ->orderBy('sort')
-                ->get(),
-        );
     }
 }

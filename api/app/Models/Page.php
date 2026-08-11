@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
@@ -38,18 +37,14 @@ class Page extends Model
         return 'slug';
     }
 
-    public static function cacheKey(string $slug): string
+    public static function cacheKey(string $slug, string $locale): string
     {
-        return "pages.{$slug}";
+        return "pages.{$slug}.{$locale}";
     }
 
     public function resolveRouteBinding($value, $field = null): ?Model
     {
-        return Cache::remember(
-            static::cacheKey((string) $value),
-            static::CACHE_TTL,
-            fn (): ?self => static::query()->published()->where('slug', $value)->first(),
-        );
+        return static::query()->published()->where('slug', $value)->first();
     }
 
     public function imageUrl(): ?string

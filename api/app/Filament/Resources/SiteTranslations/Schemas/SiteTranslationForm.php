@@ -26,7 +26,8 @@ class SiteTranslationForm
                         TextInput::make('key')
                             ->label(__('app.label.key'))
                             ->helperText(__('app.helper.unique_translation_identifier'))
-                            ->required(),
+                            ->required()
+                            ->unique(ignoreRecord: true),
 
                         TranslatableTabs::make('translations')
                             ->schema([

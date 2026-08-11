@@ -137,38 +137,73 @@ it('returns published networks in the configured order', function (): void {
         ->assertJsonPath('data.socials.0.icon', 'simple-icons:telegram');
 });
 
-it('groups published translations by category', function (): void {
+it('returns published translations keyed by key', function (): void {
     SiteTranslation::create([
-        'category' => 'cookie',
-        'key' => 'accept',
+        'category' => 'app',
+        'key' => 'cookie.accept',
         'value' => ['ru' => 'Принять', 'uz' => 'Qabul qilish'],
         'is_published' => true,
     ]);
 
     SiteTranslation::create([
-        'category' => 'cookie',
-        'key' => 'draft',
+        'category' => 'app',
+        'key' => 'cookie.draft',
         'value' => ['ru' => 'Черновик'],
         'is_published' => false,
     ]);
 
-    $this->getJson(route('api.v1.site'), ['X-Locale' => 'uz'])
+    $translations = $this->getJson(route('api.v1.site'), ['X-Locale' => 'uz'])
         ->assertOk()
-        ->assertJsonPath('data.translations.cookie.accept', 'Qabul qilish')
-        ->assertJsonMissingPath('data.translations.cookie.draft');
+        ->json('data.translations');
+
+    expect($translations)
+        ->toHaveKey('cookie.accept', 'Qabul qilish')
+        ->not->toHaveKey('cookie.draft');
 });
 
 it('refreshes the cached translations when one changes', function (): void {
     $translation = SiteTranslation::create([
-        'category' => 'cookie',
-        'key' => 'accept',
+        'category' => 'app',
+        'key' => 'cookie.accept',
         'value' => ['ru' => 'Было'],
         'is_published' => true,
     ]);
 
-    $this->getJson(route('api.v1.site'))->assertJsonPath('data.translations.cookie.accept', 'Было');
+    expect($this->getJson(route('api.v1.site'))->json('data.translations'))
+        ->toHaveKey('cookie.accept', 'Было');
 
     $translation->update(['value' => ['ru' => 'Стало']]);
 
-    $this->getJson(route('api.v1.site'))->assertJsonPath('data.translations.cookie.accept', 'Стало');
+    expect($this->getJson(route('api.v1.site'))->json('data.translations'))
+        ->toHaveKey('cookie.accept', 'Стало');
+});
+
+it('caches the socials as plain data so a second request can read them back', function (): void {
+    Social::create(['name' => 'Telegram', 'icon' => 'si-telegram', 'url' => 'https://t.me/x', 'sort' => 1]);
+
+    $first = $this->getJson(route('api.v1.site'))->assertOk()->json('data.socials');
+
+    expect(Cache::get(Social::cacheKey()))->toBeArray();
+
+    $second = $this->getJson(route('api.v1.site'))->assertOk()->json('data.socials');
+
+    expect($second)->toBe($first);
+});
+
+it('caches the menus as plain data so a second request can read them back', function (): void {
+    Menu::create([
+        'location' => MenuLocation::Header,
+        'name' => ['ru' => 'Тарифы'],
+        'url' => ['ru' => '/tariffs'],
+        'sort' => 1,
+        'status' => true,
+    ]);
+
+    $first = $this->getJson(route('api.v1.site'), ['X-Locale' => 'ru'])->assertOk()->json('data.menus.header');
+
+    expect(Cache::get(Menu::cacheKey(MenuLocation::Header, 'ru')))->toBeArray();
+
+    $second = $this->getJson(route('api.v1.site'), ['X-Locale' => 'ru'])->assertOk()->json('data.menus.header');
+
+    expect($second)->toBe($first);
 });

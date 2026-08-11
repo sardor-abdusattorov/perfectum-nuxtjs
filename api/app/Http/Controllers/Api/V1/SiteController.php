@@ -23,8 +23,8 @@ class SiteController
             'data' => [
                 'settings' => $this->settings(),
                 'menus' => $this->menus(),
-                'socials' => SocialResource::collection(Social::published())->resolve(),
-                'translations' => SiteTranslation::grouped(),
+                'socials' => $this->socials(),
+                'translations' => SiteTranslation::flat(),
             ],
         ]);
     }
@@ -44,6 +44,20 @@ class SiteController
             ],
             'site' => SiteSettings::published(),
         ];
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function socials(): array
+    {
+        return Cache::remember(
+            Social::cacheKey(),
+            Social::CACHE_TTL,
+            fn (): array => SocialResource::collection(
+                Social::query()->published()->ordered()->get()
+            )->resolve(),
+        );
     }
 
     /**

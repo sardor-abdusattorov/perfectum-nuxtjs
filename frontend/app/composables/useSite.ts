@@ -60,13 +60,5 @@ export function useSetting() {
 export function useT() {
   const { data } = useSite()
 
-  return (path: string, fallback?: string): string => {
-    const [category, key] = path.split('.')
-
-    if (!category || !key) {
-      return fallback ?? path
-    }
-
-    return data.value?.translations[category]?.[key] ?? fallback ?? key
-  }
+  return (key: string, fallback?: string): string => data.value?.translations[key] ?? fallback ?? key
 }

@@ -26,7 +26,6 @@ Homestead.yaml
 Thumbs.db
 laravel-idea.xml
 perfectum-new.xml
-phpunit.xml
 
 # Database dumps must never be committed
 /api/*.sql

@@ -60,15 +60,17 @@ if (! function_exists('clear_site_settings_cache')) {
 if (! function_exists('clear_pages_cache')) {
     function clear_pages_cache(?string $slug = null): void
     {
-        if ($slug !== null) {
-            Cache::forget(Page::cacheKey($slug));
+        $locales = config('app.locales', [config('app.locale')]);
 
-            return;
-        }
+        $slugs = $slug !== null
+            ? collect([$slug])
+            : Page::query()->pluck('slug');
 
-        Page::query()->pluck('slug')->each(
-            fn (string $value) => Cache::forget(Page::cacheKey($value))
-        );
+        $slugs->each(function (string $value) use ($locales): void {
+            foreach ($locales as $locale) {
+                Cache::forget(Page::cacheKey($value, $locale));
+            }
+        });
     }
 }
 

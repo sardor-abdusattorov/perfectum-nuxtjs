@@ -33,9 +33,9 @@ class SiteTranslation extends Model
     }
 
     /**
-     * @return array<string, array<string, string>>
+     * @return array<string, string>
      */
-    public static function grouped(?string $locale = null): array
+    public static function flat(?string $locale = null): array
     {
         $locale ??= app()->getLocale();
 
@@ -55,7 +55,7 @@ class SiteTranslation extends Model
                             ?? (reset($translations) ?: null);
 
                         if ($value !== null) {
-                            $carry[$row->category][$row->key] = $value;
+                            $carry[$row->key] = $value;
                         }
 
                         return $carry;

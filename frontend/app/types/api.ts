@@ -27,7 +27,7 @@ export type MenuLocation = 'header' | 'footer' | 'cdma_header' | 'cdma_footer'
 
 export type Menus = Partial<Record<MenuLocation, MenuItem[]>>
 
-export type Translations = Record<string, Record<string, string>>
+export type Translations = Record<string, string>
 
 export interface PageBlocks {
   page: string

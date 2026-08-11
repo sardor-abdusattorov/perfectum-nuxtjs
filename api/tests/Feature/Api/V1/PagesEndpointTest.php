@@ -97,3 +97,19 @@ it('drops the old cache entry when the slug changes', function (): void {
     $this->getJson(route('api.v1.pages.show', ['page' => 'cookie-policy']))->assertNotFound();
     $this->getJson(route('api.v1.pages.show', ['page' => 'cookie']))->assertOk();
 });
+
+it('caches the page as plain data so a second request can read it back', function (): void {
+    makePage();
+
+    $first = $this->getJson(route('api.v1.pages.show', ['page' => 'cookie-policy']), ['X-Locale' => 'ru'])
+        ->assertOk()
+        ->json('data');
+
+    expect(Cache::get(Page::cacheKey('cookie-policy', 'ru')))->toBeArray();
+
+    $second = $this->getJson(route('api.v1.pages.show', ['page' => 'cookie-policy']), ['X-Locale' => 'ru'])
+        ->assertOk()
+        ->json('data');
+
+    expect($second)->toBe($first);
+});
