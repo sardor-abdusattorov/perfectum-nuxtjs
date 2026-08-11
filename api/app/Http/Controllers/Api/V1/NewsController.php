@@ -10,7 +10,6 @@ use App\Models\News;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewsController
 {
@@ -31,14 +30,8 @@ class NewsController
         return NewsResource::collection($this->paginate($news, $request, ['title']));
     }
 
-    public function show(string $slug): JsonResponse
+    public function show(News $news): JsonResponse
     {
-        $news = News::query()->published()->with('category')->where('slug', $slug)->first();
-
-        if ($news === null) {
-            throw new NotFoundHttpException;
-        }
-
-        return response()->json(['data' => NewsResource::make($news)->resolve()]);
+        return response()->json(['data' => NewsResource::make($news->loadMissing('category'))->resolve()]);
     }
 }

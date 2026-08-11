@@ -10,7 +10,6 @@ use App\Models\Action;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ActionController
 {
@@ -28,14 +27,8 @@ class ActionController
         return ActionResource::collection($this->paginate($records, $request, ['title']));
     }
 
-    public function show(string $slug): JsonResponse
+    public function show(Action $action): JsonResponse
     {
-        $record = Action::query()->published()->with('category')->where('slug', $slug)->first();
-
-        if ($record === null) {
-            throw new NotFoundHttpException;
-        }
-
-        return response()->json(['data' => ActionResource::make($record)->resolve()]);
+        return response()->json(['data' => ActionResource::make($action->loadMissing('category'))->resolve()]);
     }
 }

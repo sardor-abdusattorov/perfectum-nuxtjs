@@ -10,7 +10,6 @@ use App\Models\Device;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeviceController
 {
@@ -28,14 +27,8 @@ class DeviceController
         return DeviceResource::collection($this->paginate($records, $request, ['name', 'brand']));
     }
 
-    public function show(string $slug): JsonResponse
+    public function show(Device $device): JsonResponse
     {
-        $record = Device::query()->published()->with('category')->where('slug', $slug)->first();
-
-        if ($record === null) {
-            throw new NotFoundHttpException;
-        }
-
-        return response()->json(['data' => DeviceResource::make($record)->resolve()]);
+        return response()->json(['data' => DeviceResource::make($device->loadMissing('category'))->resolve()]);
     }
 }

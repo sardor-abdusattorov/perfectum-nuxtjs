@@ -93,7 +93,7 @@ it('puts a featured record first', function (): void {
 it('serves a record by slug in the requested locale', function (): void {
     news();
 
-    $this->getJson(route('api.v1.news.show', ['slug' => 'zagolovok']), ['X-Locale' => 'uz'])
+    $this->getJson(route('api.v1.news.show', ['news' => 'zagolovok']), ['X-Locale' => 'uz'])
         ->assertOk()
         ->assertJsonPath('data.title', 'Sarlavha');
 });
@@ -101,7 +101,7 @@ it('serves a record by slug in the requested locale', function (): void {
 it('returns not found for an unpublished record', function (): void {
     news(['status' => false]);
 
-    $this->getJson(route('api.v1.news.show', ['slug' => 'zagolovok']))->assertNotFound();
+    $this->getJson(route('api.v1.news.show', ['news' => 'zagolovok']))->assertNotFound();
 });
 
 it('lists categories of one type only', function (): void {

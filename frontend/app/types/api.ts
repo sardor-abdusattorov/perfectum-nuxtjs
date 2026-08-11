@@ -49,6 +49,13 @@ export interface Social {
   url: string
 }
 
+export interface Site {
+  settings: Settings
+  menus: Menus
+  socials: Social[]
+  translations: Translations
+}
+
 export interface Metrics {
   yandex?: string
   google?: string

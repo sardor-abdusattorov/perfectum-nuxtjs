@@ -10,7 +10,6 @@ use App\Models\Vacancy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class VacancyController
 {
@@ -25,14 +24,8 @@ class VacancyController
         return VacancyResource::collection($this->paginate($records, $request, ['title']));
     }
 
-    public function show(string $slug): JsonResponse
+    public function show(Vacancy $vacancy): JsonResponse
     {
-        $record = Vacancy::query()->published()->where('slug', $slug)->first();
-
-        if ($record === null) {
-            throw new NotFoundHttpException;
-        }
-
-        return response()->json(['data' => VacancyResource::make($record)->resolve()]);
+        return response()->json(['data' => VacancyResource::make($vacancy)->resolve()]);
     }
 }

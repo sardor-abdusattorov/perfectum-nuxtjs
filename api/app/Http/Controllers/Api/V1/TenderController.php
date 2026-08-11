@@ -10,7 +10,6 @@ use App\Models\Tender;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TenderController
 {
@@ -25,14 +24,8 @@ class TenderController
         return TenderResource::collection($this->paginate($records, $request, ['title']));
     }
 
-    public function show(string $slug): JsonResponse
+    public function show(Tender $tender): JsonResponse
     {
-        $record = Tender::query()->published()->where('slug', $slug)->first();
-
-        if ($record === null) {
-            throw new NotFoundHttpException;
-        }
-
-        return response()->json(['data' => TenderResource::make($record)->resolve()]);
+        return response()->json(['data' => TenderResource::make($tender)->resolve()]);
     }
 }

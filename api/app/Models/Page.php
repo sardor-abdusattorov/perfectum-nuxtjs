@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +11,7 @@ use Spatie\Translatable\HasTranslations;
 class Page extends Model
 {
     use HasTranslations;
+    use Publishable;
 
     public const CACHE_TTL = 86400;
 
@@ -37,22 +38,17 @@ class Page extends Model
         return 'slug';
     }
 
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->where('status', true);
-    }
-
     public static function cacheKey(string $slug): string
     {
         return "pages.{$slug}";
     }
 
-    public static function findPublished(string $slug): ?self
+    public function resolveRouteBinding($value, $field = null): ?Model
     {
         return Cache::remember(
-            static::cacheKey($slug),
+            static::cacheKey((string) $value),
             static::CACHE_TTL,
-            fn (): ?self => static::query()->published()->where('slug', $slug)->first(),
+            fn (): ?self => static::query()->published()->where('slug', $value)->first(),
         );
     }
 
