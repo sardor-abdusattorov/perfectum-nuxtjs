@@ -29,11 +29,7 @@ class SiteSettingsSeeder extends Seeder
             'phone_secondary' => '+998 98 305 1111',
             'phone_short' => '077',
 
-            'telegram' => '@Perfectum_Support',
             'telegram_url' => 'https://t.me/Perfectum_Support',
-
-            'email_info' => 'info@perfectum.uz',
-            'email_hotline' => 'hotline@perfectum.uz',
 
             'map_url' => 'https://yandex.uz/maps/-/CDvOZK1p',
 

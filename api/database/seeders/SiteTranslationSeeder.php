@@ -49,11 +49,10 @@ class SiteTranslationSeeder extends Seeder
                 ],
                 'telegram_title' => ['ru' => 'Чат с оператором в Telegram', 'uz' => 'Telegramda operator bilan chat', 'en' => 'Chat with an operator on Telegram'],
                 'email_title' => ['ru' => 'Email', 'uz' => 'Email', 'en' => 'Email'],
-                'email_info_note' => ['ru' => 'Для получения информации', 'uz' => 'Maʼlumot olish uchun', 'en' => 'For information'],
-                'email_hotline_note' => [
-                    'ru' => 'Горячая линия для жалоб и обращений',
-                    'uz' => 'Shikoyat va murojaatlar uchun ishonch telefoni',
-                    'en' => 'Hotline for complaints and requests',
+                'emails' => [
+                    'ru' => "Для получения информации — info@perfectum.uz\nГорячая линия для жалоб и обращений — hotline@perfectum.uz",
+                    'uz' => "Maʼlumot olish uchun — info@perfectum.uz\nShikoyat va murojaatlar uchun ishonch telefoni — hotline@perfectum.uz",
+                    'en' => "For information — info@perfectum.uz\nHotline for complaints and requests — hotline@perfectum.uz",
                 ],
                 'copyright' => [
                     'ru' => 'ООО «RWC» (Торговая марка Perfectum) | Все права защищены | Услуги лицензированы | Цены указаны с учетом всех налогов.',

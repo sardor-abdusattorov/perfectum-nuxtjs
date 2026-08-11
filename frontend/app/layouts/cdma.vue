@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const head = useLocaleHead({ lang: true, dir: false, seo: true })
+const mobileMenu = useMobileMenu()
 
 useHead({
   htmlAttrs: { lang: head.value.htmlAttrs?.lang },
@@ -23,7 +24,7 @@ useHead({
   <LayoutTariffModal />
   <LayoutCookieBanner />
 
-  <div class="overlay" />
+  <div class="overlay" :class="mobileMenu.open.value && 'overlay_open'" @click="mobileMenu.close()" />
 </template>
 
 <style src="~/assets/css/cdma.css"></style>

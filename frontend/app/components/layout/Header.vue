@@ -3,6 +3,7 @@ const localePath = useLocalePath()
 const menu = useMenu('header')
 const setting = useSetting()
 const t = useT()
+const mobileMenu = useMobileMenu()
 </script>
 
 <template>
@@ -48,7 +49,13 @@ const t = useT()
                       {{ t('header.account', 'Личный кабинет') }}
                   </a>
                   <div class="header__hamburger">
-                      <button type="button" class="header__hamburger-button" :aria-label="t('header.open_menu', 'Открыть меню')" aria-expanded="false">
+                      <button
+                          type="button"
+                          class="header__hamburger-button"
+                          :aria-label="t('header.open_menu', 'Открыть меню')"
+                          :aria-expanded="mobileMenu.open.value"
+                          @click="mobileMenu.toggle()"
+                      >
                           <span class="header__hamburger-line"></span>
                           <span class="header__hamburger-line"></span>
                           <span class="header__hamburger-line"></span>

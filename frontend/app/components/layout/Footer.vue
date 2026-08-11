@@ -6,6 +6,8 @@ const setting = useSetting()
 const t = useT()
 
 const phones = computed(() => [setting('phone_primary'), setting('phone_secondary')].filter(Boolean))
+const emails = computed(() => t('footer.emails').split('\n').filter(Boolean))
+const telegram = computed(() => setting('telegram_url').replace(/^.*\/(?=[^/]+$)/, '@'))
 
 function telHref(phone: string): string {
   return `tel:${phone.replace(/[^+\d]/g, '')}`
@@ -44,22 +46,21 @@ function telHref(phone: string): string {
                               <a class="footer__contact-phone" :href="telHref(setting('phone_short'))">{{ setting('phone_short') }}</a>
                           </p>
                       </div>
-                      <div class="footer__contact">
+                      <div v-if="telegram" class="footer__contact">
                           <h2 class="footer__contact-title">{{ t('footer.telegram_title', 'Чат с оператором в Telegram') }}</h2>
                           <a
                               class="footer__contact-link"
-                              :href="setting('telegram_url', '#')"
+                              :href="setting('telegram_url')"
                               target="_blank"
                               rel="noopener"
-                          >{{ setting('telegram') }}</a>
+                          >{{ telegram }}</a>
                       </div>
                       <div class="footer__contact footer__contact_email">
                           <h2 class="footer__contact-title">{{ t('footer.email_title', 'Email') }}</h2>
                           <p class="footer__contact-text">
-                              {{ t('footer.email_info_note') }} —
-                              <a :href="`mailto:${setting('email_info')}`">{{ setting('email_info') }}</a><br />
-                              {{ t('footer.email_hotline_note') }} —
-                              <a :href="`mailto:${setting('email_hotline')}`">{{ setting('email_hotline') }}</a>
+                              <template v-for="(line, index) in emails" :key="index">
+                                  <br v-if="index" />{{ line }}
+                              </template>
                           </p>
                           <p class="footer__contact-text">{{ t('footer.copyright') }}</p>
                       </div>
