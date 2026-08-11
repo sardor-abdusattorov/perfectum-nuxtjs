@@ -37,16 +37,6 @@ class AppPromoTab extends ContentTab
                             ->helperText(__('app.helper.watermark')),
                     ]),
 
-                Section::make(__('app.label.app_links'))
-                    ->schema([
-                        TextInput::make('app_promo.app_store_url')
-                            ->label(__('app.label.app_store_url')),
-
-                        TextInput::make('app_promo.google_play_url')
-                            ->label(__('app.label.google_play_url')),
-                    ])
-                    ->columns(2),
-
                 TabSaveAction::make('app_promo', self::class),
             ]);
     }

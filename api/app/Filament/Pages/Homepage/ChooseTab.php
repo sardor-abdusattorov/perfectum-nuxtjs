@@ -72,7 +72,6 @@ class ChooseTab extends ContentTab
                             ->itemLabel(fn (array $state): ?string => is_array($state['name'] ?? null)
                                 ? (string) reset($state['name'])
                                 : null)
-                            ->columns(2)
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

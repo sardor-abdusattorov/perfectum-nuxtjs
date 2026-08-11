@@ -81,7 +81,6 @@ class FeaturesTab extends ContentTab
                             ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null)
                                 ? (string) reset($state['title'])
                                 : null)
-                            ->columns(2)
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
@@ -129,7 +128,6 @@ class FeaturesTab extends ContentTab
                                 StatusToggle::make(),
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
-                            ->columns(3)
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
