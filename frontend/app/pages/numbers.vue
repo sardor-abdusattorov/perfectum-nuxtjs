@@ -19,6 +19,7 @@ interface NumbersPayload {
 }
 
 const t = useT()
+const { locale } = useI18n()
 const { $api } = useNuxtApp()
 
 useSeo({ page: 'numbers', titleKey: 'seo.numbers' })
@@ -27,11 +28,13 @@ const sku = ref('')
 const page = ref(1)
 const cells = ref<string[]>(Array.from({ length: 7 }, () => ''))
 const inputs = useTemplateRef('inputs')
+
+const data = ref<NumbersPayload | null>(null)
+const initialLoading = ref(true)
 const busy = ref(false)
-const failed = ref(false)
 
 function pageSize(): number {
-  return import.meta.client && window.matchMedia('(max-width: 768px)').matches ? 12 : 28
+  return window.matchMedia('(max-width: 768px)').matches ? 12 : 28
 }
 
 function mask(): string | undefined {
@@ -40,32 +43,38 @@ function mask(): string | undefined {
   return pattern === '*******' ? undefined : `80${pattern}`
 }
 
-const { data, refresh } = await useAsyncData<NumbersPayload | null>(
-  'free-numbers',
-  async () => {
-    busy.value = true
+/**
+ * The page renders at once and the billing request runs behind the
+ * preloader, so a slow BSS never blocks navigation; a failure simply
+ * shows the empty message.
+ */
+async function load(): Promise<void> {
+  if (busy.value) {
+    return
+  }
 
-    try {
-      const response = await $api<ApiResponse<NumbersPayload>>('/numbers', {
-        method: 'POST',
-        body: { sku: sku.value, page: page.value, size: pageSize(), mask: mask() },
-      })
+  busy.value = true
 
-      failed.value = false
+  try {
+    const response = await $api<ApiResponse<NumbersPayload>>('/numbers', {
+      method: 'POST',
+      body: { sku: sku.value, page: page.value, size: pageSize(), mask: mask() },
+    })
 
-      return response.data
-    }
-    catch {
-      failed.value = true
+    data.value = response.data
+    page.value = response.data.page
+  }
+  catch {
+    data.value = null
+  }
+  finally {
+    busy.value = false
+    initialLoading.value = false
+  }
+}
 
-      return null
-    }
-    finally {
-      busy.value = false
-    }
-  },
-  { default: () => null },
-)
+onMounted(() => load())
+watch(locale, () => load())
 
 const categories = computed(() => data.value?.categories ?? [])
 const numbers = computed(() => data.value?.numbers ?? [])
@@ -78,12 +87,12 @@ function spaces(value: number): string {
 function pickCategory(value: string): void {
   sku.value = value
   page.value = 1
-  refresh()
+  load()
 }
 
 function submitMask(): void {
   page.value = 1
-  refresh()
+  load()
 }
 
 function turn(step: number): void {
@@ -91,7 +100,7 @@ function turn(step: number): void {
 
   if (target >= 1 && target <= totalPages.value && !busy.value) {
     page.value = target
-    refresh()
+    load()
   }
 }
 
@@ -128,7 +137,9 @@ function onCellKeydown(index: number, event: KeyboardEvent): void {
 
   <section class="numbers">
     <div class="container">
-      <div class="numbers__body" :class="busy && 'is-busy'">
+      <div class="numbers__body" :class="[initialLoading && 'is-loading', busy && 'is-busy']">
+        <div class="numbers__preloader"><span class="numbers__spinner"></span></div>
+
         <div v-if="categories.length" class="numbers__prices">
           <button
             type="button"
@@ -199,7 +210,7 @@ function onCellKeydown(index: number, event: KeyboardEvent): void {
           <p v-else-if="!busy" class="numbers__empty">{{ t('numbers.empty') }}</p>
         </div>
 
-        <div class="numbers__loader" :class="busy && 'is-active'"><span class="numbers__spinner"></span></div>
+        <div class="numbers__loader" :class="busy && !initialLoading && 'is-active'"><span class="numbers__spinner"></span></div>
 
         <div v-if="totalPages > 1" class="numbers__pager">
           <button type="button" class="numbers__pager-btn" :disabled="page <= 1" :aria-label="t('common.prev')" @click="turn(-1)">
