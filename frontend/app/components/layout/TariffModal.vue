@@ -7,10 +7,6 @@ const t = useT()
 const buttons = computed<TariffButton[]>(() => current.value?.buttons ?? [])
 
 function href(button: TariffButton): string {
-  if (button.type === 'tel') {
-    return `tel:${button.url.replace(/[^+\d]/g, '')}`
-  }
-
   return button.url || '#'
 }
 

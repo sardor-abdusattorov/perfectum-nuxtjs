@@ -48,6 +48,7 @@ it('renders the list and create page of every resource', function (string $resou
     ['site-translations', 'SiteTranslation'],
     ['socials', 'Social'],
     ['tariffs', 'Tariff'],
+    ['tariff-files', 'TariffFile'],
     ['tenders', 'Tender'],
     ['users', 'User'],
     ['vacancies', 'Vacancy'],

@@ -24,6 +24,9 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'tariff_file_single' => 'Arxiv hujjati',
+        'tariff_file_plural' => 'Tariflar arxivi',
+        'file' => 'Fayl',
         'connection_cost' => 'Ulanish narxi',
         'tariff_descriptions' => 'Tavsif bloklari',
         'office_single' => 'Savdo nuqtasi',
@@ -227,6 +230,7 @@ return [
     ],
 
     'helper' => [
+        'tariff_file_name' => 'Arxiv sahifasidagi roʻyxatda koʻrinadigan nom',
         'connection_cost' => 'Ulanish oynasida koʻrsatiladi',
         'tariff_descriptions' => 'Har bir blok — tarif kartasi ostidagi ochiluvchi boʻlim',
         'office_type' => 'Ofis — oʻz savdo nuqtasi, diler — hamkor nuqtasi',

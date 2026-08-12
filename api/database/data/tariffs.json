@@ -65,6 +65,7 @@
                 }
             }
         ],
+        "image": "images/IaTHB0YRXLXh0rsycSu6kV7FoEWCuAZ1hhbGAqiv.svg",
         "ussd": "7*1*1",
         "modal_image": "images/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
         "buttons": [
@@ -157,6 +158,7 @@
                 }
             }
         ],
+        "image": "images/tgNPajDWWmnDbCQBKswC2giW1UyXLMBsJlRVfxJp.svg",
         "ussd": "7*1*2",
         "modal_image": "images/YiUQHinDzrC7AG5EIqPzQosYzFDBpbCdgyArFeCJ.svg",
         "buttons": [
@@ -249,6 +251,7 @@
                 }
             }
         ],
+        "image": "images/BSWD9ovGge2NbeQo8dH8IUC4AMiqDQW4gTs1Q8g2.svg",
         "ussd": "7*1*3",
         "modal_image": "images/DcSW19GN3Rw6incQELVO8dWn7nLiV7Maj3k0yQDY.svg",
         "buttons": [
@@ -341,6 +344,7 @@
                 }
             }
         ],
+        "image": "images/jmaMLw9hp8InNfWw2Ef0DKQCNHcMvyDawmgOJTPF.svg",
         "ussd": "7*1*4",
         "modal_image": "images/v09yC3if09mBrjNL0JU8d2XGx0nxgraN7gMS6Yi2.svg",
         "buttons": [
@@ -433,6 +437,7 @@
                 }
             }
         ],
+        "image": "images/IxrXzhn2GLkXUdMyc3XCH4peQ5Aol0F8keOw0BGd.svg",
         "ussd": "7*1*5",
         "modal_image": "images/rlVQrN0UyqtifVTUHp0SmHrvftdYDU5d4i3RzL2N.svg",
         "buttons": [
@@ -525,6 +530,7 @@
                 }
             }
         ],
+        "image": "images/8Qt06qv70HU9Y7Aa07v5NcwiFtCKI9S9qU4dlWsn.svg",
         "ussd": "7*1*6",
         "modal_image": "images/QI2Xs7D3RB51WvxCWNivJ0uGbsCtyS91e2MPSFN4.svg",
         "buttons": [
@@ -617,6 +623,7 @@
                 }
             }
         ],
+        "image": "images/Pzyll2Xk1bpISnffQMQeHZ6CqL6DztznPc75DX1S.svg",
         "ussd": null,
         "modal_image": "images/W4uc0H6LFFmhersa8XgsDlGDDTeAqKZln87MS2Qo.svg",
         "buttons": [],
@@ -689,6 +696,7 @@
                 }
             }
         ],
+        "image": "images/srHNLllBNLO0EPFEsbcOWubgMqygtSsXUTR4l1nm.svg",
         "ussd": null,
         "modal_image": "images/5PxQIVeGE5teEaILH8ht3jhLrfrbaMIkLjfNeegD.svg",
         "buttons": [
@@ -771,6 +779,7 @@
                 }
             }
         ],
+        "image": "images/LcJsLnXMQSj6mjTmiyNeadp4s8NH98hsVMcYMno6.svg",
         "ussd": "7*1*7",
         "modal_image": "images/yzFM982xbMEO2xPOr15ghVq9aFKxvZd9NFq6tvQs.svg",
         "buttons": [
@@ -862,6 +871,7 @@
                 }
             }
         ],
+        "image": "images/puPKTWbDent7bHHrTyAVcQqZNGY2TPSoLuEB6H3I.svg",
         "ussd": "7*1*8",
         "modal_image": "images/gzWoijBJR8E6uGdlTulWPLsoY9YNIOM09zzdoA6t.svg",
         "buttons": [
@@ -954,6 +964,7 @@
                 }
             }
         ],
+        "image": "images/wPNcXOA0JBgTSJYCnoNNlyG0SI8EsTEKJTEGnNgE.svg",
         "ussd": "7*1*9",
         "modal_image": "images/H4bE0N4GrhTX5KnpY9pIIVp0PzrRyH1ur5NOdFCC.svg",
         "buttons": [
@@ -1046,6 +1057,7 @@
                 }
             }
         ],
+        "image": "images/0TQy2qI5mX1U3pJFQNM2IAm6S9tQvKx5gyEQCjUR.svg",
         "ussd": "7*1*10",
         "modal_image": "images/jrQ0dcR2lntX5WcnUXuRZSeyigCyMy6PrhEEq6Tg.svg",
         "buttons": [
@@ -1138,6 +1150,7 @@
                 }
             }
         ],
+        "image": "images/Dg3PIDYUGhIUAXe6bYSxQ3ESP0ecZDi0q59KZwKP.svg",
         "ussd": "7*1*11",
         "modal_image": "images/a0XZ7EYt6qSrb7mwqGabEtdi6CXhnYzjB0KwLqdL.svg",
         "buttons": [
@@ -1230,6 +1243,7 @@
                 }
             }
         ],
+        "image": "images/UMtd5DAT76VsjRVo22CB6NpqJZCHIEH1iu2RhCNn.svg",
         "ussd": "7*1*12",
         "modal_image": "images/ss8tsAlg0OTvqpVC941HYsu2y8tp9EQtV2AkAOxk.svg",
         "buttons": [
@@ -1322,6 +1336,7 @@
                 }
             }
         ],
+        "image": "images/ASM7NkWBUA227GZiZT4WGRDNuUfReObweseALoIb.svg",
         "ussd": null,
         "modal_image": "images/ucNuPnR7bmJLh607dohtgYliHuPKL9kRIanr1YMm.svg",
         "buttons": [],
@@ -1394,6 +1409,7 @@
                 }
             }
         ],
+        "image": "images/T4EHSsqNd394SG6cQ9u9z49nAtZN62J2oJuTIxAn.svg",
         "ussd": null,
         "modal_image": "images/I6sjJy7HDUjFfKWxWrUryhmKgzpEWtHjRmspuY2e.svg",
         "buttons": [],
@@ -1466,6 +1482,7 @@
                 }
             }
         ],
+        "image": "images/gNwHURSOz1BTEKEWWJy1uDABe2F2ryox3msgcxaz.svg",
         "ussd": null,
         "modal_image": "images/lV6rvh50k6EVRWA5bnZYv2haYtTNeLsyeq8C0qKN.svg",
         "buttons": [],
@@ -1538,6 +1555,7 @@
                 }
             }
         ],
+        "image": "images/PXBAe6X8qjui15z6Wmhzm1qYqWWfxH7DPbUUNvFh.svg",
         "ussd": null,
         "modal_image": "images/vBDkHLXtKi1mklpGOnazLtUweLPEDapdopYW84kB.svg",
         "buttons": [],
@@ -1610,6 +1628,7 @@
                 }
             }
         ],
+        "image": "images/OqQiD1cYwwPTOha9yL39OzjmyikodLX35ES8GDNi.svg",
         "ussd": null,
         "modal_image": "images/Z136eIZvqRB3p6DTb9q81ScpkpcWKnA5UDEXnyY4.svg",
         "buttons": [],
@@ -1675,6 +1694,7 @@
                 }
             }
         ],
+        "image": "images/IaTHB0YRXLXh0rsycSu6kV7FoEWCuAZ1hhbGAqiv.svg",
         "ussd": null,
         "modal_image": "images/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
         "buttons": [],
@@ -1734,6 +1754,7 @@
                 }
             }
         ],
+        "image": "images/T3SOD07QGODtk3BNhuXRpaISwjl5VMiNzxY7Glg6.png",
         "ussd": null,
         "modal_image": "images/0rG3GhsxHe5t2TUj3rGG3E2ayGQoxyuvIeyqMpyd.png",
         "buttons": [
@@ -1812,6 +1833,7 @@
                 }
             }
         ],
+        "image": "images/n5TiXxhTr4K72cRmyRJOyg3VkpSbVISkKJcFg8Xe.png",
         "ussd": null,
         "modal_image": "images/bDo0EhNwsbW0CS6N1oHbVTMih3FpBxugpRGudu7b.png",
         "buttons": [
@@ -1890,6 +1912,7 @@
                 }
             }
         ],
+        "image": "images/IWTn51euFcCx8qqsfUi8nwFXKkCgTgAlmMojlVUM.png",
         "ussd": null,
         "modal_image": "images/nZ8bszT5QvssA1v3rMmjnD4KXwXcPnxLJSz68gcJ.png",
         "buttons": [
@@ -1968,6 +1991,7 @@
                 }
             }
         ],
+        "image": "images/cnuR5weqTB4KgI6PZLNqaih5wcbaQqbAqSKgGAbq.png",
         "ussd": null,
         "modal_image": "images/e7puEyLi1qju8QlD46HBIB51eGzF7VvxYEl9nUyl.png",
         "buttons": [
@@ -2046,6 +2070,7 @@
                 }
             }
         ],
+        "image": "images/S4bBE8tbgGplwDzAwe5h0fkX5bahbHd8YiVl8ln8.png",
         "ussd": null,
         "modal_image": "images/Wamazo63hZs4bHBkuwGEl9JEzYWsPxuAUDIITsJP.png",
         "buttons": [
@@ -2124,6 +2149,7 @@
                 }
             }
         ],
+        "image": "images/iuAvgUZ0xt700NSlUmy68iV6xCjenzOOITpUQ9Ls.png",
         "ussd": null,
         "modal_image": "images/Jdp2xaLQMKtlPk1YKFqnY6YniI951VwF18ksACcZ.png",
         "buttons": [
@@ -2224,6 +2250,7 @@
                 }
             }
         ],
+        "image": "images/s9EJkYbkZQveh3AU4CEC4R3VmuHJBugq793fpIYN.png",
         "ussd": null,
         "modal_image": "images/sfsv8XInuS0EtIpQV6UUI01mCXVagrnEYwKIgDBv.png",
         "buttons": [
@@ -2324,6 +2351,7 @@
                 }
             }
         ],
+        "image": "images/6E8zwVB4rZOZb5LQ14PkInFfSCBcQ1lmUF2Esgp1.png",
         "ussd": null,
         "modal_image": "images/D2PdzAqvPHHJH9oUstW6cUXzQSkT86tvG0v0AkXF.png",
         "buttons": [
@@ -2402,6 +2430,7 @@
                 }
             }
         ],
+        "image": "images/tBeA5Yud1jrjYklzlP0Jyw2p3jMp603l46GwdrKt.png",
         "ussd": null,
         "modal_image": "images/QMiT2J230OOClaqPzZSOzH4Kc8Mw0j2RQQDuK2T0.png",
         "buttons": [
@@ -2480,6 +2509,7 @@
                 }
             }
         ],
+        "image": "images/g0eUXYri8LZv1gcmlhIkGDLMKcyFUQ5dCousBec8.png",
         "ussd": null,
         "modal_image": "images/i9hnSAk5oWJhGPSkFX9fyUzTpvoMRAiiGDQ92UcQ.png",
         "buttons": [
@@ -2558,6 +2588,7 @@
                 }
             }
         ],
+        "image": "images/oTahPyEoeHUiEEQdYfN9bibvQAecN3GfMMH8vOHa.png",
         "ussd": null,
         "modal_image": "images/ongPP9AZdWKjPBwVRa6nk9MqkRrO7ewnegpfsqp5.png",
         "buttons": [

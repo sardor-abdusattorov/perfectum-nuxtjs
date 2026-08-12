@@ -24,6 +24,9 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'tariff_file_single' => 'Archive document',
+        'tariff_file_plural' => 'Tariff archive',
+        'file' => 'File',
         'connection_cost' => 'Connection cost',
         'tariff_descriptions' => 'Description blocks',
         'office_single' => 'Point of sale',
@@ -227,6 +230,7 @@ return [
     ],
 
     'helper' => [
+        'tariff_file_name' => 'The name shown in the archive page list',
         'connection_cost' => 'Shown in the connect dialog',
         'tariff_descriptions' => 'Each block is a collapsible section under the tariff card',
         'office_type' => 'An office is our own point of sale, a dealer is a partner one',

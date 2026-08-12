@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Tariff;
 use App\Models\TariffCategory;
+use App\Models\TariffFile;
 use App\Models\TariffType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -70,6 +71,16 @@ it('filters the list by category and type slug', function (): void {
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.slug', 'qulay-1');
+});
+
+it('lists the published archive documents', function (): void {
+    TariffFile::create(['name' => '#архивные ТП 2025.pdf', 'file' => 'files/archive.pdf', 'sort' => 1]);
+    TariffFile::create(['name' => 'Черновик', 'file' => 'files/draft.pdf', 'status' => false]);
+
+    $this->getJson(route('api.v1.tariffs.files'))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.name', '#архивные ТП 2025.pdf');
 });
 
 it('keeps archived tariffs out of the list', function (): void {

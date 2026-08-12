@@ -25,6 +25,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('pages/{page}', PageController::class)->name('pages.show');
 
     Route::get('tariffs', [TariffController::class, 'index'])->name('tariffs.index');
+    Route::get('tariffs/files', [TariffController::class, 'files'])->name('tariffs.files');
     Route::get('tariffs/{tariff}', [TariffController::class, 'show'])->name('tariffs.show');
     Route::get('news', [NewsController::class, 'index'])->name('news.index');
     Route::get('news/{news}', [NewsController::class, 'show'])->name('news.show');

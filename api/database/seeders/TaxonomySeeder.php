@@ -23,8 +23,25 @@ class TaxonomySeeder extends Seeder
         $data = json_decode((string) file_get_contents(database_path('data/taxonomies.json')), true);
 
         $this->seed(TariffCategory::class, $data['tariff_categories'] ?? []);
-        $this->seed(TariffType::class, $data['tariff_types'] ?? []);
+        $this->seed(TariffType::class, $this->rankDescending($data['tariff_types'] ?? []));
         $this->seed(ServiceCategory::class, $data['service_types'] ?? []);
+    }
+
+    /**
+     * The old site listed tariff types in descending order, so the chip row
+     * started with the newest line. The new site sorts ascending everywhere;
+     * re-ranking here keeps the row identical.
+     *
+     * @param  array<int, array<string, mixed>>  $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function rankDescending(array $rows): array
+    {
+        return collect($rows)
+            ->sortByDesc(fn (array $row): array => [$row['sort'] ?? 0, $row['id'] ?? 0])
+            ->values()
+            ->map(fn (array $row, int $index): array => [...$row, 'sort' => $index + 1])
+            ->all();
     }
 
     /**

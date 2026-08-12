@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Tariff;
 use App\Models\TariffCategory;
+use App\Models\TariffFile;
 use App\Models\TariffType;
 use Illuminate\Database\Seeder;
 
@@ -34,6 +35,7 @@ class TariffSeeder extends Seeder
                 'connection_cost' => $row['connection_cost'],
                 'features' => $row['features'],
                 'descriptions' => $row['descriptions'],
+                'image' => $row['image'],
                 'ussd' => $row['ussd'],
                 'modal_image' => $row['modal_image'],
                 'buttons' => $row['buttons'],
@@ -43,6 +45,11 @@ class TariffSeeder extends Seeder
                 'status' => $row['status'],
             ]);
         }
+
+        TariffFile::updateOrCreate(
+            ['file' => 'files/uRsM6pVwPFGmwSZpLOLv9VrDtX3Dbki92ppKbJes.pdf'],
+            ['name' => '#архивные ТП 2025.pdf', 'sort' => 1],
+        );
     }
 
     /**
