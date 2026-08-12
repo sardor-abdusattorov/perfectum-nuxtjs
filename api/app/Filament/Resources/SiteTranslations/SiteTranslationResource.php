@@ -23,7 +23,7 @@ class SiteTranslationResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.administration');
+        return __('app.group.administration');
     }
 
     public static function getModelLabel(): string

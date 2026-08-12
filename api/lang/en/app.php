@@ -15,6 +15,9 @@ return [
         'outline' => 'Accent — outline',
     ],
     'group' => [
+        'content' => 'Content',
+        'administration' => 'Administration',
+        'devices' => 'Devices',
         'tariffs' => 'Tariffs',
         'services' => 'Services',
         'resources' => 'Resources',

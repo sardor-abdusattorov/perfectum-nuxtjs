@@ -60,13 +60,22 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label(fn () => __('app.label.content')),
+                    ->label(fn () => __('app.group.content')),
 
                 NavigationGroup::make()
-                    ->label(fn () => __('app.label.resources')),
+                    ->label(fn () => __('app.group.tariffs')),
 
                 NavigationGroup::make()
-                    ->label(fn () => __('app.label.administration')),
+                    ->label(fn () => __('app.group.services')),
+
+                NavigationGroup::make()
+                    ->label(fn () => __('app.group.devices')),
+
+                NavigationGroup::make()
+                    ->label(fn () => __('app.group.resources')),
+
+                NavigationGroup::make()
+                    ->label(fn () => __('app.group.administration')),
             ])
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(Width::Full)
@@ -81,7 +90,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->plugins([
                 FilamentShieldPlugin::make()
-                    ->navigationGroup(fn () => __('app.label.administration'))
+                    ->navigationGroup(fn () => __('app.group.administration'))
                     ->navigationSort(5)
                     ->navigationBadge(fn (): string => (string) Utils::getRoleModel()::count()),
 

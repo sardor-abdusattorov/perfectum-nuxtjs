@@ -44,7 +44,7 @@ class Settings extends Page implements HasForms
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.administration');
+        return __('app.group.administration');
     }
 
     public function getTitle(): string

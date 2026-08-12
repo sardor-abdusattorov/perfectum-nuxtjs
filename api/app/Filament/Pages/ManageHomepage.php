@@ -38,7 +38,7 @@ class ManageHomepage extends Page
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.content');
+        return __('app.group.content');
     }
 
     public static function getNavigationSort(): int

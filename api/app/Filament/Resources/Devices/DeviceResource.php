@@ -25,7 +25,7 @@ class DeviceResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.resources');
+        return __('app.group.devices');
     }
 
     public static function getModelLabel(): string
@@ -40,7 +40,7 @@ class DeviceResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 9;
+        return 2;
     }
 
     public static function getNavigationBadge(): ?string

@@ -25,7 +25,7 @@ class ServiceResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.resources');
+        return __('app.group.services');
     }
 
     public static function getModelLabel(): string
@@ -40,7 +40,7 @@ class ServiceResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 6;
+        return 2;
     }
 
     public static function getNavigationBadge(): ?string

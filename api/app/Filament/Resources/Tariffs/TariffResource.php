@@ -25,7 +25,7 @@ class TariffResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.resources');
+        return __('app.group.tariffs');
     }
 
     public static function getModelLabel(): string
@@ -40,7 +40,7 @@ class TariffResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 5;
+        return 3;
     }
 
     public static function getNavigationBadge(): ?string

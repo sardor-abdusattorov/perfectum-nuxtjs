@@ -25,7 +25,7 @@ class FaqResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.resources');
+        return __('app.group.resources');
     }
 
     public static function getModelLabel(): string

@@ -25,7 +25,7 @@ class PageResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('app.label.content');
+        return __('app.group.content');
     }
 
     public static function getModelLabel(): string

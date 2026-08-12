@@ -15,6 +15,9 @@ return [
         'outline' => 'Urgʻu — kontur',
     ],
     'group' => [
+        'content' => 'Kontent',
+        'administration' => 'Boshqaruv',
+        'devices' => 'Qurilmalar',
         'tariffs' => 'Tariflar',
         'services' => 'Xizmatlar',
         'resources' => 'Resurslar',

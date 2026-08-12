@@ -15,6 +15,9 @@ return [
         'outline' => 'Акцент — контуром',
     ],
     'group' => [
+        'content' => 'Контент',
+        'administration' => 'Администрирование',
+        'devices' => 'Устройства',
         'tariffs' => 'Тарифы',
         'services' => 'Услуги',
         'resources' => 'Ресурсы',
