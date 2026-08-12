@@ -24,6 +24,8 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'meta_title' => 'Meta sarlavha',
+        'meta_description' => 'Meta tavsif',
         'tariff_categories_single' => 'Tarif toifasi',
         'tariff_file_single' => 'Arxiv hujjati',
         'tariff_file_plural' => 'Tariflar arxivi',
@@ -229,6 +231,7 @@ return [
     ],
 
     'helper' => [
+        'page_key' => 'Ushbu sozlamalar saytning qaysi sahifasiga tegishli',
         'type_category' => 'Ushbu kichik toifa qaysi toifada koʻrsatiladi; boʻsh boʻlsa — hammasida',
         'tariff_file_name' => 'Arxiv sahifasidagi roʻyxatda koʻrinadigan nom',
         'tariff_descriptions' => 'Har bir blok — tarif kartasi ostidagi ochiluvchi boʻlim',

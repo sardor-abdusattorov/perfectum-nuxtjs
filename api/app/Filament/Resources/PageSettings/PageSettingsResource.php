@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PageSettings;
 
+use App\Filament\Resources\PageSettings\Pages\CreatePageSettings;
 use App\Filament\Resources\PageSettings\Pages\EditPageSettings;
 use App\Filament\Resources\PageSettings\Pages\ListPageSettings;
 use App\Filament\Resources\PageSettings\Schemas\PageSettingsForm;
@@ -12,6 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class PageSettingsResource extends Resource
 {
@@ -19,7 +22,10 @@ class PageSettingsResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMagnifyingGlass;
 
-    protected static ?string $recordTitleAttribute = 'key';
+    public static function getRecordTitle(?Model $record): string|Htmlable|null
+    {
+        return $record?->key?->getLabel();
+    }
 
     public static function getNavigationGroup(): ?string
     {
@@ -46,11 +52,6 @@ class PageSettingsResource extends Resource
         return (string) static::$model::count();
     }
 
-    public static function canCreate(): bool
-    {
-        return false;
-    }
-
     public static function form(Schema $schema): Schema
     {
         return PageSettingsForm::configure($schema);
@@ -70,6 +71,7 @@ class PageSettingsResource extends Resource
     {
         return [
             'index' => ListPageSettings::route('/'),
+            'create' => CreatePageSettings::route('/create'),
             'edit' => EditPageSettings::route('/{record}/edit'),
         ];
     }

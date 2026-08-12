@@ -24,6 +24,8 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'meta_title' => 'Meta title',
+        'meta_description' => 'Meta description',
         'tariff_categories_single' => 'Tariff category',
         'tariff_file_single' => 'Archive document',
         'tariff_file_plural' => 'Tariff archive',
@@ -229,6 +231,7 @@ return [
     ],
 
     'helper' => [
+        'page_key' => 'Which page of the site these settings belong to',
         'type_category' => 'Which category this subcategory is shown in; empty means all',
         'tariff_file_name' => 'The name shown in the archive page list',
         'tariff_descriptions' => 'Each block is a collapsible section under the tariff card',

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PageSettings\Tables;
 
 use App\Filament\Support\Tables;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -36,7 +37,7 @@ class PageSettingsTable
                     ->label(__('app.label.is_indexed'))
                     ->boolean(),
             ])
-            ->recordActions([EditAction::make()])
+            ->recordActions([EditAction::make(), DeleteAction::make()])
             ->toolbarActions(Tables::bulkActions());
     }
 }

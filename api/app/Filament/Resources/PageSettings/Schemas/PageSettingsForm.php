@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\PageSettings\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use App\Enums\PageKey;
 use App\Filament\Support\Fields;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -19,6 +21,15 @@ class PageSettingsForm
             ->components([
                 Section::make(__('app.label.seo'))
                     ->schema([
+                        Select::make('key')
+                            ->label(__('app.label.page'))
+                            ->helperText(__('app.helper.page_key'))
+                            ->options(PageKey::getOptions())
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->selectablePlaceholder(false)
+                            ->searchable(),
+
                         TranslatableTabs::make('seo_translations')
                             ->schema([
                                 TextInput::make('meta_title')
