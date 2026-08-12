@@ -3,10 +3,7 @@
 namespace App\Filament\Resources\Faqs\Tables;
 
 use App\Enums\CategoryType;
-use App\Filament\Support\CategoryFilter;
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -32,14 +29,14 @@ class FaqsTable
                     ->label(__('app.label.sort'))
                     ->sortable(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
             ])
             ->filters([
-                CategoryFilter::make(CategoryType::Faq),
+                Tables::categoryFilter(CategoryType::Faq),
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

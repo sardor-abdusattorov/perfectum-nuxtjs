@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\SiteSettings\Tables;
 
 use App\Enums\PublishedStatus;
-use App\Filament\Support\CrudActions;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -45,7 +45,7 @@ class SiteSettingsTable
                     ->searchable()
                     ->preload(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

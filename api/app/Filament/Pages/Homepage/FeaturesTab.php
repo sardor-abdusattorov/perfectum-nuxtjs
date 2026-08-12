@@ -4,9 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -29,7 +27,7 @@ class FeaturesTab extends ContentTab
                     ->schema([
                         TranslatableTabs::make('translations')
                             ->schema([
-                                MultilineText::make('features.title')
+                                Fields::multiline('features.title')
                                     ->label(__('app.label.title')),
 
                                 TextInput::make('features.title_accent')
@@ -55,10 +53,10 @@ class FeaturesTab extends ContentTab
                                         TextInput::make('tag')
                                             ->label(__('app.label.tag')),
 
-                                        MultilineText::make('title')
+                                        Fields::multiline('title')
                                             ->label(__('app.label.title')),
 
-                                        MultilineText::make('text')
+                                        Fields::multiline('text')
                                             ->label(__('app.label.description')),
 
                                         TextInput::make('link_label')
@@ -77,7 +75,7 @@ class FeaturesTab extends ContentTab
                                         'pro' => __('app.card_style.pro'),
                                     ]),
 
-                                StatusToggle::make(),
+                                Fields::status(),
                             ])
                             ->itemLabel(Translated::itemLabel('title'))
                             ->defaultItems(0)
@@ -90,7 +88,7 @@ class FeaturesTab extends ContentTab
                     ->schema([
                         TranslatableTabs::make('speed_translations')
                             ->schema([
-                                MultilineText::make('features.speed_text')
+                                Fields::multiline('features.speed_text')
                                     ->label(__('app.label.speed_text')),
 
                                 TextInput::make('features.speed_unit')
@@ -124,7 +122,7 @@ class FeaturesTab extends ContentTab
                                     ->label(__('app.label.value_to'))
                                     ->numeric(),
 
-                                StatusToggle::make(),
+                                Fields::status(),
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
                             ->defaultItems(0)
@@ -132,7 +130,7 @@ class FeaturesTab extends ContentTab
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make(self::class),
+                SaveAction::make(self::class),
             ]);
     }
 }

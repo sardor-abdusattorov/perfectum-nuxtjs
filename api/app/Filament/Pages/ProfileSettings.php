@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Support\ImageUpload;
+use App\Filament\Support\Fields;
 use App\Services\UserSessions;
 use BackedEnum;
 use Filament\Actions\Action;
@@ -73,7 +73,7 @@ class ProfileSettings extends Page implements HasActions, HasForms
                     ->description(__('app.label.personal_information_description'))
                     ->aside()
                     ->schema([
-                        ImageUpload::make('users', 'avatar_url')
+                        Fields::image('users', 'avatar_url')
                             ->label(__('app.label.avatar'))
                             ->avatar()
                             ->imageEditorAspectRatios(['1:1']),

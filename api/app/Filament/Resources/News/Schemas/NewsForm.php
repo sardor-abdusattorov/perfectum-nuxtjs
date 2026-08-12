@@ -4,11 +4,7 @@ namespace App\Filament\Resources\News\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
-use App\Filament\Support\CategorySelect;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
@@ -26,7 +22,7 @@ class NewsForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        CategorySelect::make(CategoryType::News),
+                        Fields::category(CategoryType::News),
 
                         TranslatableTabs::make('translations')
                             ->schema([
@@ -34,21 +30,21 @@ class NewsForm
                                     ->label(__('app.label.title'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
                                 Textarea::make('excerpt')
                                     ->label(__('app.label.excerpt'))
                                     ->helperText(__('app.helper.excerpt'))
                                     ->rows(3),
 
-                                TextEditor::make('content')
+                                Fields::editor('content')
                                     ->label(__('app.label.content'))
                                     ->required(Translated::required()),
                             ]),
 
-                        SlugInput::make(),
+                        Fields::slug(),
 
-                        ImageUpload::make('news'),
+                        Fields::image('news'),
 
                         DateTimePicker::make('published_at')
                             ->label(__('app.label.published_at'))
@@ -60,7 +56,7 @@ class NewsForm
                             ->label(__('app.label.is_featured'))
                             ->helperText(__('app.helper.is_featured')),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
             ]);
     }

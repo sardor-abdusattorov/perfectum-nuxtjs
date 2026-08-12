@@ -4,9 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -52,7 +50,7 @@ class ChooseTab extends ContentTab
                                         TextInput::make('category')
                                             ->label(__('app.label.category')),
 
-                                        MultilineText::make('name')
+                                        Fields::multiline('name')
                                             ->label(__('app.label.name')),
                                     ]),
 
@@ -68,7 +66,7 @@ class ChooseTab extends ContentTab
                                         'ruby' => __('app.color.ruby'),
                                     ]),
 
-                                StatusToggle::make(),
+                                Fields::status(),
                             ])
                             ->itemLabel(Translated::itemLabel('name'))
                             ->defaultItems(0)
@@ -76,7 +74,7 @@ class ChooseTab extends ContentTab
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make(self::class),
+                SaveAction::make(self::class),
             ]);
     }
 }

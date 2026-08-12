@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\MenuLocation;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,7 +22,6 @@ class Menu extends Model
         'parent_id',
         'location',
         'key',
-        'column_position',
         'name',
         'url',
         'open_in_new_tab',
@@ -60,9 +60,9 @@ class Menu extends Model
     /**
      * Top level items of a menu with their published children, ready to render.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<int, self>
+     * @return Collection<int, self>
      */
-    public static function tree(MenuLocation $location): \Illuminate\Database\Eloquent\Collection
+    public static function tree(MenuLocation $location): Collection
     {
         return static::query()
             ->published()

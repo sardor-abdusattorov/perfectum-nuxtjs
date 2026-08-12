@@ -44,24 +44,35 @@ the forms.
 
 ## Build a field from `app/Filament/Support`, do not paste one
 
-Every repeated form and table fragment has a factory there, and each is the
-one place to change that fragment for the whole panel:
+Three classes hold every repeated fragment — `Fields` for form inputs,
+`Tables` for columns, filters and actions, `Translated` for the locale
+rules. Add a method to one of them rather than a new file: the folder was
+sixteen one-method classes and became unreadable.
+
+`Fields::multiline()` is a plain `Textarea`, not an editor, on purpose. Its
+value is rendered by `LayoutLines` as escaped text with `<br>` between
+lines, so a heading stays a heading. `Fields::editor()` produces HTML and
+belongs only on `content` fields the frontend prints with `v-html`.
 
 | Helper | Replaces |
 | --- | --- |
-| `SlugInput::make()` / `::preview()` | the slug field and its live preview |
-| `SortInput::make()` | the `sort` number input |
-| `StatusToggle::make()` | the publish switch on a form or repeater item |
-| `StatusColumn::make()` | the publish `ToggleColumn` on a table |
-| `StatusFilter::make()` | the published/unpublished `SelectFilter` |
-| `CategorySelect::make($type)` | a category picker scoped to one `CategoryType` |
-| `CategoryFilter::make($type)` | the matching table filter, scoped the same way |
-| `CrudActions::record()` / `::bulk()` | the view/edit/delete and bulk-delete arrays |
-| `Translated::itemLabel($field)` | a repeater item label taken from a translated field |
+| `Fields::slug()` / `::slugPreview()` | the slug field and its live preview |
+| `Fields::sort()` | the `sort` number input |
+| `Fields::status()` | the publish switch on a form or repeater item |
+| `Fields::multiline()` | plain text whose newlines become `<br>` on the site |
+| `Fields::editor()` | the RichEditor with attachments wired up |
+| `Fields::image()` | the image upload with the crop editor |
+| `Fields::icon()` | the social-network icon picker |
+| `Fields::category($type)` | a category picker scoped to one `CategoryType` |
+| `Tables::statusColumn()` | the publish `ToggleColumn` |
+| `Tables::statusFilter()` | the published/unpublished `SelectFilter` |
+| `Tables::categoryFilter($type)` | the category filter, scoped the same way |
+| `Tables::actions()` / `::bulkActions()` | view/edit/delete and bulk-delete |
+| `Translated::itemLabel($field)` | a repeater item label from a translated field |
 | `Translated::required()` | per-locale requiredness inside `TranslatableTabs` |
-| `TabSaveAction::make(self::class)` | the save button of a homepage tab |
+| `SaveAction::make(self::class)` | the save button of a homepage tab |
 
-`CategoryFilter` and `CategorySelect` share `Category::options()`, so a
+`Tables::categoryFilter()` and `Fields::category()` share `Category::options()`, so a
 filter always lists the same rows the form offers. A raw
 `SelectFilter::make('category')->relationship('category', 'slug')` lists
 *every* category in the table — news, faq, device — and shows raw slugs.

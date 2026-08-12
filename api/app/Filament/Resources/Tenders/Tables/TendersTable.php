@@ -3,9 +3,7 @@
 namespace App\Filament\Resources\Tenders\Tables;
 
 use App\Enums\TenderState;
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -35,16 +33,16 @@ class TendersTable
                     ->placeholder('—')
                     ->sortable(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
             ])
             ->filters([
                 SelectFilter::make('state')
                     ->label(__('app.label.tender_state'))
                     ->options(TenderState::getOptions()),
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

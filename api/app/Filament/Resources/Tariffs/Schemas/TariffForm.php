@@ -4,13 +4,7 @@ namespace App\Filament\Resources\Tariffs\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
-use App\Filament\Support\CategorySelect;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\SortInput;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -28,9 +22,9 @@ class TariffForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        CategorySelect::make(CategoryType::Tariff),
+                        Fields::category(CategoryType::Tariff),
 
-                        CategorySelect::make(CategoryType::TariffType, 'type_id')
+                        Fields::category(CategoryType::TariffType, 'type_id')
                             ->label(__('app.label.tariff_type'))
                             ->helperText(__('app.helper.tariff_type')),
 
@@ -40,16 +34,16 @@ class TariffForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
-                                MultilineText::make('lead')
+                                Fields::multiline('lead')
                                     ->label(__('app.label.lead_text'))
                                     ->helperText(__('app.helper.tariff_lead')),
                             ]),
 
-                        SlugInput::make(),
+                        Fields::slug(),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
 
                 Section::make(__('app.label.price'))
@@ -76,7 +70,7 @@ class TariffForm
                             ->hiddenLabel()
                             ->addActionLabel(__('app.action.add'))
                             ->schema([
-                                ImageUpload::make('tariffs', 'icon')
+                                Fields::image('tariffs', 'icon')
                                     ->label(__('app.label.icon'))
                                     ->helperText(__('app.helper.tariff_feature_icon'))
                                     ->imageEditor(false),
@@ -101,7 +95,7 @@ class TariffForm
                 Section::make(__('app.label.tariff_connect'))
                     ->description(__('app.helper.tariff_connect'))
                     ->schema([
-                        ImageUpload::make('tariffs', 'modal_image')
+                        Fields::image('tariffs', 'modal_image')
                             ->label(__('app.label.modal_image'))
                             ->helperText(__('app.helper.modal_image'))
                             ->imageEditor(false),
@@ -114,7 +108,7 @@ class TariffForm
                             ->label(__('app.label.connect_buttons'))
                             ->addActionLabel(__('app.action.add'))
                             ->schema([
-                                ImageUpload::make('tariffs', 'icon')
+                                Fields::image('tariffs', 'icon')
                                     ->label(__('app.label.icon'))
                                     ->imageEditor(false),
 
@@ -145,12 +139,12 @@ class TariffForm
                     ->schema([
                         TranslatableTabs::make('terms_translations')
                             ->schema([
-                                TextEditor::make('terms')
+                                Fields::editor('terms')
                                     ->label(__('app.label.terms'))
                                     ->helperText(__('app.helper.terms')),
                             ]),
 
-                        ImageUpload::make('tariffs'),
+                        Fields::image('tariffs'),
 
                         Toggle::make('is_featured')
                             ->label(__('app.label.is_featured'))
@@ -160,7 +154,7 @@ class TariffForm
                             ->label(__('app.label.is_archived'))
                             ->helperText(__('app.helper.is_archived')),
 
-                        SortInput::make(),
+                        Fields::sort(),
                     ]),
             ]);
     }

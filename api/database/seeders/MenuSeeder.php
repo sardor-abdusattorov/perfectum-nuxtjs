@@ -32,7 +32,6 @@ class MenuSeeder extends Seeder
                 [
                     'name' => $item['name'],
                     'url' => $item['url'] ?? null,
-                    'column_position' => $item['column'] ?? null,
                     'sort' => $sort + 1,
                     'status' => true,
                 ]

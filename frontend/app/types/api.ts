@@ -18,7 +18,6 @@ export interface MenuItem {
   id: number
   name: string
   url: string | null
-  column: number | null
   target: string | null
   children: MenuItem[]
 }

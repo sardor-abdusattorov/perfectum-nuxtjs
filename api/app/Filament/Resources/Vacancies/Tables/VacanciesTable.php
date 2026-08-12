@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Vacancies\Tables;
 
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -35,13 +33,13 @@ class VacanciesTable
                     ->label(__('app.label.sort'))
                     ->sortable(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
             ])
             ->filters([
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

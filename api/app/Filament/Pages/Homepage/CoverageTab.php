@@ -4,9 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -32,7 +30,7 @@ class CoverageTab extends ContentTab
                                 TextInput::make('coverage.title')
                                     ->label(__('app.label.title')),
 
-                                MultilineText::make('coverage.subtitle')
+                                Fields::multiline('coverage.subtitle')
                                     ->label(__('app.label.subtitle')),
                             ]),
                     ]),
@@ -58,7 +56,7 @@ class CoverageTab extends ContentTab
                                     ->label(__('app.label.coverage_active'))
                                     ->helperText(__('app.helper.coverage_active')),
 
-                                StatusToggle::make(),
+                                Fields::status(),
                             ])
                             ->itemLabel(Translated::itemLabel('name'))
                             ->defaultItems(0)
@@ -66,7 +64,7 @@ class CoverageTab extends ContentTab
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make(self::class),
+                SaveAction::make(self::class),
             ]);
     }
 }

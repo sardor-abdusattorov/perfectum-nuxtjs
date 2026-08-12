@@ -3,9 +3,7 @@
 namespace App\Filament\Resources\Menus\Tables;
 
 use App\Enums\MenuLocation;
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -54,7 +52,7 @@ class MenusTable
                     ->label(__('app.label.open_in_new_tab'))
                     ->boolean(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
 
                 TextColumn::make('sort')
                     ->label(__('app.label.sort'))
@@ -65,9 +63,9 @@ class MenusTable
                     ->label(__('app.label.menu_location'))
                     ->options(MenuLocation::getLocationOptions()),
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

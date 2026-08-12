@@ -3,10 +3,7 @@
 namespace App\Filament\Resources\Tariffs\Tables;
 
 use App\Enums\CategoryType;
-use App\Filament\Support\CategoryFilter;
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -48,12 +45,12 @@ class TariffsTable
                     ->placeholder('—')
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
             ])
             ->filters([
-                CategoryFilter::make(CategoryType::Tariff),
+                Tables::categoryFilter(CategoryType::Tariff),
 
-                CategoryFilter::make(CategoryType::TariffType, 'type_id')
+                Tables::categoryFilter(CategoryType::TariffType, 'type_id')
                     ->label(__('app.label.tariff_type')),
 
                 SelectFilter::make('is_archived')
@@ -63,9 +60,9 @@ class TariffsTable
                         1 => __('app.label.yes'),
                     ]),
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

@@ -40,7 +40,7 @@ export function useSetting() {
   const network = useNetwork()
 
   return (name: string, fallback = ''): string => {
-    const settings = data.value?.settings.site
+    const settings = data.value?.settings?.site
 
     if (!settings) {
       return fallback
@@ -48,7 +48,7 @@ export function useSetting() {
 
     const own = network.value === 'cdma' ? settings[`cdma_${name}`] : null
 
-    return own ?? settings[name] ?? fallback
+    return own || settings[name] || fallback
   }
 }
 

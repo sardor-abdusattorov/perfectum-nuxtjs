@@ -4,13 +4,7 @@ namespace App\Filament\Resources\Services\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
-use App\Filament\Support\CategorySelect;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\SortInput;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
@@ -28,7 +22,7 @@ class ServiceForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        CategorySelect::make(CategoryType::Service),
+                        Fields::category(CategoryType::Service),
 
                         TranslatableTabs::make('translations')
                             ->schema([
@@ -36,24 +30,24 @@ class ServiceForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
                                 Textarea::make('excerpt')
                                     ->label(__('app.label.excerpt'))
                                     ->helperText(__('app.helper.service_excerpt'))
                                     ->rows(3),
 
-                                MultilineText::make('lead')
+                                Fields::multiline('lead')
                                     ->label(__('app.label.lead_text'))
                                     ->helperText(__('app.helper.service_lead')),
 
-                                TextEditor::make('content')
+                                Fields::editor('content')
                                     ->label(__('app.label.content')),
                             ]),
 
-                        SlugInput::make(),
+                        Fields::slug(),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
 
                 Section::make(__('app.label.service_summary'))
@@ -114,18 +108,18 @@ class ServiceForm
 
                 Section::make(__('app.label.additionally'))
                     ->schema([
-                        ImageUpload::make('services', 'icon')
+                        Fields::image('services', 'icon')
                             ->label(__('app.label.icon'))
                             ->helperText(__('app.helper.service_icon'))
                             ->imageEditor(false),
 
-                        ImageUpload::make('services'),
+                        Fields::image('services'),
 
                         Toggle::make('is_featured')
                             ->label(__('app.label.is_featured'))
                             ->helperText(__('app.helper.service_featured')),
 
-                        SortInput::make(),
+                        Fields::sort(),
                     ]),
             ]);
     }

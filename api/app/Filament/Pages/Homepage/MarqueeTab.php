@@ -4,9 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -37,11 +35,11 @@ class MarqueeTab extends ContentTab
                                             ->label(__('app.label.text')),
                                     ]),
 
-                                ImageUpload::make('content-blocks', 'image')
+                                Fields::image('content-blocks', 'image')
                                     ->label(__('app.label.image'))
                                     ->helperText(__('app.helper.marquee_item_image')),
 
-                                StatusToggle::make(),
+                                Fields::status(),
                             ])
                             ->itemLabel(Translated::itemLabel('text'))
                             ->defaultItems(0)
@@ -49,7 +47,7 @@ class MarqueeTab extends ContentTab
                             ->collapsible(),
                     ]),
 
-                TabSaveAction::make(self::class),
+                SaveAction::make(self::class),
             ]);
     }
 }

@@ -4,12 +4,7 @@ namespace App\Filament\Resources\Devices\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
-use App\Filament\Support\CategorySelect;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\SortInput;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
@@ -27,7 +22,7 @@ class DeviceForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        CategorySelect::make(CategoryType::Device),
+                        Fields::category(CategoryType::Device),
 
                         TranslatableTabs::make('translations')
                             ->schema([
@@ -35,22 +30,22 @@ class DeviceForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
                                 Textarea::make('excerpt')
                                     ->label(__('app.label.excerpt'))
                                     ->rows(3),
 
-                                TextEditor::make('content')
+                                Fields::editor('content')
                                     ->label(__('app.label.content')),
                             ]),
 
-                        SlugInput::make(),
+                        Fields::slug(),
 
                         TextInput::make('brand')
                             ->label(__('app.label.brand')),
 
-                        ImageUpload::make('devices'),
+                        Fields::image('devices'),
 
                         TextInput::make('price')
                             ->label(__('app.label.price'))
@@ -62,9 +57,9 @@ class DeviceForm
                             ->label(__('app.label.in_stock'))
                             ->default(true),
 
-                        SortInput::make(),
+                        Fields::sort(),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
 
                 Section::make(__('app.label.specs'))

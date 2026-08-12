@@ -4,8 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Fields;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -29,12 +28,12 @@ class TariffsTab extends ContentTab
                                 TextInput::make('tariffs.eyebrow')
                                     ->label(__('app.label.eyebrow')),
 
-                                MultilineText::make('tariffs.title')
+                                Fields::multiline('tariffs.title')
                                     ->label(__('app.label.title')),
                             ]),
                     ]),
 
-                TabSaveAction::make(self::class),
+                SaveAction::make(self::class),
             ]);
     }
 }

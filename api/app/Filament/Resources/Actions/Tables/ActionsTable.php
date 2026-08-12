@@ -3,10 +3,7 @@
 namespace App\Filament\Resources\Actions\Tables;
 
 use App\Enums\CategoryType;
-use App\Filament\Support\CategoryFilter;
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -40,14 +37,14 @@ class ActionsTable
                     ->placeholder('—')
                     ->sortable(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
             ])
             ->filters([
-                CategoryFilter::make(CategoryType::Action),
+                Tables::categoryFilter(CategoryType::Action),
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

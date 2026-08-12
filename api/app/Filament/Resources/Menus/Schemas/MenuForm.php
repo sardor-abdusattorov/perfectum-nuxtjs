@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Menus\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\MenuLocation;
-use App\Filament\Support\SortInput;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use App\Models\Menu;
 use Filament\Forms\Components\Select;
@@ -44,15 +44,6 @@ class MenuForm
                             ->preload()
                             ->live(),
 
-                        TextInput::make('column_position')
-                            ->label(__('app.label.column_position'))
-                            ->helperText(__('app.helper.footer_column_position'))
-                            ->numeric()
-                            ->minValue(1)
-                            ->maxValue(4)
-                            ->visible(fn (Get $get): bool => $get('location') === MenuLocation::Footer->value
-                                && blank($get('parent_id'))),
-
                         TranslatableTabs::make('translations')
                             ->schema([
                                 TextInput::make('name')
@@ -68,7 +59,7 @@ class MenuForm
                             ->label(__('app.label.open_in_new_tab'))
                             ->default(false),
 
-                        SortInput::make(),
+                        Fields::sort(),
 
                         Toggle::make('status')
                             ->label(__('app.label.show_on_site'))

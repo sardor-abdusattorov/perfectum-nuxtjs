@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Pages\Tables;
 
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -34,7 +32,7 @@ class PagesTable
                     ->copyable()
                     ->searchable(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
 
                 TextColumn::make('updated_at')
                     ->label(__('app.label.updated_at'))
@@ -42,9 +40,9 @@ class PagesTable
                     ->sortable(),
             ])
             ->filters([
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

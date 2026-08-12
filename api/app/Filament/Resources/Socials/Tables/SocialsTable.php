@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Socials\Tables;
 
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use App\Support\IconName;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -32,16 +30,16 @@ class SocialsTable
                     ->openUrlInNewTab()
                     ->wrap(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
 
                 TextColumn::make('sort')
                     ->label(__('app.label.sort'))
                     ->sortable(),
             ])
             ->filters([
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

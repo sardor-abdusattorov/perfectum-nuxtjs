@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('menus')->cascadeOnDelete();
             $table->string('location', 20);
             $table->string('key')->nullable();
-            $table->unsignedTinyInteger('column_position')->nullable();
             $table->json('name');
             $table->json('url')->nullable();
             $table->boolean('open_in_new_tab')->default(false);

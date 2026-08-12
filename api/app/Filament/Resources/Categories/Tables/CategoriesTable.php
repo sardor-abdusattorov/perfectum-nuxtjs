@@ -4,9 +4,7 @@ namespace App\Filament\Resources\Categories\Tables;
 
 use App\Enums\CategoryType;
 use App\Enums\Network;
-use App\Filament\Support\CrudActions;
-use App\Filament\Support\StatusColumn;
-use App\Filament\Support\StatusFilter;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -45,7 +43,7 @@ class CategoriesTable
                     ->color('gray')
                     ->searchable(),
 
-                StatusColumn::make(),
+                Tables::statusColumn(),
 
                 TextColumn::make('sort')
                     ->label(__('app.label.sort'))
@@ -60,9 +58,9 @@ class CategoriesTable
                     ->label(__('app.label.network'))
                     ->options(Network::getOptions()),
 
-                StatusFilter::make(),
+                Tables::statusFilter(),
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

@@ -1,12 +1,7 @@
 <script setup lang="ts">
 const block = useBlock('home', 'app_promo')
-const setting = useSetting()
+const stores = useStores()
 const t = useT()
-
-const stores = computed(() => [
-  { name: 'App Store', url: setting('app_store_url', '#'), logo: '/images/apple.svg' },
-  { name: 'Google Play', url: setting('google_play_url', '#'), logo: '/images/google_play.svg' },
-])
 </script>
 
 <template>
@@ -19,7 +14,7 @@ const stores = computed(() => [
           <div class="app-promo__description">
             <p><LayoutLines :value="block.description" /></p>
           </div>
-          <div class="app-promo__stores">
+          <div v-if="stores.length" class="app-promo__stores">
             <a
               v-for="store in stores"
               :key="store.name"
@@ -29,7 +24,7 @@ const stores = computed(() => [
               rel="noopener"
             >
               <span class="app-promo__store-text">{{ t('common.store_prefix', 'скачать в') }}</span>
-              <img :src="store.logo" :alt="store.name" class="app-promo__store-logo" />
+              <img :src="`/images/${store.icon}.svg`" :alt="store.name" class="app-promo__store-logo" loading="lazy" />
             </a>
           </div>
         </div>

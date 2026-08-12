@@ -24,7 +24,6 @@ class MenuResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'url' => $this->url,
-            'column' => $this->column_position,
             'target' => $this->open_in_new_tab ? '_blank' : null,
             'children' => $this->relationLoaded('children')
                 ? self::collection($this->children)->resolve()

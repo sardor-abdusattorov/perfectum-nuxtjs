@@ -4,8 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Filament\Support\MultilineText;
-use App\Filament\Support\TabSaveAction;
+use App\Filament\Support\Fields;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -25,10 +24,10 @@ class AppPromoTab extends ContentTab
                     ->schema([
                         TranslatableTabs::make('translations')
                             ->schema([
-                                MultilineText::make('app_promo.title')
+                                Fields::multiline('app_promo.title')
                                     ->label(__('app.label.title')),
 
-                                MultilineText::make('app_promo.description')
+                                Fields::multiline('app_promo.description')
                                     ->label(__('app.label.description')),
                             ]),
 
@@ -37,7 +36,7 @@ class AppPromoTab extends ContentTab
                             ->helperText(__('app.helper.watermark')),
                     ]),
 
-                TabSaveAction::make(self::class),
+                SaveAction::make(self::class),
             ]);
     }
 }

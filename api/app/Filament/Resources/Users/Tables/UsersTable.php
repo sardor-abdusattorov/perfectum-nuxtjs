@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
-use App\Filament\Support\CrudActions;
+use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -40,7 +40,7 @@ class UsersTable
             ->filters([
 
             ])
-            ->recordActions(CrudActions::record())
-            ->toolbarActions(CrudActions::bulk());
+            ->recordActions(Tables::actions())
+            ->toolbarActions(Tables::bulkActions());
     }
 }

@@ -3,9 +3,7 @@
 namespace App\Filament\Resources\Pages\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -28,17 +26,17 @@ class PageForm
                                     ->label(__('app.label.title'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
-                                TextEditor::make('content')
+                                Fields::editor('content')
                                     ->label(__('app.label.content'))
                                     ->required(Translated::required()),
                             ]),
 
-                        SlugInput::make()
+                        Fields::slug()
                             ->helperText(__('app.helper.page_slug')),
 
-                        ImageUpload::make('pages')
+                        Fields::image('pages')
                             ->label(__('app.label.image')),
 
                         Toggle::make('status')

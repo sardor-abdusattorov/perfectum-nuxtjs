@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Filament\Support;
+namespace App\Filament\Pages\Homepage;
 
-use App\Filament\Pages\Homepage\ContentTab;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Actions;
 
-class TabSaveAction
+class SaveAction
 {
     /**
      * @param  class-string<ContentTab>  $tabClass

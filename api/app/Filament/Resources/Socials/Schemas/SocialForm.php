@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Socials\Schemas;
 
-use App\Filament\Support\IconPicker;
-use App\Filament\Support\SortInput;
-use App\Filament\Support\StatusToggle;
+use App\Filament\Support\Fields;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -23,16 +21,16 @@ class SocialForm
                             ->helperText(__('app.helper.social_name'))
                             ->required(),
 
-                        IconPicker::make(),
+                        Fields::icon(),
 
                         TextInput::make('url')
                             ->label(__('app.label.url'))
                             ->url()
                             ->required(),
 
-                        SortInput::make(),
+                        Fields::sort(),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
             ]);
     }

@@ -4,9 +4,7 @@ namespace App\Filament\Resources\Tenders\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\TenderState;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -30,14 +28,14 @@ class TenderForm
                                     ->label(__('app.label.title'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
-                                TextEditor::make('content')
+                                Fields::editor('content')
                                     ->label(__('app.label.content'))
                                     ->required(Translated::required()),
                             ]),
 
-                        SlugInput::make(),
+                        Fields::slug(),
 
                         Select::make('state')
                             ->label(__('app.label.tender_state'))
@@ -59,7 +57,7 @@ class TenderForm
                             ->reorderable()
                             ->maxSize(20480),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
             ]);
     }

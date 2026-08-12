@@ -5,9 +5,7 @@ namespace App\Filament\Resources\Categories\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Enums\Network;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\SortInput;
-use App\Filament\Support\StatusToggle;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -44,17 +42,17 @@ class CategoryForm
                                     ->label(__('app.label.name'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
                             ]),
 
-                        SlugInput::make()
+                        Fields::slug()
                             ->label(__('app.label.key'))
                             ->helperText(__('app.helper.category_slug'))
                             ->unique(ignoreRecord: true, modifyRuleUsing: fn (Unique $rule, Get $get): Unique => $rule->where('type', $get('type'))),
 
-                        SortInput::make(),
+                        Fields::sort(),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
             ]);
     }

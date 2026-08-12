@@ -4,11 +4,7 @@ namespace App\Filament\Resources\Actions\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
-use App\Filament\Support\CategorySelect;
-use App\Filament\Support\ImageUpload;
-use App\Filament\Support\SlugInput;
-use App\Filament\Support\StatusToggle;
-use App\Filament\Support\TextEditor;
+use App\Filament\Support\Fields;
 use App\Filament\Support\Translated;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
@@ -25,7 +21,7 @@ class ActionForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        CategorySelect::make(CategoryType::Action),
+                        Fields::category(CategoryType::Action),
 
                         TranslatableTabs::make('translations')
                             ->schema([
@@ -33,7 +29,7 @@ class ActionForm
                                     ->label(__('app.label.title'))
                                     ->required(Translated::required())
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(SlugInput::preview()),
+                                    ->afterStateUpdated(Fields::slugPreview()),
 
                                 TextInput::make('badge')
                                     ->label(__('app.label.badge'))
@@ -44,14 +40,14 @@ class ActionForm
                                     ->helperText(__('app.helper.excerpt'))
                                     ->rows(3),
 
-                                TextEditor::make('content')
+                                Fields::editor('content')
                                     ->label(__('app.label.content'))
                                     ->required(Translated::required()),
                             ]),
 
-                        SlugInput::make(),
+                        Fields::slug(),
 
-                        ImageUpload::make('actions'),
+                        Fields::image('actions'),
 
                         DatePicker::make('starts_at')
                             ->label(__('app.label.starts_at')),
@@ -61,7 +57,7 @@ class ActionForm
                             ->helperText(__('app.helper.ends_at'))
                             ->afterOrEqual('starts_at'),
 
-                        StatusToggle::make(),
+                        Fields::status(),
                     ]),
             ]);
     }

@@ -29,12 +29,15 @@ class SiteSettingsSeeder extends Seeder
             'phone_secondary' => '+998 98 305 1111',
             'phone_short' => '077',
 
+            'email_info' => 'info@perfectum.uz',
+            'email_hotline' => 'hotline@perfectum.uz',
+
             'telegram_url' => 'https://t.me/Perfectum_Support',
 
             'map_url' => 'https://yandex.uz/maps/-/CDvOZK1p',
 
             'google_play_url' => 'https://play.google.com/store/apps/details?id=uz.perfectum',
-            'app_store_url' => 'https://apps.apple.com/uz/app/perfectum/id1234567890',
+            'app_store_url' => '',
         ];
     }
 }
