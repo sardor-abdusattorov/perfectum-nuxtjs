@@ -60,8 +60,9 @@ watch(() => route.fullPath, () => {
 
                   <a :href="setting('account_url', '#')" class="header__account" target="_blank" rel="noopener">
                       <span class="header__account-icon">
-                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                              <path d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                           </svg>
                       </span>
                       {{ t('header.account') }}

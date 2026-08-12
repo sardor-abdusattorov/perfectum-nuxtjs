@@ -2091,8 +2091,8 @@ strong {
   border-radius: 100%;
   pointer-events: none;
   opacity: 0.36;
-  background: #e60000;
-  filter: blur(175px);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
+  transform: scale(2.44);
 }
 .tariffs .tariffs__content {
   position: relative;
@@ -2101,7 +2101,6 @@ strong {
 
 .tariffs .tariffs__card .tariffs__connect {
   margin-top: auto;
-  padding-top: 32px;
 }
 
 .tariffs .section__eyebrow {
@@ -2186,7 +2185,7 @@ strong {
 }
 
 .tariffs .tariffs__chip.tariffs__chip_active {
-  color: var(--color-red);
+  color: var(--color-white);
   font-weight: 600;
 }
 
@@ -2196,6 +2195,20 @@ strong {
 
 .tariffs__swiper .swiper-slide {
   height: auto;
+}
+
+.tariffs .tariffs__swiper,
+.tariffs .tariffs__swiper .swiper-wrapper,
+.tariffs-list .tariffs-list__slider,
+.tariffs-list .tariffs-list__slider .swiper-wrapper {
+  cursor: grab;
+}
+
+.tariffs .tariffs__swiper.swiper-grabbing,
+.tariffs .tariffs__swiper.swiper-grabbing .swiper-wrapper,
+.tariffs-list .tariffs-list__slider.swiper-grabbing,
+.tariffs-list .tariffs-list__slider.swiper-grabbing .swiper-wrapper {
+  cursor: grabbing;
 }
 
 .tariffs .tariffs__card {
@@ -2303,9 +2316,44 @@ strong {
 .tariffs .tariffs__feats {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 0;
   margin-top: 24px;
   margin-bottom: 24px;
+}
+
+.tariffs .tariffs__feats .tariff-feat {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.tariffs .tariffs__feats .tariff-feat:last-child {
+  border-bottom: none;
+}
+
+.tariffs .tariffs__feats .tariff-feat .tariff-feat__icon img {
+  width: 26px;
+  height: 26px;
+}
+
+.tariffs .tariffs__feats .tariff-feat .tariff-feat__text,
+.tariffs .tariffs__feats .tariff-feat .tariff-feat__muted {
+  font-size: 14px;
+}
+
+.tariffs .tariffs__card:hover .tariff-feat {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.tariffs .tariffs__card:hover .tariff-feat__text {
+  color: var(--color-white);
+}
+
+.tariffs .tariffs__card:hover .tariff-feat__muted {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tariffs .tariffs__card:hover .tariff-feat__icon img {
+  filter: brightness(0) invert(1);
 }
 
 .tariffs .tariffs__feat {
@@ -7992,7 +8040,15 @@ select {
   }
   .tariffs .tariffs__feats {
     margin: 16px 0;
-    gap: 10px 0;
+    gap: 0;
+  }
+  .tariffs .tariffs__feats .tariff-feat {
+    gap: 12px;
+    padding: 6px 0;
+  }
+  .tariffs .tariffs__feats .tariff-feat .tariff-feat__icon img {
+    width: 24px;
+    height: 24px;
   }
   .tariffs .tariffs__price-period {
     font-size: 12px;
@@ -8953,8 +9009,7 @@ select {
   .tariffs .tariffs__tab {
     white-space: nowrap;
     flex: 0 0 auto;
-    min-height: 32px;
-    padding: 6px 14px;
+    padding: 8px 12px;
     font-size: 14px;
   }
   .choose .choose__card {
