@@ -272,9 +272,17 @@ function initBlock1() {
 
   const needles = document.querySelectorAll(".hero__gauge .hero__gauge-needle");
   if (needles.length) {
-    const readouts = document.querySelectorAll(".hero__gauge .hero__gauge-value");
-    const from = 1000;
-    const to = 970;
+    const DIP = 0.03;
+    const readouts = [];
+
+    document.querySelectorAll(".hero__gauge .hero__gauge-value").forEach(function (el) {
+      const peak = Number((el.dataset.value ?? el.textContent).replace(/[^\d.]/g, ""));
+      if (peak > 0) {
+        el.dataset.value = String(peak);
+        readouts.push({ el, peak });
+      }
+    });
+
     const maxTilt = -5;
     const duration = 1300;
     let start = null;
@@ -290,12 +298,9 @@ function initBlock1() {
         needle.style.transform = transform;
       });
 
-      const value = String(Math.round(from + (to - from) * p)).replace(
-        /\B(?=(\d{3})+(?!\d))/g,
-        " ",
-      );
       readouts.forEach(function (readout) {
-        readout.textContent = value;
+        const value = readout.peak * (1 - DIP * (1 - p));
+        readout.el.textContent = String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       });
     });
   }

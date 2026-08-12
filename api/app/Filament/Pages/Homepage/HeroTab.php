@@ -43,7 +43,7 @@ class HeroTab extends ContentTab
                                             ])
                                             ->required(),
 
-                                        Fields::editor('lead')
+                                        Fields::multiline('lead')
                                             ->label(__('app.label.lead_text'))
                                             ->helperText(__('app.helper.hero_lead')),
                                     ]),
