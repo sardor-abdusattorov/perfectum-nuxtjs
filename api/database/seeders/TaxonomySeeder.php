@@ -18,6 +18,17 @@ class TaxonomySeeder extends Seeder
         'domasnii-internet' => Network::FiveG,
     ];
 
+    private const TYPE_CATEGORIES = [
+        'qulay-ezemesyacnye' => 'cdma',
+        'qulay-polugodovye' => 'cdma',
+        'specialnye-tarify' => 'cdma',
+        'polugodovye-6k' => 'cdma',
+        'dlya-fiziceskix-lic' => 'domasnii-internet',
+        'dlya-yuridiceskix-lic' => 'domasnii-internet',
+        'bez-pokupki-routera' => 'domasnii-internet',
+        '5g-standalone' => 'mobilnaya-svya',
+    ];
+
     public function run(): void
     {
         $data = json_decode((string) file_get_contents(database_path('data/taxonomies.json')), true);
@@ -25,6 +36,12 @@ class TaxonomySeeder extends Seeder
         $this->seed(TariffCategory::class, $data['tariff_categories'] ?? []);
         $this->seed(TariffType::class, $this->rankDescending($data['tariff_types'] ?? []));
         $this->seed(ServiceCategory::class, $data['service_types'] ?? []);
+
+        $categories = TariffCategory::query()->pluck('id', 'slug');
+
+        foreach (self::TYPE_CATEGORIES as $type => $category) {
+            TariffType::query()->where('slug', $type)->update(['category_id' => $categories[$category] ?? null]);
+        }
     }
 
     /**

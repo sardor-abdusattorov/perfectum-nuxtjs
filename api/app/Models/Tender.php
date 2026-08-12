@@ -3,16 +3,21 @@
 namespace App\Models;
 
 use App\Enums\TenderState;
+use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class Tender extends Model
 {
+    use CleansUpAttachedFiles;
     use HasTranslations;
     use Publishable;
 
     protected $table = 'tenders';
+
+    /** @var array<int, string> */
+    protected array $attachedFileFields = ['files'];
 
     protected $fillable = [
         'title',

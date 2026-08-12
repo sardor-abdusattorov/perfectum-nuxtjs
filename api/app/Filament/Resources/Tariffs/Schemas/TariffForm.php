@@ -10,7 +10,10 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class TariffForm
@@ -20,151 +23,165 @@ class TariffForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make(__('app.label.basic_information'))
+                Tabs::make('tariff')
+                    ->columnSpanFull()
                     ->schema([
-                        Fields::category(TariffCategory::class),
-
-                        Fields::category(TariffType::class, 'type_id')
-                            ->label(__('app.label.tariff_type'))
-                            ->helperText(__('app.helper.tariff_type')),
-
-                        TranslatableTabs::make('translations')
+                        Tab::make(__('app.label.basic_information'))
                             ->schema([
-                                TextInput::make('name')
-                                    ->label(__('app.label.name'))
-                                    ->required()
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(Fields::slugPreview()),
-                            ]),
+                                Fields::category(TariffCategory::class)
+                                    ->live()
+                                    ->afterStateUpdated(fn (Set $set) => $set('type_id', null)),
 
-                        Fields::slug(),
+                                Select::make('type_id')
+                                    ->label(__('app.label.tariff_type'))
+                                    ->helperText(__('app.helper.tariff_type'))
+                                    ->options(fn (Get $get): array => TariffType::query()
+                                        ->when($get('category_id'), fn ($query, $category) => $query->where(
+                                            fn ($inner) => $inner->whereNull('category_id')->orWhere('category_id', $category)
+                                        ))
+                                        ->ordered()
+                                        ->pluck('name', 'id')
+                                        ->all())
+                                    ->searchable(),
 
-                        Fields::status(),
-                    ]),
-
-                Section::make(__('app.label.price'))
-                    ->schema([
-                        TextInput::make('price')
-                            ->label(__('app.label.price_value'))
-                            ->helperText(__('app.helper.price_value')),
-
-                        TranslatableTabs::make('price_translations')
-                            ->schema([
-                                TextInput::make('price_currency')
-                                    ->label(__('app.label.price_currency')),
-
-                                TextInput::make('price_period')
-                                    ->label(__('app.label.price_period'))
-                                    ->helperText(__('app.helper.price_period')),
-
-                                TextInput::make('connection_cost')
-                                    ->label(__('app.label.connection_cost'))
-                                    ->helperText(__('app.helper.connection_cost')),
-                            ]),
-                    ]),
-
-                Section::make(__('app.label.tariff_features'))
-                    ->description(__('app.helper.tariff_features'))
-                    ->schema([
-                        Repeater::make('features')
-                            ->hiddenLabel()
-                            ->addActionLabel(__('app.action.add'))
-                            ->schema([
-                                Fields::featureIcon(),
-
-                                TranslatableTabs::make('feature_translations')
+                                TranslatableTabs::make('translations')
                                     ->schema([
-                                        TextInput::make('title')
-                                            ->label(__('app.label.title'))
-                                            ->helperText(__('app.helper.tariff_feature_title')),
-
-                                        TextInput::make('note')
-                                            ->label(__('app.label.note'))
-                                            ->helperText(__('app.helper.tariff_feature_note')),
+                                        TextInput::make('name')
+                                            ->label(__('app.label.name'))
+                                            ->required()
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(Fields::slugPreview()),
                                     ]),
-                            ])
-                            ->itemLabel(Fields::itemLabel('title'))
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible(),
-                    ]),
 
-                Section::make(__('app.label.tariff_connect'))
-                    ->description(__('app.helper.tariff_connect'))
-                    ->schema([
-                        Fields::image('tariffs', 'modal_image')
-                            ->label(__('app.label.modal_image'))
-                            ->helperText(__('app.helper.modal_image'))
-                            ->imageEditor(false),
+                                Fields::slug(),
 
-                        TextInput::make('ussd')
-                            ->label(__('app.label.ussd'))
-                            ->helperText(__('app.helper.ussd')),
+                                Fields::status(),
+                            ]),
 
-                        Repeater::make('buttons')
-                            ->label(__('app.label.connect_buttons'))
-                            ->addActionLabel(__('app.action.add'))
+                        Tab::make(__('app.label.price'))
                             ->schema([
-                                Fields::image('tariffs', 'icon')
-                                    ->label(__('app.label.icon'))
+                                TextInput::make('price')
+                                    ->label(__('app.label.price_value'))
+                                    ->helperText(__('app.helper.price_value')),
+
+                                TranslatableTabs::make('price_translations')
+                                    ->schema([
+                                        TextInput::make('price_currency')
+                                            ->label(__('app.label.price_currency')),
+
+                                        TextInput::make('price_period')
+                                            ->label(__('app.label.price_period'))
+                                            ->helperText(__('app.helper.price_period')),
+
+                                        TextInput::make('connection_cost')
+                                            ->label(__('app.label.connection_cost'))
+                                            ->helperText(__('app.helper.connection_cost')),
+                                    ]),
+                            ]),
+
+                        Tab::make(__('app.label.tariff_features'))
+                            ->schema([
+                                Repeater::make('features')
+                                    ->hiddenLabel()
+                                    ->helperText(__('app.helper.tariff_features'))
+                                    ->addActionLabel(__('app.action.add'))
+                                    ->schema([
+                                        Fields::featureIcon(),
+
+                                        TranslatableTabs::make('feature_translations')
+                                            ->schema([
+                                                TextInput::make('title')
+                                                    ->label(__('app.label.title'))
+                                                    ->helperText(__('app.helper.tariff_feature_title')),
+
+                                                TextInput::make('note')
+                                                    ->label(__('app.label.note'))
+                                                    ->helperText(__('app.helper.tariff_feature_note')),
+                                            ]),
+                                    ])
+                                    ->itemLabel(Fields::itemLabel('title'))
+                                    ->defaultItems(0)
+                                    ->reorderable()
+                                    ->collapsible(),
+                            ]),
+
+                        Tab::make(__('app.label.tariff_connect'))
+                            ->schema([
+                                Fields::image('tariffs', 'modal_image')
+                                    ->label(__('app.label.modal_image'))
+                                    ->helperText(__('app.helper.modal_image'))
                                     ->imageEditor(false),
 
-                                TranslatableTabs::make('button_translations')
-                                    ->schema([
-                                        TextInput::make('name')
-                                            ->label(__('app.label.button_label')),
-                                    ]),
+                                TextInput::make('ussd')
+                                    ->label(__('app.label.ussd'))
+                                    ->helperText(__('app.helper.ussd')),
 
-                                Select::make('type')
-                                    ->label(__('app.label.link_type'))
-                                    ->options([
-                                        'link' => __('app.link_type.link'),
-                                        'tel' => __('app.link_type.tel'),
+                                Repeater::make('buttons')
+                                    ->label(__('app.label.connect_buttons'))
+                                    ->helperText(__('app.helper.tariff_connect'))
+                                    ->addActionLabel(__('app.action.add'))
+                                    ->schema([
+                                        Fields::image('tariffs', 'icon')
+                                            ->label(__('app.label.icon'))
+                                            ->imageEditor(false),
+
+                                        TranslatableTabs::make('button_translations')
+                                            ->schema([
+                                                TextInput::make('name')
+                                                    ->label(__('app.label.button_label')),
+                                            ]),
+
+                                        Select::make('type')
+                                            ->label(__('app.label.link_type'))
+                                            ->options([
+                                                'link' => __('app.link_type.link'),
+                                                'tel' => __('app.link_type.tel'),
+                                            ])
+                                            ->default('link'),
+
+                                        TextInput::make('url')
+                                            ->label(__('app.label.url')),
                                     ])
-                                    ->default('link'),
+                                    ->itemLabel(Fields::itemLabel('name'))
+                                    ->defaultItems(0)
+                                    ->reorderable()
+                                    ->collapsible(),
+                            ]),
 
-                                TextInput::make('url')
-                                    ->label(__('app.label.url')),
-                            ])
-                            ->itemLabel(Fields::itemLabel('name'))
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible(),
-                    ]),
-
-                Section::make(__('app.label.additionally'))
-                    ->schema([
-                        Repeater::make('descriptions')
-                            ->label(__('app.label.tariff_descriptions'))
-                            ->helperText(__('app.helper.tariff_descriptions'))
-                            ->addActionLabel(__('app.action.add'))
+                        Tab::make(__('app.label.additionally'))
                             ->schema([
-                                TranslatableTabs::make('description_translations')
+                                Repeater::make('descriptions')
+                                    ->label(__('app.label.tariff_descriptions'))
+                                    ->helperText(__('app.helper.tariff_descriptions'))
+                                    ->addActionLabel(__('app.action.add'))
                                     ->schema([
-                                        TextInput::make('name')
-                                            ->label(__('app.label.title'))
-                                            ->required(),
+                                        TranslatableTabs::make('description_translations')
+                                            ->schema([
+                                                TextInput::make('name')
+                                                    ->label(__('app.label.title'))
+                                                    ->required(),
 
-                                        Fields::editor('content')
-                                            ->label(__('app.label.content')),
-                                    ]),
-                            ])
-                            ->itemLabel(Fields::itemLabel('name'))
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible(),
+                                                Fields::editor('content')
+                                                    ->label(__('app.label.content')),
+                                            ]),
+                                    ])
+                                    ->itemLabel(Fields::itemLabel('name'))
+                                    ->defaultItems(0)
+                                    ->reorderable()
+                                    ->collapsible(),
 
-                        Fields::image('tariffs'),
+                                Fields::image('tariffs'),
 
-                        Toggle::make('is_featured')
-                            ->label(__('app.label.is_featured'))
-                            ->helperText(__('app.helper.is_featured')),
+                                Toggle::make('is_featured')
+                                    ->label(__('app.label.is_featured'))
+                                    ->helperText(__('app.helper.is_featured')),
 
-                        Toggle::make('is_archived')
-                            ->label(__('app.label.is_archived'))
-                            ->helperText(__('app.helper.is_archived')),
+                                Toggle::make('is_archived')
+                                    ->label(__('app.label.is_archived'))
+                                    ->helperText(__('app.helper.is_archived')),
 
-                        Fields::sort(),
+                                Fields::sort(),
+                            ]),
                     ]),
             ]);
     }

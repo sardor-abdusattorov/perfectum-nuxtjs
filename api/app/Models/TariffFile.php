@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class TariffFile extends Model
 {
+    use CleansUpAttachedFiles;
     use Publishable;
 
     protected $table = 'tariff_files';
+
+    /** @var array<int, string> */
+    protected array $attachedFileFields = ['file'];
 
     protected $fillable = [
         'name',

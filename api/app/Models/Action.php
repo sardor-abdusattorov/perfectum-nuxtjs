@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
@@ -10,6 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Action extends Model
 {
+    use CleansUpAttachedFiles;
     use HasCategory;
     use HasMediaUrl;
     use HasTranslations;

@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('tariff_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->nullable()->constrained('tariff_categories')->nullOnDelete();
             $table->json('name');
             $table->string('slug')->unique();
             $table->string('network', 10)->default('both')->index();

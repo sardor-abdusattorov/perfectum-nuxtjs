@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
+    use CleansUpAttachedFiles;
     use HasMediaUrl;
     use HasTranslations;
     use Publishable;

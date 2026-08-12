@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Network;
+use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
@@ -13,12 +14,16 @@ use Spatie\Translatable\HasTranslations;
 
 class Tariff extends Model
 {
+    use CleansUpAttachedFiles;
     use HasCategory;
     use HasMediaUrl;
     use HasTranslations;
     use Publishable;
 
     protected $table = 'tariffs';
+
+    /** @var array<int, string> */
+    protected array $attachedFileFields = ['image', 'modal_image'];
 
     protected $fillable = [
         'category_id',

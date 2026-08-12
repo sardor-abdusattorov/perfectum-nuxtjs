@@ -24,6 +24,7 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'tariff_categories_single' => 'Tariff category',
         'tariff_file_single' => 'Archive document',
         'tariff_file_plural' => 'Tariff archive',
         'file' => 'File',
@@ -230,6 +231,7 @@ return [
     ],
 
     'helper' => [
+        'type_category' => 'Which category this subcategory is shown in; empty means all',
         'tariff_file_name' => 'The name shown in the archive page list',
         'connection_cost' => 'Shown in the connect dialog',
         'tariff_descriptions' => 'Each block is a collapsible section under the tariff card',

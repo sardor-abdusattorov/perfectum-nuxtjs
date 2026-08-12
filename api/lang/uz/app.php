@@ -24,6 +24,7 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'tariff_categories_single' => 'Tarif toifasi',
         'tariff_file_single' => 'Arxiv hujjati',
         'tariff_file_plural' => 'Tariflar arxivi',
         'file' => 'Fayl',
@@ -230,6 +231,7 @@ return [
     ],
 
     'helper' => [
+        'type_category' => 'Ushbu kichik toifa qaysi toifada koʻrsatiladi; boʻsh boʻlsa — hammasida',
         'tariff_file_name' => 'Arxiv sahifasidagi roʻyxatda koʻrinadigan nom',
         'connection_cost' => 'Ulanish oynasida koʻrsatiladi',
         'tariff_descriptions' => 'Har bir blok — tarif kartasi ostidagi ochiluvchi boʻlim',
