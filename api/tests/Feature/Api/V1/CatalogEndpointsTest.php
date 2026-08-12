@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-use App\Enums\CategoryType;
 use App\Enums\Network;
-use App\Models\Category;
 use App\Models\Faq;
+use App\Models\FaqCategory;
 use App\Models\News;
+use App\Models\NewsCategory;
 use App\Models\Vacancy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-function category(CategoryType $type, Network $network, string $slug): Category
+function category(string $model, Network $network, string $slug): mixed
 {
-    return Category::create([
-        'type' => $type,
-        'network' => $network,
-        'name' => ['ru' => ucfirst($slug)],
+    return $model::create([
+        'name' => ['ru' => $slug, 'uz' => $slug],
         'slug' => $slug,
+        'network' => $network,
+        'sort' => 1,
+        'status' => true,
     ]);
 }
 
@@ -34,7 +35,7 @@ function news(array $attributes = []): News
 }
 
 it('keeps a five g record out of the cdma section', function (): void {
-    news(['category_id' => category(CategoryType::News, Network::FiveG, 'razvitie')->id]);
+    news(['category_id' => category(NewsCategory::class, Network::FiveG, 'razvitie')->id]);
 
     $this->getJson(route('api.v1.news.index', ['network' => 'cdma']))
         ->assertOk()
@@ -46,7 +47,7 @@ it('keeps a five g record out of the cdma section', function (): void {
 });
 
 it('shows a shared record in both sections', function (): void {
-    news(['category_id' => category(CategoryType::News, Network::Both, 'kompaniya')->id]);
+    news(['category_id' => category(NewsCategory::class, Network::Both, 'kompaniya')->id]);
 
     foreach (['5g', 'cdma'] as $network) {
         $this->getJson(route('api.v1.news.index', ['network' => $network]))
@@ -64,8 +65,8 @@ it('keeps a record without a category in every section', function (): void {
 });
 
 it('filters by category slug', function (): void {
-    news(['category_id' => category(CategoryType::News, Network::Both, 'razvitie')->id]);
-    news(['slug' => 'vtoraya', 'category_id' => category(CategoryType::News, Network::Both, 'kompaniya')->id]);
+    news(['category_id' => category(NewsCategory::class, Network::Both, 'razvitie')->id]);
+    news(['slug' => 'vtoraya', 'category_id' => category(NewsCategory::class, Network::Both, 'kompaniya')->id]);
 
     $this->getJson(route('api.v1.news.index', ['category' => 'kompaniya']))
         ->assertOk()
@@ -105,10 +106,10 @@ it('returns not found for an unpublished record', function (): void {
 });
 
 it('lists categories of one type only', function (): void {
-    category(CategoryType::News, Network::Both, 'kompaniya');
-    category(CategoryType::Faq, Network::Both, 'podklyuchenie');
+    category(NewsCategory::class, Network::Both, 'kompaniya');
+    category(FaqCategory::class, Network::Both, 'podklyuchenie');
 
-    $this->getJson(route('api.v1.categories', ['type' => 'news']))
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.slug', 'kompaniya');
@@ -120,7 +121,7 @@ it('rejects an unknown category type', function (): void {
 
 it('serves faqs of the requested network', function (): void {
     Faq::create([
-        'category_id' => category(CategoryType::Faq, Network::Cdma, 'cdma-help')->id,
+        'category_id' => category(FaqCategory::class, Network::Cdma, 'cdma-help')->id,
         'question' => ['ru' => 'Как проверить баланс?'],
         'answer' => ['ru' => '<p>Наберите *100#</p>'],
     ]);

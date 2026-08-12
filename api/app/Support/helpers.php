@@ -1,16 +1,21 @@
 <?php
 
-use App\Enums\CategoryType;
 use App\Enums\MenuLocation;
 use App\Enums\PageKey;
-use App\Models\Category;
+use App\Models\ActionCategory;
 use App\Models\ContentBlock;
+use App\Models\DeviceCategory;
+use App\Models\FaqCategory;
 use App\Models\Menu;
+use App\Models\NewsCategory;
 use App\Models\Page;
+use App\Models\ServiceCategory;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
 use App\Models\Social;
+use App\Models\TariffCategory;
+use App\Models\TariffType;
 use Illuminate\Support\Facades\Cache;
 
 if (! function_exists('app_locales')) {
@@ -64,13 +69,29 @@ if (! function_exists('clear_pages_cache')) {
     }
 }
 
-if (! function_exists('clear_categories_cache')) {
-    function clear_categories_cache(): void
+if (! function_exists('taxonomies')) {
+    /**
+     * @return array<int, class-string>
+     */
+    function taxonomies(): array
     {
-        foreach (CategoryType::cases() as $type) {
-            foreach (app_locales() as $locale) {
-                Cache::forget(Category::cacheKey($type, $locale));
-            }
+        return [
+            NewsCategory::class,
+            ActionCategory::class,
+            FaqCategory::class,
+            DeviceCategory::class,
+            TariffCategory::class,
+            TariffType::class,
+            ServiceCategory::class,
+        ];
+    }
+}
+
+if (! function_exists('clear_taxonomy_cache')) {
+    function clear_taxonomy_cache(string $model): void
+    {
+        foreach (app_locales() as $locale) {
+            Cache::forget($model::cacheKey($locale));
         }
     }
 }

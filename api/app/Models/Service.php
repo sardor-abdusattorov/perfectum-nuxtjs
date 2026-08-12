@@ -44,6 +44,11 @@ class Service extends Model
         'status' => 'boolean',
     ];
 
+    public static function categoryModel(): string
+    {
+        return ServiceCategory::class;
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

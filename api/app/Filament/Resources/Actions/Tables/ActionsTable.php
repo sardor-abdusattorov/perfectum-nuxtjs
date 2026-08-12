@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Actions\Tables;
 
-use App\Enums\CategoryType;
 use App\Filament\Support\Tables;
+use App\Models\ActionCategory;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -40,7 +40,7 @@ class ActionsTable
                 Tables::statusColumn(),
             ])
             ->filters([
-                Tables::categoryFilter(CategoryType::Action),
+                Tables::categoryFilter(ActionCategory::class),
 
                 Tables::statusFilter(),
             ])

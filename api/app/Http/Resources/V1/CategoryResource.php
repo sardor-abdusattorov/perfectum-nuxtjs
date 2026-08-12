@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
-use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Category
+ * @mixin Model
  */
 class CategoryResource extends JsonResource
 {
@@ -23,7 +23,7 @@ class CategoryResource extends JsonResource
         return [
             'slug' => $this->slug,
             'name' => $this->name,
-            'network' => $this->network->value,
+            'network' => $this->network?->value,
         ];
     }
 }

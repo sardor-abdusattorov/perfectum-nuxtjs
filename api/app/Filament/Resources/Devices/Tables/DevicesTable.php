@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Devices\Tables;
 
-use App\Enums\CategoryType;
 use App\Filament\Support\Tables;
+use App\Models\DeviceCategory;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -50,7 +50,7 @@ class DevicesTable
                 Tables::statusColumn(),
             ])
             ->filters([
-                Tables::categoryFilter(CategoryType::Device),
+                Tables::categoryFilter(DeviceCategory::class),
 
                 Tables::statusFilter(),
             ])

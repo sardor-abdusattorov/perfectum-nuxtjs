@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Services\Tables;
 
-use App\Enums\CategoryType;
 use App\Filament\Support\Tables;
+use App\Models\ServiceCategory;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -42,7 +42,7 @@ class ServicesTable
                 Tables::statusColumn(),
             ])
             ->filters([
-                Tables::categoryFilter(CategoryType::Service),
+                Tables::categoryFilter(ServiceCategory::class),
 
                 Tables::statusFilter(),
             ])

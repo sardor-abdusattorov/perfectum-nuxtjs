@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Tariffs\Tables;
 
-use App\Enums\CategoryType;
 use App\Filament\Support\Tables;
+use App\Models\TariffCategory;
+use App\Models\TariffType;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -48,9 +49,9 @@ class TariffsTable
                 Tables::statusColumn(),
             ])
             ->filters([
-                Tables::categoryFilter(CategoryType::Tariff),
+                Tables::categoryFilter(TariffCategory::class),
 
-                Tables::categoryFilter(CategoryType::TariffType, 'type_id')
+                Tables::categoryFilter(TariffType::class, 'type_id')
                     ->label(__('app.label.tariff_type')),
 
                 SelectFilter::make('is_archived')

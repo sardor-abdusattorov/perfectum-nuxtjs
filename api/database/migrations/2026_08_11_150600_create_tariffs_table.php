@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('tariffs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
-            $table->foreignId('type_id')->nullable()->constrained('categories')->nullOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('tariff_categories')->nullOnDelete();
+            $table->foreignId('type_id')->nullable()->constrained('tariff_types')->nullOnDelete();
             $table->json('name');
             $table->string('slug')->unique();
             $table->string('price')->nullable();

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('news_categories')->nullOnDelete();
             $table->json('title');
             $table->string('slug')->unique();
             $table->json('excerpt')->nullable();

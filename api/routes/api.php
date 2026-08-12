@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('site', SiteController::class)->name('site');
     Route::get('metrics', MetricsController::class)->name('metrics');
-    Route::get('categories/{type}', CategoryController::class)->name('categories');
+    Route::get('categories/{taxonomy}', CategoryController::class)->name('categories');
     Route::get('faqs', FaqController::class)->name('faqs');
     Route::get('blocks/{page}', BlockController::class)->name('blocks.show');
     Route::get('pages/{page}', PageController::class)->name('pages.show');

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\TariffCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
@@ -28,7 +29,13 @@ it('renders the list and create page of every resource', function (string $resou
         ->assertOk();
 })->with([
     ['actions', 'Action'],
-    ['categories', 'Category'],
+    ['news-categories', 'NewsCategory'],
+    ['action-categories', 'ActionCategory'],
+    ['faq-categories', 'FaqCategory'],
+    ['device-categories', 'DeviceCategory'],
+    ['tariff-categories', 'TariffCategory'],
+    ['tariff-types', 'TariffType'],
+    ['service-categories', 'ServiceCategory'],
     ['devices', 'Device'],
     ['faqs', 'Faq'],
     ['menus', 'Menu'],
@@ -45,13 +52,11 @@ it('renders the list and create page of every resource', function (string $resou
 ]);
 
 it('forgets the cached category options when a category changes', function (): void {
-    $type = App\Enums\CategoryType::Tariff;
+    TariffCategory::create(['name' => ['ru' => 'Первая'], 'slug' => 'pervaya', 'sort' => 1, 'status' => true]);
 
-    App\Models\Category::create(['type' => $type, 'name' => ['ru' => 'Первая'], 'slug' => 'pervaya', 'sort' => 1, 'status' => true]);
+    expect(TariffCategory::options())->toHaveCount(1);
 
-    expect(App\Models\Category::options($type))->toHaveCount(1);
+    TariffCategory::create(['name' => ['ru' => 'Вторая'], 'slug' => 'vtoraya', 'sort' => 2, 'status' => true]);
 
-    App\Models\Category::create(['type' => $type, 'name' => ['ru' => 'Вторая'], 'slug' => 'vtoraya', 'sort' => 2, 'status' => true]);
-
-    expect(App\Models\Category::options($type))->toHaveCount(2);
+    expect(TariffCategory::options())->toHaveCount(2);
 });

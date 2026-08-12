@@ -2,9 +2,8 @@
 
 namespace App\Filament\Support;
 
-use App\Enums\CategoryType;
+use App\Enums\Network;
 use App\Enums\SocialIcon;
-use App\Models\Category;
 use App\Support\IconName;
 use App\Support\Slug;
 use Closure;
@@ -138,12 +137,25 @@ class Fields
             ->afterStateHydrated(fn (Select $component, ?string $state) => $component->state(IconName::blade($state)));
     }
 
-    public static function category(CategoryType $type, string $field = 'category_id'): Select
+    /**
+     * @param  class-string  $taxonomy
+     */
+    public static function category(string $taxonomy, string $field = 'category_id'): Select
     {
         return Select::make($field)
             ->label(__('app.label.category'))
             ->helperText(__('app.helper.entity_category'))
-            ->options(Category::options($type))
+            ->options($taxonomy::options())
             ->searchable();
+    }
+
+    public static function network(string $field = 'network'): Select
+    {
+        return Select::make($field)
+            ->label(__('app.label.network'))
+            ->helperText(__('app.helper.network'))
+            ->options(Network::getOptions())
+            ->default(Network::Both->value)
+            ->required();
     }
 }

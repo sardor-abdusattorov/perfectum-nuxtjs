@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace App\Models\Concerns;
 
 use App\Enums\Network;
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait HasCategory
 {
+    /**
+     * @return class-string
+     */
+    abstract public static function categoryModel(): string;
+
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(static::categoryModel());
     }
 
     /**

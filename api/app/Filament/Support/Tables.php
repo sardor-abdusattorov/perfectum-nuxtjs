@@ -2,9 +2,7 @@
 
 namespace App\Filament\Support;
 
-use App\Enums\CategoryType;
 use App\Enums\PublishedStatus;
-use App\Models\Category;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -33,11 +31,14 @@ class Tables
             ->options(PublishedStatus::getStatusOptions());
     }
 
-    public static function categoryFilter(CategoryType $type, string $field = 'category_id'): SelectFilter
+    /**
+     * @param  class-string  $taxonomy
+     */
+    public static function categoryFilter(string $taxonomy, string $field = 'category_id'): SelectFilter
     {
         return SelectFilter::make($field)
             ->label(__('app.label.category'))
-            ->options(Category::options($type));
+            ->options($taxonomy::options());
     }
 
     /**

@@ -28,4 +28,9 @@ class Faq extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public static function categoryModel(): string
+    {
+        return FaqCategory::class;
+    }
 }

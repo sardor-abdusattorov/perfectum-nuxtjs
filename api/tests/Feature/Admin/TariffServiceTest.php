@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Enums\CategoryType;
 use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Tariffs\Pages\CreateTariff;
-use App\Models\Category;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\Tariff;
+use App\Models\TariffCategory;
+use App\Models\TariffType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -33,15 +34,13 @@ function allowed(string $subject): User
 it('creates a tariff with its features and connect buttons', function (): void {
     allowed('Tariff');
 
-    $section = Category::create([
-        'type' => CategoryType::Tariff,
+    $section = TariffCategory::create([
         'name' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa'],
         'slug' => 'mobile',
         'status' => true,
     ]);
 
-    $chip = Category::create([
-        'type' => CategoryType::TariffType,
+    $chip = TariffType::create([
         'name' => ['ru' => 'Тариф 5G', 'uz' => '5G tarifi'],
         'slug' => 'tariff-5g',
         'status' => true,
@@ -107,8 +106,7 @@ it('keeps archived tariffs out of the current scope', function (): void {
 it('creates a service with its facts and steps', function (): void {
     allowed('Service');
 
-    $category = Category::create([
-        'type' => CategoryType::Service,
+    $category = ServiceCategory::create([
         'name' => ['ru' => 'Сетевые услуги', 'uz' => 'Tarmoq xizmatlari'],
         'slug' => 'network',
         'status' => true,

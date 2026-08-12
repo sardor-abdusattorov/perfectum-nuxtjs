@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Actions\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
+use App\Models\ActionCategory;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -20,7 +20,7 @@ class ActionForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(CategoryType::Action),
+                        Fields::category(ActionCategory::class),
 
                         TranslatableTabs::make('translations')
                             ->schema([

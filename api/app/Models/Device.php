@@ -40,6 +40,11 @@ class Device extends Model
         'status' => 'boolean',
     ];
 
+    public static function categoryModel(): string
+    {
+        return DeviceCategory::class;
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

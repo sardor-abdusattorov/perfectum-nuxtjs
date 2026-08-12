@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('faq_categories')->nullOnDelete();
             $table->json('question');
             $table->json('answer');
             $table->integer('sort')->default(0);

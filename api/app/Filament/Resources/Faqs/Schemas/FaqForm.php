@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Faqs\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
+use App\Models\FaqCategory;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -18,7 +18,7 @@ class FaqForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(CategoryType::Faq),
+                        Fields::category(FaqCategory::class),
 
                         TranslatableTabs::make('translations')
                             ->schema([

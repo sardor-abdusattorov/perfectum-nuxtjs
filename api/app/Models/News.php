@@ -37,6 +37,11 @@ class News extends Model
         'status' => 'boolean',
     ];
 
+    public static function categoryModel(): string
+    {
+        return NewsCategory::class;
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

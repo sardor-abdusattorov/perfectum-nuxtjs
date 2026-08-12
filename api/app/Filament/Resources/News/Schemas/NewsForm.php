@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\News\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
+use App\Models\NewsCategory;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -21,7 +21,7 @@ class NewsForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(CategoryType::News),
+                        Fields::category(NewsCategory::class),
 
                         TranslatableTabs::make('translations')
                             ->schema([

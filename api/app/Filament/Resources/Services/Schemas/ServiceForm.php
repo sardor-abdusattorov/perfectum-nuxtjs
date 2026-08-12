@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Services\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
+use App\Models\ServiceCategory;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -21,7 +21,7 @@ class ServiceForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(CategoryType::Service),
+                        Fields::category(ServiceCategory::class),
 
                         TranslatableTabs::make('translations')
                             ->schema([

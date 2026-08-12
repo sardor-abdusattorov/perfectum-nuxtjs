@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Enums\CategoryType;
-use App\Filament\Resources\Categories\Pages\CreateCategory;
 use App\Filament\Resources\News\Pages\CreateNews;
 use App\Filament\Resources\News\Pages\EditNews;
-use App\Models\Category;
+use App\Filament\Resources\NewsCategories\Pages\CreateNewsCategory;
+use App\Models\ActionCategory;
 use App\Models\News;
+use App\Models\NewsCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -117,24 +117,22 @@ it('regenerates the slug when it is cleared while editing', function (): void {
     expect($news->refresh()->slug)->toBe('renamed-later');
 });
 
-it('scopes a generated category slug to its type', function (): void {
-    admin('Category');
+it('lets two taxonomies hold the same slug', function (): void {
+    admin('NewsCategory');
 
-    Category::create([
-        'type' => CategoryType::News,
-        'name' => ['ru' => 'Акции', 'en' => 'Offers'],
-        'slug' => 'offers',
+    ActionCategory::create([
+        'name' => ['ru' => 'Акции'],
+        'slug' => 'akcii',
         'status' => true,
     ]);
 
-    Livewire::test(CreateCategory::class)
+    Livewire::test(CreateNewsCategory::class)
         ->fillForm([
-            'type' => CategoryType::Action->value,
-            'name' => ['ru' => 'Акции', 'uz' => 'Aksiyalar', 'en' => 'Offers'],
+            'name' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'slug' => '',
         ])
         ->call('create')
         ->assertHasNoFormErrors();
 
-    expect(Category::query()->where('type', CategoryType::Action)->sole()->slug)->toBe('offers');
+    expect(NewsCategory::query()->sole()->slug)->toBe('akcii');
 });

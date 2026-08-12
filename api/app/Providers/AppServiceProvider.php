@@ -8,7 +8,6 @@ use App\Filament\Resources\Activities\Widgets\ActivityTrendChartWidget;
 use App\Filament\Resources\Activities\Widgets\HighRiskActionsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopEventsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopUsersChartWidget;
-use App\Models\Category;
 use App\Models\ContentBlock;
 use App\Models\Menu;
 use App\Models\Page;
@@ -16,7 +15,6 @@ use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
 use App\Models\Social;
-use App\Observers\CategoryObserver;
 use App\Observers\ContentBlockObserver;
 use App\Observers\MenuObserver;
 use App\Observers\PageObserver;
@@ -24,6 +22,7 @@ use App\Observers\SettingsObserver;
 use App\Observers\SiteSettingsObserver;
 use App\Observers\SiteTranslationObserver;
 use App\Observers\SocialObserver;
+use App\Observers\TaxonomyObserver;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use BezhanSalleh\LanguageSwitch\Enums\Placement;
 use BezhanSalleh\LanguageSwitch\Enums\PlacementMode;
@@ -86,7 +85,10 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureObservers(): void
     {
-        Category::observe(CategoryObserver::class);
+        foreach (taxonomies() as $taxonomy) {
+            $taxonomy::observe(TaxonomyObserver::class);
+        }
+
         ContentBlock::observe(ContentBlockObserver::class);
         Menu::observe(MenuObserver::class);
         Page::observe(PageObserver::class);

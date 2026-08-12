@@ -3,8 +3,9 @@
 namespace App\Filament\Resources\Tariffs\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
+use App\Models\TariffCategory;
+use App\Models\TariffType;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -21,9 +22,9 @@ class TariffForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(CategoryType::Tariff),
+                        Fields::category(TariffCategory::class),
 
-                        Fields::category(CategoryType::TariffType, 'type_id')
+                        Fields::category(TariffType::class, 'type_id')
                             ->label(__('app.label.tariff_type'))
                             ->helperText(__('app.helper.tariff_type')),
 

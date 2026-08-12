@@ -50,9 +50,14 @@ class Tariff extends Model
         'status' => 'boolean',
     ];
 
+    public static function categoryModel(): string
+    {
+        return TariffCategory::class;
+    }
+
     public function type(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'type_id');
+        return $this->belongsTo(TariffType::class, 'type_id');
     }
 
     public function getRouteKeyName(): string
