@@ -8,6 +8,7 @@ use App\Enums\MenuLocation;
 use App\Http\Resources\V1\MenuResource;
 use App\Http\Resources\V1\SocialResource;
 use App\Models\Menu;
+use App\Models\PageSettings;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
@@ -43,6 +44,7 @@ class SiteController
                     || filled(Settings::get('metrics.google')),
             ],
             'site' => SiteSettings::published(),
+            'pages' => PageSettings::map(),
         ];
     }
 

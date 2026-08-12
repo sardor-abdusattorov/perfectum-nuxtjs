@@ -5,7 +5,7 @@ const localePath = useLocalePath()
 const t = useT()
 const { open } = useTariffModal()
 
-useSeo({ titleKey: 'seo.tariffs' })
+useSeo({ page: 'tariffs' })
 
 const { data } = await useTariffCatalog()
 

@@ -6,12 +6,20 @@ export interface Seo {
   og_image: string | null
 }
 
+export interface PageSeo {
+  title: string | null
+  description: string | null
+  og_image: string | null
+  indexed: boolean
+}
+
 export interface Settings {
   locale: string
   locales: string[]
   seo: Seo
   metrics: { enabled: boolean }
   site: Record<string, string | null>
+  pages: Record<string, PageSeo>
 }
 
 export interface MenuItem {

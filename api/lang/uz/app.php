@@ -23,6 +23,12 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'page_settings_single' => 'Sahifa SEO',
+        'page_settings_plural' => 'Sahifalar SEO',
+        'page' => 'Sahifa',
+        'og_image' => 'Ijtimoiy tarmoqlar uchun rasm',
+        'is_indexed' => 'Indekslash',
+        'seo' => 'SEO',
         'news_category_single' => 'Yangilik toifasi',
         'action_category_single' => 'Aksiya toifasi',
         'faq_category_single' => 'Savol toifasi',
@@ -207,6 +213,8 @@ return [
     ],
 
     'helper' => [
+        'meta_title' => 'Brauzer yorligʻidagi va qidiruvdagi sarlavha',
+        'meta_description' => 'Qidiruvdagi qisqa tavsif, 200 belgigacha',
         'network' => 'Qaysi tarmoq uchun — 5G, CDMA yoki ikkalasi',
         'category_code' => 'Integratsiyalar uchun xizmat kodi',
         'menu_key' => 'Lotin harflarida — sider qayta ishga tushganda bandni shu orqali topadi. Oʻz bandlaringizni kalitsiz qoldirsa ham boʻladi',

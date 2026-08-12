@@ -23,6 +23,12 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'page_settings_single' => 'Page SEO',
+        'page_settings_plural' => 'Page SEO',
+        'page' => 'Page',
+        'og_image' => 'Social image',
+        'is_indexed' => 'Index',
+        'seo' => 'SEO',
         'news_category_single' => 'News category',
         'action_category_single' => 'Promotion category',
         'faq_category_single' => 'FAQ category',
@@ -207,6 +213,8 @@ return [
     ],
 
     'helper' => [
+        'meta_title' => 'The title in the browser tab and in search results',
+        'meta_description' => 'A short description in search results, up to 200 characters',
         'network' => 'Which network — 5G, CDMA or both',
         'category_code' => 'Service code for integrations',
         'menu_key' => 'Latin letters — the seeder finds the item by it on a re-run. Your own items can stay without a key',
