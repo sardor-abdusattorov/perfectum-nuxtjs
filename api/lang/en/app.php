@@ -10,6 +10,10 @@ return [
         'sign_out' => 'Sign out',
     ],
 
+    'color' => [
+        'accent' => 'Accent — red',
+        'outline' => 'Accent — outline',
+    ],
     'label' => [
         'category_single' => 'Category',
         'category_plural' => 'Categories',
@@ -201,7 +205,6 @@ return [
         'page_slug' => 'Latin letters — the address is built from it: /pages/cookie-policy',
         'page_seo' => 'Leave empty and the values from the main settings are used',
         'if_disabled_not_shown' => 'If disabled — not shown on the site',
-        'line_breaks' => 'Enter starts a paragraph, Shift+Enter breaks the line',
         'hero_slides' => 'Slides rotate as a carousel, drag to reorder them',
         'lead_text' => 'The paragraph beside the phone; on mobile it moves underneath. The store buttons next to it come from the site settings',
         'show_aside' => 'The text beside the phone and the store buttons, below the phone on mobile',

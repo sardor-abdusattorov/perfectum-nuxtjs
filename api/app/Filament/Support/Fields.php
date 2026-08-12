@@ -10,6 +10,7 @@ use App\Support\Slug;
 use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\RichEditor\TextColor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -73,11 +74,14 @@ class Fields
     public static function multiline(string $field): RichEditor
     {
         return RichEditor::make($field)
-            ->helperText(__('app.helper.line_breaks'))
             ->toolbarButtons([
                 ['bold', 'italic', 'underline', 'strike', 'link'],
-                ['highlight', 'textColor', 'clearFormatting'],
+                ['textColor', 'clearFormatting'],
                 ['undo', 'redo'],
+            ])
+            ->textColors([
+                'accent' => TextColor::make(__('app.color.accent'), '#e60000', '#ff4d4d'),
+                'outline' => TextColor::make(__('app.color.outline'), '#0b0d17', '#ffffff'),
             ]);
     }
 

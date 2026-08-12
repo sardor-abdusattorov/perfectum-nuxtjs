@@ -9,9 +9,7 @@ const dials = computed(() => published(block.value.dials))
   <section class="features">
     <div class="container">
       <div class="section__head">
-        <h2 class="features__title section__title">
-          {{ block.title }} <br class="features__title-break" /><span class="section__title-accent">{{ block.title_accent }}</span>
-        </h2>
+        <h2 class="features__title section__title" v-html="rich(block.title, { accent: 'section__title-accent' })"></h2>
         <LayoutArrowLink :link="block.link" link-class="features__link arrow-link" />
       </div>
 

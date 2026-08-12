@@ -10,6 +10,10 @@ return [
         'sign_out' => 'Chiqish',
     ],
 
+    'color' => [
+        'accent' => 'Urgʻu — qizil',
+        'outline' => 'Urgʻu — kontur',
+    ],
     'label' => [
         'category_single' => 'Turkum',
         'category_plural' => 'Turkumlar',
@@ -201,7 +205,6 @@ return [
         'page_slug' => 'Lotin harflarida — manzil shundan yigʻiladi: /pages/cookie-policy',
         'page_seo' => 'Boʻsh qoldirilsa — asosiy sozlamalardagi qiymatlar olinadi',
         'if_disabled_not_shown' => 'Oʻchirilgan boʻlsa — saytda koʻrsatilmaydi',
-        'line_breaks' => 'Enter — yangi xatboshi, Shift+Enter — qator koʻchirish',
         'hero_slides' => 'Slaydlar karusel boʻlib aylanadi, tartibini surib oʻzgartirish mumkin',
         'lead_text' => 'Telefon oʻng tomonidagi xatboshi; mobil qurilmada uning ostida chiqadi. Yonidagi doʻkon tugmalari sayt sozlamalaridan olinadi',
         'show_aside' => 'Telefondan oʻngdagi matn va doʻkon tugmalari, mobilda — telefon ostida',

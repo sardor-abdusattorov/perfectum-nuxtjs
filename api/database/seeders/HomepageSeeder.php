@@ -29,8 +29,8 @@ class HomepageSeeder extends Seeder
                     [
                         'description' => ['ru' => 'Первая 5G SA сеть в центральной Азии', 'uz' => 'Markaziy Osiyodagi birinchi 5G SA tarmogʻi'],
                         'title' => [
-                            'ru' => 'Скорость которая <span class="hero__title-red">меняет</span> <span class="hero__title-outline">правила</span> игры',
-                            'uz' => 'Oʻyin <span class="hero__title-outline">qoidalarini</span> <span class="hero__title-red">oʻzgartiradigan</span> tezlik',
+                            'ru' => 'Скорость которая <span class="color" data-color="accent">меняет</span> <span class="color" data-color="outline">правила</span> игры',
+                            'uz' => 'Oʻyin <span class="color" data-color="outline">qoidalarini</span> <span class="color" data-color="accent">oʻzgartiradigan</span> tezlik',
                         ],
                         'lead' => [
                             'ru' => 'Запуск самостоятельной сети <span>5G Standalone</span> в Узбекистане Скорости до <span>1 Гбит/с</span>, минимальные задержки, новые сценарии для дома и бизнеса',
@@ -143,8 +143,10 @@ class HomepageSeeder extends Seeder
             ],
 
             'features' => [
-                'title' => ['ru' => 'Что меняет', 'uz' => 'Nimani oʻzgartiradi'],
-                'title_accent' => ['ru' => '5G SA', 'uz' => '5G SA'],
+                'title' => [
+                    'ru' => '<p>Что меняет <span class="color" data-color="accent">5G SA</span></p>',
+                    'uz' => '<p>Nimani oʻzgartiradi <span class="color" data-color="accent">5G SA</span></p>',
+                ],
                 'link' => [
                     'label' => ['ru' => 'Все возможности', 'uz' => 'Barcha imkoniyatlar'],
                     'url' => '/services',

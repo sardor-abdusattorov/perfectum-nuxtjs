@@ -17,7 +17,10 @@ const buttons = (slide: Record<string, any>) => published(slide.buttons)
                   <div v-if="slide.description" class="hero__description">
                     <p>{{ slide.description }}</p>
                   </div>
-                  <h1 class="hero__title" v-html="slide.title"></h1>
+                  <h1
+                    class="hero__title"
+                    v-html="rich(slide.title, { accent: 'hero__title-red', outline: 'hero__title-outline' })"
+                  ></h1>
                 </div>
 
                 <div v-if="slide.show_aside !== false" class="hero__mobile">

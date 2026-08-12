@@ -30,9 +30,6 @@ class FeaturesTab extends ContentTab
                                     ->label(__('app.label.title'))
                                     ->required(),
 
-                                TextInput::make('features.title_accent')
-                                    ->label(__('app.label.title_accent')),
-
                                 TextInput::make('features.link.label')
                                     ->label(__('app.label.link_label')),
                             ]),
