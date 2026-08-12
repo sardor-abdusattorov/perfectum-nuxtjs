@@ -1,40 +1,37 @@
 <?php
 
-namespace App\Filament\Resources\Socials\Tables;
+namespace App\Filament\Resources\Regions\Tables;
 
 use App\Filament\Support\Tables;
-use App\Models\Social;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class SocialsTable
+class RegionsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->defaultSort('sort')
             ->columns([
-                IconColumn::make('icon')
-                    ->label(__('app.label.icon'))
-                    ->icon(fn (?string $state): ?string => Social::iconName($state)),
-
                 TextColumn::make('name')
                     ->label(__('app.label.name'))
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('url')
-                    ->label(__('app.label.url'))
-                    ->url(fn (string $state): string => $state)
-                    ->openUrlInNewTab()
-                    ->wrap(),
+                TextColumn::make('slug')
+                    ->label(__('app.label.slug'))
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-                Tables::statusColumn(),
+                TextColumn::make('offices_count')
+                    ->label(__('app.label.office_plural'))
+                    ->counts('offices')
+                    ->sortable(),
 
                 TextColumn::make('sort')
                     ->label(__('app.label.sort'))
                     ->sortable(),
+
+                Tables::statusColumn(),
             ])
             ->filters([
                 Tables::statusFilter(),

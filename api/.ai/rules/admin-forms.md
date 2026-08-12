@@ -69,15 +69,17 @@ inside an `<h2>` or a `<p>` without nesting a block element in one.
 | `Fields::editor()` | the full editor, with attachments, for `content` |
 | `Fields::image()` | the image upload with the crop editor |
 | `Fields::icon()` | the social-network icon picker |
-| `Fields::category($type)` | a category picker scoped to one `CategoryType` |
+| `Fields::category($model)` | a picker over one taxonomy model's rows |
 | `Tables::statusColumn()` | the publish `ToggleColumn` |
 | `Tables::statusFilter()` | the published/unpublished `SelectFilter` |
-| `Tables::categoryFilter($type)` | the category filter, scoped the same way |
+| `Tables::categoryFilter($model)` | the matching filter over the same rows |
 | `Tables::actions()` / `::bulkActions()` | view/edit/delete and bulk-delete |
 | `Fields::itemLabel($field)` | a repeater item label from a translated field |
 | `SaveAction::make(self::class)` | the save button of a homepage tab |
 
-`Tables::categoryFilter()` and `Fields::category()` share `Category::options()`, so a
-filter always lists the same rows the form offers. A raw
-`SelectFilter::make('category')->relationship('category', 'slug')` lists
-*every* category in the table — news, faq, device — and shows raw slugs.
+Both take a taxonomy model class and share its `options()`, so a filter always
+lists the same rows the form offers. A raw
+`SelectFilter::make('category')->relationship('category', 'slug')` shows raw
+slugs and skips the cached options. Both return a plain Filament component, so
+override the label when the taxonomy is not a category:
+`Fields::category(Region::class, 'region_id')->label(__('app.label.region_single'))`.

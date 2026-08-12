@@ -15,6 +15,7 @@ return [
         'outline' => 'Акцент — контуром',
     ],
     'group' => [
+        'offices' => 'Офисы и дилеры',
         'content' => 'Контент',
         'administration' => 'Администрирование',
         'devices' => 'Устройства',
@@ -23,6 +24,18 @@ return [
         'resources' => 'Ресурсы',
     ],
     'label' => [
+        'office_single' => 'Точка продаж',
+        'office_plural' => 'Офисы и дилеры',
+        'office_type' => 'Тип точки',
+        'office_name' => 'Название дилера',
+        'region_single' => 'Регион',
+        'region_plural' => 'Регионы',
+        'district' => 'Район или город',
+        'address' => 'Адрес',
+        'phone' => 'Телефон',
+        'lat' => 'Широта',
+        'lng' => 'Долгота',
+        'all' => 'Все',
         'page_settings_single' => 'SEO страницы',
         'page_settings_plural' => 'SEO страниц',
         'page' => 'Страница',
@@ -212,6 +225,10 @@ return [
     ],
 
     'helper' => [
+        'office_type' => 'Офис — собственная точка продаж, дилер — партнёрская',
+        'office_name' => 'У офисов остаётся пустым, у дилера — обязательно',
+        'office_region' => 'По региону точки группируются в списке и на карте',
+        'coordinates' => 'Координаты для карты, можно скопировать из Google Maps',
         'meta_title' => 'Заголовок во вкладке браузера и в выдаче поиска',
         'meta_description' => 'Короткое описание в выдаче, до 200 символов',
         'network' => 'Для какой сети — 5G, CDMA или для обеих',
@@ -378,6 +395,11 @@ return [
         'careers' => 'Вакансии',
         'procurement' => 'Закупки',
         'cdma' => 'CDMA',
+    ],
+
+    'office_type' => [
+        'office' => 'Офис',
+        'dealer' => 'Дилер',
     ],
 
     'network' => [

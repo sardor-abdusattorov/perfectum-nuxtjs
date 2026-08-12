@@ -15,6 +15,7 @@ return [
         'outline' => 'Urgʻu — kontur',
     ],
     'group' => [
+        'offices' => 'Ofis va dilerlar',
         'content' => 'Kontent',
         'administration' => 'Boshqaruv',
         'devices' => 'Qurilmalar',
@@ -23,6 +24,18 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'office_single' => 'Savdo nuqtasi',
+        'office_plural' => 'Ofis va dilerlar',
+        'office_type' => 'Nuqta turi',
+        'office_name' => 'Diler nomi',
+        'region_single' => 'Hudud',
+        'region_plural' => 'Hududlar',
+        'district' => 'Tuman yoki shahar',
+        'address' => 'Manzil',
+        'phone' => 'Telefon',
+        'lat' => 'Kenglik',
+        'lng' => 'Uzunlik',
+        'all' => 'Barchasi',
         'page_settings_single' => 'Sahifa SEO',
         'page_settings_plural' => 'Sahifalar SEO',
         'page' => 'Sahifa',
@@ -212,6 +225,10 @@ return [
     ],
 
     'helper' => [
+        'office_type' => 'Ofis — oʻz savdo nuqtasi, diler — hamkor nuqtasi',
+        'office_name' => 'Ofislarda boʻsh qoladi, dilerda esa majburiy',
+        'office_region' => 'Nuqtalar roʻyxatda va xaritada hudud boʻyicha guruhlanadi',
+        'coordinates' => 'Xarita uchun koordinatalar, Google Maps’dan koʻchirish mumkin',
         'meta_title' => 'Brauzer yorligʻidagi va qidiruvdagi sarlavha',
         'meta_description' => 'Qidiruvdagi qisqa tavsif, 200 belgigacha',
         'network' => 'Qaysi tarmoq uchun — 5G, CDMA yoki ikkalasi',
@@ -378,6 +395,11 @@ return [
         'careers' => 'Vakansiyalar',
         'procurement' => 'Xaridlar',
         'cdma' => 'CDMA',
+    ],
+
+    'office_type' => [
+        'office' => 'Ofis',
+        'dealer' => 'Diler',
     ],
 
     'network' => [

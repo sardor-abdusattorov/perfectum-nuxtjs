@@ -36,6 +36,8 @@ it('renders the list and create page of every resource', function (string $resou
     ['tariff-categories', 'TariffCategory'],
     ['tariff-types', 'TariffType'],
     ['service-categories', 'ServiceCategory'],
+    ['regions', 'Region'],
+    ['offices', 'Office'],
     ['devices', 'Device'],
     ['faqs', 'Faq'],
     ['menus', 'Menu'],

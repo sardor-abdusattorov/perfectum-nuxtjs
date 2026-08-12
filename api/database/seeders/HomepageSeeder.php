@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
-use App\Support\Content;
+use App\Models\ContentBlock;
 use Illuminate\Database\Seeder;
 
 class HomepageSeeder extends Seeder
@@ -14,7 +14,7 @@ class HomepageSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->blocks() as $key => $data) {
-            Content::save(PageKey::Home, ContentBlockKey::from($key), $data);
+            ContentBlock::write(PageKey::Home, ContentBlockKey::from($key), $data);
         }
     }
 

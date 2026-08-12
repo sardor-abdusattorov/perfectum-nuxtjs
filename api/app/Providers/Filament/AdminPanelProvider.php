@@ -72,6 +72,9 @@ class AdminPanelProvider extends PanelProvider
                     ->label(fn () => __('app.group.devices')),
 
                 NavigationGroup::make()
+                    ->label(fn () => __('app.group.offices')),
+
+                NavigationGroup::make()
                     ->label(fn () => __('app.group.resources')),
 
                 NavigationGroup::make()

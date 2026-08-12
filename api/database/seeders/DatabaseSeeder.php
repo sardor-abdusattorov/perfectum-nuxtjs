@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             PageSettingsSeeder::class,
             TaxonomySeeder::class,
             TariffSeeder::class,
+            OfficeSeeder::class,
             MenuSeeder::class,
             HomepageSeeder::class,
         ]);

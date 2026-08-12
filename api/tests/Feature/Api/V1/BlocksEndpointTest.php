@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
-use App\Support\Content;
+use App\Models\ContentBlock;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,7 +15,7 @@ beforeEach(function (): void {
 });
 
 it('returns the blocks of a page resolved into the requested locale', function (): void {
-    Content::save(PageKey::Home, ContentBlockKey::Marquee, [
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Marquee, [
         'items' => [
             ['text' => ['ru' => 'Безлимит', 'uz' => 'Limitsiz'], 'status' => true],
         ],

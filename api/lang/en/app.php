@@ -15,6 +15,7 @@ return [
         'outline' => 'Accent — outline',
     ],
     'group' => [
+        'offices' => 'Offices and dealers',
         'content' => 'Content',
         'administration' => 'Administration',
         'devices' => 'Devices',
@@ -23,6 +24,18 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'office_single' => 'Point of sale',
+        'office_plural' => 'Offices and dealers',
+        'office_type' => 'Point type',
+        'office_name' => 'Dealer name',
+        'region_single' => 'Region',
+        'region_plural' => 'Regions',
+        'district' => 'District or city',
+        'address' => 'Address',
+        'phone' => 'Phone',
+        'lat' => 'Latitude',
+        'lng' => 'Longitude',
+        'all' => 'All',
         'page_settings_single' => 'Page SEO',
         'page_settings_plural' => 'Page SEO',
         'page' => 'Page',
@@ -212,6 +225,10 @@ return [
     ],
 
     'helper' => [
+        'office_type' => 'An office is our own point of sale, a dealer is a partner one',
+        'office_name' => 'Left empty for offices, required for dealers',
+        'office_region' => 'Points are grouped by region in the list and on the map',
+        'coordinates' => 'Map coordinates, can be copied from Google Maps',
         'meta_title' => 'The title in the browser tab and in search results',
         'meta_description' => 'A short description in search results, up to 200 characters',
         'network' => 'Which network — 5G, CDMA or both',
@@ -378,6 +395,11 @@ return [
         'careers' => 'Careers',
         'procurement' => 'Procurement',
         'cdma' => 'CDMA',
+    ],
+
+    'office_type' => [
+        'office' => 'Office',
+        'dealer' => 'Dealer',
     ],
 
     'network' => [

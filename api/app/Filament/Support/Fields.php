@@ -4,7 +4,7 @@ namespace App\Filament\Support;
 
 use App\Enums\Network;
 use App\Enums\SocialIcon;
-use App\Support\IconName;
+use App\Models\Social;
 use App\Support\Slug;
 use Closure;
 use Filament\Forms\Components\FileUpload;
@@ -134,7 +134,7 @@ class Fields
             ->searchable()
             ->native(false)
             ->required()
-            ->afterStateHydrated(fn (Select $component, ?string $state) => $component->state(IconName::blade($state)));
+            ->afterStateHydrated(fn (Select $component, ?string $state) => $component->state(Social::iconName($state)));
     }
 
     /**

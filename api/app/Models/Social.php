@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
-use App\Support\IconName;
+use BladeUI\Icons\Exceptions\SvgNotFound;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Social extends Model
 {
     public const CACHE_TTL = 86400;
+
+    /** @var array<string, string|null> */
+    private static array $names = [];
+
+    /** @var array<string, string|null> */
+    private static array $icons = [];
 
     protected $table = 'socials';
 
@@ -26,7 +32,7 @@ class Social extends Model
 
     public function setIconAttribute(?string $value): void
     {
-        $this->attributes['icon'] = IconName::blade($value) ?? $value;
+        $this->attributes['icon'] = static::iconName($value) ?? $value;
     }
 
     public function scopePublished(Builder $query): Builder
@@ -42,5 +48,73 @@ class Social extends Model
     public static function cacheKey(): string
     {
         return 'socials.published';
+    }
+
+    /**
+     * The picker stores a Blade Icons name, but an Iconify one
+     * (`simple-icons:facebook`) is what a designer copies, so both are
+     * accepted and resolved to the name the icon set actually registers.
+     */
+    public static function iconName(?string $name): ?string
+    {
+        if (blank($name)) {
+            return null;
+        }
+
+        return static::$names[$name] ??= collect(static::candidates($name))
+            ->first(fn (string $candidate): bool => static::renderIcon($candidate) !== null);
+    }
+
+    /**
+     * @param  array<string, string>  $attributes
+     */
+    public static function iconSvg(?string $name, array $attributes = []): ?string
+    {
+        $icon = static::iconName($name);
+
+        if ($icon === null) {
+            return null;
+        }
+
+        return static::$icons[$icon.'|'.serialize($attributes)] ??= static::renderIcon($icon, $attributes);
+    }
+
+    public static function hasIcon(?string $name): bool
+    {
+        return static::iconName($name) !== null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private static function candidates(string $name): array
+    {
+        $names = [$name];
+
+        if (str_contains($name, ':')) {
+            [$set, $icon] = explode(':', $name, 2);
+
+            $names[] = match ($set) {
+                'simple-icons' => 'si-'.$icon,
+                'heroicons' => 'heroicon-o-'.$icon,
+                default => $set.'-'.$icon,
+            };
+
+            $names[] = 'brand-'.$icon;
+        }
+
+        return array_values(array_unique($names));
+    }
+
+    /**
+     * @param  array<string, string>  $attributes
+     */
+    private static function renderIcon(string $name, array $attributes = []): ?string
+    {
+        try {
+            return svg($name, '', ['aria-hidden' => 'true', 'focusable' => 'false', ...$attributes])->toHtml();
+        } catch (SvgNotFound) {
+            return null;
+        }
     }
 }

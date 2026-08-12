@@ -6,7 +6,6 @@ use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Models\ContentBlock;
 use App\Models\User;
-use App\Support\Content;
 use Database\Seeders\HomepageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
@@ -36,7 +35,7 @@ it('renders every tab of the homepage manager', function (): void {
 });
 
 it('offers buttons and both switches inside the hero slide', function (): void {
-    Content::save(PageKey::Home, ContentBlockKey::Hero, [
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
         'slides' => [
             [
                 'title' => ['ru' => 'Скорость'],
@@ -58,7 +57,7 @@ it('offers buttons and both switches inside the hero slide', function (): void {
 });
 
 it('keeps buttons and the two hero switches inside a slide', function (): void {
-    Content::save(PageKey::Home, ContentBlockKey::Hero, [
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
         'slides' => [
             [
                 'title' => ['ru' => 'Скорость'],
@@ -73,7 +72,7 @@ it('keeps buttons and the two hero switches inside a slide', function (): void {
         ],
     ]);
 
-    $slide = Content::get(PageKey::Home, ContentBlockKey::Hero)['slides'][0];
+    $slide = ContentBlock::read(PageKey::Home, ContentBlockKey::Hero)['slides'][0];
 
     expect($slide['buttons'])->toHaveCount(1)
         ->and($slide['buttons'][0]['url'])->toBe('/tariffs')
@@ -84,7 +83,7 @@ it('keeps buttons and the two hero switches inside a slide', function (): void {
 });
 
 it('keeps the coverage status text and the publish switch apart', function (): void {
-    Content::save(PageKey::Home, ContentBlockKey::Coverage, [
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Coverage, [
         'cities' => [
             [
                 'name' => ['ru' => 'Ташкент'],
@@ -95,7 +94,7 @@ it('keeps the coverage status text and the publish switch apart', function (): v
         ],
     ]);
 
-    $city = Content::get(PageKey::Home, ContentBlockKey::Coverage)['cities'][0];
+    $city = ContentBlock::read(PageKey::Home, ContentBlockKey::Coverage)['cities'][0];
 
     expect($city['status_text']['ru'])->toBe('Полное покрытие')
         ->and($city['status'])->toBeFalse();
@@ -122,7 +121,7 @@ it('seeds every block of the home page', function (): void {
     $this->seed(HomepageSeeder::class);
 
     foreach (ContentBlockKey::cases() as $key) {
-        expect(Content::get(PageKey::Home, $key))
+        expect(ContentBlock::read(PageKey::Home, $key))
             ->not->toBeEmpty("блок {$key->value} пустой");
     }
 });

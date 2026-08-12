@@ -9,6 +9,7 @@ use App\Models\FaqCategory;
 use App\Models\Menu;
 use App\Models\NewsCategory;
 use App\Models\Page;
+use App\Models\Region;
 use App\Models\ServiceCategory;
 use App\Models\Settings;
 use App\Models\SiteSettings;
@@ -83,6 +84,7 @@ if (! function_exists('taxonomies')) {
             TariffCategory::class,
             TariffType::class,
             ServiceCategory::class,
+            Region::class,
         ];
     }
 }

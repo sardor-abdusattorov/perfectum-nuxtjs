@@ -51,6 +51,22 @@ class ContentBlock extends Model
         return "content_blocks.{$page->value}.{$locale}";
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public static function read(PageKey $page, ContentBlockKey $key): array
+    {
+        return static::query()->page($page)->key($key)->first()?->getRawData() ?? [];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function write(PageKey $page, ContentBlockKey $key, array $data): self
+    {
+        return static::updateOrCreate(['page' => $page, 'key' => $key], ['data' => $data]);
+    }
+
     public function scopePage(Builder $query, PageKey $page): Builder
     {
         return $query->where('page', $page);

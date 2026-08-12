@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-use App\Support\IconName;
+use App\Models\Social;
 use Filament\Support\Contracts\HasLabel;
 
 enum SocialIcon: string implements HasLabel
@@ -43,7 +43,7 @@ enum SocialIcon: string implements HasLabel
 
     public function toHtml(): string
     {
-        $svg = IconName::svg($this->value, ['style' => 'width:1.15rem;height:1.15rem;flex:none']) ?? '';
+        $svg = Social::iconSvg($this->value, ['style' => 'width:1.15rem;height:1.15rem;flex:none']) ?? '';
 
         return '<span style="display:inline-flex;align-items:center;gap:.5rem">'
             .$svg

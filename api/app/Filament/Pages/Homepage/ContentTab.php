@@ -4,7 +4,7 @@ namespace App\Filament\Pages\Homepage;
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
-use App\Support\Content;
+use App\Models\ContentBlock;
 use Filament\Schemas\Components\Tabs\Tab;
 
 abstract class ContentTab
@@ -23,7 +23,7 @@ abstract class ContentTab
      */
     public static function load(): array
     {
-        return Content::get(static::page(), static::key());
+        return ContentBlock::read(static::page(), static::key());
     }
 
     /**
@@ -31,6 +31,6 @@ abstract class ContentTab
      */
     public static function save(array $data): void
     {
-        Content::save(static::page(), static::key(), $data);
+        ContentBlock::write(static::page(), static::key(), $data);
     }
 }

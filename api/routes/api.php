@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\FaqController;
 use App\Http\Controllers\Api\V1\MetricsController;
 use App\Http\Controllers\Api\V1\NewsController;
+use App\Http\Controllers\Api\V1\OfficeController;
 use App\Http\Controllers\Api\V1\PageController;
 use App\Http\Controllers\Api\V1\SiteController;
 use App\Http\Controllers\Api\V1\TariffController;
@@ -19,6 +20,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('metrics', MetricsController::class)->name('metrics');
     Route::get('categories/{taxonomy}', CategoryController::class)->name('categories');
     Route::get('faqs', FaqController::class)->name('faqs');
+    Route::get('offices', OfficeController::class)->name('offices');
     Route::get('blocks/{page}', BlockController::class)->name('blocks.show');
     Route::get('pages/{page}', PageController::class)->name('pages.show');
 
