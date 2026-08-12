@@ -43,3 +43,15 @@ it('renders the list and create page of every resource', function (string $resou
     ['users', 'User'],
     ['vacancies', 'Vacancy'],
 ]);
+
+it('forgets the cached category options when a category changes', function (): void {
+    $type = App\Enums\CategoryType::Tariff;
+
+    App\Models\Category::create(['type' => $type, 'name' => ['ru' => 'Первая'], 'slug' => 'pervaya', 'sort' => 1, 'status' => true]);
+
+    expect(App\Models\Category::options($type))->toHaveCount(1);
+
+    App\Models\Category::create(['type' => $type, 'name' => ['ru' => 'Вторая'], 'slug' => 'vtoraya', 'sort' => 2, 'status' => true]);
+
+    expect(App\Models\Category::options($type))->toHaveCount(2);
+});

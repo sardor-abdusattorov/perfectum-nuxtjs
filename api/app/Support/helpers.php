@@ -1,7 +1,9 @@
 <?php
 
+use App\Enums\CategoryType;
 use App\Enums\MenuLocation;
 use App\Enums\PageKey;
+use App\Models\Category;
 use App\Models\ContentBlock;
 use App\Models\Menu;
 use App\Models\Page;
@@ -57,6 +59,17 @@ if (! function_exists('clear_pages_cache')) {
         foreach ($slugs as $value) {
             foreach (app_locales() as $locale) {
                 Cache::forget(Page::cacheKey($value, $locale));
+            }
+        }
+    }
+}
+
+if (! function_exists('clear_categories_cache')) {
+    function clear_categories_cache(): void
+    {
+        foreach (CategoryType::cases() as $type) {
+            foreach (app_locales() as $locale) {
+                Cache::forget(Category::cacheKey($type, $locale));
             }
         }
     }
