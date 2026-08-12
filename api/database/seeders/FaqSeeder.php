@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Database\Seeders;
+
+use App\Models\Faq;
+use App\Models\FaqCategory;
+use Illuminate\Database\Seeder;
+
+class FaqSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $data = json_decode((string) file_get_contents(database_path('data/faqs.json')), true);
+
+        foreach ($data['categories'] ?? [] as $sort => $category) {
+            FaqCategory::updateOrCreate(['slug' => $category['slug']], [
+                'name' => $category['name'],
+                'network' => $category['network'],
+                'sort' => $sort + 1,
+            ]);
+        }
+
+        $categories = FaqCategory::query()->pluck('id', 'slug')->all();
+
+        foreach ($data['faqs'] ?? [] as $row) {
+            Faq::updateOrCreate(['question->ru' => $row['question']['ru']], [
+                'category_id' => $categories[$row['category']] ?? null,
+                'question' => $row['question'],
+                'answer' => $row['answer'],
+                'is_featured' => $row['is_featured'],
+                'sort' => $row['sort'],
+            ]);
+        }
+    }
+}

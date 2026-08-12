@@ -21,6 +21,7 @@ class FaqController
             ->with('category')
             ->forNetwork($this->network($request))
             ->inCategory($request->query('category'))
+            ->when($request->boolean('featured'), fn ($query) => $query->where('is_featured', true))
             ->orderBy('sort')
             ->get();
 

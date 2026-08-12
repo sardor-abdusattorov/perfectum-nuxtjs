@@ -19,6 +19,7 @@ class Faq extends Model
         'category_id',
         'question',
         'answer',
+        'is_featured',
         'sort',
         'status',
     ];
@@ -26,6 +27,7 @@ class Faq extends Model
     public $translatable = ['question', 'answer'];
 
     protected $casts = [
+        'is_featured' => 'boolean',
         'status' => 'boolean',
     ];
 

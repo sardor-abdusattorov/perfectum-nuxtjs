@@ -94,6 +94,28 @@ class SiteTranslationSeeder extends Seeder
             'common.store_prefix' => ['ru' => 'скачать в', 'uz' => 'yuklab olish'],
             'common.read_more' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
 
+            'faq.eyebrow' => ['ru' => 'Помощь и поддержка', 'uz' => 'Yordam va qoʻllab-quvvatlash'],
+            'faq.title' => ['ru' => 'Часто<br />задаваемые <span class="color" data-color="accent">вопросы</span>', 'uz' => 'Koʻp<br />beriladigan <span class="color" data-color="accent">savollar</span>'],
+            'faq.subtitle' => ['ru' => 'Ответы на популярные вопросы о подключении, тарифах, SIM/eSIM и личном кабинете — найдите нужный раздел или воспользуйтесь поиском.', 'uz' => 'Ulanish, tariflar, SIM/eSIM va shaxsiy kabinet haqidagi mashhur savollarga javoblar — kerakli boʻlimni toping yoki qidiruvdan foydalaning.'],
+            'faq.search_placeholder' => ['ru' => 'Например: «как подключить eSIM», «не работает интернет»…', 'uz' => 'Masalan: «eSIM qanday ulanadi», «internet ishlamayapti»…'],
+            'faq.search_label' => ['ru' => 'Поиск по вопросам', 'uz' => 'Savollar boʻyicha qidirish'],
+            'faq.categories_label' => ['ru' => 'Категории вопросов', 'uz' => 'Savol toifalari'],
+            'faq.all' => ['ru' => 'Все', 'uz' => 'Barchasi'],
+            'faq.all_questions' => ['ru' => 'Все вопросы', 'uz' => 'Barcha savollar'],
+            'faq.empty' => ['ru' => 'Ничего не найдено', 'uz' => 'Hech narsa topilmadi'],
+            'faq.cta_title' => ['ru' => 'Не нашли ответ? Напишите в поддержку — ответим в течение дня.', 'uz' => 'Javob topolmadingizmi? Qoʻllab-quvvatlashga yozing — kun davomida javob beramiz.'],
+            'faq.cta_button' => ['ru' => 'Связаться с поддержкой', 'uz' => 'Qoʻllab-quvvatlash bilan bogʻlanish'],
+
+            'help.title' => ['ru' => 'Частые <span class="color" data-color="accent">вопросы</span>', 'uz' => 'Koʻp beriladigan <span class="color" data-color="accent">savollar</span>'],
+            'help.aside_label' => ['ru' => 'Разделы помощи', 'uz' => 'Yordam boʻlimlari'],
+            'help.aside_toggle' => ['ru' => 'Показать разделы помощи', 'uz' => 'Yordam boʻlimlarini koʻrsatish'],
+            'help.nav_faq' => ['ru' => 'Часто задаваемые вопросы', 'uz' => 'Koʻp beriladigan savollar'],
+            'help.nav_numbers' => ['ru' => 'Свободные номера', 'uz' => 'Boʻsh raqamlar'],
+            'help.nav_contact' => ['ru' => 'Связь с нами', 'uz' => 'Biz bilan aloqa'],
+            'help.all_questions' => ['ru' => 'Все вопросы и ответы', 'uz' => 'Barcha savol-javoblar'],
+
+            'cdma.faq_title' => ['ru' => 'Частые вопросы', 'uz' => 'Koʻp beriladigan savollar'],
+
             'numbers.eyebrow' => ['ru' => 'Perfectum 5G — Мобильная связь', 'uz' => 'Perfectum 5G — Mobil aloqa'],
             'numbers.title' => ['ru' => 'Свободные<br /><span class="color" data-color="accent">номера</span>', 'uz' => 'Bo‘sh<br /><span class="color" data-color="accent">raqamlar</span>'],
             'numbers.subtitle' => ['ru' => 'Выберите понравившийся номер. Для приобретения обратитесь в офис или войдите в личный кабинет.', 'uz' => 'Yoqqan raqamni tanlang. Sotib olish uchun ofisga murojaat qiling yoki shaxsiy kabinetga kiring.'],

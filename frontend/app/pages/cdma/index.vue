@@ -1,7 +1,13 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const t = useT()
+
 definePageMeta({ layout: 'cdma' })
-useSeo({ titleKey: 'seo.cdma' })
+useSeo({ page: 'cdma', titleKey: 'seo.cdma' })
+
+const { data: faqData } = await useFaqs({ network: 'cdma' })
+
+const faqs = computed(() => faqData.value?.faqs ?? [])
 </script>
 
 <template>
@@ -459,93 +465,8 @@ useSeo({ titleKey: 'seo.cdma' })
   <!-- CDMA FAQ -->
   <section class="cdma-section" id="cdma-faq">
       <div class="container">
-          <h2 class="cdma-section__title">Частые вопросы</h2>
-          <div class="faq-accordion faq-accordion_cdma">
-              <details class="faq-item">
-                  <summary class="faq-item__summary">
-                      <span class="faq-item__question">Как проверить баланс?</span>
-                      <span class="faq-item__toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </span>
-                  </summary>
-                  <div class="faq-item__answer">
-                      <p>Наберите *100# и нажмите вызов — баланс придёт ответным сообщением.</p>
-                  </div>
-              </details>
-              <details class="faq-item">
-                  <summary class="faq-item__summary">
-                      <span class="faq-item__question">Можно ли переехать со своим номером на 5G?</span>
-                      <span class="faq-item__toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </span>
-                  </summary>
-                  <div class="faq-item__answer">
-                      <p>Да, номер сохраняется. Обратитесь в любой офис обслуживания с паспортом.</p>
-                  </div>
-              </details>
-              <details class="faq-item">
-                  <summary class="faq-item__summary">
-                      <span class="faq-item__question">Что делать при потере SIM-карты?</span>
-                      <span class="faq-item__toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </span>
-                  </summary>
-                  <div class="faq-item__answer">
-                      <p>Заблокируйте номер по телефону 077 и восстановите SIM-карту в офисе продаж.</p>
-                  </div>
-              </details>
-              <details class="faq-item">
-                  <summary class="faq-item__summary">
-                      <span class="faq-item__question">Как настроить мобильный интернет?</span>
-                      <span class="faq-item__toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </span>
-                  </summary>
-                  <div class="faq-item__answer">
-                      <p>Отправьте пустое SMS на номер 1234 — настройки придут автоматически.</p>
-                  </div>
-              </details>
-              <details class="faq-item">
-                  <summary class="faq-item__summary">
-                      <span class="faq-item__question">Работает ли номер в других странах?</span>
-                      <span class="faq-item__toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </span>
-                  </summary>
-                  <div class="faq-item__answer">
-                      <p>Да, при подключённом роуминге. Тарифы зависят от страны пребывания.</p>
-                  </div>
-              </details>
-              <details class="faq-item">
-                  <summary class="faq-item__summary">
-                      <span class="faq-item__question">Как отключить автоматически списавшуюся услугу?</span>
-                      <span class="faq-item__toggle" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </span>
-                  </summary>
-                  <div class="faq-item__answer">
-                      <p>Наберите *100*0# для списка активных услуг и отключите ненужные.</p>
-                  </div>
-              </details>
-          </div>
+          <h2 class="cdma-section__title">{{ t('cdma.faq_title') }}</h2>
+          <FaqAccordion v-if="faqs.length" class="faq-accordion_cdma" :items="faqs" />
       </div>
   </section>
 

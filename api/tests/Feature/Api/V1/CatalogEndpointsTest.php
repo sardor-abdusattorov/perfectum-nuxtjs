@@ -130,6 +130,16 @@ it('serves faqs of the requested network', function (): void {
     $this->getJson(route('api.v1.faqs', ['network' => '5g']))->assertOk()->assertJsonCount(0, 'data');
 });
 
+it('serves only featured faqs when asked', function (): void {
+    Faq::create(['question' => ['ru' => 'Обычный'], 'answer' => ['ru' => '<p>a</p>'], 'is_featured' => false]);
+    Faq::create(['question' => ['ru' => 'Популярный'], 'answer' => ['ru' => '<p>b</p>'], 'is_featured' => true]);
+
+    $this->getJson(route('api.v1.faqs', ['featured' => 1]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.question', 'Популярный');
+});
+
 it('paginates a long list', function (): void {
     foreach (range(1, 15) as $index) {
         news(['slug' => "novost-{$index}"]);

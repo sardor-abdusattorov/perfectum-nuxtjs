@@ -6956,6 +6956,10 @@ body.overflow__hidden {
   color: var(--color-red);
 }
 
+.help .help__all-link {
+  margin-top: 28px;
+}
+
 .help__aside-tab {
   display: none;
 }

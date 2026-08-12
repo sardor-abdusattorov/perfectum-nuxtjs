@@ -24,6 +24,7 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'faq_featured' => '«Yordam»da koʻrsatish',
         'meta_title' => 'Meta sarlavha',
         'meta_description' => 'Meta tavsif',
         'tariff_categories_single' => 'Tarif toifasi',
@@ -231,6 +232,7 @@ return [
     ],
 
     'helper' => [
+        'faq_featured' => 'Savol «Yordam» sahifasidagi tanlovga chiqadi',
         'page_key' => 'Ushbu sozlamalar saytning qaysi sahifasiga tegishli',
         'type_category' => 'Ushbu kichik toifa qaysi toifada koʻrsatiladi; boʻsh boʻlsa — hammasida',
         'tariff_file_name' => 'Arxiv sahifasidagi roʻyxatda koʻrinadigan nom',
