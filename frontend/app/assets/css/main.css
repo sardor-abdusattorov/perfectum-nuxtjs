@@ -2695,8 +2695,8 @@ strong {
 }
 
 .coverage .coverage__list li {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 0 0 auto;
+  width: 25%;
 }
 
 .coverage .coverage__city {
@@ -7975,6 +7975,7 @@ select {
   }
   .coverage .coverage__list {
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -8386,7 +8387,7 @@ select {
     margin-bottom: 16px;
   }
   .coverage .coverage__list li {
-    min-width: 33.333%;
+    min-width: 50%;
   }
   .coverage .coverage__list {
     padding: 12px 0;
@@ -8394,7 +8395,7 @@ select {
   .coverage .coverage__name,
   .coverage .coverage__status {
     font-size: 12px;
-    line-height: normal;
+    line-height: 16px;
     font-style: normal;
   }
   .tariffs {
