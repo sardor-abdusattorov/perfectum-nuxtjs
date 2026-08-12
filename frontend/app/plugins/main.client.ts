@@ -165,6 +165,10 @@ function initBlock1() {
       centeredSlides: true,
       spaceBetween: 12,
       watchOverflow: true,
+      navigation: {
+        prevEl: ".tariffs-list .slider-arrow_prev",
+        nextEl: ".tariffs-list .slider-arrow_next",
+      },
       breakpoints: {
         0: { slidesPerView: "auto", spaceBetween: 12, centeredSlides: true },
         576: { slidesPerView: 2, spaceBetween: 16, centeredSlides: false },

@@ -39,6 +39,19 @@ function connect(name: string, price: string, period: string): void {
                   aria-selected="true">Все</button>
           </div>
 
+          <div class="slider-nav" aria-hidden="true">
+              <button type="button" class="slider-arrow slider-arrow_prev" aria-label="Назад">
+                  <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+              </button>
+              <button type="button" class="slider-arrow slider-arrow_next" aria-label="Вперёд">
+                  <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+              </button>
+          </div>
+
           <div class="tariffs-list__slider swiper">
               <div class="swiper-wrapper">
                   <!-- CARD -->

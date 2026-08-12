@@ -76,6 +76,9 @@ const cards = [
                   <span class="tariffs__price-value">{{ card.price }}</span>
                   <span class="tariffs__price-period">{{ card.period }}</span>
                 </div>
+                <ul class="tariffs__feats">
+                  <li v-for="feat in card.feats" :key="feat" class="tariffs__feat">{{ feat }}</li>
+                </ul>
                 <button
                   type="button"
                   class="tariffs__connect"
@@ -89,9 +92,6 @@ const cards = [
                     buttons: [],
                   })"
                 >Подключить</button>
-                <ul class="tariffs__feats">
-                  <li v-for="feat in card.feats" :key="feat" class="tariffs__feat">{{ feat }}</li>
-                </ul>
                 <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
               </article>
             </div>
