@@ -9,7 +9,7 @@ const cities = computed(() => published(block.value.cities))
           <div class="coverage__head">
               <h2 class="section__title coverage__title">{{ block.title }}</h2>
               <div v-if="block.subtitle" class="coverage__subtitle">
-                  <p>{{ block.subtitle }}</p>
+                  <p v-html="rich(block.subtitle)"></p>
               </div>
           </div>
           <div class="coverage__cities">

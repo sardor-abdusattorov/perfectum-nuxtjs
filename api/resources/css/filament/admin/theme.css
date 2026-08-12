@@ -44,12 +44,3 @@
 .fi-logo {
     padding: 10px 0;
 }
-
-/* Rich editors are short by default; a two-line heading should not need scrolling */
-.fi-fo-rich-editor .tiptap {
-    min-height: 6rem;
-}
-
-.fi-fo-rich-editor .fi-fo-rich-editor-content {
-    min-height: 6rem;
-}

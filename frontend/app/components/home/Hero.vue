@@ -28,7 +28,7 @@ const buttons = (slide: Record<string, any>) => published(slide.buttons)
                     <HomeHeroGauge :uid="`m-${index}`" :value="slide.gauge_value" />
                   </div>
                   <div class="hero__mobile-text">
-                    <p v-html="slide.lead"></p>
+                    <p v-html="rich(slide.lead)"></p>
                   </div>
                 </div>
 
@@ -58,7 +58,7 @@ const buttons = (slide: Record<string, any>) => published(slide.buttons)
               </div>
 
               <div v-if="slide.show_aside !== false" class="hero__aside">
-                <p v-html="slide.lead"></p>
+                <p v-html="rich(slide.lead)"></p>
 
                 <HomeHeroStores />
               </div>

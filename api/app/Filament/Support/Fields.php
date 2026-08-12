@@ -82,6 +82,9 @@ class Fields
             ->textColors([
                 'accent' => TextColor::make(__('app.color.accent'), '#e60000', '#ff4d4d'),
                 'outline' => TextColor::make(__('app.color.outline'), '#0b0d17', '#ffffff'),
+            ])
+            ->extraInputAttributes([
+                'style' => 'min-height: 7rem; max-height: 30vh; overflow-y: auto;',
             ]);
     }
 
@@ -101,6 +104,9 @@ class Fields
                 ['table', 'attachFiles'],
                 ['grid'],
                 ['undo', 'redo'],
+            ])
+            ->extraInputAttributes([
+                'style' => 'min-height: 15rem; max-height: 30vh; overflow-y: auto;',
             ]);
     }
 
