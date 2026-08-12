@@ -25,11 +25,6 @@ class TariffController
             ->forNetwork($this->network($request))
             ->inCategory($request->query('category'))
             ->inCategory($request->query('type'), 'type')
-            ->when(
-                $request->boolean('archived'),
-                fn ($query) => $query->archived(),
-                fn ($query) => $query->current(),
-            )
             ->orderBy('sort');
 
         return TariffResource::collection($this->paginate($records, $request, ['name']));

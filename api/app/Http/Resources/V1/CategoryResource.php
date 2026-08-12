@@ -23,7 +23,7 @@ class CategoryResource extends JsonResource
         return [
             'slug' => $this->slug,
             'name' => $this->name,
-            'network' => $this->network?->value,
+            'network' => array_key_exists('network', $this->resource->getAttributes()) ? $this->network?->value : null,
         ];
     }
 }

@@ -9,7 +9,6 @@ use App\Models\TariffType;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Get;
@@ -73,9 +72,6 @@ class TariffForm
                                             ->label(__('app.label.price_period'))
                                             ->helperText(__('app.helper.price_period')),
 
-                                        TextInput::make('connection_cost')
-                                            ->label(__('app.label.connection_cost'))
-                                            ->helperText(__('app.helper.connection_cost')),
                                     ]),
                             ]),
 
@@ -111,10 +107,6 @@ class TariffForm
                                     ->label(__('app.label.modal_image'))
                                     ->helperText(__('app.helper.modal_image'))
                                     ->imageEditor(false),
-
-                                TextInput::make('ussd')
-                                    ->label(__('app.label.ussd'))
-                                    ->helperText(__('app.helper.ussd')),
 
                                 Repeater::make('buttons')
                                     ->label(__('app.label.connect_buttons'))
@@ -171,14 +163,6 @@ class TariffForm
                                     ->collapsible(),
 
                                 Fields::image('tariffs'),
-
-                                Toggle::make('is_featured')
-                                    ->label(__('app.label.is_featured'))
-                                    ->helperText(__('app.helper.is_featured')),
-
-                                Toggle::make('is_archived')
-                                    ->label(__('app.label.is_archived'))
-                                    ->helperText(__('app.helper.is_archived')),
 
                                 Fields::sort(),
                             ]),

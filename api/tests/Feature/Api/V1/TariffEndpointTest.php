@@ -18,7 +18,6 @@ function tariff(array $attributes = []): Tariff
         'price' => '25 000',
         'price_currency' => ['ru' => 'сум', 'uz' => 'so`m'],
         'price_period' => ['ru' => 'мес.', 'uz' => 'oy'],
-        'connection_cost' => ['ru' => '0 сум', 'uz' => '0 so`m'],
         'features' => [
             ['icon' => 'phone', 'title' => ['ru' => '400 минут', 'uz' => '400 daqiqa'], 'note' => ['ru' => '(Исходящие)', 'uz' => '(Chiquvchi)']],
         ],
@@ -41,8 +40,7 @@ it('serves a tariff with translated repeater rows', function (): void {
         ->assertJsonPath('data.features.0.note', '(Исходящие)')
         ->assertJsonPath('data.descriptions.0.name', 'Подробнее')
         ->assertJsonPath('data.descriptions.0.content', '<p>Условия</p>')
-        ->assertJsonPath('data.buttons.0.name', 'Наберите 7*1*1')
-        ->assertJsonPath('data.connection_cost', '0 сум');
+        ->assertJsonPath('data.buttons.0.name', 'Наберите 7*1*1');
 });
 
 it('serves the uz locale of every repeater row', function (): void {
@@ -81,11 +79,4 @@ it('lists the published archive documents', function (): void {
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.name', '#архивные ТП 2025.pdf');
-});
-
-it('keeps archived tariffs out of the list', function (): void {
-    tariff(['is_archived' => true]);
-
-    $this->getJson(route('api.v1.tariffs.index'))->assertOk()->assertJsonCount(0, 'data');
-    $this->getJson(route('api.v1.tariffs.index', ['archived' => 1]))->assertOk()->assertJsonCount(1, 'data');
 });

@@ -38,7 +38,6 @@ function connect(tariff: Tariff): void {
     price_currency: tariff.price_currency,
     price_period: tariff.price_period,
     modal_image: tariff.modal_image,
-    ussd: tariff.ussd,
     buttons: tariff.buttons,
   })
 }

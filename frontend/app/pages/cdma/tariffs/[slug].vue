@@ -5,7 +5,7 @@ useSeo({ titleKey: 'seo.cdma_tariff' })
 const { open } = useTariffModal()
 
 function connect(name: string, price: string, period: string): void {
-  open({ name, price, price_currency: 'сум', price_period: period, modal_image: null, ussd: null, buttons: [] })
+  open({ name, price, price_currency: 'сум', price_period: period, modal_image: null, buttons: [] })
 }
 </script>
 

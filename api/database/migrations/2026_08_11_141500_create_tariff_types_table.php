@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('tariff_categories')->nullOnDelete();
             $table->json('name');
             $table->string('slug')->unique();
-            $table->string('network', 10)->default('both')->index();
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();
             $table->timestamps();

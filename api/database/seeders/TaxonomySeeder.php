@@ -70,10 +70,13 @@ class TaxonomySeeder extends Seeder
         foreach ($rows as $row) {
             $values = [
                 'name' => $row['name'],
-                'network' => (self::NETWORKS[$row['slug']] ?? Network::Both)->value,
                 'sort' => $row['sort'] ?? 0,
                 'status' => $row['status'] ?? true,
             ];
+
+            if ($model !== TariffType::class) {
+                $values['network'] = (self::NETWORKS[$row['slug']] ?? Network::Both)->value;
+            }
 
             $model::updateOrCreate(['slug' => $row['slug']], $values);
         }

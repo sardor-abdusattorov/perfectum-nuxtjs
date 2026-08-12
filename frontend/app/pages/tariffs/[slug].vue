@@ -24,7 +24,6 @@ function connect(): void {
     price_currency: tariff.value.price_currency,
     price_period: tariff.value.price_period,
     modal_image: tariff.value.modal_image,
-    ussd: tariff.value.ussd,
     buttons: tariff.value.buttons,
   })
 }
@@ -97,6 +96,9 @@ function connect(): void {
         <nav class="tariff-detail__switch" :aria-label="t('tariffs.nav_label')">
           <NuxtLink class="tariff-detail__switch-btn" :to="localePath('/tariffs')">
             {{ t('tariffs.all_tariffs') }}
+          </NuxtLink>
+          <NuxtLink class="tariff-detail__switch-btn tariff-detail__switch-btn_active" :to="localePath('/devices')">
+            {{ t('tariffs.routers') }}
           </NuxtLink>
         </nav>
       </div>

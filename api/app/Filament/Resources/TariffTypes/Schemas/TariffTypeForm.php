@@ -33,8 +33,6 @@ class TariffTypeForm
 
                         Fields::slug(),
 
-                        Fields::network(),
-
                         Fields::sort(),
 
                         Fields::status(),

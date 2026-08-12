@@ -17,7 +17,7 @@ defineProps<{ features: TariffFeature[], tag?: 'ul' | 'div' }>()
         <img :src="`/images/icon-${feature.icon}.svg`" alt="" loading="lazy" />
       </span>
       <span class="tariff-feat__text">
-        <b>{{ feature.title }}</b>
+        <b>{{ feature.title }}</b>{{ ' ' }}
         <span v-if="feature.note" class="tariff-feat__muted">{{ feature.note }}</span>
       </span>
     </component>

@@ -23,15 +23,11 @@ export interface Tariff {
   price: string
   price_currency: string
   price_period: string
-  connection_cost: string
   features: TariffFeature[]
   descriptions: TariffDescription[]
   image: string | null
   modal_image: string | null
-  ussd: string | null
   buttons: TariffButton[]
-  is_featured: boolean
-  is_archived: boolean
   category: Taxonomy | null
   type: Taxonomy | null
 }

@@ -54,7 +54,6 @@ it('creates a tariff with its features and connect buttons', function (): void {
             'price' => '100 000',
             'price_currency' => ['ru' => 'сум', 'uz' => 'soʻm', 'en' => 'UZS'],
             'price_period' => ['ru' => '/ 30 дней', 'uz' => '/ 30 kun', 'en' => '/ 30 days'],
-            'ussd' => '7*1*1',
             'features' => [
                 ['icon' => null, 'title' => ['ru' => '1000 минут', 'uz' => '1000 daqiqa', 'en' => ''], 'note' => ['ru' => 'Исходящие по Узбекистану', 'uz' => '', 'en' => '']],
                 ['icon' => null, 'title' => ['ru' => '1000 SMS', 'uz' => '1000 SMS', 'en' => ''], 'note' => ['ru' => '', 'uz' => '', 'en' => '']],
@@ -93,14 +92,6 @@ it('translates a tariff into the requested locale', function (): void {
 
     expect($tariff->refresh()->name)->toBe('Tarif')
         ->and($tariff->price_period)->toBe('oyiga');
-});
-
-it('keeps archived tariffs out of the current scope', function (): void {
-    Tariff::create(['name' => ['ru' => 'Живой'], 'slug' => 'live', 'status' => true]);
-    Tariff::create(['name' => ['ru' => 'Старый'], 'slug' => 'old', 'is_archived' => true, 'status' => true]);
-
-    expect(Tariff::query()->published()->current()->count())->toBe(1)
-        ->and(Tariff::query()->published()->archived()->count())->toBe(1);
 });
 
 it('creates a service with its facts and steps', function (): void {

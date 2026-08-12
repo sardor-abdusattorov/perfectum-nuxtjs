@@ -85,6 +85,5 @@ export interface TariffSummary {
   price_currency: string
   price_period: string
   modal_image: string | null
-  ussd: string | null
   buttons: TariffButton[]
 }

@@ -3296,7 +3296,7 @@ strong {
 
 .tariffs-list {
   position: relative;
-  margin-top: -20px;
+  margin-top: -50px;
   margin-bottom: 80px;
 }
 
@@ -3304,16 +3304,20 @@ strong {
   display: inline-flex;
   gap: 16px;
   padding: 9px 8px;
-  margin-bottom: 38px;
+  margin-bottom: 30px;
   border-radius: var(--radius-pill);
-  background: #fcfcfc;
+  background: #fbfbfb;
+  box-shadow: 0 8px 55px rgba(0, 0, 0, 0.11);
 }
 
 .tariffs-list .tariffs-list__tab {
-  height: 39px;
-  padding: 0 16px;
+  padding: 10px 18px;
   border-radius: var(--radius-pill);
-  color: rgba(0, 0, 0, 0.42);
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: var(--transition);
+  color: rgba(0, 0, 0, 0.55);
 }
 
 .tariffs-list .tariffs-list__tab:hover {
@@ -3330,15 +3334,17 @@ strong {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 73px;
+  margin-bottom: 75px;
 }
 
 .tariffs-list .tariffs-list__filter {
-  height: 39px;
-  padding: 0 25px;
+  padding: 10px 22px;
   border-radius: var(--radius-pill);
-  border: 1px solid #e5e5e5;
-  background: #fcfcfc;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: var(--transition);
   color: var(--color-black);
 }
 
@@ -3421,8 +3427,9 @@ strong {
 
 .tariffs-list .tariffs-list__price-row {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   margin-bottom: 22px;
 }
 
