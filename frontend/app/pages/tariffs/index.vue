@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 useSeo({ titleKey: 'seo.tariffs' })
+const { open } = useTariffModal()
+
+function connect(name: string, price: string, period: string): void {
+  open({ name, price, price_currency: 'сум', price_period: period, modal_image: null, ussd: null, buttons: [] })
+}
 </script>
 
 <template>
@@ -82,7 +87,8 @@ useSeo({ titleKey: 'seo.tariffs' })
                                   </li>
                               </ul>
                               <div class="tariffs-list__actions">
-                                  <button type="button" class="tariffs-list__connect js-tariff-connect" data-name="Тариф 5G" data-price="100 000" data-period="/ 30 дней">Подключить</button>
+                                  <button type="button" class="tariffs-list__connect"
+                    @click="connect('Тариф 5G', '100 000', '/ 30 дней')">Подключить</button>
                                   <NuxtLink class="tariffs-list__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                               </div>
                           </div>
@@ -135,7 +141,8 @@ useSeo({ titleKey: 'seo.tariffs' })
                                   </li>
                               </ul>
                               <div class="tariffs-list__actions">
-                                  <button type="button" class="tariffs-list__connect js-tariff-connect" data-name="Тариф 5G" data-price="100 000" data-period="/ 30 дней">Подключить</button>
+                                  <button type="button" class="tariffs-list__connect"
+                    @click="connect('Тариф 5G', '100 000', '/ 30 дней')">Подключить</button>
                                   <NuxtLink class="tariffs-list__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                               </div>
                           </div>
@@ -188,7 +195,8 @@ useSeo({ titleKey: 'seo.tariffs' })
                                   </li>
                               </ul>
                               <div class="tariffs-list__actions">
-                                  <button type="button" class="tariffs-list__connect js-tariff-connect" data-name="Тариф 5G" data-price="100 000" data-period="/ 30 дней">Подключить</button>
+                                  <button type="button" class="tariffs-list__connect"
+                    @click="connect('Тариф 5G', '100 000', '/ 30 дней')">Подключить</button>
                                   <NuxtLink class="tariffs-list__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                               </div>
                           </div>
@@ -241,7 +249,8 @@ useSeo({ titleKey: 'seo.tariffs' })
                                   </li>
                               </ul>
                               <div class="tariffs-list__actions">
-                                  <button type="button" class="tariffs-list__connect js-tariff-connect" data-name="Тариф 5G" data-price="100 000" data-period="/ 30 дней">Подключить</button>
+                                  <button type="button" class="tariffs-list__connect"
+                    @click="connect('Тариф 5G', '100 000', '/ 30 дней')">Подключить</button>
                                   <NuxtLink class="tariffs-list__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
                               </div>
                           </div>

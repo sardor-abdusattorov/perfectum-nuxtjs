@@ -894,46 +894,6 @@ function initBlock3() {
   });
 }
 
-function initBlock4() {
-  const tariffModal = document.getElementById("tariffConnectModal");
-  if (!tariffModal) return;
-  const nameEl = tariffModal.querySelector(".tariff-modal__name");
-  const priceValue = tariffModal.querySelector(".tariff-modal__price-value");
-  const pricePeriod = tariffModal.querySelector(".tariff-modal__price-period");
-
-  function openTariffModal(trigger) {
-    const d = trigger.dataset;
-    nameEl.textContent = d.name || "";
-    priceValue.textContent = d.price || "";
-    pricePeriod.textContent = d.period || "";
-    tariffModal.classList.add("tariff-modal_open");
-    tariffModal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("overflow__hidden");
-  }
-  function closeTariffModal() {
-    tariffModal.classList.remove("tariff-modal_open");
-    tariffModal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("overflow__hidden");
-  }
-
-  document.querySelectorAll(".js-tariff-connect").forEach(function (btn) {
-    btn.addEventListener("click", function (event) {
-      event.preventDefault();
-      openTariffModal(btn);
-    });
-  });
-  if (!tariffModal.dataset.bound) {
-    tariffModal.dataset.bound = "1";
-    tariffModal.querySelectorAll("[data-modal-close]").forEach(function (el) {
-      el.addEventListener("click", closeTariffModal);
-    });
-  }
-  bindDocument("tariff-escape", "keydown", function (event) {
-    if (event.key === "Escape" && tariffModal.classList.contains("tariff-modal_open")) {
-      closeTariffModal();
-    }
-  });
-}
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {
@@ -941,6 +901,5 @@ export default defineNuxtPlugin((nuxtApp) => {
     initBlock1()
     initBlock2()
     initBlock3()
-    initBlock4()
   })
 })

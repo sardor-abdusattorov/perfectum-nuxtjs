@@ -2,6 +2,11 @@
 const localePath = useLocalePath()
 definePageMeta({ layout: 'cdma' })
 useSeo({ titleKey: 'seo.cdma_tariff' })
+const { open } = useTariffModal()
+
+function connect(name: string, price: string, period: string): void {
+  open({ name, price, price_currency: 'сум', price_period: period, modal_image: null, ussd: null, buttons: [] })
+}
 </script>
 
 <template>
@@ -33,8 +38,7 @@ useSeo({ titleKey: 'seo.cdma_tariff' })
 
           <div class="cdma-price">
               <p class="cdma-price__value">50 000<span class="cdma-price__period">сум / 30 дней</span></p>
-              <button type="button" class="cdma-price__btn js-tariff-connect" data-name="Qulay 50"
-                  data-price="50 000" data-period="/ 30 дней">Подключиться</button>
+              <button type="button" class="cdma-price__btn" @click="connect('Qulay 50', '50 000', '/ 30 дней')">Подключиться</button>
           </div>
 
           <h2 class="cdma-detail__subhead">Что входит</h2>

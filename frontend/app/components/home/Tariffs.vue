@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 const block = useBlock('home', 'tariffs')
+const { open } = useTariffModal()
 
 const tabs = [
   { key: 'home', label: 'Дом.интернет' },
@@ -77,10 +78,16 @@ const cards = [
                 </div>
                 <button
                   type="button"
-                  class="tariffs__connect js-tariff-connect"
-                  :data-name="card.name"
-                  :data-price="card.price"
-                  :data-period="card.period"
+                  class="tariffs__connect"
+                  @click="open({
+                    name: card.name,
+                    price: card.price,
+                    price_currency: '',
+                    price_period: card.period,
+                    modal_image: null,
+                    ussd: null,
+                    buttons: [],
+                  })"
                 >Подключить</button>
                 <ul class="tariffs__feats">
                   <li v-for="feat in card.feats" :key="feat" class="tariffs__feat">{{ feat }}</li>

@@ -1,6 +1,19 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 useSeo({ titleKey: 'seo.tariff' })
+const { open } = useTariffModal()
+
+function connect(): void {
+  open({
+    name: "A'LO 5G",
+    price: '100 000',
+    price_currency: 'сум',
+    price_period: '/ 30 дней',
+    modal_image: null,
+    ussd: null,
+    buttons: [],
+  })
+}
 </script>
 
 <template>
@@ -45,7 +58,7 @@ useSeo({ titleKey: 'seo.tariff' })
                                   000</span><span class="tariff-detail__price-currency">сум</span></p>
                           <p class="tariff-detail__price-period">в месяц · 30 дней</p>
                       </div>
-                      <button type="button" class="tariff-detail__connect js-tariff-connect" data-name="A'LO 5G" data-price="100 000" data-period="/ 30 дней">Подключить</button>
+                      <button type="button" class="tariff-detail__connect" @click="connect()">Подключить</button>
                   </div>
 
                   <div class="tariff-detail__feats">

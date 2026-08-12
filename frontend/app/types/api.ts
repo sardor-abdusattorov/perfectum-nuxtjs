@@ -63,3 +63,20 @@ export interface Metrics {
 export interface ApiResponse<T> {
   data: T
 }
+
+export interface TariffButton {
+  icon: string | null
+  name: string
+  url: string
+  type: 'link' | 'tel'
+}
+
+export interface TariffSummary {
+  name: string
+  price: string
+  price_currency: string
+  price_period: string
+  modal_image: string | null
+  ussd: string | null
+  buttons: TariffButton[]
+}
