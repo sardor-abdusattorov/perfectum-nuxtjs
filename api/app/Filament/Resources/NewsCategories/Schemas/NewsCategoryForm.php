@@ -28,6 +28,8 @@ class NewsCategoryForm
 
                         Fields::slug(),
 
+                        Fields::network(),
+
                         Fields::sort(),
 
                         Fields::status(),

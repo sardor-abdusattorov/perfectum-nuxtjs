@@ -28,6 +28,8 @@ class DeviceCategoryForm
 
                         Fields::slug(),
 
+                        Fields::network(),
+
                         Fields::sort(),
 
                         Fields::status(),

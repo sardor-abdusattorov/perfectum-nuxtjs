@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Network;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
@@ -63,6 +64,25 @@ class Tariff extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * A tariff belongs to the section it sits in and to the chip above it, so
+     * either one may pin it to a network.
+     */
+    public function scopeForNetwork(Builder $query, ?Network $network): Builder
+    {
+        if ($network === null) {
+            return $query;
+        }
+
+        return $query
+            ->where(fn (Builder $builder) => $builder
+                ->whereNull('category_id')
+                ->orWhereHas('category', fn (Builder $category) => $category->forNetwork($network)))
+            ->where(fn (Builder $builder) => $builder
+                ->whereNull('type_id')
+                ->orWhereHas('type', fn (Builder $type) => $type->forNetwork($network)));
     }
 
     public function scopeCurrent(Builder $query): Builder

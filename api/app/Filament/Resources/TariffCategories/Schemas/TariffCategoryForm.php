@@ -28,11 +28,6 @@ class TariffCategoryForm
 
                         Fields::slug(),
 
-                        TextInput::make('code')
-                            ->label(__('app.label.code'))
-                            ->helperText(__('app.helper.category_code'))
-                            ->maxLength(32),
-
                         Fields::network(),
 
                         Fields::sort(),

@@ -28,6 +28,8 @@ class FaqCategoryForm
 
                         Fields::slug(),
 
+                        Fields::network(),
+
                         Fields::sort(),
 
                         Fields::status(),

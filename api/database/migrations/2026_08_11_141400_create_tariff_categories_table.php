@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tariff_categories', function (Blueprint $table) {
-            Taxonomy::columns($table, withCode: true);
+            Taxonomy::columns($table);
         });
     }
 

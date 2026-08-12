@@ -16,7 +16,7 @@ class TariffCategory extends Model
 
     protected $table = 'tariff_categories';
 
-    protected $fillable = ['name', 'slug', 'code', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'slug', 'network', 'sort', 'status'];
 
     public $translatable = ['name'];
 

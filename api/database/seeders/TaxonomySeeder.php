@@ -22,7 +22,7 @@ class TaxonomySeeder extends Seeder
     {
         $data = json_decode((string) file_get_contents(database_path('data/taxonomies.json')), true);
 
-        $this->seed(TariffCategory::class, $data['tariff_categories'] ?? [], withCode: true);
+        $this->seed(TariffCategory::class, $data['tariff_categories'] ?? []);
         $this->seed(TariffType::class, $data['tariff_types'] ?? []);
         $this->seed(ServiceCategory::class, $data['service_types'] ?? []);
     }
@@ -31,7 +31,7 @@ class TaxonomySeeder extends Seeder
      * @param  class-string  $model
      * @param  array<int, array<string, mixed>>  $rows
      */
-    private function seed(string $model, array $rows, bool $withCode = false): void
+    private function seed(string $model, array $rows): void
     {
         foreach ($rows as $row) {
             $values = [
@@ -40,10 +40,6 @@ class TaxonomySeeder extends Seeder
                 'sort' => $row['sort'] ?? 0,
                 'status' => $row['status'] ?? true,
             ];
-
-            if ($withCode) {
-                $values['code'] = $row['code'] ?? null;
-            }
 
             $model::updateOrCreate(['slug' => $row['slug']], $values);
         }
