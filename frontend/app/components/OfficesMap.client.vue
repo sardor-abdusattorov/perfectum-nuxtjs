@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Office } from '~/composables/useOffices'
 
-const props = defineProps<{ points: Office[], active: number | null }>()
+const props = defineProps<{ points: Office[], userCoords: [number, number] | null }>()
 const emit = defineEmits<{ select: [id: number] }>()
 
 const t = useT()
@@ -12,13 +12,17 @@ const canvas = useTemplateRef('canvas')
 const failed = ref(false)
 
 let map: any = null
+let clusterer: any = null
+let userPlacemark: any = null
 const markers = new Map<number, any>()
 
 const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
 
-const PIN = '<svg viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">'
-  + '<path d="M16 0C7.7 0 1 6.7 1 15c0 10 15 25 15 25s15-15 15-25C31 6.7 24.3 0 16 0z" fill="#E60000"/>'
-  + '<circle cx="16" cy="15" r="6" fill="#fff"/></svg>'
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, char => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] as string
+  ))
+}
 
 function load(): Promise<void> {
   if ((window as any).ymaps) {
@@ -29,7 +33,7 @@ function load(): Promise<void> {
   const src = `https://api-maps.yandex.ru/2.1/?${key ? `apikey=${key}&` : ''}lang=${LANGS[locale.value] ?? 'ru_RU'}`
 
   return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(`script[data-ymaps]`)
+    const existing = document.querySelector<HTMLScriptElement>('script[data-ymaps]')
 
     if (existing) {
       existing.addEventListener('load', () => resolve())
@@ -49,41 +53,79 @@ function load(): Promise<void> {
   })
 }
 
-function balloon(point: Office): string {
-  const tag = point.type === 'dealer' ? t('offices.dealer') : t('offices.office')
+function placemark(point: Office): any {
+  const ymaps = (window as any).ymaps
+  const title = escapeHtml(officeTitle(point))
 
-  return `<div class="map__balloon">`
-    + `<span class="map__popup-tag${point.type === 'dealer' ? ' map__popup-tag_dealer' : ''}">${tag}</span>`
-    + `<h3 class="map__popup-title">${officeTitle(point)}</h3>`
-    + `<p class="map__popup-text">${point.address}</p>`
-    + `</div>`
+  const marker = new ymaps.Placemark([point.lat, point.lng], {
+    balloonContentHeader: title,
+    balloonContentBody:
+      `<p style="margin:0 0 10px">${escapeHtml(point.address)}</p>`
+      + `<a class="map__popup-btn" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps/?rtext=~${point.lat},${point.lng}&rtt=auto">${escapeHtml(t('offices.route'))}</a>`,
+    hintContent: title,
+  }, {
+    preset: point.type === 'dealer' ? 'islands#blueCircleDotIcon' : 'islands#redIcon',
+  })
+
+  marker.events.add('click', () => emit('select', point.id))
+
+  return marker
 }
 
 function draw(): void {
-  const ymaps = (window as any).ymaps
+  if (!clusterer) {
+    return
+  }
 
-  markers.forEach(marker => map.geoObjects.remove(marker))
+  clusterer.removeAll()
   markers.clear()
 
-  props.points.forEach(point => {
+  for (const point of props.points) {
     if (point.lat === null || point.lng === null) {
-      return
+      continue
     }
 
-    const marker = new ymaps.Placemark([point.lat, point.lng], { balloonContent: balloon(point) }, {
-      iconLayout: ymaps.templateLayoutFactory.createClass(`<div class="map-pin">${PIN}</div>`),
-      iconShape: { type: 'Rectangle', coordinates: [[-16, -40], [16, 0]] },
-    })
+    markers.set(point.id, placemark(point))
+  }
 
-    marker.events.add('click', () => emit('select', point.id))
-    markers.set(point.id, marker)
-    map.geoObjects.add(marker)
-  })
+  clusterer.add([...markers.values()])
 }
 
-function zoom(step: number): void {
-  map?.setZoom(map.getZoom() + step, { duration: 200 })
+/**
+ * The balloon opens even when the point is currently folded into a cluster,
+ * the way the live site does it.
+ */
+function openBalloon(id: number): void {
+  const marker = markers.get(id)
+
+  if (!marker) {
+    return
+  }
+
+  const state = clusterer.getObjectState(marker)
+
+  if (state.isClustered) {
+    state.cluster.state.set('activeObject', marker)
+    clusterer.balloon.open(state.cluster)
+  }
+  else if (state.isShown) {
+    marker.balloon.open()
+  }
 }
+
+function focus(id: number): void {
+  const point = props.points.find(item => item.id === id)
+
+  if (!map || !point || point.lat === null || point.lng === null) {
+    return
+  }
+
+  map.setCenter([point.lat, point.lng], 14, { duration: 400 })
+  canvas.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  setTimeout(() => openBalloon(id), 450)
+}
+
+defineExpose({ focus })
 
 onMounted(async () => {
   try {
@@ -102,36 +144,53 @@ onMounted(async () => {
       return
     }
 
-    map = new ymaps.Map(canvas.value, { center: [41.6, 64.5], zoom: 6, controls: [] }, {
+    map = new ymaps.Map(canvas.value, {
+      center: [41.31, 64.5],
+      zoom: 6,
+      controls: ['zoomControl', 'geolocationControl', 'typeSelector', 'fullscreenControl'],
+    }, {
       suppressMapOpenBlock: true,
-      balloonPanelMaxMapArea: 400 * 400,
     })
-    map.behaviors.disable('scrollZoom')
+
+    clusterer = new ymaps.Clusterer({
+      preset: 'islands#invertedRedClusterIcons',
+      groupByCoordinates: false,
+      gridSize: 64,
+    })
+    map.geoObjects.add(clusterer)
+
     draw()
+
+    if (props.userCoords) {
+      showUser(props.userCoords)
+    }
   })
 })
 
 onBeforeUnmount(() => {
   map?.destroy()
   map = null
+  clusterer = null
 })
 
-watch(() => props.points, () => map && draw())
+watch(() => props.points, () => draw())
 
-watch(() => props.active, id => {
-  const marker = id === null ? null : markers.get(id)
+function showUser(coords: [number, number]): void {
+  const ymaps = (window as any).ymaps
 
-  if (!map || !marker) {
-    return
+  if (userPlacemark) {
+    map.geoObjects.remove(userPlacemark)
   }
 
-  const point = props.points.find(item => item.id === id)
+  userPlacemark = new ymaps.Placemark(coords, { hintContent: t('offices.you_here') }, { preset: 'islands#geolocationIcon' })
+  map.geoObjects.add(userPlacemark)
+  map.setCenter(coords, 11, { duration: 400 })
+}
 
-  if (point?.lat != null && point.lng != null) {
-    map.setCenter([point.lat, point.lng], 13, { duration: 800 })
+watch(() => props.userCoords, (coords) => {
+  if (map && coords) {
+    showUser(coords)
   }
-
-  marker.balloon.open()
 })
 </script>
 
@@ -141,9 +200,5 @@ watch(() => props.active, id => {
       <p class="map__fallback">{{ t('offices.map_unavailable') }}</p>
     </div>
     <div v-else ref="canvas" class="map__canvas" role="application" :aria-label="t('offices.map_label')"></div>
-    <div class="map__zoom">
-      <button class="map__zoom-btn" type="button" :aria-label="t('offices.zoom_in')" @click="zoom(1)">+</button>
-      <button class="map__zoom-btn" type="button" :aria-label="t('offices.zoom_out')" @click="zoom(-1)">−</button>
-    </div>
   </div>
 </template>

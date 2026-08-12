@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'billing' => [
+        'url' => env('BILLING_API_URL', 'https://api-dmz.perfectum.uz/api/bss/v1'),
+        'token' => env('BILLING_API_TOKEN'),
+        'timeout' => env('BILLING_API_TIMEOUT', 30),
+        'client_ip_header' => env('BILLING_CLIENT_IP_HEADER', 'X-Forwarded-For'),
+
+        'endpoints' => [
+            'msisdns' => '/msisdns',
+            'msisdns_categories' => '/msisdns-category',
+        ],
+    ],
+
 ];

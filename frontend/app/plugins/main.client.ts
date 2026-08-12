@@ -241,24 +241,6 @@ function initBlock1() {
     });
   }
 
-  const maskCells = document.querySelectorAll(".numbers__mask-cell");
-  if (maskCells.length) {
-    maskCells.forEach(function (cell, i) {
-      cell.addEventListener("beforeinput", function (event) {
-        if (event.data && /\D/.test(event.data)) event.preventDefault();
-      });
-      cell.addEventListener("input", function () {
-        const digit = cell.value.replace(/\D/g, "").slice(0, 1);
-        if (digit !== cell.value) cell.value = digit;
-        if (digit && maskCells[i + 1]) maskCells[i + 1].focus();
-      });
-      cell.addEventListener("keydown", function (event) {
-        if (event.key === "Backspace" && !cell.value && maskCells[i - 1]) {
-          maskCells[i - 1].focus();
-        }
-      });
-    });
-  }
 }
 
 function initBlock2() {

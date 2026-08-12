@@ -48,7 +48,7 @@ export function useOffices(query: OfficeQuery = {}) {
  * sits in — neither ever has both.
  */
 export function officeTitle(office: Office): string {
-  return office.name || office.district || office.address
+  return office.name || office.district || office.region?.name || office.address
 }
 
 export function officeMatches(office: Office, search: string): boolean {
@@ -58,6 +58,6 @@ export function officeMatches(office: Office, search: string): boolean {
 
   const query = search.toLowerCase()
 
-  return [office.name, office.district, office.address, office.region?.name]
+  return [officeTitle(office), office.address, office.district, office.region?.name]
     .some(value => value?.toLowerCase().includes(query))
 }

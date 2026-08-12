@@ -1,5 +1,6 @@
 import Swiper from 'swiper/bundle'
 import type { SwiperOptions } from 'swiper/types'
+import type { ShallowRef } from 'vue'
 
 /**
  * The slides come from the API and change whenever a tab or a chip is clicked,

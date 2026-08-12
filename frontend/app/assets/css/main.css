@@ -1245,6 +1245,8 @@ strong {
 
 .map {
   position: relative;
+  min-height: 450px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--radius);
   overflow: hidden;
   background: #e8e8e8;
@@ -4023,49 +4025,40 @@ body.overflow__hidden {
   color: rgba(255, 255, 255, 0.58);
 }
 
-/* ==========================================================
-   OFFICES
-   ========================================================== */
-
+/* ============================================================
+   OFFICES — locator (filter panel + map)
+   ============================================================ */
 .offices {
   position: relative;
   z-index: 1;
   margin-top: -60px;
   margin-bottom: 80px;
 }
-
-/* Frame 1199:597 off the 1920 slide: a 405x676 panel at 181 next to a 1129
-   map, 24 apart. Inside the panel everything is 24 apart and every control is
-   55 tall — search 429, tabs 508, region 587, city 698, locate 809, hint 888,
-   the three stat cards 932. */
 .offices__layout {
   display: grid;
   grid-template-columns: 405px 1fr;
   gap: 24px;
   align-items: stretch;
-  margin-bottom: 42px;
+  margin-bottom: 56px;
 }
-
+/* --- filter panel --- */
 .offices-filter {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  min-height: 676px;
+  justify-content: space-between;
+  gap: 20px;
   padding: 24px;
   background: #f8f8f8;
   border-radius: var(--radius);
   box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
 }
-
 .offices-filter__search {
   position: relative;
 }
-
 .offices-filter__search-input {
   width: 100%;
-  height: 55px;
-  padding: 0 44px 0 12px;
-  border: 0.5px solid #cbd5e1;
+  padding: 14px 46px 14px 20px;
+  border: 1px solid #cbd5e1;
   border-radius: var(--radius-pill);
   font-family: inherit;
   font-size: 16px;
@@ -4073,236 +4066,202 @@ body.overflow__hidden {
   background: var(--color-white);
   transition: var(--transition);
 }
-
-.offices-filter__search-input::placeholder {
-  color: rgba(0, 0, 0, 0.44);
+/* normalize задаёт input[type=search]{box-sizing:content-box} со специфичностью
+   (0,1,1), которая выше одного класса → возвращаем border-box более специфичным
+   селектором, иначе width:100% + большие паддинги вылезают за карточку фильтра. */
+.offices-filter__search .offices-filter__search-input {
+  box-sizing: border-box;
 }
-
+.offices-filter__search-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
 .offices-filter__search-input:focus {
   outline: none;
   border-color: var(--color-red);
 }
-
 .offices-filter__search-btn {
   position: absolute;
   top: 50%;
-  right: 12px;
+  right: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   transform: translateY(-50%);
   color: rgba(0, 0, 0, 0.55);
 }
-
 .offices-filter__search-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
-
 .offices-filter__tabs {
   display: flex;
   gap: 8px;
   padding: 8px;
   background: rgba(255, 255, 255, 1);
   border-radius: var(--radius-pill);
+  box-shadow: 0 8px 55px rgba(0, 0, 0, 0.11);
 }
-
 .offices-filter__tab {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 10px;
+  flex: 1;
+  padding: 10px 12px;
   border-radius: var(--radius-pill);
   font-size: 16px;
   font-weight: 500;
-  line-height: 19px;
   color: rgba(0, 0, 0, 0.55);
   transition: var(--transition);
 }
-
-/* Frame 195 hugs "все" at 83 and splits the rest between the other two */
-.offices-filter__tab:first-child {
-  flex: 0 0 83px;
-}
-
 .offices-filter__tab:hover {
   color: var(--color-black);
 }
-
 .offices-filter__tab_active,
 .offices-filter__tab_active:hover {
   background: var(--color-red);
   color: var(--color-white);
 }
-
-.offices-filter .field__label {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: normal;
-  color: rgba(0, 0, 0, 0.44);
-}
-
-/* _Input Field Base as the offices frame sizes it: 55 tall, 12 of side
-   padding, a hairline #cbd5e1 outline */
-.offices-filter .select__control {
-  height: 55px;
-  padding: 0 44px 0 12px;
-  border: 0.5px solid #cbd5e1;
-}
-
 .offices-filter__locate {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 55px;
-  padding: 0 12px;
+  gap: 10px;
+  padding: 14px 24px;
   border-radius: 12px;
   background: var(--color-black);
   color: var(--color-white);
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   transition: var(--transition);
 }
-
 .offices-filter__locate:hover {
   background: var(--color-red);
 }
-
 .offices-filter__locate svg {
   flex: 0 0 auto;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
-
-/* the one gap the panel does not set at 24: the frame leaves 20 between the
-   hint and the stat row */
+/* Пин зашит fill="#E60000"; на красном ховере он сливается — делаем белым
+   (CSS fill перебивает presentation-атрибут). */
+.offices-filter__locate:hover svg path {
+  fill: #fff;
+}
 .offices-filter__hint {
-  margin-bottom: -4px;
   font-size: 14px;
-  line-height: 24px;
-  color: rgba(0, 0, 0, 0.44);
+  color: rgba(0, 0, 0, 0.5);
 }
-
 .offices-filter__stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
-
 .offices-filter__stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
-  min-height: 107px;
-  padding: 8px 6px;
-  border-radius: var(--radius);
+  gap: 10px;
+  padding: 20px 6px;
+  border-radius: 24px;
   background: var(--color-white);
   box-shadow: 0 1px 11px rgba(38, 63, 118, 0.08);
   text-align: center;
 }
-
 .offices-filter__stat b {
   font-size: 32px;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1;
   color: var(--color-black);
 }
-
 .offices-filter__stat span {
   font-size: 16px;
   font-weight: 400;
-  line-height: 24px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.55);
 }
 
+/* ============================================================
+   OFFICES — found points list
+   ============================================================ */
 .offices__heading {
   margin-bottom: 24px;
   font-size: 18px;
   font-weight: 700;
-  line-height: 24px;
   color: var(--color-black);
 }
-
-/* Group 2131332450 sits 24 into the offices map, not the 32 the coverage map
-   insets it by */
-.offices .map__zoom {
-  top: 24px;
-  left: 24px;
-}
-
 .offices__list {
   margin-bottom: 8px;
 }
-
+/* Прелоадер списка точек: тот же красный спиннер, что на странице numbers.
+   Виден, пока JS/карта не отрисуют список (потом скрипт вешает is-hidden). */
+.offices__loader {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+.offices__loader.is-hidden {
+  display: none;
+}
+.offices__spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(230, 0, 0, 0.18);
+  border-top-color: var(--color-red);
+  border-radius: 50%;
+  animation: numbers-spin 0.8s linear infinite;
+}
 .offices__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
-/* the ring is an inset shadow, not a border, so it cannot push the 18 padding
-   the frame measures off the card edge */
 .office-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-height: 143px;
   padding: 18px;
+  border: 1px solid transparent;
   border-radius: 24px;
   background: rgba(230, 0, 0, 0.06);
-  cursor: pointer;
   transition: var(--transition);
 }
-
 .office-card:hover {
-  box-shadow: inset 0 0 0 1px rgba(230, 0, 0, 0.35);
+  border-color: rgba(230, 0, 0, 0.35);
 }
-
 .office-card_active {
-  box-shadow: inset 0 0 0 1px var(--color-red);
+  border-color: var(--color-red);
 }
-
 .office-card_dealer {
   background: rgba(0, 0, 0, 0.04);
 }
-
 .office-card_dealer:hover {
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+  border-color: rgba(0, 0, 0, 0.25);
 }
-
 .office-card__tag {
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 8px;
   background: var(--color-red);
   color: var(--color-white);
   font-size: 16px;
   font-weight: 500;
-  line-height: 19px;
   margin-bottom: 20px;
 }
-
 .office-card__tag_dealer {
   background: var(--color-black);
 }
-
 .office-card__title {
   font-size: 18px;
   font-weight: 700;
-  line-height: 24px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: var(--color-black);
 }
-
 .office-card__address {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.55);
 }
-
+/* ============================================================
+   OFFICES — interactive Leaflet map integration
+   ============================================================ */
 .offices__head {
   display: flex;
   align-items: baseline;
@@ -4310,14 +4269,200 @@ body.overflow__hidden {
   gap: 16px;
   margin-bottom: 24px;
 }
-
 .offices__head .offices__heading {
   margin-bottom: 0;
 }
-
 .offices__result {
   display: none;
 }
+.office-card {
+  cursor: pointer;
+}
+.map__canvas {
+  width: 100%;
+  height: 100%;
+}
+/* red teardrop marker */
+.map-pin {
+  color: var(--color-red);
+}
+.map-pin svg {
+  width: 34px;
+  height: 42px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+}
+/* leaflet zoom control → project style */
+.map .leaflet-control-zoom {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.map .leaflet-control-zoom a {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  color: var(--color-black);
+  background: var(--color-white);
+  border: none;
+}
+.map .leaflet-control-zoom a:hover {
+  background: #f5f5f5;
+  color: var(--color-red);
+}
+.map .leaflet-bar a:first-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.map .leaflet-popup-content-wrapper {
+  padding: 6px;
+  border-radius: 20px;
+  box-shadow: 0 31px 55px rgba(0, 0, 0, 0.16);
+}
+.map .leaflet-popup-content {
+  margin: 16px 18px;
+  width: 232px !important;
+}
+.map__popup-tag_dealer {
+  background: var(--color-black);
+}
+
+.map__popup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-black);
+  transition: var(--transition);
+}
+.map__popup-btn:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+.map__popup-btn svg {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--color-red);
+}
+
+/* Пагинация списка точек (перенесено из careers.html vac-pagination) */
+.vac-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 32px;
+}
+.vac-pagination__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background: var(--color-white);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-black);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.vac-pagination__item:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+.vac-pagination__item svg {
+  width: 18px;
+  height: 18px;
+}
+.vac-pagination__item_active,
+.vac-pagination__item_active:hover {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  color: var(--color-white);
+}
+.vac-pagination__item_disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.vac-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 44px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Автокомплит поиска офисов: выпадающий список совпадений */
+.offices-filter__suggest {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.28);
+  display: none;
+}
+.offices-filter__suggest_open {
+  display: block;
+}
+.offices-filter__suggest-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: var(--transition);
+}
+.offices-filter__suggest-item:last-child {
+  border-bottom: none;
+}
+.offices-filter__suggest-item:hover {
+  background: rgba(230, 0, 0, 0.06);
+}
+.offices-filter__suggest-tag {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-white);
+  background: var(--color-red);
+}
+.offices-filter__suggest-tag_dealer {
+  background: var(--color-black);
+}
+.offices-filter__suggest-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-black);
+}
+.offices-filter__suggest-address {
+  margin-top: 2px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.offices-filter__suggest-empty {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
 /* ==========================================================
    SERVICES
    ========================================================== */
@@ -7710,7 +7855,7 @@ select {
     font-size: 14px;
   }
   .offices__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   }
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -8070,7 +8215,7 @@ select {
     height: 420px;
   }
   .offices__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
   .brand-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -9325,7 +9470,7 @@ select {
     line-height: 14px;
   }
   .offices {
-    margin-top: -21px;
+    margin-top: -20px;
   }
   .offices .offices__layout {
     gap: 24px;
@@ -10252,7 +10397,8 @@ select {
     line-height: 24px;
   }
   .office-card {
-    min-height: 88px;
+    border-radius: 16px;
+    min-height: 0;
     padding: 12px;
   }
   .office-card .office-card__tag {
@@ -10271,8 +10417,8 @@ select {
     line-height: normal;
   }
   .offices__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px 8px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
   .pagination .pagination__page,
   .pagination .pagination__arrow {
@@ -10311,5 +10457,102 @@ select {
     flex: 0 1 170px;
     width: auto;
     min-width: 0;
+  }
+}
+
+/* Мобильный адаптив карточек точек (перенесено из reference custom.css) */
+@media (max-width: 576px) {
+  .office-card__title {
+    font-size: 12px;
+  }
+  .office-card__address {
+    font-size: 8px;
+  }
+  .office-card__tag {
+    font-size: 8px;
+    line-height: normal;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+
+  /* Пагинация: одна строка без переноса, компактнее */
+  .vac-pagination {
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+  }
+  .vac-pagination__item {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 6px;
+    font-size: 14px;
+  }
+
+  /* Размеры страницы офисов на мобиле по макету (iPhone 402px) */
+  .page-hero.page-hero_office .page-hero__title {
+    font-size: 32px;
+  }
+  .page-hero.page-hero_office .page-hero__subtitle {
+    font-size: 12px;
+  }
+  .offices .offices__heading {
+    font-size: 16px;
+  }
+  .offices .offices-filter__stat b {
+    font-size: 24px;
+  }
+  .offices .offices-filter__tab {
+    font-size: 12px;
+  }
+  .offices .map {
+    min-height: 372px;
+  }
+
+  /* Контролы фильтра на мобиле компактнее — по макету все ~40px высотой */
+  .offices-filter__search-input,
+  .offices-filter .select__control {
+    height: 40px;
+    padding: 0 44px 0 16px;
+    font-size: 13px;
+  }
+  .offices-filter__tabs {
+    padding: 6px;
+  }
+  .offices .offices-filter__tab {
+    padding: 6px 12px;
+  }
+  .offices-filter__locate {
+    height: 40px;
+    padding: 0 24px;
+    font-size: 14px;
+  }
+
+  .offices-filter__stats {
+    gap: 8px;
+  }
+  .offices-filter__stat {
+    border-radius: 16px;
+    padding: 24px 6px;
+    gap: 8px;
+  }
+  .offices-filter__stat span {
+    font-size: 12px;
+  }
+
+  /* Hero офиса: компактный низ, чтобы карточка фильтра наезжала как в макете
+     (в дизайне тёмный зазор под подзаголовком ~15px, карта фильтра наезжает ~20px) */
+  .page-hero.page-hero_office {
+    padding: 40px 0 36px 0;
+    margin-bottom: 0;
+  }
+  /* Красное свечение hero точь-в-точь по макету: эллипс 283×126, blur 61,
+     opacity .65, в правом-верхнем углу с выходом за край (mask-group из Figma) */
+  .page-hero.page-hero_office::after {
+    top: 55%;
+    right: -16%;
+    width: 283px;
+    height: 126px;
+    opacity: 0.65;
+    transform: translateY(-50%) scale(2.29, 3.9);
   }
 }

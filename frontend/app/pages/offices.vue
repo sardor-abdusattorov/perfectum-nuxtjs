@@ -11,43 +11,93 @@ useSeo({ page: 'offices' })
 
 const { data } = await useOffices({ network })
 
-const regions = computed(() => data.value?.regions ?? [])
 const offices = computed(() => data.value?.offices ?? [])
 
 const type = ref<OfficeType | ''>('')
 const region = ref('')
-const district = ref('')
+const city = ref('')
 const search = ref('')
+const suggestOpen = ref(false)
 const page = ref(1)
 const active = ref<number | null>(null)
 const hint = ref('')
+const userCoords = ref<[number, number] | null>(null)
+const nearestSort = ref(false)
 
-const inRegion = computed(() => (
-  region.value ? offices.value.filter(item => item.region?.slug === region.value) : offices.value
+const searchBox = useTemplateRef('searchBox')
+const map = useTemplateRef('map')
+
+const byType = computed(() => (
+  type.value ? offices.value.filter(item => item.type === type.value) : offices.value
 ))
 
-const districts = computed(() => [...new Set(inRegion.value.map(item => item.district).filter(Boolean))] as string[])
+const regions = computed(() => {
+  const present = new Set(byType.value.map(item => item.region?.slug).filter(Boolean))
 
-const visible = computed(() => inRegion.value.filter(item => (
-  (!type.value || item.type === type.value)
-  && (!district.value || item.district === district.value)
-  && officeMatches(item, search.value)
-)))
+  return (data.value?.regions ?? []).filter(item => present.has(item.slug))
+})
+
+const inRegion = computed(() => (
+  region.value ? byType.value.filter(item => item.region?.slug === region.value) : byType.value
+))
+
+const cities = computed(() => [...new Set(inRegion.value.map(item => item.district).filter(Boolean))] as string[])
+
+function distanceSq(office: Office, coords: [number, number]): number {
+  return (office.lat! - coords[0]) ** 2 + (office.lng! - coords[1]) ** 2
+}
+
+const visible = computed(() => {
+  const items = inRegion.value.filter(item => (
+    (!city.value || item.district === city.value) && officeMatches(item, search.value)
+  ))
+
+  if (nearestSort.value && userCoords.value) {
+    return [...items]
+      .filter(item => item.lat !== null && item.lng !== null)
+      .sort((a, b) => distanceSq(a, userCoords.value!) - distanceSq(b, userCoords.value!))
+  }
+
+  return items
+})
+
+const suggestions = computed(() => (
+  search.value.trim() ? visible.value.slice(0, 8) : []
+))
 
 const pages = computed(() => Math.max(1, Math.ceil(visible.value.length / PER_PAGE)))
 const shown = computed(() => visible.value.slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE))
 
+/**
+ * Page numbers collapse around the current one — 1 … 4 5 6 … 22 — and the
+ * window narrows on a phone so the row never wraps.
+ */
 const pager = computed<Array<number | null>>(() => {
-  const items: Array<number | null> = []
+  const total = pages.value
+  const current = page.value
+  const delta = 1
 
-  for (let index = 1; index <= pages.value; index += 1) {
-    if (index === 1 || index === pages.value || Math.abs(index - page.value) <= 1) {
-      items.push(index)
-    }
-    else if (items.at(-1) !== null) {
-      items.push(null)
-    }
+  if (total <= 5 + delta * 2) {
+    return Array.from({ length: total }, (_, index) => index + 1)
   }
+
+  const items: Array<number | null> = [1]
+  const left = Math.max(2, current - delta)
+  const right = Math.min(total - 1, current + delta)
+
+  if (left > 2) {
+    items.push(null)
+  }
+
+  for (let index = left; index <= right; index += 1) {
+    items.push(index)
+  }
+
+  if (right < total - 1) {
+    items.push(null)
+  }
+
+  items.push(total)
 
   return items
 })
@@ -57,15 +107,20 @@ const counts = computed(() => ({
   dealer: offices.value.filter(item => item.type === 'dealer').length,
 }))
 
-watch([type, region, district, search], () => {
-  page.value = 1
+watch(type, () => {
+  region.value = ''
+  city.value = ''
 })
 
 watch(region, () => {
-  district.value = ''
+  city.value = ''
 })
 
-watch(pages, total => {
+watch([type, region, city, search], () => {
+  page.value = 1
+})
+
+watch(pages, (total) => {
   page.value = Math.min(page.value, total)
 })
 
@@ -77,11 +132,31 @@ function turn(target: number | null): void {
 
 function select(id: number): void {
   active.value = id
+  map.value?.focus(id)
 }
+
+function pick(office: Office): void {
+  search.value = officeTitle(office)
+  suggestOpen.value = false
+  select(office.id)
+}
+
+function onSearchInput(): void {
+  suggestOpen.value = search.value.trim() !== ''
+}
+
+function onDocumentClick(event: MouseEvent): void {
+  if (!searchBox.value?.contains(event.target as Node)) {
+    suggestOpen.value = false
+  }
+}
+
+onMounted(() => document.addEventListener('click', onDocumentClick))
+onBeforeUnmount(() => document.removeEventListener('click', onDocumentClick))
 
 function locate(): void {
   if (!navigator.geolocation) {
-    hint.value = t('offices.locate_unsupported')
+    hint.value = t('offices.locate_failed')
 
     return
   }
@@ -89,21 +164,22 @@ function locate(): void {
   hint.value = t('offices.locating')
 
   navigator.geolocation.getCurrentPosition(
-    position => {
-      const { latitude, longitude } = position.coords
-      const distance = (item: Office) => (item.lat! - latitude) ** 2 + (item.lng! - longitude) ** 2
-      const nearest = visible.value.filter(item => item.lat !== null && item.lng !== null).sort((a, b) => distance(a) - distance(b))[0]
+    (position) => {
+      userCoords.value = [position.coords.latitude, position.coords.longitude]
+      nearestSort.value = true
+      page.value = 1
+      hint.value = t('offices.located')
 
-      hint.value = nearest ? t('offices.located') : t('offices.locate_empty')
+      const nearest = visible.value[0]
 
       if (nearest) {
-        page.value = Math.floor(visible.value.indexOf(nearest) / PER_PAGE) + 1
         active.value = nearest.id
       }
     },
     () => {
       hint.value = t('offices.locate_failed')
     },
+    { enableHighAccuracy: true, timeout: 8000 },
   )
 }
 </script>
@@ -130,20 +206,41 @@ function locate(): void {
     <div class="container">
       <div class="offices__layout">
         <aside class="offices-filter" :aria-label="t('offices.filter_label')">
-          <div class="offices-filter__search">
+          <div ref="searchBox" class="offices-filter__search">
             <input
               v-model.trim="search"
               type="search"
               class="offices-filter__search-input"
               :placeholder="t('offices.search_placeholder')"
               :aria-label="t('offices.search')"
+              @input="onSearchInput()"
+              @focus="onSearchInput()"
+              @keydown.esc="suggestOpen = false"
             />
-            <span class="offices-filter__search-btn" aria-hidden="true">
+            <button type="button" class="offices-filter__search-btn" :aria-label="t('offices.search')">
               <svg viewBox="0 0 24 24" fill="none">
                 <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
                 <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
               </svg>
-            </span>
+            </button>
+
+            <div class="offices-filter__suggest" :class="suggestOpen && 'offices-filter__suggest_open'">
+              <template v-if="suggestions.length">
+                <div
+                  v-for="office in suggestions"
+                  :key="office.id"
+                  class="offices-filter__suggest-item"
+                  @click="pick(office)"
+                >
+                  <span class="offices-filter__suggest-tag" :class="office.type === 'dealer' && 'offices-filter__suggest-tag_dealer'">
+                    {{ office.type === 'dealer' ? t('offices.dealer') : t('offices.office') }}
+                  </span>
+                  <div class="offices-filter__suggest-title">{{ officeTitle(office) }}</div>
+                  <div class="offices-filter__suggest-address">{{ office.address }}</div>
+                </div>
+              </template>
+              <div v-else class="offices-filter__suggest-empty">{{ t('offices.empty') }}</div>
+            </div>
           </div>
 
           <div class="offices-filter__tabs" role="tablist" :aria-label="t('offices.type_label')">
@@ -173,11 +270,11 @@ function locate(): void {
           </div>
 
           <div class="field">
-            <label class="field__label" for="offices-district">{{ t('offices.district') }}</label>
+            <label class="field__label" for="offices-city">{{ t('offices.city') }}</label>
             <div class="select">
-              <select id="offices-district" v-model="district" class="select__control">
-                <option value="">{{ t('offices.all_districts') }}</option>
-                <option v-for="item in districts" :key="item" :value="item">{{ item }}</option>
+              <select id="offices-city" v-model="city" class="select__control">
+                <option value="">{{ t('offices.all_cities') }}</option>
+                <option v-for="item in cities" :key="item" :value="item">{{ item }}</option>
               </select>
               <svg class="select__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                 <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -186,8 +283,8 @@ function locate(): void {
           </div>
 
           <button type="button" class="offices-filter__locate" @click="locate()">
-            <svg width="12" height="24" viewBox="0 0 12 24" fill="none" aria-hidden="true">
-              <path d="M12 6C12 2.691 9.309 0 6 0C2.691 0 0 2.691 0 6C0 8.968 2.166 11.439 5 11.916V23C5 23.552 5.448 24 6 24C6.552 24 7 23.552 7 23V11.916C9.834 11.439 12 8.968 12 6Z" fill="#E60000" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18 6C18 2.691 15.309 0 12 0C8.691 0 6 2.691 6 6C6 8.968 8.166 11.439 11 11.916V23C11 23.552 11.448 24 12 24C12.552 24 13 23.552 13 23V11.916C15.834 11.439 18 8.968 18 6Z" fill="#E60000" />
             </svg>
             {{ t('offices.locate') }}
           </button>
@@ -200,7 +297,7 @@ function locate(): void {
           </ul>
         </aside>
 
-        <OfficesMap :points="visible" :active="active" @select="select" />
+        <OfficesMap ref="map" :points="visible" :user-coords="userCoords" @select="active = $event" />
       </div>
 
       <div class="offices__head">
@@ -226,7 +323,6 @@ function locate(): void {
             </span>
             <h3 class="office-card__title">{{ officeTitle(office) }}</h3>
             <p class="office-card__address">{{ office.address }}</p>
-            <a v-if="office.phone" class="office-card__phone" :href="`tel:${office.phone}`" @click.stop>{{ office.phone }}</a>
           </li>
         </ul>
         <p v-else class="offices__empty">{{ t('offices.empty') }}</p>
@@ -235,13 +331,13 @@ function locate(): void {
       <nav v-if="pages > 1" class="vac-pagination" :aria-label="t('offices.pagination_label')">
         <button
           type="button"
-          class="vac-pagination__item"
+          class="vac-pagination__item vac-pagination__item_arrow"
           :class="page === 1 && 'vac-pagination__item_disabled'"
           :aria-label="t('common.prev')"
           @click="turn(page - 1)"
         >
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
 
@@ -258,13 +354,13 @@ function locate(): void {
 
         <button
           type="button"
-          class="vac-pagination__item"
+          class="vac-pagination__item vac-pagination__item_arrow"
           :class="page === pages && 'vac-pagination__item_disabled'"
           :aria-label="t('common.next')"
           @click="turn(page + 1)"
         >
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
       </nav>
