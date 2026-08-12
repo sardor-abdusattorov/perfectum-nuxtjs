@@ -221,7 +221,6 @@ class HomepageSeeder extends Seeder
                         'max' => 1000,
                         'from' => 980,
                         'to' => 1000,
-                        'status' => true,
                     ],
                     [
                         'label' => 'LTE',
@@ -229,7 +228,6 @@ class HomepageSeeder extends Seeder
                         'max' => 1000,
                         'from' => 90,
                         'to' => 100,
-                        'status' => true,
                     ],
                 ],
             ],

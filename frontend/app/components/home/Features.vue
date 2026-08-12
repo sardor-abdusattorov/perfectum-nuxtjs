@@ -2,7 +2,7 @@
 const block = useBlock('home', 'features')
 
 const cards = computed(() => published(block.value.cards))
-const dials = computed(() => published(block.value.dials))
+const dials = computed<Record<string, any>[]>(() => Array.isArray(block.value.dials) ? block.value.dials : [])
 </script>
 
 <template>

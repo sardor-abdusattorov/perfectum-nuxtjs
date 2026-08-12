@@ -119,8 +119,6 @@ class FeaturesTab extends ContentTab
                                 TextInput::make('to')
                                     ->label(__('app.label.value_to'))
                                     ->numeric(),
-
-                                Fields::status(),
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
                             ->defaultItems(0)
