@@ -52,11 +52,26 @@
   ],
   "ussd": "7*1*1",
   "modal_image": "images/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/dP7oXB9NOzMRgBfLlqv2z738cT9d9AqNoMQG1FI9.png\",\"name\":\"Наберите 7*1*1\",\"url\":\"tel:7*1*1\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*1\",\"url\":\"tel:7*1*1\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/dP7oXB9NOzMRgBfLlqv2z738cT9d9AqNoMQG1FI9.png",
+    "name": {
+     "ru": "Наберите 7*1*1",
+     "uz": "Chaqiruv 7*1*1"
+    },
+    "url": "tel:7*1*1",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -114,11 +129,26 @@
   ],
   "ussd": "7*1*2",
   "modal_image": "images/YiUQHinDzrC7AG5EIqPzQosYzFDBpbCdgyArFeCJ.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*2\",\"url\":\"tel:7*1*2\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*2\",\"url\":\"tel:7*1*2\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*2",
+     "uz": "Chaqiruv 7*1*2"
+    },
+    "url": "tel:7*1*2",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -176,11 +206,26 @@
   ],
   "ussd": "7*1*3",
   "modal_image": "images/DcSW19GN3Rw6incQELVO8dWn7nLiV7Maj3k0yQDY.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*3\",\"url\":\"tel:7*1*3\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*3\",\"url\":\"tel:7*1*3\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*3",
+     "uz": "Chaqiruv 7*1*3"
+    },
+    "url": "tel:7*1*3",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -238,11 +283,26 @@
   ],
   "ussd": "7*1*4",
   "modal_image": "images/v09yC3if09mBrjNL0JU8d2XGx0nxgraN7gMS6Yi2.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*4\",\"url\":\"tel:7*1*4\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*4\",\"url\":\"tel:7*1*4\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*4",
+     "uz": "Chaqiruv 7*1*4"
+    },
+    "url": "tel:7*1*4",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -300,11 +360,26 @@
   ],
   "ussd": "7*1*5",
   "modal_image": "images/rlVQrN0UyqtifVTUHp0SmHrvftdYDU5d4i3RzL2N.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*5\",\"url\":\"tel:7*1*5\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*5\",\"url\":\"tel:7*1*5\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*5",
+     "uz": "Chaqiruv 7*1*5"
+    },
+    "url": "tel:7*1*5",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -362,11 +437,26 @@
   ],
   "ussd": "7*1*6",
   "modal_image": "images/QI2Xs7D3RB51WvxCWNivJ0uGbsCtyS91e2MPSFN4.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*6\",\"url\":\"tel:7*1*6\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*6\",\"url\":\"tel:7*1*6\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*6",
+     "uz": "Chaqiruv 7*1*6"
+    },
+    "url": "tel:7*1*6",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -424,11 +514,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/W4uc0H6LFFmhersa8XgsDlGDDTeAqKZln87MS2Qo.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -486,11 +572,17 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/5PxQIVeGE5teEaILH8ht3jhLrfrbaMIkLjfNeegD.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -548,11 +640,26 @@
   ],
   "ussd": "7*1*7",
   "modal_image": "images/yzFM982xbMEO2xPOr15ghVq9aFKxvZd9NFq6tvQs.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*7\",\"url\":\"tel:7*1*7\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*7\",\"url\":\"tel:7*1*7\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*7",
+     "uz": "Chaqiruv 7*1*7"
+    },
+    "url": "tel:7*1*7",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -610,11 +717,26 @@
   ],
   "ussd": "7*1*8",
   "modal_image": "images/gzWoijBJR8E6uGdlTulWPLsoY9YNIOM09zzdoA6t.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*8\",\"url\":\"tel:7*1*8\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*8\",\"url\":\"tel:7*1*8\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*8",
+     "uz": "Chaqiruv 7*1*8"
+    },
+    "url": "tel:7*1*8",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -672,11 +794,26 @@
   ],
   "ussd": "7*1*9",
   "modal_image": "images/H4bE0N4GrhTX5KnpY9pIIVp0PzrRyH1ur5NOdFCC.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*9\",\"url\":\"tel:7*1*9\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*9\",\"url\":\"tel:7*1*9\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*9",
+     "uz": "Chaqiruv 7*1*9"
+    },
+    "url": "tel:7*1*9",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -734,11 +871,26 @@
   ],
   "ussd": "7*1*10",
   "modal_image": "images/jrQ0dcR2lntX5WcnUXuRZSeyigCyMy6PrhEEq6Tg.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*10\",\"url\":\"tel:7*1*10\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*10\",\"url\":\"tel:7*1*10\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*10",
+     "uz": "Chaqiruv 7*1*10"
+    },
+    "url": "tel:7*1*10",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -796,11 +948,26 @@
   ],
   "ussd": "7*1*11",
   "modal_image": "images/a0XZ7EYt6qSrb7mwqGabEtdi6CXhnYzjB0KwLqdL.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*11\",\"url\":\"tel:7*1*11\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*11\",\"url\":\"tel:7*1*11\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*11",
+     "uz": "Chaqiruv 7*1*11"
+    },
+    "url": "tel:7*1*11",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -858,11 +1025,26 @@
   ],
   "ussd": "7*1*12",
   "modal_image": "images/ss8tsAlg0OTvqpVC941HYsu2y8tp9EQtV2AkAOxk.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Наберите 7*1*12\",\"url\":\"tel:7*1*12\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/phone-solid.png\",\"name\":\"Chaqiruv 7*1*12\",\"url\":\"tel:7*1*12\",\"type\":\"tel\"},{\"icon\":\"images/user-solid.png\",\"name\":\"Shaxsiy kabinet\",\"url\":\"https://my.perfectum.uz/login.php\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/phone-solid.png",
+    "name": {
+     "ru": "Наберите 7*1*12",
+     "uz": "Chaqiruv 7*1*12"
+    },
+    "url": "tel:7*1*12",
+    "type": "tel"
+   },
+   {
+    "icon": "images/user-solid.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Shaxsiy kabinet"
+    },
+    "url": "https://my.perfectum.uz/login.php",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -920,11 +1102,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/ucNuPnR7bmJLh607dohtgYliHuPKL9kRIanr1YMm.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -982,11 +1160,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/I6sjJy7HDUjFfKWxWrUryhmKgzpEWtHjRmspuY2e.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1044,11 +1218,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/lV6rvh50k6EVRWA5bnZYv2haYtTNeLsyeq8C0qKN.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1106,11 +1276,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/vBDkHLXtKi1mklpGOnazLtUweLPEDapdopYW84kB.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1168,11 +1334,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/Z136eIZvqRB3p6DTb9q81ScpkpcWKnA5UDEXnyY4.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1229,11 +1391,7 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
-  "buttons": {
-   "en": "[]",
-   "ru": "[]",
-   "uz": "[]"
-  },
+  "buttons": [],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1290,11 +1448,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/0rG3GhsxHe5t2TUj3rGG3E2ayGQoxyuvIeyqMpyd.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/bQdtPKkxYZJSp4qvyaG8jRJNj05mZQ8C1Oeovwu8.png\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/l9y1yDuqiGyp7TyYp3FDGO3hWussNMeAW3dkYQwl.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/xoAjQpgbN7R1Dm8BF47oxSzyXDggCKXdjEYB1tVF.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/8XxY3wrClMOXrIhvrFxvFszq9IDGfHcQA0CRMg8q.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/bQdtPKkxYZJSp4qvyaG8jRJNj05mZQ8C1Oeovwu8.png",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/l9y1yDuqiGyp7TyYp3FDGO3hWussNMeAW3dkYQwl.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1351,11 +1524,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/bDo0EhNwsbW0CS6N1oHbVTMih3FpBxugpRGudu7b.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/o89oOLuHwuSK6dLBykfmcAU4lpe8t0H73Z3AQNve.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/DvtL3qFeh6zX3OvLZDwHYUIhDVHMhAAbYTbJGMqm.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/aIqa0Xhcx44vGagWuSgAhiEKzPfpXkDwKO2lFJJz.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/MfBbrxb91WAuoruwfEUvyeCwE8qwHd47GUOhu8eX.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/o89oOLuHwuSK6dLBykfmcAU4lpe8t0H73Z3AQNve.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/DvtL3qFeh6zX3OvLZDwHYUIhDVHMhAAbYTbJGMqm.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1411,11 +1599,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/nZ8bszT5QvssA1v3rMmjnD4KXwXcPnxLJSz68gcJ.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/EloLHV2DlLbmLRg0UXZJFmvWzbBUqqkzuLWsD6ph.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/FVgyOQZGCGXjzhyqArRw5t7bmj4JfNM1yYAvOEu2.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/A2MjiaRYyVAxHqZrQC3eamRrHqC4jXrMjaIvJVip.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"link\"},{\"icon\":\"images/GSYlfS7RU7HyzmCJNBl3Cs6z60iNe9gODT18IM8x.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/EloLHV2DlLbmLRg0UXZJFmvWzbBUqqkzuLWsD6ph.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/FVgyOQZGCGXjzhyqArRw5t7bmj4JfNM1yYAvOEu2.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1471,11 +1674,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/e7puEyLi1qju8QlD46HBIB51eGzF7VvxYEl9nUyl.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/PcNhC2INVXDv7E8YmqjaiDGGRf6OaIy2d9OzaKEq.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/5byMRCBvwbyhwkitjds6jTMvHYtiTj9KgKQu2EhH.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/lqjqWYzSqGoc23JxsUYL2y3ApiN7tWOAmI4dbNwg.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/ANWOaA8bOaIbEiAmt7A8vfsxYMehwtTB5RfS1FLJ.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/PcNhC2INVXDv7E8YmqjaiDGGRf6OaIy2d9OzaKEq.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/5byMRCBvwbyhwkitjds6jTMvHYtiTj9KgKQu2EhH.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1531,11 +1749,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/Wamazo63hZs4bHBkuwGEl9JEzYWsPxuAUDIITsJP.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/Xqk2lHe1MMpQEVAjQc2Wy01NNhMaEIknbMliCyLy.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/0Oaw4QtUpty8q1jT9U6QnPq2xBYWVGAL7D8VM7KA.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/QkgXn1kGMKXwDloYFZNJv6AJScais4VfqIV35Qx3.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/8Oi07xnuaTibSVxtNa9EUXp22yIF7QHPXopyjoZY.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/Xqk2lHe1MMpQEVAjQc2Wy01NNhMaEIknbMliCyLy.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/0Oaw4QtUpty8q1jT9U6QnPq2xBYWVGAL7D8VM7KA.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1591,11 +1824,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/Jdp2xaLQMKtlPk1YKFqnY6YniI951VwF18ksACcZ.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/Fx8rZ8utKpcsHljiN6cbj6v5Asj05WL4qiNaGBCF.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/pwsNE1y3sTiQvB9MSobH1nq07U53Io384Hf93qkp.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/A1YJ71wTzKnbIYToHWwbyL0oldJ9c8zwmXCYe9qb.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/Cv5mV0fbmNa5DwQg2HkXwPz8anHlNFo6H1u72R0j.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/Fx8rZ8utKpcsHljiN6cbj6v5Asj05WL4qiNaGBCF.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/pwsNE1y3sTiQvB9MSobH1nq07U53Io384Hf93qkp.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1654,11 +1902,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/sfsv8XInuS0EtIpQV6UUI01mCXVagrnEYwKIgDBv.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/yrS99AFYcAsIDbhg1PQo6mrHAkVOVzgwUL1elVo9.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://lk.perfectum.uz/ru/login\",\"type\":\"link\"},{\"icon\":\"images/cUUj5r0rotKx2jWOiysB9tjMijCgr2TKqpWNZI82.png\",\"name\":\"Моб. приложение\",\"url\":\"https://perfectum.uz/app\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/IE9Fskdow4sB7YKs7zLIMKdxNpPBBI9euRdBDUi5.png\",\"name\":\"Personal kabineti\",\"url\":\"https://lk.perfectum.uz/ru/login\",\"type\":\"link\"},{\"icon\":\"images/XPbsZs8H5RhTPwCk56Mhgswc38Ea6zVfvbrFVHXK.png\",\"name\":\"Mob. ilova\",\"url\":\"https://perfectum.uz/app\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/yrS99AFYcAsIDbhg1PQo6mrHAkVOVzgwUL1elVo9.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Personal kabineti"
+    },
+    "url": "https://lk.perfectum.uz/ru/login",
+    "type": "link"
+   },
+   {
+    "icon": "images/cUUj5r0rotKx2jWOiysB9tjMijCgr2TKqpWNZI82.png",
+    "name": {
+     "ru": "Моб. приложение",
+     "uz": "Mob. ilova"
+    },
+    "url": "https://perfectum.uz/app",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1717,11 +1980,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/D2PdzAqvPHHJH9oUstW6cUXzQSkT86tvG0v0AkXF.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/MQYWEBH3zKeszkKe3PIpFHQGxGL7yYII9ij0MmXl.png\",\"name\":\"Персональный кабинет\",\"url\":\"https://lk.perfectum.uz/ru/login\",\"type\":\"link\"},{\"icon\":\"images/XQl45BiVjHWoZNJwHBF5GZnUMzyBHgxTusFV6zEP.png\",\"name\":\"Моб. приложение\",\"url\":\"https://perfectum.uz/app\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/tCVTKloIiH7LIRhh7ddX9zjQ3zfiCGTWtHZ0pMkn.png\",\"name\":\"Personal kabineti\",\"url\":\"https://lk.perfectum.uz/ru/login\",\"type\":\"link\"},{\"icon\":\"images/leNOklSEBCCYxF8XoJ4jvdE2WXPe4zuPBOxanueW.png\",\"name\":\"Mob. ilova\",\"url\":\"https://perfectum.uz/app\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/MQYWEBH3zKeszkKe3PIpFHQGxGL7yYII9ij0MmXl.png",
+    "name": {
+     "ru": "Персональный кабинет",
+     "uz": "Personal kabineti"
+    },
+    "url": "https://lk.perfectum.uz/ru/login",
+    "type": "link"
+   },
+   {
+    "icon": "images/XQl45BiVjHWoZNJwHBF5GZnUMzyBHgxTusFV6zEP.png",
+    "name": {
+     "ru": "Моб. приложение",
+     "uz": "Mob. ilova"
+    },
+    "url": "https://perfectum.uz/app",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1777,11 +2055,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/QMiT2J230OOClaqPzZSOzH4Kc8Mw0j2RQQDuK2T0.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/PflUbOrTWexNHkpbaO3z5D5kNES1wwxcVeT467py.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/wVHppsYlzwkopVdRVF73UXPmG4osJ2I71rV1jPTS.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/Qyd1L3JLaLESSTWcZtHb5jEQj6szaOWFqAmpIOUP.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"link\"},{\"icon\":\"images/VbCddm7t7nZ0SzLLo88F6RQIxPdfAObcjVNveEhq.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/PflUbOrTWexNHkpbaO3z5D5kNES1wwxcVeT467py.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/wVHppsYlzwkopVdRVF73UXPmG4osJ2I71rV1jPTS.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1837,11 +2130,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/i9hnSAk5oWJhGPSkFX9fyUzTpvoMRAiiGDQ92UcQ.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/kVrxe8TTfAXTTiND2EYljpfKbKMAUuQIatdD76vi.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/TBwanUmzHjE5PrSKRhp9lRxZkAST82vHrqbKmfBm.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/E1otrifLpXjitY7AYT5c7oEaecCQxSNW0mj0mTFQ.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/uMUFoO2YeSfrpWK9iY4o58kANbwEuWr7e9cU3hOm.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/kVrxe8TTfAXTTiND2EYljpfKbKMAUuQIatdD76vi.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/TBwanUmzHjE5PrSKRhp9lRxZkAST82vHrqbKmfBm.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
@@ -1897,11 +2205,26 @@
   ],
   "ussd": "NULL",
   "modal_image": "images/ongPP9AZdWKjPBwVRa6nk9MqkRrO7ewnegpfsqp5.png",
-  "buttons": {
-   "en": "[]",
-   "ru": "[{\"icon\":\"images/Rl9au6fRYCD7u3RcptkX3Djk2usH7oxqzrcch4Dv.jpg\",\"name\":\"Связаться с нами\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/bR9WdXT9NpJuxlP9rh4YOZEpwOIpu0ozIYGXa2kH.png\",\"name\":\"Оставить заявку\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]",
-   "uz": "[{\"icon\":\"images/LS64bwEhDScTMvAVjUObUIJ1gDjYRq8bvjaswtXR.jpg\",\"name\":\"Biz bilan bog'laning\",\"url\":\"tel:+998 98 127 0077\",\"type\":\"tel\"},{\"icon\":\"images/nY56kqHF14zrDUo4VVis2VlLymtjbBhD4gP1SRjy.png\",\"name\":\"Ariza qoldirish\",\"url\":\"https://www.perfectum.uz/additionals/contact\",\"type\":\"link\"}]"
-  },
+  "buttons": [
+   {
+    "icon": "images/Rl9au6fRYCD7u3RcptkX3Djk2usH7oxqzrcch4Dv.jpg",
+    "name": {
+     "ru": "Связаться с нами",
+     "uz": "Biz bilan bog'laning"
+    },
+    "url": "tel:+998 98 127 0077",
+    "type": "tel"
+   },
+   {
+    "icon": "images/bR9WdXT9NpJuxlP9rh4YOZEpwOIpu0ozIYGXa2kH.png",
+    "name": {
+     "ru": "Оставить заявку",
+     "uz": "Ariza qoldirish"
+    },
+    "url": "https://www.perfectum.uz/additionals/contact",
+    "type": "link"
+   }
+  ],
   "is_featured": false,
   "is_archived": false,
   "status": true
