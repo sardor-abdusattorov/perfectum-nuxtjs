@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
             SiteSettingsSeeder::class,
             SiteTranslationSeeder::class,
             SocialSeeder::class,
+            TaxonomySeeder::class,
+            TariffSeeder::class,
             MenuSeeder::class,
             HomepageSeeder::class,
         ]);

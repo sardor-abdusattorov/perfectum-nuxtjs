@@ -1,0 +1,271 @@
+{
+ "tariff_categories": [
+  {
+   "id": 1,
+   "name": {
+    "ru": "Мобильная связь",
+    "uz": "Mobil aloqa"
+   },
+   "slug": "mobilnaya-svya",
+   "code": "abonent",
+   "sort": 1,
+   "status": true
+  },
+  {
+   "id": 2,
+   "name": {
+    "ru": "Домашний интернет",
+    "uz": "Uy internet"
+   },
+   "slug": "domasnii-internet",
+   "code": "corporate",
+   "sort": 2,
+   "status": true
+  },
+  {
+   "id": 6,
+   "name": {
+    "ru": "CDMA"
+   },
+   "slug": "cdma",
+   "code": "abonent",
+   "sort": 3,
+   "status": true
+  }
+ ],
+ "tariff_types": [
+  {
+   "id": 4,
+   "name": {
+    "ru": "\"Qulay\" ежемесячные",
+    "uz": "\"Qulay\" oylik"
+   },
+   "slug": "qulay-ezemesyacnye",
+   "code": null,
+   "sort": 6,
+   "status": true
+  },
+  {
+   "id": 5,
+   "name": {
+    "ru": "\"Qulay\" полугодовые",
+    "uz": "\"Qulay\"  yarim yillik"
+   },
+   "slug": "qulay-polugodovye",
+   "code": null,
+   "sort": 5,
+   "status": true
+  },
+  {
+   "id": 6,
+   "name": {
+    "ru": "Прочие тарифы",
+    "uz": "Boshqa tariflar"
+   },
+   "slug": "procie-tarify",
+   "code": null,
+   "sort": 4,
+   "status": true
+  },
+  {
+   "id": 7,
+   "name": {
+    "ru": "ПОЛУГОДОВЫЕ (6+K)",
+    "uz": "YARIM YILLIK (6+K)"
+   },
+   "slug": "polugodovye-6k",
+   "code": null,
+   "sort": 2,
+   "status": true
+  },
+  {
+   "id": 8,
+   "name": {
+    "ru": "Архивные тарифы",
+    "uz": "Arxiv tariflari"
+   },
+   "slug": "arxivnye-tarify",
+   "code": null,
+   "sort": 1,
+   "status": true
+  },
+  {
+   "id": 10,
+   "name": {
+    "ru": "\"Специальные тарифы\"",
+    "uz": "\"Maxsus tariflar\""
+   },
+   "slug": "specialnye-tarify",
+   "code": null,
+   "sort": 3,
+   "status": true
+  },
+  {
+   "id": 12,
+   "name": {
+    "ru": "Для физических лиц",
+    "uz": "Jismoniy shaxslar uchun"
+   },
+   "slug": "dlya-fiziceskix-lic",
+   "code": null,
+   "sort": 2,
+   "status": true
+  },
+  {
+   "id": 13,
+   "name": {
+    "ru": "Для юридических лиц",
+    "uz": "Yuridik shaxslar uchun"
+   },
+   "slug": "dlya-yuridiceskix-lic",
+   "code": null,
+   "sort": 1,
+   "status": true
+  },
+  {
+   "id": 17,
+   "name": {
+    "ru": "5G Standalone",
+    "uz": "5G Standalone"
+   },
+   "slug": "5g-standalone",
+   "code": null,
+   "sort": 1,
+   "status": true
+  },
+  {
+   "id": 18,
+   "name": {
+    "ru": "Без покупки роутера",
+    "uz": "Router sotib olmasdan"
+   },
+   "slug": "bez-pokupki-routera",
+   "code": null,
+   "sort": 3,
+   "status": true
+  }
+ ],
+ "service_types": [
+  {
+   "id": 1,
+   "name": {
+    "ru": "Сетевые услуги",
+    "uz": "Tarmoq xizmatlari"
+   },
+   "slug": "setevye-uslugi",
+   "code": null,
+   "sort": 3,
+   "status": true
+  },
+  {
+   "id": 2,
+   "name": {
+    "ru": "Дополнительные услуги",
+    "uz": "Qo`shimcha xizmatlar"
+   },
+   "slug": "dopolnitelnye-uslugi",
+   "code": null,
+   "sort": 4,
+   "status": true
+  },
+  {
+   "id": 4,
+   "name": {
+    "ru": "Мобильный кабинет",
+    "uz": "Mobil kabineti"
+   },
+   "slug": "mobilnyi-kabinet",
+   "code": null,
+   "sort": 5,
+   "status": true
+  },
+  {
+   "id": 5,
+   "name": {
+    "ru": "Программа лояльности",
+    "uz": "Ishonch dasturi"
+   },
+   "slug": "programma-loyalnosti",
+   "code": null,
+   "sort": 6,
+   "status": true
+  },
+  {
+   "id": 6,
+   "name": {
+    "ru": "Узнать баланс",
+    "uz": "Balansni bilish"
+   },
+   "slug": "uznat-balans",
+   "code": null,
+   "sort": 7,
+   "status": true
+  },
+  {
+   "id": 7,
+   "name": {
+    "ru": "Абонентские услуги",
+    "uz": "Abonent xizmatlari"
+   },
+   "slug": "abonentskie-uslugi",
+   "code": null,
+   "sort": 8,
+   "status": true
+  },
+  {
+   "id": 8,
+   "name": {
+    "ru": "Международная связь",
+    "uz": "Xalqaro aloqa"
+   },
+   "slug": "mezdunarodnaya-svyaz",
+   "code": null,
+   "sort": 9,
+   "status": true
+  },
+  {
+   "id": 9,
+   "name": {
+    "ru": "Услуги от Контент-провайдеров",
+    "uz": "Kontent - provayderlarining xizmatlari"
+   },
+   "slug": "uslugi-ot-kontent-provaiderov",
+   "code": null,
+   "sort": 10,
+   "status": true
+  },
+  {
+   "id": 10,
+   "name": {
+    "ru": "Оплата госуслуг",
+    "uz": "Davlat xizmatlari uchun to'lov"
+   },
+   "slug": "oplata-gosuslug",
+   "code": null,
+   "sort": 1,
+   "status": false
+  },
+  {
+   "id": 13,
+   "name": {
+    "ru": "Услуги для домашнего интернета",
+    "uz": "Uy interneti uchun xizmatlar"
+   },
+   "slug": "uslugi-dlya-domasnego-interneta",
+   "code": null,
+   "sort": 2,
+   "status": true
+  },
+  {
+   "id": 14,
+   "name": {
+    "ru": "Услуги мобильной связи 5G SA",
+    "uz": "5G SA mobil aloqa xizmatlari"
+   },
+   "slug": "uslugi-mobilnoi-svyazi-5g-sa",
+   "code": null,
+   "sort": 1,
+   "status": true
+  }
+ ]
+}
