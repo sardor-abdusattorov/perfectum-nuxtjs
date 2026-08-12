@@ -35,7 +35,6 @@ const dials = computed(() => published(block.value.dials))
 
       <div v-if="dials.length" class="features__speed">
         <template v-for="(dial, index) in dials" :key="index">
-          <div v-if="index" class="features__mid" v-html="rich(block.speed_text)"></div>
           <div
             class="features__dial"
             :class="dial.color && `features__dial_${dial.color}`"
@@ -60,6 +59,12 @@ const dials = computed(() => published(block.value.dials))
               <div class="features__readout-unit">{{ block.speed_unit }}</div>
             </div>
           </div>
+
+          <div
+            v-if="index === 0 && block.speed_text"
+            class="features__mid"
+            v-html="rich(block.speed_text)"
+          ></div>
         </template>
       </div>
     </div>
