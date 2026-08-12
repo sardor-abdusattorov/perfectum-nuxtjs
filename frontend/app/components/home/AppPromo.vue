@@ -23,7 +23,7 @@ const t = useT()
               target="_blank"
               rel="noopener"
             >
-              <span class="app-promo__store-text">{{ t('common.store_prefix', 'скачать в') }}</span>
+              <span class="app-promo__store-text">{{ t('common.store_prefix') }}</span>
               <img :src="`/images/${store.icon}.svg`" :alt="store.name" class="app-promo__store-logo" loading="lazy" />
             </a>
           </div>

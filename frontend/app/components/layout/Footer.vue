@@ -9,8 +9,8 @@ const t = useT()
 const phones = computed(() => [setting('phone_primary'), setting('phone_secondary')].filter(Boolean))
 
 const emails = computed(() => [
-  { address: setting('email_info'), note: t('footer.email_info_note', 'Для получения информации') },
-  { address: setting('email_hotline'), note: t('footer.email_hotline_note', 'Горячая линия для жалоб и обращений') },
+  { address: setting('email_info'), note: t('footer.email_info_note') },
+  { address: setting('email_hotline'), note: t('footer.email_hotline_note') },
 ].filter(email => email.address))
 
 const telegram = computed(() => {
@@ -35,32 +35,32 @@ function telHref(phone: string): string {
 
           <div class="footer__contacts">
             <div class="footer__contact">
-              <p class="footer__contact-title">{{ t('footer.office_title', 'Головной офис') }}</p>
-              <p class="footer__contact-text">{{ t('footer.address', 'Узбекистан, Ташкент') }}</p>
+              <p class="footer__contact-title">{{ t('footer.office_title') }}</p>
+              <p class="footer__contact-text">{{ t('footer.address') }}</p>
               <a
                 v-if="setting('map_url')"
                 class="footer__contact-link"
                 :href="setting('map_url')"
                 target="_blank"
                 rel="noopener"
-              >{{ t('footer.map_link', 'Показать на карте') }}</a>
+              >{{ t('footer.map_link') }}</a>
             </div>
 
             <div v-if="phones.length" class="footer__contact">
-              <p class="footer__contact-title">{{ t('footer.phones_title', 'Телефоны поддержки') }}</p>
+              <p class="footer__contact-title">{{ t('footer.phones_title') }}</p>
               <ul class="footer__contact-list">
                 <li v-for="phone in phones" :key="phone">
                   <a class="footer__contact-phone" :href="telHref(phone)">{{ phone }}</a>
                 </li>
               </ul>
               <p v-if="setting('phone_short')" class="footer__contact-text">
-                {{ t('footer.phone_short_note', 'Для абонентов Perfectum') }} —
+                {{ t('footer.phone_short_note') }} —
                 <a class="footer__contact-phone" :href="telHref(setting('phone_short'))">{{ setting('phone_short') }}</a>
               </p>
             </div>
 
             <div v-if="telegram" class="footer__contact">
-              <p class="footer__contact-title">{{ t('footer.telegram_title', 'Чат с оператором в Telegram') }}</p>
+              <p class="footer__contact-title">{{ t('footer.telegram_title') }}</p>
               <a
                 class="footer__contact-link"
                 :href="setting('telegram_url')"
@@ -70,14 +70,14 @@ function telHref(phone: string): string {
             </div>
 
             <div class="footer__contact footer__contact_email">
-              <p v-if="emails.length" class="footer__contact-title">{{ t('footer.email_title', 'Email') }}</p>
+              <p v-if="emails.length" class="footer__contact-title">{{ t('footer.email_title') }}</p>
               <ul v-if="emails.length" class="footer__contact-list">
                 <li v-for="email in emails" :key="email.address" class="footer__contact-text">
                   {{ email.note }} —
                   <a class="footer__contact-phone" :href="`mailto:${email.address}`">{{ email.address }}</a>
                 </li>
               </ul>
-              <p class="footer__contact-text">{{ t('footer.copyright', 'Все права защищены') }}</p>
+              <p class="footer__contact-text">{{ t('footer.copyright') }}</p>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ function telHref(phone: string): string {
             v-for="column in menu"
             :key="column.id"
             class="footer__menu"
-            :aria-label="column.name ?? t('footer.nav_label', 'Навигация в подвале')"
+            :aria-label="column.name ?? t('footer.nav_label')"
           >
             <p class="footer__heading">{{ column.name }}</p>
             <ul class="footer__list">
@@ -99,7 +99,7 @@ function telHref(phone: string): string {
 
           <div class="footer__widgets">
             <div v-if="stores.length" class="footer__widget">
-              <p class="footer__heading">{{ t('footer.app_title', 'Мобильное приложение') }}</p>
+              <p class="footer__heading">{{ t('footer.app_title') }}</p>
               <div class="footer__stores">
                 <a
                   v-for="store in stores"
@@ -116,7 +116,7 @@ function telHref(phone: string): string {
             </div>
 
             <div v-if="socials.length" class="footer__widget">
-              <p class="footer__heading">{{ t('footer.socials_title', 'Социальные сети') }}</p>
+              <p class="footer__heading">{{ t('footer.socials_title') }}</p>
               <div class="footer__social">
                 <a
                   v-for="social in socials"

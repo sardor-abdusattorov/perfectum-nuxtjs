@@ -14,7 +14,7 @@ const t = useT()
       rel="noopener"
       :aria-label="store.name"
     >
-      <span class="hero__store-text">{{ t('common.store_prefix', 'Скачать в') }}</span>
+      <span class="hero__store-text">{{ t('common.store_prefix') }}</span>
       <img class="hero__store-logo" :src="`/images/${store.icon}-dark.svg`" :alt="store.name" loading="lazy" />
     </a>
   </div>

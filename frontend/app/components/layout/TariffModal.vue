@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
       aria-modal="true"
       aria-labelledby="tariffModalName"
     >
-      <button type="button" class="tariff-modal__close" :aria-label="t('tariff.close', 'Закрыть')" @click="close()">
+      <button type="button" class="tariff-modal__close" :aria-label="t('tariff.close')" @click="close()">
         <svg viewBox="0 0 24 24" fill="none">
           <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
         <span class="tariff-modal__price-period">{{ current.price_period }}</span>
       </div>
 
-      <h2 class="tariff-modal__heading">{{ t('tariff.connect_anyway', 'Подключить любым способом') }}:</h2>
+      <h2 class="tariff-modal__heading">{{ t('tariff.connect_anyway') }}:</h2>
 
       <div v-if="buttons.length" class="tariff-modal__buttons">
         <a

@@ -66,6 +66,12 @@ class SiteTranslationSeeder extends Seeder
             'footer.app_title' => ['ru' => 'Мобильное приложение', 'uz' => 'Mobil ilova'],
             'footer.socials_title' => ['ru' => 'Социальные сети', 'uz' => 'Ijtimoiy tarmoqlar'],
 
+            'tariff.connect_anyway' => [
+                'ru' => 'Подключить любым способом',
+                'uz' => 'Tarifni istalgan usulda ulashingiz mumkin',
+            ],
+            'tariff.close' => ['ru' => 'Закрыть', 'uz' => 'Yopish'],
+
             'common.back_home' => ['ru' => 'На главную', 'uz' => 'Bosh sahifaga'],
             'common.store_prefix' => ['ru' => 'скачать в', 'uz' => 'yuklab olish'],
             'common.read_more' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],

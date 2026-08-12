@@ -7,10 +7,10 @@ const t = useT()
   <ClientOnly>
     <div v-if="visible" class="cookies">
       <p class="cookies__text">
-        {{ t('cookie.text', 'Мы используем файлы cookie, чтобы сайт работал лучше. Продолжая пользоваться сайтом, вы соглашаетесь с их использованием.') }}
+        {{ t('cookie.text') }}
       </p>
       <button type="button" class="cookies__accept" @click="accept">
-        {{ t('cookie.accept', 'Принять') }}
+        {{ t('cookie.accept') }}
       </button>
     </div>
   </ClientOnly>

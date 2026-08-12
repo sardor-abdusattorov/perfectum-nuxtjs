@@ -64,13 +64,13 @@ watch(() => route.fullPath, () => {
                               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                           </svg>
                       </span>
-                      {{ t('header.account', 'Личный кабинет') }}
+                      {{ t('header.account') }}
                   </a>
                   <div class="header__hamburger">
                       <button
                           type="button"
                           class="header__hamburger-button"
-                          :aria-label="t('header.open_menu', 'Открыть меню')"
+                          :aria-label="t('header.open_menu')"
                           :aria-expanded="mobileMenu.open.value"
                           @click="mobileMenu.toggle()"
                       >

@@ -20,7 +20,7 @@ watch(() => route.fullPath, () => {
               <NuxtLink :to="localePath('/')" class="menu__logo">
                   <img src="/images/logo-white.svg" alt="Perfectum 5G" />
               </NuxtLink>
-              <button type="button" class="menu__close" :aria-label="t('header.close_menu', 'Закрыть')" @click="mobileMenu.close()">
+              <button type="button" class="menu__close" :aria-label="t('header.close_menu')" @click="mobileMenu.close()">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
                   </svg>
@@ -51,7 +51,7 @@ watch(() => route.fullPath, () => {
               </li>
           </ul>
           <a :href="setting('account_url', '#')" class="menu__account" target="_blank" rel="noopener">
-              {{ t('header.account', 'Личный кабинет') }}
+              {{ t('header.account') }}
           </a>
       </div>
   </div>
