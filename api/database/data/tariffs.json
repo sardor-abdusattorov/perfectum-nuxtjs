@@ -23,7 +23,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "400 минут",
      "uz": "400 daqiqa"
@@ -37,7 +37,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "600 Мб",
      "uz": "600 Mb"
@@ -100,7 +100,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "800 минут",
      "uz": "800 daqiqa"
@@ -114,7 +114,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "1 Гб",
      "uz": "1 Gb"
@@ -177,7 +177,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "2000 минут",
      "uz": "2000 daqiqa"
@@ -191,7 +191,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "4 Гб",
      "uz": "4 Gb"
@@ -254,7 +254,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "8000 минут",
      "uz": "8000 daqiqa"
@@ -268,7 +268,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "15 Гб",
      "uz": "15 Gb"
@@ -331,7 +331,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "∞ минут",
      "uz": "∞ daqiqa"
@@ -345,7 +345,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "35 Гб",
      "uz": "35 Gb"
@@ -408,7 +408,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "∞ минут",
      "uz": "∞ daqiqa"
@@ -422,7 +422,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "45 Гб",
      "uz": "45 Gb"
@@ -485,7 +485,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "60 минут",
      "uz": "60 daqiqa"
@@ -499,7 +499,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "0 Мб",
      "uz": "0 Mb"
@@ -543,7 +543,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "100 минут",
      "uz": "100 daqiqa"
@@ -557,7 +557,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "100 Мб",
      "uz": "100 Mb"
@@ -611,7 +611,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "400 минут",
      "uz": "400 daqiqa"
@@ -625,7 +625,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "400 Мб",
      "uz": "400 Mb"
@@ -688,7 +688,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "800 минут",
      "uz": "800 daqiqa"
@@ -702,7 +702,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "800 Мб",
      "uz": "800 Mb"
@@ -765,7 +765,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "2000 минут",
      "uz": "2000 daqiqa"
@@ -779,7 +779,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "3 Гб",
      "uz": "3 Gb"
@@ -842,7 +842,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "8000 минут",
      "uz": "8000 daqiqa"
@@ -856,7 +856,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "10 Гб",
      "uz": "10 Gb"
@@ -919,7 +919,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "∞ минут",
      "uz": "∞ daqiqa"
@@ -933,7 +933,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "30 Гб",
      "uz": "30 Gb"
@@ -996,7 +996,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "∞ минут",
      "uz": "∞ daqiqa"
@@ -1010,7 +1010,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "40 Гб",
      "uz": "40 Gb"
@@ -1073,7 +1073,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "800 минут",
      "uz": "800 daqiqa"
@@ -1087,7 +1087,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "800 Мб",
      "uz": "800 Mb"
@@ -1131,7 +1131,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "2000 минут",
      "uz": "2000 daqiqa"
@@ -1145,7 +1145,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "2000 Мб",
      "uz": "2000 Mb"
@@ -1189,7 +1189,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "6000 минут",
      "uz": "6000 daqiqa"
@@ -1203,7 +1203,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "0 Мб",
      "uz": "0 Mb"
@@ -1247,7 +1247,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "10000 минут",
      "uz": "10000 daqiqa"
@@ -1261,7 +1261,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "10000 Мб",
      "uz": "10000 Mb"
@@ -1305,7 +1305,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "30000 минут",
      "uz": "30000 daqiqa"
@@ -1319,7 +1319,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "30000 Мб",
      "uz": "30000 Mb"
@@ -1363,7 +1363,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "600 минут",
      "uz": "600 daqiqa"
@@ -1377,7 +1377,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "None"
     }
@@ -1420,7 +1420,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -1432,7 +1432,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит",
      "uz": "Limitsiz"
@@ -1496,7 +1496,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "uz": "None"
     }
@@ -1508,7 +1508,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит",
      "uz": "Limitsiz"
@@ -1571,7 +1571,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -1583,7 +1583,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит",
      "uz": "Limitsiz"
@@ -1646,7 +1646,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -1658,7 +1658,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит",
      "uz": "Limitsiz"
@@ -1721,7 +1721,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -1733,7 +1733,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит",
      "uz": "Limitsiz"
@@ -1796,7 +1796,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -1808,7 +1808,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит",
      "uz": "Limitsiz"
@@ -1872,7 +1872,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "1000 минут",
      "uz": "1000 daqiqa"
@@ -1886,7 +1886,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "1000 Гб",
      "uz": "1000 Gb"
@@ -1950,7 +1950,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "1000 минут",
      "uz": "1000 daqiqa"
@@ -1964,7 +1964,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "100 Гб",
      "uz": "100 Gb"
@@ -2027,7 +2027,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -2039,7 +2039,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит + Роутер",
      "uz": "Limitsiz + Router"
@@ -2102,7 +2102,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -2114,7 +2114,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит + Роутер",
      "uz": "Limitsiz + Router"
@@ -2177,7 +2177,7 @@
   },
   "features": [
    {
-    "icon": "minutes",
+    "icon": "phone",
     "title": {
      "ru": "None"
     }
@@ -2189,7 +2189,7 @@
     }
    },
    {
-    "icon": "traffic",
+    "icon": "globe",
     "title": {
      "ru": "Безлимит + Роутер",
      "uz": "Limitsiz + Router"
