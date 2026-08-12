@@ -24,6 +24,8 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'connection_cost' => 'Connection cost',
+        'tariff_descriptions' => 'Description blocks',
         'office_single' => 'Point of sale',
         'office_plural' => 'Offices and dealers',
         'office_type' => 'Point type',
@@ -225,6 +227,8 @@ return [
     ],
 
     'helper' => [
+        'connection_cost' => 'Shown in the connect dialog',
+        'tariff_descriptions' => 'Each block is a collapsible section under the tariff card',
         'office_type' => 'An office is our own point of sale, a dealer is a partner one',
         'office_name' => 'Left empty for offices, required for dealers',
         'office_region' => 'Points are grouped by region in the list and on the map',
@@ -395,6 +399,13 @@ return [
         'careers' => 'Careers',
         'procurement' => 'Procurement',
         'cdma' => 'CDMA',
+    ],
+
+    'feature_icon' => [
+        'phone' => 'Minutes',
+        'sms' => 'SMS',
+        'globe' => 'Internet',
+        'speed' => 'Speed',
     ],
 
     'office_type' => [

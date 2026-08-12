@@ -24,6 +24,8 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'connection_cost' => 'Ulanish narxi',
+        'tariff_descriptions' => 'Tavsif bloklari',
         'office_single' => 'Savdo nuqtasi',
         'office_plural' => 'Ofis va dilerlar',
         'office_type' => 'Nuqta turi',
@@ -225,6 +227,8 @@ return [
     ],
 
     'helper' => [
+        'connection_cost' => 'Ulanish oynasida koʻrsatiladi',
+        'tariff_descriptions' => 'Har bir blok — tarif kartasi ostidagi ochiluvchi boʻlim',
         'office_type' => 'Ofis — oʻz savdo nuqtasi, diler — hamkor nuqtasi',
         'office_name' => 'Ofislarda boʻsh qoladi, dilerda esa majburiy',
         'office_region' => 'Nuqtalar roʻyxatda va xaritada hudud boʻyicha guruhlanadi',
@@ -395,6 +399,13 @@ return [
         'careers' => 'Vakansiyalar',
         'procurement' => 'Xaridlar',
         'cdma' => 'CDMA',
+    ],
+
+    'feature_icon' => [
+        'phone' => 'Daqiqalar',
+        'sms' => 'SMS',
+        'globe' => 'Internet',
+        'speed' => 'Tezlik',
     ],
 
     'office_type' => [

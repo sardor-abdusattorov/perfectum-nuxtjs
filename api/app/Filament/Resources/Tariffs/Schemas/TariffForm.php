@@ -35,10 +35,6 @@ class TariffForm
                                     ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
-
-                                Fields::multiline('lead')
-                                    ->label(__('app.label.lead_text'))
-                                    ->helperText(__('app.helper.tariff_lead')),
                             ]),
 
                         Fields::slug(),
@@ -60,6 +56,10 @@ class TariffForm
                                 TextInput::make('price_period')
                                     ->label(__('app.label.price_period'))
                                     ->helperText(__('app.helper.price_period')),
+
+                                TextInput::make('connection_cost')
+                                    ->label(__('app.label.connection_cost'))
+                                    ->helperText(__('app.helper.connection_cost')),
                             ]),
                     ]),
 
@@ -70,10 +70,7 @@ class TariffForm
                             ->hiddenLabel()
                             ->addActionLabel(__('app.action.add'))
                             ->schema([
-                                Fields::image('tariffs', 'icon')
-                                    ->label(__('app.label.icon'))
-                                    ->helperText(__('app.helper.tariff_feature_icon'))
-                                    ->imageEditor(false),
+                                Fields::featureIcon(),
 
                                 TranslatableTabs::make('feature_translations')
                                     ->schema([
@@ -137,12 +134,25 @@ class TariffForm
 
                 Section::make(__('app.label.additionally'))
                     ->schema([
-                        TranslatableTabs::make('terms_translations')
+                        Repeater::make('descriptions')
+                            ->label(__('app.label.tariff_descriptions'))
+                            ->helperText(__('app.helper.tariff_descriptions'))
+                            ->addActionLabel(__('app.action.add'))
                             ->schema([
-                                Fields::editor('terms')
-                                    ->label(__('app.label.terms'))
-                                    ->helperText(__('app.helper.terms')),
-                            ]),
+                                TranslatableTabs::make('description_translations')
+                                    ->schema([
+                                        TextInput::make('name')
+                                            ->label(__('app.label.title'))
+                                            ->required(),
+
+                                        Fields::editor('content')
+                                            ->label(__('app.label.content')),
+                                    ]),
+                            ])
+                            ->itemLabel(Fields::itemLabel('name'))
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible(),
 
                         Fields::image('tariffs'),
 

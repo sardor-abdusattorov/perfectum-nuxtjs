@@ -47,7 +47,7 @@ function connect(): void {
             <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">{{ tariff.name }}</span>
           </nav>
 
-          <p v-if="tariff.type" class="page-hero__eyebrow page-hero__eyebrow_silver">{{ tariff.type.name }}</p>
+          <p class="page-hero__eyebrow page-hero__eyebrow_silver">{{ tariff.type?.name ?? '5G' }}</p>
           <h1 class="page-hero__title section__title">{{ tariff.name }}</h1>
         </div>
       </div>
@@ -56,8 +56,8 @@ function connect(): void {
     <section class="tariff-detail">
       <div class="container">
         <article class="tariff-detail__card">
-          <div v-if="tariff.category" class="tariff-detail__head">
-            <span class="tariff-detail__tag"><b>{{ tariff.category.name }}</b></span>
+          <div class="tariff-detail__head">
+            <span class="tariff-detail__tag"><b>{{ tariff.type?.name ?? '5G' }}</b></span>
           </div>
 
           <div class="tariff-detail__body">
@@ -75,25 +75,23 @@ function connect(): void {
               </button>
             </div>
 
-            <div v-if="tariff.features.length" class="tariff-detail__feats">
-              <div v-for="(feature, index) in tariff.features" :key="index" class="tariff-feat">
-                <span v-if="feature.icon" class="tariff-feat__icon">
-                  <img :src="`/images/icon-${feature.icon}.svg`" alt="" loading="lazy" />
-                </span>
-                <span class="tariff-feat__text" v-html="rich(feature.title)"></span>
-              </div>
-            </div>
+            <TariffFeats v-if="tariff.features.length" tag="div" class="tariff-detail__feats" :features="tariff.features" />
           </div>
         </article>
 
-        <details v-if="tariff.terms" class="tariff-detail__more" open>
+        <details
+          v-for="(description, index) in tariff.descriptions"
+          :key="index"
+          class="tariff-detail__more"
+          :open="index === 0"
+        >
           <summary class="tariff-detail__more-summary">
-            {{ t('common.read_more') }}
+            {{ description.name }}
             <svg class="tariff-detail__more-chevron" viewBox="0 0 24 24" fill="none">
               <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </summary>
-          <div class="tariff-detail__more-content" v-html="tariff.terms"></div>
+          <div class="tariff-detail__more-content" v-html="description.content"></div>
         </details>
 
         <nav class="tariff-detail__switch" :aria-label="t('tariffs.nav_label')">

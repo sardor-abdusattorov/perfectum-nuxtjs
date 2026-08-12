@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Models\Tariff;
+use App\Models\TariffCategory;
+use App\Models\TariffType;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+function tariff(array $attributes = []): Tariff
+{
+    return Tariff::create(array_merge([
+        'name' => ['ru' => 'Qulay 1', 'uz' => 'Qulay 1'],
+        'slug' => 'qulay-1',
+        'price' => '25 000',
+        'price_currency' => ['ru' => 'сум', 'uz' => 'so`m'],
+        'price_period' => ['ru' => 'мес.', 'uz' => 'oy'],
+        'connection_cost' => ['ru' => '0 сум', 'uz' => '0 so`m'],
+        'features' => [
+            ['icon' => 'phone', 'title' => ['ru' => '400 минут', 'uz' => '400 daqiqa'], 'note' => ['ru' => '(Исходящие)', 'uz' => '(Chiquvchi)']],
+        ],
+        'descriptions' => [
+            ['name' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'], 'content' => ['ru' => '<p>Условия</p>', 'uz' => '<p>Shartlar</p>']],
+        ],
+        'buttons' => [
+            ['icon' => null, 'name' => ['ru' => 'Наберите 7*1*1', 'uz' => 'Chaqiruv 7*1*1'], 'url' => 'tel:7*1*1', 'type' => 'tel'],
+        ],
+        'status' => true,
+    ], $attributes));
+}
+
+it('serves a tariff with translated repeater rows', function (): void {
+    tariff();
+
+    $this->getJson(route('api.v1.tariffs.show', ['tariff' => 'qulay-1']))
+        ->assertOk()
+        ->assertJsonPath('data.features.0.title', '400 минут')
+        ->assertJsonPath('data.features.0.note', '(Исходящие)')
+        ->assertJsonPath('data.descriptions.0.name', 'Подробнее')
+        ->assertJsonPath('data.descriptions.0.content', '<p>Условия</p>')
+        ->assertJsonPath('data.buttons.0.name', 'Наберите 7*1*1')
+        ->assertJsonPath('data.connection_cost', '0 сум');
+});
+
+it('serves the uz locale of every repeater row', function (): void {
+    tariff();
+
+    $this->getJson(route('api.v1.tariffs.show', ['tariff' => 'qulay-1']), ['X-Locale' => 'uz'])
+        ->assertOk()
+        ->assertJsonPath('data.features.0.title', '400 daqiqa')
+        ->assertJsonPath('data.descriptions.0.name', 'Batafsil')
+        ->assertJsonPath('data.buttons.0.name', 'Chaqiruv 7*1*1');
+});
+
+it('filters the list by category and type slug', function (): void {
+    $category = TariffCategory::create(['name' => ['ru' => 'CDMA'], 'slug' => 'cdma', 'status' => true]);
+    $type = TariffType::create(['name' => ['ru' => 'Месячные'], 'slug' => 'monthly', 'status' => true]);
+
+    tariff(['category_id' => $category->id, 'type_id' => $type->id]);
+    tariff(['slug' => 'other']);
+
+    $this->getJson(route('api.v1.tariffs.index', ['category' => 'cdma']))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.slug', 'qulay-1');
+
+    $this->getJson(route('api.v1.tariffs.index', ['type' => 'monthly']))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.slug', 'qulay-1');
+});
+
+it('keeps archived tariffs out of the list', function (): void {
+    tariff(['is_archived' => true]);
+
+    $this->getJson(route('api.v1.tariffs.index'))->assertOk()->assertJsonCount(0, 'data');
+    $this->getJson(route('api.v1.tariffs.index', ['archived' => 1]))->assertOk()->assertJsonCount(1, 'data');
+});

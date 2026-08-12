@@ -27,13 +27,13 @@ class TariffResource extends JsonResource
             'price' => $this->price,
             'price_currency' => $this->price_currency,
             'price_period' => $this->price_period,
-            'lead' => $this->lead,
-            'terms' => $this->terms,
-            'features' => $this->features ?? [],
+            'connection_cost' => $this->connection_cost,
+            'features' => $this->rows($this->features, ['title', 'note']),
+            'descriptions' => $this->rows($this->descriptions, ['name', 'content']),
             'image' => $this->imageUrl(),
             'modal_image' => $this->modalImageUrl(),
             'ussd' => $this->ussd,
-            'buttons' => $this->buttonsPayload(),
+            'buttons' => $this->buttonRows(),
             'is_featured' => $this->is_featured,
             'is_archived' => $this->is_archived,
             'category' => CategoryResource::make($this->whenLoaded('category')),
@@ -53,14 +53,34 @@ class TariffResource extends JsonResource
     }
 
     /**
+     * Repeater rows keep one value per locale, so every listed field is
+     * resolved down to the requested one before the row leaves the API.
+     *
+     * @param  array<int, array<string, mixed>>|null  $rows
+     * @param  array<int, string>  $fields
      * @return array<int, array<string, mixed>>
      */
-    private function buttonsPayload(): array
+    private function rows(?array $rows, array $fields): array
     {
-        return collect($this->buttons ?? [])
+        return collect($rows ?? [])
+            ->map(function (array $row) use ($fields): array {
+                foreach ($fields as $field) {
+                    $row[$field] = $this->translate($row[$field] ?? null);
+                }
+
+                return $row;
+            })
+            ->all();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function buttonRows(): array
+    {
+        return collect($this->rows($this->buttons, ['name']))
             ->map(fn (array $button): array => [
                 ...$button,
-                'name' => $this->translate($button['name'] ?? null),
                 'icon' => blank($button['icon'] ?? null)
                     ? null
                     : Storage::disk('public')->url($button['icon']),

@@ -149,6 +149,21 @@ class Fields
             ->searchable();
     }
 
+    /**
+     * The design ships four feature icons and the card layout is built around
+     * them, so the field picks one rather than uploading a fifth.
+     */
+    public static function featureIcon(string $field = 'icon'): Select
+    {
+        return Select::make($field)
+            ->label(__('app.label.icon'))
+            ->helperText(__('app.helper.tariff_feature_icon'))
+            ->options(collect(['phone', 'sms', 'globe', 'speed'])
+                ->mapWithKeys(fn (string $icon): array => [$icon => __("app.feature_icon.{$icon}")])
+                ->all())
+            ->native(false);
+    }
+
     public static function network(string $field = 'network'): Select
     {
         return Select::make($field)

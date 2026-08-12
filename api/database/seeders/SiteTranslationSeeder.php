@@ -81,7 +81,7 @@ class SiteTranslationSeeder extends Seeder
             'tariffs.archive' => ['ru' => 'Архивные тарифы', 'uz' => 'Arxiv tariflar'],
             'common.prev' => ['ru' => 'Назад', 'uz' => 'Orqaga'],
             'common.next' => ['ru' => 'Вперёд', 'uz' => 'Oldinga'],
-            'tariffs.terms' => ['ru' => 'Условия', 'uz' => 'Shartlar'],
+            'tariffs.empty' => ['ru' => 'Тарифы не найдены', 'uz' => 'Tariflar topilmadi'],
             'tariffs.all_tariffs' => ['ru' => 'Список тарифов', 'uz' => 'Tariflar roʻyxati'],
             'tariffs.nav_label' => ['ru' => 'Навигация по тарифам', 'uz' => 'Tariflar boʻyicha navigatsiya'],
             'common.breadcrumbs' => ['ru' => 'Хлебные крошки', 'uz' => 'Yoʻl belgilari'],

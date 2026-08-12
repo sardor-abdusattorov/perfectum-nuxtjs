@@ -1,98 +1,106 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const t = useT()
 const block = useBlock('home', 'tariffs')
-const { open } = useTariffModal()
 
-const tabs = [
-  { key: 'home', label: 'Дом.интернет' },
-  { key: 'mobile', label: 'Мобильная связь' },
-]
+const { data } = await useTariffCatalog()
+const { categories, types, category, type, visible } = useTariffFilter(data)
 
-const chips = ['Все', 'Без покупки роутера', 'Для физических лиц', 'Для юридических лиц']
+const slider = useTemplateRef('slider')
 
-const cards = [
-  { group: 'home', name: 'Asl 5G Start', label: 'Трафик интернета', price: '333 000', period: 'сум/30 дней', feats: ['Безлимит + Роутер', 'до 100 Мбит/сек'] },
-  { group: 'home', name: 'Asl 5G', label: 'Трафик интернета', price: '250 000', period: 'сум/30 дней', feats: ['Безлимит', 'до 1 Гбит/сек'] },
-  { group: 'home', name: 'Asl 5G Pro', label: 'Трафик интернета', price: '363 000', period: 'сум/30 дней', feats: ['Безлимит + Роутер', 'до 200 Мбит/сек'] },
-  { group: 'home', name: 'Biznes 50', label: 'Трафик интернета', price: '280 000', period: 'сум/месяц', feats: ['Безлимит', 'до 50 Мбит/сек'] },
-  { group: 'mobile', name: 'Mobil Start', label: 'Минуты и гигабайты', price: '45 000', period: 'сум/30 дней', feats: ['25 ГБ интернета', '500 минут'] },
-  { group: 'mobile', name: 'Mobil 5G', label: 'Минуты и гигабайты', price: '75 000', period: 'сум/30 дней', feats: ['Безлимит интернет', '1000 минут'] },
-  { group: 'mobile', name: 'Mobil Pro', label: 'Минуты и гигабайты', price: '110 000', period: 'сум/30 дней', feats: ['Безлимит интернет', 'Безлимит минут'] },
-  { group: 'mobile', name: 'Biznes Mobil', label: 'Корпоративный', price: '130 000', period: 'сум/месяц', feats: ['Безлимит', 'до 50 SIM-карт'] },
-]
+useSlider(slider, {
+  slidesPerView: 2,
+  spaceBetween: 24,
+  watchOverflow: true,
+  navigation: {
+    prevEl: '.tariffs .slider-arrow_prev',
+    nextEl: '.tariffs .slider-arrow_next',
+  },
+  breakpoints: {
+    0: { slidesPerView: 1.2, spaceBetween: 12 },
+    768: { slidesPerView: 2, spaceBetween: 16 },
+    1200: { slidesPerView: 3, spaceBetween: 20 },
+    1400: { slidesPerView: 4, spaceBetween: 24 },
+  },
+}, () => visible.value)
 </script>
 
 <template>
   <section class="tariffs">
     <div class="container">
-      <span class="section__eyebrow">{{ block.eyebrow }}</span>
+      <span v-if="block.eyebrow" class="section__eyebrow">{{ block.eyebrow }}</span>
       <h2 class="section__title" v-html="rich(block.title)"></h2>
 
       <div class="tariffs__content">
         <div class="tariffs__controls">
-          <div class="tariffs__tabs">
+          <div class="tariffs__tabs" role="tablist" :aria-label="t('tariffs.categories_label')">
             <button
-              v-for="(tab, index) in tabs"
-              :key="tab.key"
+              v-for="item in categories"
+              :key="item.slug"
               type="button"
               class="tariffs__tab"
-              :class="!index && 'tariffs__tab_active'"
-              :data-tab="tab.key"
-            >{{ tab.label }}</button>
+              :class="item.slug === category && 'tariffs__tab_active'"
+              role="tab"
+              :aria-selected="item.slug === category"
+              @click="category = item.slug"
+            >{{ item.name }}</button>
           </div>
-          <div class="tariffs__chips">
+
+          <div class="tariffs__chips" role="tablist" :aria-label="t('tariffs.types_label')">
             <button
-              v-for="(chip, index) in chips"
-              :key="chip"
               type="button"
               class="tariffs__chip"
-              :class="!index && 'tariffs__chip_active'"
-            >{{ chip }}</button>
+              :class="!type && 'tariffs__chip_active'"
+              role="tab"
+              :aria-selected="!type"
+              @click="type = ''"
+            >{{ t('tariffs.all') }}</button>
+
+            <button
+              v-for="item in types"
+              :key="item.slug"
+              type="button"
+              class="tariffs__chip"
+              :class="item.slug === type && 'tariffs__chip_active'"
+              role="tab"
+              :aria-selected="item.slug === type"
+              @click="type = item.slug"
+            >{{ item.name }}</button>
           </div>
         </div>
 
         <div class="slider-nav" aria-hidden="true">
-          <button type="button" class="slider-arrow slider-arrow_prev" aria-label="Назад">
+          <button type="button" class="slider-arrow slider-arrow_prev" :aria-label="t('common.prev')">
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <button type="button" class="slider-arrow slider-arrow_next" aria-label="Вперёд">
+          <button type="button" class="slider-arrow slider-arrow_next" :aria-label="t('common.next')">
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
         </div>
 
-        <div class="swiper tariffs__swiper">
+        <div ref="slider" class="swiper tariffs__swiper">
           <div class="swiper-wrapper">
-            <div v-for="card in cards" :key="card.name" class="swiper-slide" :data-group="card.group">
+            <div v-for="tariff in visible" :key="tariff.slug" class="swiper-slide">
               <article class="tariffs__card">
                 <div class="tariffs__card-head">
-                  <h3 class="tariffs__name">{{ card.name }}</h3>
-                  <div class="tariffs__label">{{ card.label }}</div>
+                  <h3 class="tariffs__name">{{ tariff.name }}</h3>
+                  <div v-if="tariff.type" class="tariffs__label">{{ tariff.type.name }}</div>
                 </div>
+
                 <div class="tariffs__price">
-                  <span class="tariffs__price-value">{{ card.price }}</span>
-                  <span class="tariffs__price-period">{{ card.period }}</span>
+                  <span class="tariffs__price-value">{{ tariff.price }}</span>
+                  <span class="tariffs__price-period">{{ tariff.price_currency }}/{{ tariff.price_period }}</span>
                 </div>
-                <ul class="tariffs__feats">
-                  <li v-for="feat in card.feats" :key="feat" class="tariffs__feat">{{ feat }}</li>
-                </ul>
-                <button
-                  type="button"
-                  class="tariffs__connect"
-                  @click="open({
-                    name: card.name,
-                    price: card.price,
-                    price_currency: '',
-                    price_period: card.period,
-                    modal_image: null,
-                    ussd: null,
-                    buttons: [],
-                  })"
-                >Подключить</button>
-                <NuxtLink class="tariffs__more" :to="localePath('/tariffs/example')">Подробнее</NuxtLink>
+
+                <TariffFeats class="tariffs__feats" :features="tariff.features" />
+
+                <NuxtLink class="tariffs__connect" :to="localePath(`/tariffs/${tariff.slug}`)">
+                  {{ t('common.read_more') }}
+                </NuxtLink>
               </article>
             </div>
           </div>

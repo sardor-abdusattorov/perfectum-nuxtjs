@@ -28,9 +28,9 @@ class Tariff extends Model
         'price',
         'price_currency',
         'price_period',
-        'lead',
+        'connection_cost',
         'features',
-        'terms',
+        'descriptions',
         'image',
         'modal_image',
         'ussd',
@@ -41,10 +41,11 @@ class Tariff extends Model
         'status',
     ];
 
-    public $translatable = ['name', 'price_currency', 'price_period', 'lead', 'terms'];
+    public $translatable = ['name', 'price_currency', 'price_period', 'connection_cost'];
 
     protected $casts = [
         'features' => 'array',
+        'descriptions' => 'array',
         'buttons' => 'array',
         'is_featured' => 'boolean',
         'is_archived' => 'boolean',

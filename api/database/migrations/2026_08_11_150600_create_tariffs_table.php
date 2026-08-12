@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('price')->nullable();
             $table->json('price_currency')->nullable();
             $table->json('price_period')->nullable();
-            $table->json('lead')->nullable();
+            $table->json('connection_cost')->nullable();
             $table->json('features')->nullable();
-            $table->json('terms')->nullable();
+            $table->json('descriptions')->nullable();
             $table->string('image')->nullable();
             $table->string('modal_image')->nullable();
             $table->string('ussd')->nullable();

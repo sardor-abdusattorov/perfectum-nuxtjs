@@ -8,34 +8,28 @@ const { open } = useTariffModal()
 useSeo({ page: 'tariffs' })
 
 const { data } = await useTariffCatalog()
+const { categories, types, category, type, visible } = useTariffFilter(data)
 
-const categories = computed(() => data.value?.categories ?? [])
-const tariffs = computed(() => data.value?.tariffs ?? [])
+const slider = useTemplateRef('slider')
 
-const category = ref('')
-const type = ref('')
-
-watchEffect(() => {
-  if (!category.value && categories.value.length) {
-    category.value = categories.value[0]!.slug
-  }
-})
-
-const inCategory = computed(() => tariffs.value.filter(item => item.category?.slug === category.value))
-
-const types = computed(() => {
-  const present = new Set(inCategory.value.map(item => item.type?.slug).filter(Boolean))
-
-  return (data.value?.types ?? []).filter(item => present.has(item.slug))
-})
-
-const visible = computed(() => (
-  type.value ? inCategory.value.filter(item => item.type?.slug === type.value) : inCategory.value
-))
-
-watch(category, () => {
-  type.value = ''
-})
+useSlider(slider, {
+  slidesPerView: 'auto',
+  centeredSlides: true,
+  spaceBetween: 12,
+  grabCursor: true,
+  watchOverflow: true,
+  navigation: {
+    prevEl: '.tariffs-list .slider-arrow_prev',
+    nextEl: '.tariffs-list .slider-arrow_next',
+  },
+  breakpoints: {
+    0: { slidesPerView: 1.2, spaceBetween: 12, centeredSlides: false },
+    576: { slidesPerView: 1.6, spaceBetween: 16, centeredSlides: false },
+    992: { slidesPerView: 2, spaceBetween: 20, centeredSlides: false },
+    1200: { slidesPerView: 3, spaceBetween: 24, centeredSlides: false },
+    1700: { slidesPerView: 4, spaceBetween: 24, centeredSlides: false },
+  },
+}, () => visible.value)
 
 function connect(tariff: Tariff): void {
   open({
@@ -110,12 +104,12 @@ function connect(tariff: Tariff): void {
         </button>
       </div>
 
-      <div class="tariffs-list__slider swiper">
+      <div ref="slider" class="tariffs-list__slider swiper">
         <div class="swiper-wrapper">
           <div v-for="tariff in visible" :key="tariff.slug" class="swiper-slide">
             <article class="tariffs-list__card">
-              <div v-if="tariff.type" class="tariffs-list__card-head">
-                <span class="tariffs-list__card-tag"><b>{{ tariff.type.name }}</b></span>
+              <div class="tariffs-list__card-head">
+                <span class="tariffs-list__card-tag"><b>{{ tariff.type?.name ?? '5G' }}</b></span>
               </div>
 
               <div class="tariffs-list__card-body">
@@ -127,19 +121,7 @@ function connect(tariff: Tariff): void {
                   </div>
                 </div>
 
-                <ul v-if="tariff.features.length" class="tariffs-list__feats">
-                  <li
-                    v-for="(feature, index) in tariff.features"
-                    :key="index"
-                    class="tariff-feat"
-                    :class="index === tariff.features.length - 1 && 'tariff-feat_last'"
-                  >
-                    <span v-if="feature.icon" class="tariff-feat__icon">
-                      <img :src="`/images/icon-${feature.icon}.svg`" alt="" loading="lazy" />
-                    </span>
-                    <span class="tariff-feat__text" v-html="rich(feature.title)"></span>
-                  </li>
-                </ul>
+                <TariffFeats class="tariffs-list__feats" :features="tariff.features" />
 
                 <div class="tariffs-list__actions">
                   <button type="button" class="tariffs-list__connect" @click="connect(tariff)">
@@ -151,6 +133,10 @@ function connect(tariff: Tariff): void {
                 </div>
               </div>
             </article>
+          </div>
+
+          <div v-if="!visible.length" class="swiper-slide">
+            <p class="tariffs-list__empty">{{ t('tariffs.empty') }}</p>
           </div>
         </div>
       </div>

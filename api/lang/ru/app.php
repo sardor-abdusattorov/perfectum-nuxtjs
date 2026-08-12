@@ -24,6 +24,8 @@ return [
         'resources' => 'Ресурсы',
     ],
     'label' => [
+        'connection_cost' => 'Стоимость подключения',
+        'tariff_descriptions' => 'Блоки описания',
         'office_single' => 'Точка продаж',
         'office_plural' => 'Офисы и дилеры',
         'office_type' => 'Тип точки',
@@ -225,6 +227,8 @@ return [
     ],
 
     'helper' => [
+        'connection_cost' => 'Показывается в модалке подключения',
+        'tariff_descriptions' => 'Каждый блок — раскрывающийся раздел под карточкой тарифа',
         'office_type' => 'Офис — собственная точка продаж, дилер — партнёрская',
         'office_name' => 'У офисов остаётся пустым, у дилера — обязательно',
         'office_region' => 'По региону точки группируются в списке и на карте',
@@ -395,6 +399,13 @@ return [
         'careers' => 'Вакансии',
         'procurement' => 'Закупки',
         'cdma' => 'CDMA',
+    ],
+
+    'feature_icon' => [
+        'phone' => 'Минуты',
+        'sms' => 'SMS',
+        'globe' => 'Интернет',
+        'speed' => 'Скорость',
     ],
 
     'office_type' => [
