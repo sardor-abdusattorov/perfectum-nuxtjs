@@ -5,7 +5,6 @@ namespace App\Filament\Pages\Homepage;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -41,7 +40,8 @@ class HeroTab extends ContentTab
                                             ->helperText(__('app.helper.hero_title'))
                                             ->extraInputAttributes([
                                                 'style' => 'min-height: 8rem; max-height: 30vh; overflow-y: auto;',
-                                            ]),
+                                            ])
+                                            ->required(),
 
                                         Fields::editor('lead')
                                             ->label(__('app.label.lead_text'))
@@ -74,7 +74,7 @@ class HeroTab extends ContentTab
 
                                         Fields::status(),
                                     ])
-                                    ->itemLabel(Translated::itemLabel('label'))
+                                    ->itemLabel(Fields::itemLabel('label'))
                                     ->defaultItems(0)
                                     ->reorderable()
                                     ->collapsible(),
@@ -95,7 +95,7 @@ class HeroTab extends ContentTab
 
                                 Fields::status(),
                             ])
-                            ->itemLabel(Translated::itemLabel('title'))
+                            ->itemLabel(Fields::itemLabel('title'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

@@ -29,7 +29,8 @@ class TariffsTab extends ContentTab
                                     ->label(__('app.label.eyebrow')),
 
                                 Fields::multiline('tariffs.title')
-                                    ->label(__('app.label.title')),
+                                    ->label(__('app.label.title'))
+                                    ->required(),
                             ]),
                     ]),
 

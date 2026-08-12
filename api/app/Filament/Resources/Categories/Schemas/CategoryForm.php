@@ -6,7 +6,6 @@ use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Enums\Network;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -40,7 +39,7 @@ class CategoryForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
                             ]),

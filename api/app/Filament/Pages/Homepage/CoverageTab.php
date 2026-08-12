@@ -5,7 +5,6 @@ namespace App\Filament\Pages\Homepage;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -28,7 +27,8 @@ class CoverageTab extends ContentTab
                         TranslatableTabs::make('translations')
                             ->schema([
                                 TextInput::make('coverage.title')
-                                    ->label(__('app.label.title')),
+                                    ->label(__('app.label.title'))
+                                    ->required(),
 
                                 Fields::multiline('coverage.subtitle')
                                     ->label(__('app.label.subtitle')),
@@ -58,7 +58,7 @@ class CoverageTab extends ContentTab
 
                                 Fields::status(),
                             ])
-                            ->itemLabel(Translated::itemLabel('name'))
+                            ->itemLabel(Fields::itemLabel('name'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

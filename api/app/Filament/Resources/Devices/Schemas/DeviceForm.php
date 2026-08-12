@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Devices\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -28,7 +27,7 @@ class DeviceForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 

@@ -18,6 +18,21 @@ use Filament\Schemas\Components\Utilities\Set;
 
 class Fields
 {
+    public static function itemLabel(string $field): Closure
+    {
+        return function (array $state) use ($field): ?string {
+            $value = $state[$field] ?? null;
+
+            if (is_array($value)) {
+                $value = collect($value)->first(fn ($item): bool => filled($item));
+            }
+
+            $label = trim(strip_tags((string) $value));
+
+            return $label === '' ? null : $label;
+        };
+    }
+
     public static function slug(string $field = 'slug'): TextInput
     {
         return TextInput::make($field)

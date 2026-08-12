@@ -27,27 +27,25 @@ class HomepageSeeder extends Seeder
             'hero' => [
                 'slides' => [
                     [
-                        'description' => ['ru' => 'Первая 5G SA сеть в центральной Азии', 'uz' => 'Markaziy Osiyodagi birinchi 5G SA tarmogʻi', 'en' => 'The first 5G SA network in Central Asia'],
+                        'description' => ['ru' => 'Первая 5G SA сеть в центральной Азии', 'uz' => 'Markaziy Osiyodagi birinchi 5G SA tarmogʻi'],
                         'title' => [
                             'ru' => 'Скорость которая <span class="hero__title-red">меняет</span> <span class="hero__title-outline">правила</span> игры',
                             'uz' => 'Oʻyin <span class="hero__title-outline">qoidalarini</span> <span class="hero__title-red">oʻzgartiradigan</span> tezlik',
-                            'en' => 'Speed that <span class="hero__title-red">changes</span> the <span class="hero__title-outline">rules</span> of the game',
                         ],
                         'lead' => [
                             'ru' => 'Запуск самостоятельной сети <span>5G Standalone</span> в Узбекистане Скорости до <span>1 Гбит/с</span>, минимальные задержки, новые сценарии для дома и бизнеса',
                             'uz' => 'Oʻzbekistonda mustaqil <span>5G Standalone</span> tarmogʻining ishga tushirilishi. Tezlik <span>1 Gbit/s</span> gacha, minimal kechikishlar, uy va biznes uchun yangi stsenariylar',
-                            'en' => 'The launch of a <span>5G Standalone</span> network in Uzbekistan. Speeds up to <span>1 Gbps</span>, minimal latency, new scenarios for home and business',
                         ],
                         'image' => null,
                         'buttons' => [
                             [
-                                'label' => ['ru' => 'Подключиться', 'uz' => 'Ulanish', 'en' => 'Connect'],
+                                'label' => ['ru' => 'Подключиться', 'uz' => 'Ulanish'],
                                 'url' => '/tariffs',
                                 'style' => 'primary',
                                 'status' => true,
                             ],
                             [
-                                'label' => ['ru' => 'Проверить покрытие', 'uz' => 'Qamrovni tekshirish', 'en' => 'Check coverage'],
+                                'label' => ['ru' => 'Проверить покрытие', 'uz' => 'Qamrovni tekshirish'],
                                 'url' => '/coverage-area',
                                 'style' => 'secondary',
                                 'status' => true,
@@ -64,22 +62,22 @@ class HomepageSeeder extends Seeder
             'marquee' => [
                 'items' => [
                     [
-                        'text' => ['ru' => 'STANDALONE', 'uz' => 'STANDALONE', 'en' => 'STANDALONE'],
+                        'text' => ['ru' => 'STANDALONE', 'uz' => 'STANDALONE'],
                         'image' => null,
                         'status' => true,
                     ],
                     [
-                        'text' => ['ru' => 'VONR', 'uz' => 'VONR', 'en' => 'VONR'],
+                        'text' => ['ru' => 'VONR', 'uz' => 'VONR'],
                         'image' => null,
                         'status' => true,
                     ],
                     [
-                        'text' => ['ru' => 'PERFECTUM', 'uz' => 'PERFECTUM', 'en' => 'PERFECTUM'],
+                        'text' => ['ru' => 'PERFECTUM', 'uz' => 'PERFECTUM'],
                         'image' => null,
                         'status' => true,
                     ],
                     [
-                        'text' => ['ru' => 'БЕСПРОВОДНОЙ ИНТЕРНЕТ', 'uz' => 'SIMSIZ INTERNET', 'en' => 'WIRELESS INTERNET'],
+                        'text' => ['ru' => 'БЕСПРОВОДНОЙ ИНТЕРНЕТ', 'uz' => 'SIMSIZ INTERNET'],
                         'image' => null,
                         'status' => true,
                     ],
@@ -87,51 +85,47 @@ class HomepageSeeder extends Seeder
             ],
 
             'choose' => [
-                'title' => ['ru' => 'Выбери своё', 'uz' => 'Oʻzingnikini tanla', 'en' => 'Choose your own'],
+                'title' => ['ru' => 'Выбери своё', 'uz' => 'Oʻzingnikini tanla'],
                 'link' => [
-                    'label' => ['ru' => 'Все услуги', 'uz' => 'Barcha xizmatlar', 'en' => 'All services'],
+                    'label' => ['ru' => 'Все услуги', 'uz' => 'Barcha xizmatlar'],
                     'url' => '/services',
                 ],
                 'cards' => [
                     [
-                        'category' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa', 'en' => 'Mobile'],
+                        'category' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa'],
                         'name' => [
                             'ru' => '<p>Тариф<br>Perfectum 5G</p>',
                             'uz' => '<p>Perfectum 5G<br>tarifi</p>',
-                            'en' => '<p>Perfectum 5G<br>tariff</p>',
                         ],
                         'url' => '/tariffs',
                         'color' => 'red',
                         'status' => true,
                     ],
                     [
-                        'category' => ['ru' => 'Домой', 'uz' => 'Uyga', 'en' => 'Home'],
+                        'category' => ['ru' => 'Домой', 'uz' => 'Uyga'],
                         'name' => [
                             'ru' => '<p>Беспроводной<br>интернет</p>',
                             'uz' => '<p>Simsiz<br>internet</p>',
-                            'en' => '<p>Wireless<br>internet</p>',
                         ],
                         'url' => '/tariffs',
                         'color' => 'scarlet',
                         'status' => true,
                     ],
                     [
-                        'category' => ['ru' => 'Бизнес', 'uz' => 'Biznes', 'en' => 'Business'],
+                        'category' => ['ru' => 'Бизнес', 'uz' => 'Biznes'],
                         'name' => [
                             'ru' => '<p>5G для<br>компаний</p>',
                             'uz' => '<p>Kompaniyalar<br>uchun 5G</p>',
-                            'en' => '<p>5G for<br>companies</p>',
                         ],
                         'url' => '/tariffs',
                         'color' => 'dark',
                         'status' => true,
                     ],
                     [
-                        'category' => ['ru' => 'Устройства', 'uz' => 'Qurilmalar', 'en' => 'Devices'],
+                        'category' => ['ru' => 'Устройства', 'uz' => 'Qurilmalar'],
                         'name' => [
                             'ru' => '<p>Роутеры<br>и модемы</p>',
                             'uz' => '<p>Routerlar<br>va modemlar</p>',
-                            'en' => '<p>Routers<br>and modems</p>',
                         ],
                         'url' => '/devices',
                         'color' => 'ruby',
@@ -141,65 +135,59 @@ class HomepageSeeder extends Seeder
             ],
 
             'tariffs' => [
-                'eyebrow' => ['ru' => 'Собери свой тариф', 'uz' => 'Oʻz tarifingizni yigʻing', 'en' => 'Build your own tariff'],
+                'eyebrow' => ['ru' => 'Собери свой тариф', 'uz' => 'Oʻz tarifingizni yigʻing'],
                 'title' => [
                     'ru' => '<p>Только то,<br>что нужно тебе</p>',
                     'uz' => '<p>Faqat sizga<br>kerak boʻlgani</p>',
-                    'en' => '<p>Only what<br>you need</p>',
                 ],
             ],
 
             'features' => [
-                'title' => ['ru' => 'Что меняет', 'uz' => 'Nimani oʻzgartiradi', 'en' => 'What changes with'],
-                'title_accent' => ['ru' => '5G SA', 'uz' => '5G SA', 'en' => '5G SA'],
+                'title' => ['ru' => 'Что меняет', 'uz' => 'Nimani oʻzgartiradi'],
+                'title_accent' => ['ru' => '5G SA', 'uz' => '5G SA'],
                 'link' => [
-                    'label' => ['ru' => 'Все возможности', 'uz' => 'Barcha imkoniyatlar', 'en' => 'All features'],
+                    'label' => ['ru' => 'Все возможности', 'uz' => 'Barcha imkoniyatlar'],
                     'url' => '/services',
                 ],
                 'cards' => [
                     [
-                        'tag' => ['ru' => 'Гейминг Стриминг', 'uz' => 'Geyming va striming', 'en' => 'Gaming and streaming'],
+                        'tag' => ['ru' => 'Гейминг Стриминг', 'uz' => 'Geyming va striming'],
                         'title' => [
                             'ru' => '<p>Лаг как<br>понятие<br>исчезает</p>',
                             'uz' => '<p>Lag degan<br>tushuncha<br>yoʻqoladi</p>',
-                            'en' => '<p>Lag as a<br>concept<br>disappears</p>',
                         ],
                         'text' => [
                             'ru' => '<p>Задержка 5 мс делает облачный гейминг<br>неотличимым от локального. Стримы в 4K<br>без буфера — даже в час пик.</p>',
                             'uz' => '<p>5 ms kechikish bulutli geymingni lokal<br>oʻyindan farqlanmas qiladi. 4K oqimlar<br>bufersiz — hatto eng gavjum soatlarda ham.</p>',
-                            'en' => '<p>A 5 ms latency makes cloud gaming<br>indistinguishable from local play. 4K streams<br>with no buffering — even at peak hours.</p>',
                         ],
-                        'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil', 'en' => 'Read more'],
+                        'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
                         'url' => '/services',
                         'style' => 'lag',
                         'status' => true,
                     ],
                     [
-                        'tag' => ['ru' => 'умный дом', 'uz' => 'aqlli uy', 'en' => 'smart home'],
-                        'title' => ['ru' => 'Сотни устройств', 'uz' => 'Yuzlab qurilmalar', 'en' => 'Hundreds of devices'],
+                        'tag' => ['ru' => 'умный дом', 'uz' => 'aqlli uy'],
+                        'title' => ['ru' => 'Сотни устройств', 'uz' => 'Yuzlab qurilmalar'],
                         'text' => [
                             'ru' => 'Один роутер тянет всё: камеры, лампы, датчики, ТВ.',
                             'uz' => 'Bitta router hammasiga yetadi: kameralar, chiroqlar, datchiklar, TV.',
-                            'en' => 'One router handles it all: cameras, lights, sensors, TV.',
                         ],
-                        'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil', 'en' => 'Read more'],
+                        'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
                         'url' => '/devices',
                         'style' => 'smart',
                         'status' => true,
                     ],
                     [
-                        'tag' => ['ru' => 'гейминг', 'uz' => 'geyming', 'en' => 'gaming'],
+                        'tag' => ['ru' => 'гейминг', 'uz' => 'geyming'],
                         'title' => [
                             'ru' => '<p>Интернет<br>без проводов</p>',
                             'uz' => '<p>Simsiz<br>internet</p>',
-                            'en' => '<p>Internet<br>without wires</p>',
                         ],
                         'text' => [
                             'ru' => '<p>Скорости оптоволокна — без копания<br>траншей и ожидания монтажа.</p>',
                             'uz' => '<p>Optik tolali tezliklar — xandaq qazishsiz<br>va oʻrnatishni kutishsiz.</p>',
-                            'en' => '<p>Fibre-optic speeds — with no trenches to dig<br>and no waiting for installation.</p>',
                         ],
-                        'link_label' => ['ru' => 'Заказать', 'uz' => 'Buyurtma berish', 'en' => 'Order now'],
+                        'link_label' => ['ru' => 'Заказать', 'uz' => 'Buyurtma berish'],
                         'url' => '/tariffs',
                         'style' => 'wire',
                         'status' => true,
@@ -208,14 +196,12 @@ class HomepageSeeder extends Seeder
                         'title' => [
                             'ru' => '<p>Преимущества<br>5G Standalone</p>',
                             'uz' => '<p>5G Standalone<br>afzalliklari</p>',
-                            'en' => '<p>Advantages of<br>5G Standalone</p>',
                         ],
                         'text' => [
                             'ru' => '<p>Скорости оптоволокна — без копания<br>траншей и ожидания монтажа.</p>',
                             'uz' => '<p>Optik tolali tezliklar — xandaq qazishsiz<br>va oʻrnatishni kutishsiz.</p>',
-                            'en' => '<p>Fibre-optic speeds — with no trenches to dig<br>and no waiting for installation.</p>',
                         ],
-                        'link_label' => ['ru' => 'Корпоративный отдел', 'uz' => 'Korporativ boʻlim', 'en' => 'Corporate department'],
+                        'link_label' => ['ru' => 'Корпоративный отдел', 'uz' => 'Korporativ boʻlim'],
                         'url' => '/contacts',
                         'style' => 'pro',
                         'status' => true,
@@ -224,9 +210,8 @@ class HomepageSeeder extends Seeder
                 'speed_text' => [
                     'ru' => '<p>Скорость<br>нового уровня</p>',
                     'uz' => '<p>Yangi darajadagi<br>tezlik</p>',
-                    'en' => '<p>A new level<br>of speed</p>',
                 ],
-                'speed_unit' => ['ru' => 'Мбит/с', 'uz' => 'Mbit/s', 'en' => 'Mbps'],
+                'speed_unit' => ['ru' => 'Мбит/с', 'uz' => 'Mbit/s'],
                 'dials' => [
                     [
                         'label' => '5G',
@@ -248,40 +233,39 @@ class HomepageSeeder extends Seeder
             ],
 
             'coverage' => [
-                'title' => ['ru' => 'Где работает', 'uz' => 'Qayerda ishlaydi', 'en' => 'Where it works'],
+                'title' => ['ru' => 'Где работает', 'uz' => 'Qayerda ishlaydi'],
                 'subtitle' => [
                     'ru' => '5G SA уже развёрнут в крупнейших городах. Подключение и расширение покрытия — каждый месяц.',
                     'uz' => '5G SA yirik shaharlarda allaqachon ishga tushirilgan. Ulanish va qamrovni kengaytirish — har oyda.',
-                    'en' => '5G SA is already deployed in the largest cities. Connections and coverage expansion — every month.',
                 ],
                 'cities' => [
                     [
-                        'name' => ['ru' => 'Ташкент', 'uz' => 'Toshkent', 'en' => 'Tashkent'],
-                        'status_text' => ['ru' => 'Полное покрытие', 'uz' => 'Toʻliq qamrov', 'en' => 'Full coverage'],
+                        'name' => ['ru' => 'Ташкент', 'uz' => 'Toshkent'],
+                        'status_text' => ['ru' => 'Полное покрытие', 'uz' => 'Toʻliq qamrov'],
                         'active' => true,
                         'status' => true,
                     ],
                     [
-                        'name' => ['ru' => 'Самарканд', 'uz' => 'Samarqand', 'en' => 'Samarkand'],
-                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada', 'en' => 'Coming soon'],
+                        'name' => ['ru' => 'Самарканд', 'uz' => 'Samarqand'],
+                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada'],
                         'active' => false,
                         'status' => true,
                     ],
                     [
-                        'name' => ['ru' => 'Бухара', 'uz' => 'Buxoro', 'en' => 'Bukhara'],
-                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada', 'en' => 'Coming soon'],
+                        'name' => ['ru' => 'Бухара', 'uz' => 'Buxoro'],
+                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada'],
                         'active' => false,
                         'status' => true,
                     ],
                     [
-                        'name' => ['ru' => 'Наманган', 'uz' => 'Namangan', 'en' => 'Namangan'],
-                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada', 'en' => 'Coming soon'],
+                        'name' => ['ru' => 'Наманган', 'uz' => 'Namangan'],
+                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada'],
                         'active' => false,
                         'status' => true,
                     ],
                     [
-                        'name' => ['ru' => 'Андижан', 'uz' => 'Andijon', 'en' => 'Andijan'],
-                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada', 'en' => 'Coming soon'],
+                        'name' => ['ru' => 'Андижан', 'uz' => 'Andijon'],
+                        'status_text' => ['ru' => 'Скоро', 'uz' => 'Tez orada'],
                         'active' => false,
                         'status' => true,
                     ],
@@ -292,12 +276,10 @@ class HomepageSeeder extends Seeder
                 'title' => [
                     'ru' => '<p>УПРАВЛЯЙ<br>В ОДИН ТАП</p>',
                     'uz' => '<p>BIR TEGINISHDA<br>BOSHQARING</p>',
-                    'en' => '<p>MANAGE<br>IN ONE TAP</p>',
                 ],
                 'description' => [
                     'ru' => '<p>Тариф, остатки, оплата, поддержка — всё<br>в приложении Perfectum. Узбекский,<br>русский, английский.</p>',
                     'uz' => '<p>Tarif, qoldiqlar, toʻlov, qoʻllab-quvvatlash — barchasi<br>Perfectum ilovasida. Oʻzbek,<br>rus, ingliz tillari.</p>',
-                    'en' => '<p>Tariff, balances, payment, support — everything<br>in the Perfectum app. Uzbek,<br>Russian, English.</p>',
                 ],
                 'watermark' => '5G',
             ],

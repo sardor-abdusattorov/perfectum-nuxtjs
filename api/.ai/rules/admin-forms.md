@@ -34,13 +34,14 @@ and the empty-value fallback.
 
 ## Translated fields are required only in ru and uz
 
-Inside `TranslatableTabs`, use `->required(Translated::required())` rather
-than `->required()`. The plain call applies to every locale tab and blocks
-publishing until all three are written, while everything that reads
-translated content already falls back to a filled locale.
+Write a plain `->required()`. `AppServiceProvider::configureTranslatableTabs()`
+passes `modifyFieldsUsing()` to the plugin, which hands it the tab's locale,
+and narrows the requirement to `config('app.required_locales')`. A field that
+did not ask to be required stays optional in every locale.
 
-The list lives in `config('app.required_locales')` — change it there, not in
-the forms.
+Do not parse the locale out of `getStatePath()` — the plugin supplies it.
+The panel-wide hook also keeps the asterisk honest: it shows on the ru and
+uz tabs and not on en, which a per-field closure got wrong for a while.
 
 ## Build a field from `app/Filament/Support`, do not paste one
 
@@ -73,8 +74,7 @@ inside an `<h2>` or a `<p>` without nesting a block element in one.
 | `Tables::statusFilter()` | the published/unpublished `SelectFilter` |
 | `Tables::categoryFilter($type)` | the category filter, scoped the same way |
 | `Tables::actions()` / `::bulkActions()` | view/edit/delete and bulk-delete |
-| `Translated::itemLabel($field)` | a repeater item label from a translated field |
-| `Translated::required()` | per-locale requiredness inside `TranslatableTabs` |
+| `Fields::itemLabel($field)` | a repeater item label from a translated field |
 | `SaveAction::make(self::class)` | the save button of a homepage tab |
 
 `Tables::categoryFilter()` and `Fields::category()` share `Category::options()`, so a

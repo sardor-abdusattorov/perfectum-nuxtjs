@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Tenders\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\TenderState;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -26,13 +25,13 @@ class TenderForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Fields::slug(),

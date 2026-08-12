@@ -25,7 +25,8 @@ class AppPromoTab extends ContentTab
                         TranslatableTabs::make('translations')
                             ->schema([
                                 Fields::multiline('app_promo.title')
-                                    ->label(__('app.label.title')),
+                                    ->label(__('app.label.title'))
+                                    ->required(),
 
                                 Fields::multiline('app_promo.description')
                                     ->label(__('app.label.description')),

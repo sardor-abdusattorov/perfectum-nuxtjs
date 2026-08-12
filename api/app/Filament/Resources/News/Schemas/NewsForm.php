@@ -5,7 +5,6 @@ namespace App\Filament\Resources\News\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -28,7 +27,7 @@ class NewsForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
@@ -39,7 +38,7 @@ class NewsForm
 
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Fields::slug(),

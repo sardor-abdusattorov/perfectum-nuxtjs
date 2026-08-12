@@ -126,3 +126,21 @@ it('seeds every block of the home page', function (): void {
             ->not->toBeEmpty("блок {$key->value} пустой");
     }
 });
+
+it('requires the title in ru and uz but not in en', function (): void {
+    $html = $this->actingAs(homepageAdmin())
+        ->get('/admin/homepage')
+        ->assertOk()
+        ->getContent();
+
+    $marked = function (string $locale) use ($html): bool {
+        $label = strpos($html, "form.app_promo.title.{$locale}-label");
+
+        return $label !== false
+            && str_contains(substr($html, $label, 400), 'fi-fo-field-label-required-mark');
+    };
+
+    expect($marked('ru'))->toBeTrue()
+        ->and($marked('uz'))->toBeTrue()
+        ->and($marked('en'))->toBeFalse();
+});

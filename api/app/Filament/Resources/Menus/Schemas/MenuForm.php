@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Menus\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\MenuLocation;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use App\Models\Menu;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -48,7 +47,7 @@ class MenuForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required(Translated::required()),
+                                    ->required(),
 
                                 TextInput::make('url')
                                     ->label(__('app.label.url'))

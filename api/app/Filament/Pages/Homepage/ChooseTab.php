@@ -5,7 +5,6 @@ namespace App\Filament\Pages\Homepage;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -28,7 +27,8 @@ class ChooseTab extends ContentTab
                         TranslatableTabs::make('translations')
                             ->schema([
                                 TextInput::make('choose.title')
-                                    ->label(__('app.label.title')),
+                                    ->label(__('app.label.title'))
+                                    ->required(),
 
                                 TextInput::make('choose.link.label')
                                     ->label(__('app.label.link_label')),
@@ -51,7 +51,8 @@ class ChooseTab extends ContentTab
                                             ->label(__('app.label.category')),
 
                                         Fields::multiline('name')
-                                            ->label(__('app.label.name')),
+                                            ->label(__('app.label.name'))
+                                            ->required(),
                                     ]),
 
                                 TextInput::make('url')
@@ -68,7 +69,7 @@ class ChooseTab extends ContentTab
 
                                 Fields::status(),
                             ])
-                            ->itemLabel(Translated::itemLabel('name'))
+                            ->itemLabel(Fields::itemLabel('name'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

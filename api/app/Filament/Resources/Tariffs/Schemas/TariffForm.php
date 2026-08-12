@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Tariffs\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -32,7 +31,7 @@ class TariffForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
@@ -86,7 +85,7 @@ class TariffForm
                                             ->helperText(__('app.helper.tariff_feature_note')),
                                     ]),
                             ])
-                            ->itemLabel(Translated::itemLabel('title'))
+                            ->itemLabel(Fields::itemLabel('title'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
@@ -129,7 +128,7 @@ class TariffForm
                                 TextInput::make('url')
                                     ->label(__('app.label.url')),
                             ])
-                            ->itemLabel(Translated::itemLabel('name'))
+                            ->itemLabel(Fields::itemLabel('name'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

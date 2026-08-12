@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Vacancies\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -22,7 +21,7 @@ class VacancyForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
@@ -39,7 +38,7 @@ class VacancyForm
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
                                     ->helperText(__('app.helper.vacancy_content'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Fields::slug(),

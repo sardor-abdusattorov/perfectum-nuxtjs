@@ -26,6 +26,7 @@ use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use BezhanSalleh\LanguageSwitch\Enums\Placement;
 use BezhanSalleh\LanguageSwitch\Enums\PlacementMode;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
+use Filament\Forms\Components\Field;
 use Filament\Support\Facades\FilamentView;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
@@ -165,7 +166,10 @@ class AppServiceProvider extends ServiceProvider
                 ->locales(app_locales())
                 ->addDirectionByLocale()
                 ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLabel: __('app.label.empty'))
-                ->addSetActiveTabThatHasValue();
+                ->addSetActiveTabThatHasValue()
+                ->modifyFieldsUsing(fn (Field $field, string $locale) => $field->required(
+                    $field->isRequired() && in_array($locale, (array) config('app.required_locales'), true)
+                ));
         });
     }
 

@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Actions\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -27,7 +26,7 @@ class ActionForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
@@ -42,7 +41,7 @@ class ActionForm
 
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Fields::slug(),

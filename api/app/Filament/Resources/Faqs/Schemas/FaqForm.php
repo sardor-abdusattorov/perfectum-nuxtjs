@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Faqs\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -25,11 +24,11 @@ class FaqForm
                             ->schema([
                                 TextInput::make('question')
                                     ->label(__('app.label.question'))
-                                    ->required(Translated::required()),
+                                    ->required(),
 
                                 Fields::editor('answer')
                                     ->label(__('app.label.answer'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Fields::sort(),

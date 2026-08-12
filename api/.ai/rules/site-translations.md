@@ -44,3 +44,9 @@ in three places and losing the `mailto:`/`tel:` link.
 A missing translation renders its own key on the page (`footer.address`),
 which is worse than English text. Pass the Russian wording as the second
 argument at every call site.
+
+## Seeders write ru and uz only
+
+English is a supported locale but not seeded copy. Seed `['ru' => …, 'uz' => …]`
+and leave `en` out; the tab stays in the admin so it can be filled later, and
+every reader already falls back to a filled locale.

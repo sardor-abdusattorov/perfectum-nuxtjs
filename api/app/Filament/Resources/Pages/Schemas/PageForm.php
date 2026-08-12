@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Pages\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -24,13 +23,13 @@ class PageForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('app.label.title'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Fields::slug()

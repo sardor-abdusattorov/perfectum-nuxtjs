@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Services\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\CategoryType;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -28,7 +27,7 @@ class ServiceForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required(Translated::required())
+                                    ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
@@ -77,7 +76,7 @@ class ServiceForm
                                             ->label(__('app.label.value')),
                                     ]),
                             ])
-                            ->itemLabel(Translated::itemLabel('label'))
+                            ->itemLabel(Fields::itemLabel('label'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),
@@ -100,7 +99,7 @@ class ServiceForm
                                     ->label(__('app.label.ussd'))
                                     ->helperText(__('app.helper.service_step_code')),
                             ])
-                            ->itemLabel(Translated::itemLabel('text'))
+                            ->itemLabel(Fields::itemLabel('text'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

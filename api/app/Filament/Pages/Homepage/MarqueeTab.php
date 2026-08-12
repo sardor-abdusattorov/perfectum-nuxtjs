@@ -5,7 +5,6 @@ namespace App\Filament\Pages\Homepage;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
 use App\Filament\Support\Fields;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -41,7 +40,7 @@ class MarqueeTab extends ContentTab
 
                                 Fields::status(),
                             ])
-                            ->itemLabel(Translated::itemLabel('text'))
+                            ->itemLabel(Fields::itemLabel('text'))
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible(),

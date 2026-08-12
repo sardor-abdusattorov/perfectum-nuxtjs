@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\SiteTranslations\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use App\Filament\Support\Translated;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -36,7 +35,7 @@ class SiteTranslationForm
                                     ->label(__('app.label.value'))
                                     ->rows(6)
                                     ->helperText(__('app.helper.text_displayed_on_site'))
-                                    ->required(Translated::required()),
+                                    ->required(),
                             ]),
 
                         Toggle::make('is_published')
