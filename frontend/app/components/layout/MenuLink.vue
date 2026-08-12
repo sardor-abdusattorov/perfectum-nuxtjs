@@ -3,7 +3,7 @@ import type { MenuItem } from '~/types/api'
 
 const props = defineProps<{ item: MenuItem, linkClass: string }>()
 
-const { external, to } = useLink(() => props.item.url)
+const { external, to } = useUrl(() => props.item.url)
 </script>
 
 <template>

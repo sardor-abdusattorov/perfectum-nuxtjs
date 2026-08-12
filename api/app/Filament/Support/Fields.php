@@ -11,7 +11,6 @@ use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
@@ -56,12 +55,15 @@ class Fields
             ->default(true);
     }
 
-    public static function multiline(string $field): Textarea
+    public static function multiline(string $field): RichEditor
     {
-        return Textarea::make($field)
+        return RichEditor::make($field)
             ->helperText(__('app.helper.line_breaks'))
-            ->rows(2)
-            ->autosize();
+            ->toolbarButtons([
+                ['bold', 'italic', 'underline', 'strike', 'link'],
+                ['highlight', 'textColor', 'clearFormatting'],
+                ['undo', 'redo'],
+            ]);
     }
 
     public static function editor(string $field): RichEditor

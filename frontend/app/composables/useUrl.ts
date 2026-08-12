@@ -1,6 +1,6 @@
 const EXTERNAL = /^(https?:)?\/\/|^(mailto|tel|sms):/
 
-export function useLink(url: MaybeRefOrGetter<string | null | undefined>) {
+export function useUrl(url: MaybeRefOrGetter<string | null | undefined>) {
   const localePath = useLocalePath()
 
   const raw = computed(() => toValue(url) ?? '')

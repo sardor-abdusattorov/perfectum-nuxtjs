@@ -33,7 +33,7 @@ const cards = computed(() => published(block.value.cards))
               </svg>
             </span>
           </div>
-          <span class="choose__name"><LayoutLines :value="card.name" /></span>
+          <span class="choose__name" v-html="rich(card.name)"></span>
         </LayoutCardLink>
       </div>
     </div>

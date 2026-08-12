@@ -96,9 +96,9 @@ class HomepageSeeder extends Seeder
                     [
                         'category' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa', 'en' => 'Mobile'],
                         'name' => [
-                            'ru' => "Тариф\nPerfectum 5G",
-                            'uz' => "Perfectum 5G\ntarifi",
-                            'en' => "Perfectum 5G\ntariff",
+                            'ru' => '<p>Тариф<br>Perfectum 5G</p>',
+                            'uz' => '<p>Perfectum 5G<br>tarifi</p>',
+                            'en' => '<p>Perfectum 5G<br>tariff</p>',
                         ],
                         'url' => '/tariffs',
                         'color' => 'red',
@@ -107,9 +107,9 @@ class HomepageSeeder extends Seeder
                     [
                         'category' => ['ru' => 'Домой', 'uz' => 'Uyga', 'en' => 'Home'],
                         'name' => [
-                            'ru' => "Беспроводной\nинтернет",
-                            'uz' => "Simsiz\ninternet",
-                            'en' => "Wireless\ninternet",
+                            'ru' => '<p>Беспроводной<br>интернет</p>',
+                            'uz' => '<p>Simsiz<br>internet</p>',
+                            'en' => '<p>Wireless<br>internet</p>',
                         ],
                         'url' => '/tariffs',
                         'color' => 'scarlet',
@@ -118,9 +118,9 @@ class HomepageSeeder extends Seeder
                     [
                         'category' => ['ru' => 'Бизнес', 'uz' => 'Biznes', 'en' => 'Business'],
                         'name' => [
-                            'ru' => "5G для\nкомпаний",
-                            'uz' => "Kompaniyalar\nuchun 5G",
-                            'en' => "5G for\ncompanies",
+                            'ru' => '<p>5G для<br>компаний</p>',
+                            'uz' => '<p>Kompaniyalar<br>uchun 5G</p>',
+                            'en' => '<p>5G for<br>companies</p>',
                         ],
                         'url' => '/tariffs',
                         'color' => 'dark',
@@ -129,9 +129,9 @@ class HomepageSeeder extends Seeder
                     [
                         'category' => ['ru' => 'Устройства', 'uz' => 'Qurilmalar', 'en' => 'Devices'],
                         'name' => [
-                            'ru' => "Роутеры\nи модемы",
-                            'uz' => "Routerlar\nva modemlar",
-                            'en' => "Routers\nand modems",
+                            'ru' => '<p>Роутеры<br>и модемы</p>',
+                            'uz' => '<p>Routerlar<br>va modemlar</p>',
+                            'en' => '<p>Routers<br>and modems</p>',
                         ],
                         'url' => '/devices',
                         'color' => 'ruby',
@@ -143,9 +143,9 @@ class HomepageSeeder extends Seeder
             'tariffs' => [
                 'eyebrow' => ['ru' => 'Собери свой тариф', 'uz' => 'Oʻz tarifingizni yigʻing', 'en' => 'Build your own tariff'],
                 'title' => [
-                    'ru' => "Только то,\nчто нужно тебе",
-                    'uz' => "Faqat sizga\nkerak boʻlgani",
-                    'en' => "Only what\nyou need",
+                    'ru' => '<p>Только то,<br>что нужно тебе</p>',
+                    'uz' => '<p>Faqat sizga<br>kerak boʻlgani</p>',
+                    'en' => '<p>Only what<br>you need</p>',
                 ],
             ],
 
@@ -160,14 +160,14 @@ class HomepageSeeder extends Seeder
                     [
                         'tag' => ['ru' => 'Гейминг Стриминг', 'uz' => 'Geyming va striming', 'en' => 'Gaming and streaming'],
                         'title' => [
-                            'ru' => "Лаг как\nпонятие\nисчезает",
-                            'uz' => "Lag degan\ntushuncha\nyoʻqoladi",
-                            'en' => "Lag as a\nconcept\ndisappears",
+                            'ru' => '<p>Лаг как<br>понятие<br>исчезает</p>',
+                            'uz' => '<p>Lag degan<br>tushuncha<br>yoʻqoladi</p>',
+                            'en' => '<p>Lag as a<br>concept<br>disappears</p>',
                         ],
                         'text' => [
-                            'ru' => "Задержка 5 мс делает облачный гейминг\nнеотличимым от локального. Стримы в 4K\nбез буфера — даже в час пик.",
-                            'uz' => "5 ms kechikish bulutli geymingni lokal\noʻyindan farqlanmas qiladi. 4K oqimlar\nbufersiz — hatto eng gavjum soatlarda ham.",
-                            'en' => "A 5 ms latency makes cloud gaming\nindistinguishable from local play. 4K streams\nwith no buffering — even at peak hours.",
+                            'ru' => '<p>Задержка 5 мс делает облачный гейминг<br>неотличимым от локального. Стримы в 4K<br>без буфера — даже в час пик.</p>',
+                            'uz' => '<p>5 ms kechikish bulutli geymingni lokal<br>oʻyindan farqlanmas qiladi. 4K oqimlar<br>bufersiz — hatto eng gavjum soatlarda ham.</p>',
+                            'en' => '<p>A 5 ms latency makes cloud gaming<br>indistinguishable from local play. 4K streams<br>with no buffering — even at peak hours.</p>',
                         ],
                         'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil', 'en' => 'Read more'],
                         'url' => '/services',
@@ -190,14 +190,14 @@ class HomepageSeeder extends Seeder
                     [
                         'tag' => ['ru' => 'гейминг', 'uz' => 'geyming', 'en' => 'gaming'],
                         'title' => [
-                            'ru' => "Интернет\nбез проводов",
-                            'uz' => "Simsiz\ninternet",
-                            'en' => "Internet\nwithout wires",
+                            'ru' => '<p>Интернет<br>без проводов</p>',
+                            'uz' => '<p>Simsiz<br>internet</p>',
+                            'en' => '<p>Internet<br>without wires</p>',
                         ],
                         'text' => [
-                            'ru' => "Скорости оптоволокна — без копания\nтраншей и ожидания монтажа.",
-                            'uz' => "Optik tolali tezliklar — xandaq qazishsiz\nva oʻrnatishni kutishsiz.",
-                            'en' => "Fibre-optic speeds — with no trenches to dig\nand no waiting for installation.",
+                            'ru' => '<p>Скорости оптоволокна — без копания<br>траншей и ожидания монтажа.</p>',
+                            'uz' => '<p>Optik tolali tezliklar — xandaq qazishsiz<br>va oʻrnatishni kutishsiz.</p>',
+                            'en' => '<p>Fibre-optic speeds — with no trenches to dig<br>and no waiting for installation.</p>',
                         ],
                         'link_label' => ['ru' => 'Заказать', 'uz' => 'Buyurtma berish', 'en' => 'Order now'],
                         'url' => '/tariffs',
@@ -206,14 +206,14 @@ class HomepageSeeder extends Seeder
                     ],
                     [
                         'title' => [
-                            'ru' => "Преимущества\n5G Standalone",
-                            'uz' => "5G Standalone\nafzalliklari",
-                            'en' => "Advantages of\n5G Standalone",
+                            'ru' => '<p>Преимущества<br>5G Standalone</p>',
+                            'uz' => '<p>5G Standalone<br>afzalliklari</p>',
+                            'en' => '<p>Advantages of<br>5G Standalone</p>',
                         ],
                         'text' => [
-                            'ru' => "Скорости оптоволокна — без копания\nтраншей и ожидания монтажа.",
-                            'uz' => "Optik tolali tezliklar — xandaq qazishsiz\nva oʻrnatishni kutishsiz.",
-                            'en' => "Fibre-optic speeds — with no trenches to dig\nand no waiting for installation.",
+                            'ru' => '<p>Скорости оптоволокна — без копания<br>траншей и ожидания монтажа.</p>',
+                            'uz' => '<p>Optik tolali tezliklar — xandaq qazishsiz<br>va oʻrnatishni kutishsiz.</p>',
+                            'en' => '<p>Fibre-optic speeds — with no trenches to dig<br>and no waiting for installation.</p>',
                         ],
                         'link_label' => ['ru' => 'Корпоративный отдел', 'uz' => 'Korporativ boʻlim', 'en' => 'Corporate department'],
                         'url' => '/contacts',
@@ -222,9 +222,9 @@ class HomepageSeeder extends Seeder
                     ],
                 ],
                 'speed_text' => [
-                    'ru' => "Скорость\nнового уровня",
-                    'uz' => "Yangi darajadagi\ntezlik",
-                    'en' => "A new level\nof speed",
+                    'ru' => '<p>Скорость<br>нового уровня</p>',
+                    'uz' => '<p>Yangi darajadagi<br>tezlik</p>',
+                    'en' => '<p>A new level<br>of speed</p>',
                 ],
                 'speed_unit' => ['ru' => 'Мбит/с', 'uz' => 'Mbit/s', 'en' => 'Mbps'],
                 'dials' => [
@@ -290,14 +290,14 @@ class HomepageSeeder extends Seeder
 
             'app_promo' => [
                 'title' => [
-                    'ru' => "УПРАВЛЯЙ\nВ ОДИН ТАП",
-                    'uz' => "BIR TEGINISHDA\nBOSHQARING",
-                    'en' => "MANAGE\nIN ONE TAP",
+                    'ru' => '<p>УПРАВЛЯЙ<br>В ОДИН ТАП</p>',
+                    'uz' => '<p>BIR TEGINISHDA<br>BOSHQARING</p>',
+                    'en' => '<p>MANAGE<br>IN ONE TAP</p>',
                 ],
                 'description' => [
-                    'ru' => "Тариф, остатки, оплата, поддержка — всё\nв приложении Perfectum. Узбекский,\nрусский, английский.",
-                    'uz' => "Tarif, qoldiqlar, toʻlov, qoʻllab-quvvatlash — barchasi\nPerfectum ilovasida. Oʻzbek,\nrus, ingliz tillari.",
-                    'en' => "Tariff, balances, payment, support — everything\nin the Perfectum app. Uzbek,\nRussian, English.",
+                    'ru' => '<p>Тариф, остатки, оплата, поддержка — всё<br>в приложении Perfectum. Узбекский,<br>русский, английский.</p>',
+                    'uz' => '<p>Tarif, qoldiqlar, toʻlov, qoʻllab-quvvatlash — barchasi<br>Perfectum ilovasida. Oʻzbek,<br>rus, ingliz tillari.</p>',
+                    'en' => '<p>Tariff, balances, payment, support — everything<br>in the Perfectum app. Uzbek,<br>Russian, English.</p>',
                 ],
                 'watermark' => '5G',
             ],

@@ -10,9 +10,9 @@ const t = useT()
     <div class="container">
       <div class="app-promo__wrapper">
         <div class="app-promo__content">
-          <h2 class="app-promo__title section__title"><LayoutLines :value="block.title" /></h2>
+          <h2 class="app-promo__title section__title" v-html="rich(block.title)"></h2>
           <div class="app-promo__description">
-            <p><LayoutLines :value="block.description" /></p>
+            <p v-html="rich(block.description)"></p>
           </div>
           <div v-if="stores.length" class="app-promo__stores">
             <a

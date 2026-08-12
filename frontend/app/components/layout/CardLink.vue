@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{ url?: string | null }>()
 
-const { external, to } = useLink(() => props.url)
+const { external, to } = useUrl(() => props.url)
 </script>
 
 <template>

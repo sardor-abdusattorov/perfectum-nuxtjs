@@ -26,7 +26,3 @@ export function published(items: unknown): Block[] {
 
   return items.filter(item => item && typeof item === 'object' && (item as Block).status !== false)
 }
-
-export function lines(value: unknown): string[] {
-  return String(value ?? '').split('\n').map(line => line.trim()).filter(Boolean)
-}

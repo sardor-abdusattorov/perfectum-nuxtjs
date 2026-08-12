@@ -49,18 +49,23 @@ Three classes hold every repeated fragment — `Fields` for form inputs,
 rules. Add a method to one of them rather than a new file: the folder was
 sixteen one-method classes and became unreadable.
 
-`Fields::multiline()` is a plain `Textarea`, not an editor, on purpose. Its
-value is rendered by `LayoutLines` as escaped text with `<br>` between
-lines, so a heading stays a heading. `Fields::editor()` produces HTML and
-belongs only on `content` fields the frontend prints with `v-html`.
+Both editors are `RichEditor`; they differ in reach.
+`Fields::multiline()` has no file uploads and no block buttons — inline
+marks only — for headings and leads where the editor mostly supplies a
+manual line break. `Fields::editor()` adds headings, lists, tables and
+attachments, and belongs on `content`.
+
+Everything either one produces is HTML, so the frontend prints it with
+`v-html="rich(value)"`. `rich()` unwraps a lone `<p>` so the value can sit
+inside an `<h2>` or a `<p>` without nesting a block element in one.
 
 | Helper | Replaces |
 | --- | --- |
 | `Fields::slug()` / `::slugPreview()` | the slug field and its live preview |
 | `Fields::sort()` | the `sort` number input |
 | `Fields::status()` | the publish switch on a form or repeater item |
-| `Fields::multiline()` | plain text whose newlines become `<br>` on the site |
-| `Fields::editor()` | the RichEditor with attachments wired up |
+| `Fields::multiline()` | inline-only editor for headings and leads |
+| `Fields::editor()` | the full editor, with attachments, for `content` |
 | `Fields::image()` | the image upload with the crop editor |
 | `Fields::icon()` | the social-network icon picker |
 | `Fields::category($type)` | a category picker scoped to one `CategoryType` |

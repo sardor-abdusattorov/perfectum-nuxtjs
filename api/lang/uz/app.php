@@ -202,7 +202,7 @@ return [
         'page_slug' => 'Lotin harflarida — manzil shundan yigʻiladi: /pages/cookie-policy',
         'page_seo' => 'Boʻsh qoldirilsa — asosiy sozlamalardagi qiymatlar olinadi',
         'if_disabled_not_shown' => 'Oʻchirilgan boʻlsa — saytda koʻrsatilmaydi',
-        'line_breaks' => 'Har bir yangi qator saytda ham yangi qatordan boshlanadi',
+        'line_breaks' => 'Enter — yangi xatboshi, Shift+Enter — qator koʻchirish',
         'hero_slides' => 'Slaydlar karusel boʻlib aylanadi, tartibini surib oʻzgartirish mumkin',
         'show_aside' => 'Telefondan oʻngdagi matn va doʻkon tugmalari, mobilda — telefon ostida',
         'show_gauge' => 'Telefon rasmi ustidagi spidometr',

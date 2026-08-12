@@ -24,9 +24,9 @@ const dials = computed(() => published(block.value.dials))
         >
           <span v-if="card.tag" class="features__tag">{{ card.tag }}</span>
           <div class="features__card-content">
-            <h3 class="features__card-title"><LayoutLines :value="card.title" /></h3>
+            <h3 class="features__card-title" v-html="rich(card.title)"></h3>
             <div class="features__text">
-              <p><LayoutLines :value="card.text" /></p>
+              <p v-html="rich(card.text)"></p>
             </div>
             <div v-if="card.link_label" class="features__link arrow-link">{{ card.link_label }}</div>
           </div>
@@ -37,7 +37,7 @@ const dials = computed(() => published(block.value.dials))
 
       <div v-if="dials.length" class="features__speed">
         <template v-for="(dial, index) in dials" :key="index">
-          <div v-if="index" class="features__mid"><LayoutLines :value="block.speed_text" /></div>
+          <div v-if="index" class="features__mid" v-html="rich(block.speed_text)"></div>
           <div
             class="features__dial"
             :class="dial.color && `features__dial_${dial.color}`"

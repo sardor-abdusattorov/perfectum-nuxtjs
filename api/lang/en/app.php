@@ -202,7 +202,7 @@ return [
         'page_slug' => 'Latin letters — the address is built from it: /pages/cookie-policy',
         'page_seo' => 'Leave empty and the values from the main settings are used',
         'if_disabled_not_shown' => 'If disabled — not shown on the site',
-        'line_breaks' => 'Every new line becomes a line break on the site',
+        'line_breaks' => 'Enter starts a paragraph, Shift+Enter breaks the line',
         'hero_slides' => 'Slides rotate as a carousel, drag to reorder them',
         'show_aside' => 'The text beside the phone and the store buttons, below the phone on mobile',
         'show_gauge' => 'The speedometer over the phone image',

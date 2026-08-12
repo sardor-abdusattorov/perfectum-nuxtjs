@@ -25,7 +25,7 @@ const cards = [
   <section class="tariffs">
     <div class="container">
       <span class="section__eyebrow">{{ block.eyebrow }}</span>
-      <h2 class="section__title"><LayoutLines :value="block.title" /></h2>
+      <h2 class="section__title" v-html="rich(block.title)"></h2>
 
       <div class="tariffs__content">
         <div class="tariffs__controls">
