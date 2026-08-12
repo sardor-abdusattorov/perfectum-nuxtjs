@@ -24,6 +24,7 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'department' => 'Departament',
         'faq_featured' => '«Yordam»da koʻrsatish',
         'meta_title' => 'Meta sarlavha',
         'meta_description' => 'Meta tavsif',

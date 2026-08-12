@@ -1,67 +1,51 @@
 <script setup lang="ts">
+const route = useRoute()
 const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.tender' })
+const t = useT()
+
+const slug = computed(() => String(route.params.slug ?? ''))
+const { data: item } = await useTenderItem(slug)
+
+if (!item.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Not Found', fatal: true })
+}
+
+useSeo({ title: () => item.value?.title ?? '' })
 </script>
 
 <template>
-  <!-- TENDER DETAIL -->
-  <section class="article">
-      <div class="container">
-          <div class="article__inner">
-              <div class="article__topline">
-                  <NuxtLink class="article__back" :to="localePath('/procurement')">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true">
-                          <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8"
-                              stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                      Назад к закупкам
-                  </NuxtLink>
-                  <span class="article__cat article__cat_red">Открыт</span>
-              </div>
+  <section v-if="item" class="article">
+    <div class="container">
+      <div class="article__inner">
+        <div class="article__topline">
+          <NuxtLink class="article__back" :to="localePath('/procurement')">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ t('procurement.back') }}
+          </NuxtLink>
+          <span class="article__cat article__cat_red">{{ t(`procurement.state_${item.state}`) }}</span>
+        </div>
 
-              <h1 class="article__title">Конкурс по выбору поставщика сплит кондиционеров мощностью 18000 BTU Low</h1>
-              <p class="article__date">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor"
-                          stroke-width="1.7" />
-                      <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7"
-                          stroke-linecap="round" />
-                  </svg>
-                  02.06.2026
-              </p>
+        <h1 class="article__title">{{ item.title }}</h1>
+        <p v-if="item.deadline_at" class="article__date">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3.875 8.46875H19.625M5.91071 2V3.68771M17.375 2V3.6875M17.375 3.6875H6.125C4.26104 3.6875 2.75 5.19854 2.75 7.0625V18.3126C2.75 20.1766 4.26104 21.6876 6.125 21.6876H17.375C19.239 21.6876 20.75 20.1766 20.75 18.3126L20.75 7.0625C20.75 5.19854 19.239 3.6875 17.375 3.6875ZM6.6875 12.4063H16.8125M6.6875 16.9063H16.8125" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          {{ t('procurement.deadline') }} {{ dateShort(item.deadline_at) }}
+        </p>
 
-              <div class="article__body">
-                  <p>ООО «RWC» (торговая марка Perfectum) объявляет конкурс по выбору поставщика сплит
-                      кондиционеров мощностью 18000 BTU Low для офисов продаж и технических помещений
-                      компании.</p>
+        <div class="article__body" v-html="item.content"></div>
 
-                  <h2 class="article__subtitle">Предмет закупки</h2>
-                  <p>Поставка, доставка и пусконаладка сплит-систем в количестве и по адресам, указанным в
-                      техническом задании. Оборудование должно быть новым, не бывшим в эксплуатации, с
-                      действующей гарантией производителя.</p>
-
-                  <h2 class="article__subtitle">Требования к участникам</h2>
-                  <p>К участию допускаются юридические лица и индивидуальные предприниматели,
-                      зарегистрированные в Республике Узбекистан, не находящиеся в процессе ликвидации и не
-                      имеющие задолженности по налогам и обязательным платежам.</p>
-
-                  <h2 class="article__subtitle">Порядок подачи заявок</h2>
-                  <p>Коммерческие предложения принимаются в электронном виде на адрес
-                      <a href="mailto:info@perfectum.uz">info@perfectum.uz</a> с пометкой «Конкурс на поставку
-                      кондиционеров». К предложению прилагаются учредительные документы, прайс-лист и
-                      гарантийные условия.</p>
-
-                  <div class="callout">
-                      <p>Приём заявок открыт до 31.07.2026 включительно. Организатор вправе запросить у
-                          участника дополнительные документы и уточнения по предложению.</p>
-                  </div>
-
-                  <h2 class="article__subtitle">Контакты организатора</h2>
-                  <p>По вопросам участия — отдел закупок: <a href="tel:+998981270077">+998 98 127 0077</a>,
-                      <a href="mailto:info@perfectum.uz">info@perfectum.uz</a>.</p>
-              </div>
-          </div>
+        <div v-if="item.files.length" class="article__body">
+          <h2>{{ t('procurement.files') }}</h2>
+          <ul>
+            <li v-for="file in item.files" :key="file">
+              <a :href="file" target="_blank" rel="noopener">{{ file.split('/').pop() }}</a>
+            </li>
+          </ul>
+        </div>
       </div>
+    </div>
   </section>
 </template>

@@ -5335,6 +5335,39 @@ body.overflow__hidden {
   color: rgba(0, 0, 0, 0.75);
 }
 
+.article__body h2,
+.article__card h2,
+.vacancy .vacancy__section h2 {
+  margin: 28px 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.article__body ul,
+.article__card ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.article__body blockquote {
+  position: relative;
+  max-width: 1020px;
+  margin: 16px 0;
+  padding: 16px 20px 16px 37px;
+  background: rgba(236, 236, 236, 0.44);
+  border-left: 3px solid var(--color-red);
+  border-radius: var(--radius);
+}
+
+.vacancy .vacancy__section ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+  margin-bottom: 22px;
+}
+
 .article__subtitle {
   margin: 28px 0 16px;
   font-size: 18px;

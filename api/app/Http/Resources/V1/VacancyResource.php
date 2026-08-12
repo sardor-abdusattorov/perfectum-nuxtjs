@@ -23,6 +23,7 @@ class VacancyResource extends JsonResource
         return [
             'slug' => $this->slug,
             'title' => $this->title,
+            'department' => $this->department,
             'city' => $this->city,
             'employment' => $this->employment,
             'salary' => $this->salary,

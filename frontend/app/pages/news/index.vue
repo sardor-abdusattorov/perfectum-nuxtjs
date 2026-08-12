@@ -1,160 +1,129 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.news' })
+const t = useT()
+
+useSeo({ page: 'news', titleKey: 'seo.news' })
+
+const category = ref('')
+const search = ref('')
+const page = ref(1)
+
+const { data } = await useNewsList({ network: '5g', category, search, page }, true)
+
+const items = computed(() => data.value?.items ?? [])
+const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1, total: 0 })
+const categories = computed(() => data.value?.categories ?? [])
+
+const featured = computed(() => (
+  page.value === 1 && !search.value && !category.value
+    ? items.value.find(item => item.is_featured) ?? null
+    : null
+))
+
+const rest = computed(() => items.value.filter(item => item !== featured.value))
+
+watch([category, search], () => {
+  page.value = 1
+})
 </script>
 
 <template>
-  <!-- PAGE HERO -->
   <section class="page-hero page-hero_inner page-hero_news">
-      <div class="container">
-          <div class="page-hero__inner">
-              <nav class="page-hero__crumbs" aria-label="Хлебные крошки">
-                  <NuxtLink class="page-hero__crumb" :to="localePath('/')">Главная</NuxtLink>
-                  <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                      fill="none" aria-hidden="true">
-                      <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
-                          stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">Новости</span>
-              </nav>
-              <h1 class="page-hero__title section__title">Новости <span
-                      class="page-hero__title-red">Perfectum</span></h1>
-          </div>
+    <div class="container">
+      <div class="page-hero__inner">
+        <nav class="page-hero__crumbs" :aria-label="t('common.breadcrumbs')">
+          <NuxtLink class="page-hero__crumb" :to="localePath('/')">{{ t('common.home') }}</NuxtLink>
+          <svg class="page-hero__crumb-sep" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">{{ t('seo.news') }}</span>
+        </nav>
+        <h1 class="page-hero__title section__title" v-html="rich(t('news.title'), { accent: 'page-hero__title-red' })"></h1>
       </div>
+    </div>
   </section>
 
-  <!-- NEWS -->
   <section class="news">
-      <div class="container">
-          <div class="filter-search">
-              <div class="filter-search__field">
-                  <input type="search" class="filter-search__input" placeholder="Поиск по новостям…"
-                      aria-label="Поиск по новостям" />
-                  <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none"
-                      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-                      <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8"
-                          stroke-linecap="round" />
-                  </svg>
-              </div>
-              <div class="filter-search__chips" role="tablist" aria-label="Категории новостей">
-                  <button type="button" class="filter-search__chip filter-search__chip_active" role="tab" aria-selected="true">Все <span class="filter-search__chip-count">22</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Развитие сети <span class="filter-search__chip-count">3</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Компания <span class="filter-search__chip-count">3</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Продукты и услуги <span class="filter-search__chip-count">3</span></button>
-              </div>
-          </div>
-
-          <article class="news-feature">
-              <div class="news-feature__media">
-                  <span class="news-feature__cat">Развитие сети</span>
-                  <h2 class="news-feature__title">Perfectum запустил 5G Standalone в Андижане</h2>
-              </div>
-              <div class="news-feature__body">
-                  <span class="news-feature__date">20.06.2026</span>
-                  <p class="news-feature__text">Сеть пятого поколения стала доступна жителям Андижана — это уже
-                      пятый город с покрытием 5G SA.</p>
-                  <NuxtLink class="news-feature__link" :to="localePath('/news/example')">Читать полностью <svg viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 1l7 7-7 7M19 8H1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></NuxtLink>
-              </div>
-          </article>
-
-          <div class="section-head">
-              <h2 class="section-head__title">Все новости</h2>
-              <span class="section-head__count">6 новостей</span>
-          </div>
-
-          <ul class="news-grid">
-              <li class="news-card">
-                  <NuxtLink class="news-card__link" :to="localePath('/news/example')">
-                      <div class="news-card__media">
-                          <span class="news-card__cat">Продукты и услуги</span>
-                      </div>
-                      <div class="news-card__body">
-                          <h3 class="news-card__title">В приложении Perfectum появилось оформление eSIM</h3>
-                          <p class="news-card__text">Теперь цифровую SIM-карту можно оформить полностью онлайн — без визита в офис продаж.</p>
-                          <div class="news-card__foot"><span class="news-card__date">до 31.07.2026</span><span class="news-card__more">Читать полностью<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="news-card">
-                  <NuxtLink class="news-card__link" :to="localePath('/news/example')">
-                      <div class="news-card__media">
-                          <span class="news-card__cat">Компания</span>
-                      </div>
-                      <div class="news-card__body">
-                          <h3 class="news-card__title">Perfectum подвёл итоги 2025 года</h3>
-                          <p class="news-card__text">Рост абонентской базы, расширение сети и запуск новых тарифов — главные итоги прошедшего года.</p>
-                          <div class="news-card__foot"><span class="news-card__date">до 31.07.2026</span><span class="news-card__more">Читать полностью<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="news-card">
-                  <NuxtLink class="news-card__link" :to="localePath('/news/example')">
-                      <div class="news-card__media">
-                          <span class="news-card__cat">Продукты и услуги</span>
-                      </div>
-                      <div class="news-card__body">
-                          <h3 class="news-card__title">Новый тариф «A&#39;lo 5G Max» с безлимитным интернетом</h3>
-                          <p class="news-card__text">Безлимитный мобильный интернет на скорости 5G SA — для тех, кто много работает онлайн.</p>
-                          <div class="news-card__foot"><span class="news-card__date">до 31.07.2026</span><span class="news-card__more">Читать полностью<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="news-card">
-                  <NuxtLink class="news-card__link" :to="localePath('/news/example')">
-                      <div class="news-card__media">
-                          <span class="news-card__cat">Продукты и услуги</span>
-                      </div>
-                      <div class="news-card__body">
-                          <h3 class="news-card__title">В приложении Perfectum появилось оформление eSIM</h3>
-                          <p class="news-card__text">Теперь цифровую SIM-карту можно оформить полностью онлайн — без визита в офис продаж.</p>
-                          <div class="news-card__foot"><span class="news-card__date">до 31.07.2026</span><span class="news-card__more">Читать полностью<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="news-card">
-                  <NuxtLink class="news-card__link" :to="localePath('/news/example')">
-                      <div class="news-card__media">
-                          <span class="news-card__cat">Компания</span>
-                      </div>
-                      <div class="news-card__body">
-                          <h3 class="news-card__title">Perfectum подвёл итоги 2025 года</h3>
-                          <p class="news-card__text">Рост абонентской базы, расширение сети и запуск новых тарифов — главные итоги прошедшего года.</p>
-                          <div class="news-card__foot"><span class="news-card__date">до 31.07.2026</span><span class="news-card__more">Читать полностью<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="news-card">
-                  <NuxtLink class="news-card__link" :to="localePath('/news/example')">
-                      <div class="news-card__media">
-                          <span class="news-card__cat">Продукты и услуги</span>
-                      </div>
-                      <div class="news-card__body">
-                          <h3 class="news-card__title">Новый тариф «A&#39;lo 5G Max» с безлимитным интернетом</h3>
-                          <p class="news-card__text">Безлимитный мобильный интернет на скорости 5G SA — для тех, кто много работает онлайн.</p>
-                          <div class="news-card__foot"><span class="news-card__date">до 31.07.2026</span><span class="news-card__more">Читать полностью<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-                      </div>
-                  </NuxtLink>
-              </li>
-          </ul>
-
-          <nav class="pagination" aria-label="Пагинация">
-              <a class="pagination__arrow" href="#" aria-label="Назад">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </a>
-              <div class="pagination__pages">
-                  <a class="pagination__page" href="#">1</a>
-                  <a class="pagination__page pagination__page_active" href="#" aria-current="page">2</a>
-                  <a class="pagination__page" href="#">3</a>
-                  <a class="pagination__page" href="#">4</a>
-                  <a class="pagination__page" href="#">5</a>
-                  <a class="pagination__page" href="#">6</a>
-                  <span class="pagination__page">…</span>
-              </div>
-              <a class="pagination__arrow" href="#" aria-label="Вперёд">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </a>
-          </nav>
+    <div class="container">
+      <div class="filter-search">
+        <div class="filter-search__field">
+          <input
+            v-model.trim="search"
+            type="search"
+            class="filter-search__input"
+            :placeholder="t('news.search_placeholder')"
+            :aria-label="t('news.search_label')"
+          />
+          <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="filter-search__chips" role="tablist" :aria-label="t('news.categories_label')">
+          <button
+            type="button"
+            class="filter-search__chip"
+            :class="!category && 'filter-search__chip_active'"
+            role="tab"
+            :aria-selected="!category"
+            @click="category = ''"
+          >{{ t('news.all') }}</button>
+          <button
+            v-for="item in categories"
+            :key="item.slug"
+            type="button"
+            class="filter-search__chip"
+            :class="item.slug === category && 'filter-search__chip_active'"
+            role="tab"
+            :aria-selected="item.slug === category"
+            @click="category = item.slug"
+          >{{ item.name }}</button>
+        </div>
       </div>
+
+      <article v-if="featured" class="news-feature">
+        <div class="news-feature__media">
+          <span v-if="featured.category" class="news-feature__cat">{{ featured.category.name }}</span>
+          <h2 class="news-feature__title">{{ featured.title }}</h2>
+        </div>
+        <div class="news-feature__body">
+          <span class="news-feature__date">{{ dateShort(featured.published_at) }}</span>
+          <p class="news-feature__text">{{ featured.excerpt }}</p>
+          <NuxtLink class="news-feature__link" :to="localePath(`/news/${featured.slug}`)">
+            {{ t('news.read_full') }}
+            <svg viewBox="0 0 20 16" fill="none" aria-hidden="true"><path d="M12 1l7 7-7 7M19 8H1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </NuxtLink>
+        </div>
+      </article>
+
+      <div class="section-head">
+        <h2 class="section-head__title">{{ t('news.all_title') }}</h2>
+        <span class="section-head__count">{{ meta.total }}</span>
+      </div>
+
+      <ul v-if="rest.length" class="news-grid">
+        <li v-for="item in rest" :key="item.slug" class="news-card">
+          <NuxtLink class="news-card__link" :to="localePath(`/news/${item.slug}`)">
+            <div class="news-card__media">
+              <span v-if="item.category" class="news-card__cat">{{ item.category.name }}</span>
+            </div>
+            <div class="news-card__body">
+              <h3 class="news-card__title">{{ item.title }}</h3>
+              <p class="news-card__text">{{ item.excerpt }}</p>
+              <div class="news-card__foot">
+                <span class="news-card__date">{{ dateShort(item.published_at) }}</span>
+                <span class="news-card__more">
+                  {{ t('news.read_full') }}
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </div>
+            </div>
+          </NuxtLink>
+        </li>
+      </ul>
+      <p v-else-if="!featured" class="news__empty">{{ t('news.empty') }}</p>
+
+      <AppPagination :page="meta.current_page" :pages="meta.last_page" @change="page = $event" />
+    </div>
   </section>
 </template>

@@ -24,6 +24,7 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'department' => 'Department',
         'faq_featured' => 'Show on the Help page',
         'meta_title' => 'Meta title',
         'meta_description' => 'Meta description',

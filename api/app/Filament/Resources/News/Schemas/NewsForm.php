@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\News\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use App\Enums\Network;
 use App\Filament\Support\Fields;
 use App\Models\NewsCategory;
 use Filament\Forms\Components\DateTimePicker;
@@ -10,6 +11,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class NewsForm
@@ -21,7 +23,13 @@ class NewsForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(NewsCategory::class),
+                        Fields::network()
+                            ->options(collect(Network::getOptions())->except(Network::Both->value)->all())
+                            ->default(Network::FiveG->value)
+                            ->live(),
+
+                        Fields::category(NewsCategory::class)
+                            ->visible(fn (Get $get): bool => $get('network') !== Network::Cdma->value),
 
                         TranslatableTabs::make('translations')
                             ->schema([

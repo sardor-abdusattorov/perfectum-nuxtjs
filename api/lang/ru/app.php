@@ -24,6 +24,7 @@ return [
         'resources' => 'Ресурсы',
     ],
     'label' => [
+        'department' => 'Департамент',
         'faq_featured' => 'Показывать в «Помощи»',
         'meta_title' => 'Meta-заголовок',
         'meta_description' => 'Meta-описание',

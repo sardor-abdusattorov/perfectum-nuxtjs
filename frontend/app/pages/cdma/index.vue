@@ -6,8 +6,42 @@ definePageMeta({ layout: 'cdma' })
 useSeo({ page: 'cdma', titleKey: 'seo.cdma' })
 
 const { data: faqData } = await useFaqs({ network: 'cdma' })
+const { data: newsData } = await useNewsList({ network: 'cdma', perPage: 24 })
+const { data: actionsData } = await useActionsList({ network: 'cdma', perPage: 12 })
 
 const faqs = computed(() => faqData.value?.faqs ?? [])
+const { locale } = useI18n()
+
+const newsYear = ref('')
+const newsMonth = ref('')
+
+const allNews = computed(() => newsData.value?.items ?? [])
+
+const newsYears = computed(() => [...new Set(allNews.value.map(item => item.published_at?.slice(0, 4)).filter(Boolean))] as string[])
+
+const newsMonths = computed(() => [...new Set(
+  allNews.value
+    .filter(item => !newsYear.value || item.published_at?.startsWith(newsYear.value))
+    .map(item => item.published_at?.slice(5, 7))
+    .filter(Boolean),
+)] as string[])
+
+const news = computed(() => allNews.value.filter(item => (
+  (!newsYear.value || item.published_at?.startsWith(newsYear.value))
+  && (!newsMonth.value || item.published_at?.slice(5, 7) === newsMonth.value)
+)))
+
+watch(newsYear, () => {
+  newsMonth.value = ''
+})
+
+function monthName(month: string): string {
+  return new Intl.DateTimeFormat(locale.value === 'uz' ? 'uz-UZ' : 'ru-RU', { month: 'long' })
+    .format(new Date(2026, Number(month) - 1, 1))
+}
+
+const promos = computed(() => actionsData.value?.items ?? [])
+const PROMO_COVERS = ['cdma-promo-card__cover_orange', 'cdma-promo-card__cover_red', 'cdma-promo-card__cover_sale']
 </script>
 
 <template>
@@ -356,12 +390,12 @@ const faqs = computed(() => faqData.value?.faqs ?? [])
   <section class="cdma-section" id="cdma-news">
       <div class="container">
           <div class="cdma-section__head">
-              <h2 class="cdma-section__title">Новости</h2>
+              <h2 class="cdma-section__title">{{ t('cdma.news_title') }}</h2>
               <div class="cdma-section__filters">
                   <div class="select select_compact">
-                      <select class="select__control" aria-label="Год">
-                          <option>2026</option>
-                          <option>2025</option>
+                      <select v-model="newsYear" class="select__control" :aria-label="t('cdma.year')">
+                          <option value="">{{ t('cdma.all_years') }}</option>
+                          <option v-for="year in newsYears" :key="year" :value="year">{{ year }}</option>
                       </select>
                       <svg class="select__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
@@ -369,9 +403,9 @@ const faqs = computed(() => faqData.value?.faqs ?? [])
                       </svg>
                   </div>
                   <div class="select select_compact">
-                      <select class="select__control" aria-label="Месяц">
-                          <option>Июль</option>
-                          <option>Июнь</option>
+                      <select v-model="newsMonth" class="select__control" :aria-label="t('cdma.month')">
+                          <option value="">{{ t('cdma.all_months') }}</option>
+                          <option v-for="month in newsMonths" :key="month" :value="month">{{ monthName(month) }}</option>
                       </select>
                       <svg class="select__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
@@ -381,46 +415,11 @@ const faqs = computed(() => faqData.value?.faqs ?? [])
               </div>
           </div>
           <ul class="cdma-news">
-              <li class="cdma-news-card">
-                  <span class="cdma-news-card__date">14 июля 2026 г.</span>
+              <li v-for="item in news" :key="item.slug" class="cdma-news-card">
+                  <span class="cdma-news-card__date">{{ dateLong(item.published_at, locale) }}</span>
                   <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
-                          :to="localePath('/cdma/news/example')">SMS-информирование (№№14800, №1490, СП ООО «IST
-                          TELEKOM»)</NuxtLink></h3>
-                  <span class="cdma-news-card__cat">SMS-информирование</span>
-              </li>
-              <li class="cdma-news-card">
-                  <span class="cdma-news-card__date">10 июля 2026 г.</span>
-                  <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
-                          :to="localePath('/cdma/news/example')">Изменения в SMS-услугах ООО «Play mobile»</NuxtLink></h3>
-                  <span class="cdma-news-card__cat">SMS-информирование</span>
-              </li>
-              <li class="cdma-news-card">
-                  <span class="cdma-news-card__date">9 июля 2026 г.</span>
-                  <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
-                          :to="localePath('/cdma/news/example')">SMS-информирование (№№3838, ООО «EIGHT
-                          GROUP»)</NuxtLink></h3>
-                  <span class="cdma-news-card__cat">SMS-информирование</span>
-              </li>
-              <li class="cdma-news-card">
-                  <span class="cdma-news-card__date">7 июля 2026 г.</span>
-                  <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
-                          :to="localePath('/cdma/news/example')">SMS-информирование (№№22700, ООО «AURUM STELLA
-                          05»)</NuxtLink></h3>
-                  <span class="cdma-news-card__cat">SMS-информирование</span>
-              </li>
-              <li class="cdma-news-card">
-                  <span class="cdma-news-card__date">1 июля 2026 г.</span>
-                  <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
-                          :to="localePath('/cdma/news/example')">КИБЕРБЕЗОПАСНОСТЬ: КАК НЕ СТАТЬ ЖЕРТВОЙ
-                          МОШЕННИКОВ</NuxtLink></h3>
-                  <span class="cdma-news-card__cat">SMS-информирование</span>
-              </li>
-              <li class="cdma-news-card">
-                  <span class="cdma-news-card__date">30 июня 2026 г.</span>
-                  <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
-                          :to="localePath('/cdma/news/example')">SMS-информирование (№№6060, «INNASOFT DIGITAL
-                          SERVICE»)</NuxtLink></h3>
-                  <span class="cdma-news-card__cat">SMS-информирование</span>
+                          :to="localePath(`/cdma/news/${item.slug}`)">{{ item.title }}</NuxtLink></h3>
+                  <span v-if="item.category" class="cdma-news-card__cat">{{ item.category.name }}</span>
               </li>
           </ul>
       </div>
@@ -429,33 +428,15 @@ const faqs = computed(() => faqData.value?.faqs ?? [])
   <!-- CDMA PROMO -->
   <section class="cdma-section" id="cdma-promo">
       <div class="container">
-          <h2 class="cdma-section__title">Акции</h2>
+          <h2 class="cdma-section__title">{{ t('cdma.promo_title') }}</h2>
           <ul class="cdma-promo">
-              <li class="cdma-promo-card">
-                  <NuxtLink class="cdma-promo-card__cover cdma-promo-card__cover_orange"
-                      :to="localePath('/cdma/actions')">“1+1”</NuxtLink>
+              <li v-for="(item, index) in promos" :key="item.slug" class="cdma-promo-card">
+                  <NuxtLink class="cdma-promo-card__cover" :class="PROMO_COVERS[index % PROMO_COVERS.length]"
+                      :to="localePath(`/cdma/actions/${item.slug}`)">{{ item.badge ?? item.title }}</NuxtLink>
                   <div class="cdma-promo-card__body">
-                      <span class="cdma-promo-card__date">12 мая, 2022</span>
-                      <h3 class="cdma-promo-card__title">“1+1”</h3>
-                      <span class="cdma-promo-card__cat">Интернет - пакет = Ночной Бонус!</span>
-                  </div>
-              </li>
-              <li class="cdma-promo-card">
-                  <NuxtLink class="cdma-promo-card__cover cdma-promo-card__cover_red"
-                      :to="localePath('/cdma/actions')">Internet bonus</NuxtLink>
-                  <div class="cdma-promo-card__body">
-                      <span class="cdma-promo-card__date">12 мая, 2022</span>
-                      <h3 class="cdma-promo-card__title">“Internet bonus”</h3>
-                      <span class="cdma-promo-card__cat">Акция</span>
-                  </div>
-              </li>
-              <li class="cdma-promo-card">
-                  <NuxtLink class="cdma-promo-card__cover cdma-promo-card__cover_sale"
-                      :to="localePath('/cdma/actions')">SALE до 90%</NuxtLink>
-                  <div class="cdma-promo-card__body">
-                      <span class="cdma-promo-card__date">12 декабря, 2024</span>
-                      <h3 class="cdma-promo-card__title">Акция “Скидки на номера - до 90%!”</h3>
-                      <span class="cdma-promo-card__cat">Акция</span>
+                      <span class="cdma-promo-card__date">{{ dateLong(item.starts_at, locale) }}</span>
+                      <h3 class="cdma-promo-card__title">{{ item.title }}</h3>
+                      <span class="cdma-promo-card__cat">{{ item.excerpt }}</span>
                   </div>
               </li>
           </ul>

@@ -26,6 +26,10 @@ class ActionsTable
                     ->wrap()
                     ->sortable(),
 
+                TextColumn::make('network')
+                    ->label(__('app.label.network'))
+                    ->badge(),
+
                 TextColumn::make('category.name')
                     ->label(__('app.label.category'))
                     ->badge()

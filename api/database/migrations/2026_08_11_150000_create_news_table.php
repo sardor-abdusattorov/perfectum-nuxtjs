@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('news_categories')->nullOnDelete();
+            $table->string('network', 10)->default('5g')->index();
             $table->json('title');
             $table->string('slug')->unique();
             $table->json('excerpt')->nullable();

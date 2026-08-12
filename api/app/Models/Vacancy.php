@@ -16,6 +16,7 @@ class Vacancy extends Model
     protected $fillable = [
         'title',
         'slug',
+        'department',
         'city',
         'employment',
         'salary',
@@ -24,7 +25,7 @@ class Vacancy extends Model
         'status',
     ];
 
-    public $translatable = ['title', 'city', 'employment', 'salary', 'content'];
+    public $translatable = ['title', 'department', 'city', 'employment', 'salary', 'content'];
 
     protected $casts = [
         'status' => 'boolean',

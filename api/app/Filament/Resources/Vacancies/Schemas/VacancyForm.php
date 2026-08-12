@@ -25,6 +25,9 @@ class VacancyForm
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(Fields::slugPreview()),
 
+                                TextInput::make('department')
+                                    ->label(__('app.label.department')),
+
                                 TextInput::make('city')
                                     ->label(__('app.label.city')),
 

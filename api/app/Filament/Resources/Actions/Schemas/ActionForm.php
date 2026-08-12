@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\Actions\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use App\Enums\Network;
 use App\Filament\Support\Fields;
 use App\Models\ActionCategory;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class ActionForm
@@ -20,7 +22,13 @@ class ActionForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
-                        Fields::category(ActionCategory::class),
+                        Fields::network()
+                            ->options(collect(Network::getOptions())->except(Network::Both->value)->all())
+                            ->default(Network::FiveG->value)
+                            ->live(),
+
+                        Fields::category(ActionCategory::class)
+                            ->visible(fn (Get $get): bool => $get('network') !== Network::Cdma->value),
 
                         TranslatableTabs::make('translations')
                             ->schema([

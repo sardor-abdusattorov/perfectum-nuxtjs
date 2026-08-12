@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Network;
+use App\Models\Concerns\BelongsToNetwork;
 use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
@@ -11,8 +13,11 @@ use Spatie\Translatable\HasTranslations;
 
 class News extends Model
 {
+    use BelongsToNetwork;
     use CleansUpAttachedFiles;
-    use HasCategory;
+    use HasCategory {
+        BelongsToNetwork::scopeForNetwork insteadof HasCategory;
+    }
     use HasMediaUrl;
     use HasTranslations;
     use Publishable;
@@ -21,6 +26,7 @@ class News extends Model
 
     protected $fillable = [
         'category_id',
+        'network',
         'title',
         'slug',
         'excerpt',
@@ -34,6 +40,7 @@ class News extends Model
     public $translatable = ['title', 'excerpt', 'content'];
 
     protected $casts = [
+        'network' => Network::class,
         'is_featured' => 'boolean',
         'published_at' => 'datetime',
         'status' => 'boolean',

@@ -34,34 +34,19 @@ function news(array $attributes = []): News
     ], $attributes));
 }
 
-it('keeps a five g record out of the cdma section', function (): void {
-    news(['category_id' => category(NewsCategory::class, Network::FiveG, 'razvitie')->id]);
+it('splits the news feed by the record network', function (): void {
+    news();
+    news(['slug' => 'cdma-novost', 'network' => Network::Cdma]);
 
     $this->getJson(route('api.v1.news.index', ['network' => 'cdma']))
         ->assertOk()
-        ->assertJsonCount(0, 'data');
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.slug', 'cdma-novost');
 
     $this->getJson(route('api.v1.news.index', ['network' => '5g']))
         ->assertOk()
-        ->assertJsonCount(1, 'data');
-});
-
-it('shows a shared record in both sections', function (): void {
-    news(['category_id' => category(NewsCategory::class, Network::Both, 'kompaniya')->id]);
-
-    foreach (['5g', 'cdma'] as $network) {
-        $this->getJson(route('api.v1.news.index', ['network' => $network]))
-            ->assertOk()
-            ->assertJsonCount(1, 'data');
-    }
-});
-
-it('keeps a record without a category in every section', function (): void {
-    news();
-
-    $this->getJson(route('api.v1.news.index', ['network' => 'cdma']))
-        ->assertOk()
-        ->assertJsonCount(1, 'data');
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.slug', 'zagolovok');
 });
 
 it('filters by category slug', function (): void {

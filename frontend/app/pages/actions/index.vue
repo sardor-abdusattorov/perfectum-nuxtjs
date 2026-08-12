@@ -1,161 +1,108 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.actions' })
+const t = useT()
+
+useSeo({ page: 'actions', titleKey: 'seo.actions' })
+
+const category = ref('')
+const search = ref('')
+const page = ref(1)
+
+const { data } = await useActionsList({ network: '5g', category, search, page }, true)
+
+const items = computed(() => data.value?.items ?? [])
+const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1, total: 0 })
+const categories = computed(() => data.value?.categories ?? [])
+
+watch([category, search], () => {
+  page.value = 1
+})
 </script>
 
 <template>
-  <!-- PAGE HERO -->
   <section class="page-hero page-hero_inner page-hero_actions">
-      <div class="container">
-          <div class="page-hero__inner">
-              <nav class="page-hero__crumbs" aria-label="Хлебные крошки">
-                  <NuxtLink class="page-hero__crumb" :to="localePath('/')">Главная</NuxtLink>
-                  <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                      fill="none" aria-hidden="true">
-                      <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
-                          stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">Акции</span>
-              </nav>
-              <h1 class="page-hero__title section__title">Акции</h1>
-          </div>
+    <div class="container">
+      <div class="page-hero__inner">
+        <nav class="page-hero__crumbs" :aria-label="t('common.breadcrumbs')">
+          <NuxtLink class="page-hero__crumb" :to="localePath('/')">{{ t('common.home') }}</NuxtLink>
+          <svg class="page-hero__crumb-sep" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">{{ t('seo.actions') }}</span>
+        </nav>
+        <h1 class="page-hero__title section__title">{{ t('seo.actions') }}</h1>
       </div>
+    </div>
   </section>
 
-  <!-- ACTIONS -->
   <section class="actions">
-      <div class="container">
-          <div class="filter-search">
-              <div class="filter-search__field">
-                  <input type="search" class="filter-search__input" placeholder="Поиск по акциям…"
-                      aria-label="Поиск по акциям" />
-                  <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none"
-                      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-                      <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8"
-                          stroke-linecap="round" />
-                  </svg>
-              </div>
-              <div class="filter-search__chips" role="tablist" aria-label="Категории акций">
-                  <button type="button" class="filter-search__chip filter-search__chip_active" role="tab" aria-selected="true">Все <span class="filter-search__chip-count">22</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Мобильная связь <span class="filter-search__chip-count">3</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Домашний интернет <span class="filter-search__chip-count">3</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Устройства <span class="filter-search__chip-count">3</span></button>
-              </div>
-          </div>
-
-          <div class="section-head">
-              <h2 class="section-head__title">Все акции</h2>
-              <span class="section-head__count">6 акций</span>
-          </div>
-
-          <ul class="promo-grid">
-              <li class="promo-card">
-                  <NuxtLink class="promo-card__link" :to="localePath('/actions/example')">
-                      <div class="promo-card__media">
-                          <span class="promo-card__badge">Новая</span>
-                          <span class="promo-card__cat">Мобильная связь</span>
-                      </div>
-                      <div class="promo-card__body">
-                          <h3 class="promo-card__title">Бесплатное оформление eSIM</h3>
-                          <p class="promo-card__text">При подключении тарифа «A&#39;lo 5G» оформление eSIM в приложении бесплатно — без визита в офис.</p>
-                          <div class="promo-card__foot">
-                              <span class="promo-card__date">до 31.07.2026</span>
-                              <span class="promo-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                          </div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="promo-card promo-card_active">
-                  <NuxtLink class="promo-card__link" :to="localePath('/actions/example')">
-                      <div class="promo-card__media">
-                          <span></span>
-                          <span class="promo-card__cat">Мобильная связь</span>
-                      </div>
-                      <div class="promo-card__body">
-                          <h3 class="promo-card__title">Скидка 20% на семейные тарифы</h3>
-                          <p class="promo-card__text">Подключите второй и третий номер на тариф «Keling! Plus» со скидкой 20% к ежемесячному платежу.</p>
-                          <div class="promo-card__foot">
-                              <span class="promo-card__date">до 31.07.2026</span>
-                              <span class="promo-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                          </div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="promo-card">
-                  <NuxtLink class="promo-card__link" :to="localePath('/actions/example')">
-                      <div class="promo-card__media">
-                          <span class="promo-card__badge">Хит</span>
-                          <span class="promo-card__cat">Домашний интернет</span>
-                      </div>
-                      <div class="promo-card__body">
-                          <h3 class="promo-card__title">Бесплатная установка роутера</h3>
-                          <p class="promo-card__text">При подключении домашнего интернета 5G SA — установка и настройка CPE-роутера бесплатно.</p>
-                          <div class="promo-card__foot">
-                              <span class="promo-card__date">до 31.07.2026</span>
-                              <span class="promo-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                          </div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="promo-card">
-                  <NuxtLink class="promo-card__link" :to="localePath('/actions/example')">
-                      <div class="promo-card__media">
-                          <span class="promo-card__badge">Новая</span>
-                          <span class="promo-card__cat">Мобильная связь</span>
-                      </div>
-                      <div class="promo-card__body">
-                          <h3 class="promo-card__title">Бесплатное оформление eSIM</h3>
-                          <p class="promo-card__text">При подключении тарифа «A&#39;lo 5G» оформление eSIM в приложении бесплатно — без визита в офис.</p>
-                          <div class="promo-card__foot">
-                              <span class="promo-card__date">до 31.07.2026</span>
-                              <span class="promo-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                          </div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="promo-card">
-                  <NuxtLink class="promo-card__link" :to="localePath('/actions/example')">
-                      <div class="promo-card__media">
-                          <span></span>
-                          <span class="promo-card__cat">Мобильная связь</span>
-                      </div>
-                      <div class="promo-card__body">
-                          <h3 class="promo-card__title">Скидка 20% на семейные тарифы</h3>
-                          <p class="promo-card__text">Подключите второй и третий номер на тариф «Keling! Plus» со скидкой 20% к ежемесячному платежу.</p>
-                          <div class="promo-card__foot">
-                              <span class="promo-card__date">до 31.07.2026</span>
-                              <span class="promo-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                          </div>
-                      </div>
-                  </NuxtLink>
-              </li>
-              <li class="promo-card">
-                  <NuxtLink class="promo-card__link" :to="localePath('/actions/example')">
-                      <div class="promo-card__media">
-                          <span class="promo-card__badge">Хит</span>
-                          <span class="promo-card__cat">Домашний интернет</span>
-                      </div>
-                      <div class="promo-card__body">
-                          <h3 class="promo-card__title">Бесплатная установка роутера</h3>
-                          <p class="promo-card__text">При подключении домашнего интернета 5G SA — установка и настройка CPE-роутера бесплатно.</p>
-                          <div class="promo-card__foot">
-                              <span class="promo-card__date">до 31.07.2026</span>
-                              <span class="promo-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                          </div>
-                      </div>
-                  </NuxtLink>
-              </li>
-          </ul>
-
-          <div class="section-foot">
-              <a href="#" class="btn-pill-outline">Архив акций
-                  <svg viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M12 1l7 7-7 7M19 8H1" stroke="currentColor" stroke-width="1.6"
-                          stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-              </a>
-          </div>
+    <div class="container">
+      <div class="filter-search">
+        <div class="filter-search__field">
+          <input
+            v-model.trim="search"
+            type="search"
+            class="filter-search__input"
+            :placeholder="t('actions.search_placeholder')"
+            :aria-label="t('actions.search_label')"
+          />
+          <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="filter-search__chips" role="tablist" :aria-label="t('actions.categories_label')">
+          <button
+            type="button"
+            class="filter-search__chip"
+            :class="!category && 'filter-search__chip_active'"
+            role="tab"
+            :aria-selected="!category"
+            @click="category = ''"
+          >{{ t('actions.all') }}</button>
+          <button
+            v-for="item in categories"
+            :key="item.slug"
+            type="button"
+            class="filter-search__chip"
+            :class="item.slug === category && 'filter-search__chip_active'"
+            role="tab"
+            :aria-selected="item.slug === category"
+            @click="category = item.slug"
+          >{{ item.name }}</button>
+        </div>
       </div>
+
+      <div class="section-head">
+        <h2 class="section-head__title">{{ t('actions.all_title') }}</h2>
+        <span class="section-head__count">{{ meta.total }}</span>
+      </div>
+
+      <ul v-if="items.length" class="promo-grid">
+        <li v-for="item in items" :key="item.slug" class="promo-card">
+          <NuxtLink class="promo-card__link" :to="localePath(`/actions/${item.slug}`)">
+            <div class="promo-card__media">
+              <span v-if="item.badge" class="promo-card__badge">{{ item.badge }}</span>
+              <span v-else></span>
+              <span v-if="item.category" class="promo-card__cat">{{ item.category.name }}</span>
+            </div>
+            <div class="promo-card__body">
+              <h3 class="promo-card__title">{{ item.title }}</h3>
+              <p class="promo-card__text">{{ item.excerpt }}</p>
+              <div class="promo-card__foot">
+                <span v-if="item.ends_at" class="promo-card__date">{{ t('actions.until') }} {{ dateShort(item.ends_at) }}</span>
+                <span v-else></span>
+                <span class="promo-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </div>
+            </div>
+          </NuxtLink>
+        </li>
+      </ul>
+      <p v-else class="actions__empty">{{ t('actions.empty') }}</p>
+
+      <AppPagination :page="meta.current_page" :pages="meta.last_page" @change="page = $event" />
+    </div>
   </section>
 </template>

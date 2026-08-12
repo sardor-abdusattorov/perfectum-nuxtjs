@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->json('title');
             $table->string('slug')->unique();
+            $table->json('department')->nullable();
             $table->json('city')->nullable();
             $table->json('employment')->nullable();
             $table->json('salary')->nullable();
