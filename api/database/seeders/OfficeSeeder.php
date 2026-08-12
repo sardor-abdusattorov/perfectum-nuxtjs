@@ -22,12 +22,9 @@ class OfficeSeeder extends Seeder
         }
 
         $regions = Region::query()->pluck('id', 'slug')->all();
-        $sort = [];
 
-        foreach ($data['offices'] ?? [] as $row) {
-            $sort[$row['type']] = ($sort[$row['type']] ?? 0) + 1;
-
-            Office::updateOrCreate(['type' => $row['type'], 'sort' => $sort[$row['type']]], [
+        foreach ($data['offices'] ?? [] as $index => $row) {
+            Office::updateOrCreate(['type' => $row['type'], 'sort' => $index + 1], [
                 'region_id' => $regions[$row['region']] ?? null,
                 'name' => $row['name'] ?? null,
                 'district' => $row['district'] ?? null,
