@@ -36,13 +36,6 @@ const faqs = computed(() => data.value?.faqs ?? [])
 
             <FaqAccordion v-if="faqs.length" :items="faqs" open-first />
             <p v-else class="faq__empty">{{ t('faq.empty') }}</p>
-
-            <NuxtLink class="help__all-link arrow-link" :to="localePath('/faq')">
-              {{ t('help.all_questions') }}
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </NuxtLink>
           </div>
         </div>
       </div>
