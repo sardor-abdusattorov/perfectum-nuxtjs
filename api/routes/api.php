@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ActionController;
+use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Http\Controllers\Api\V1\BlockController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\CdmaNumberController;
 use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\FaqController;
 use App\Http\Controllers\Api\V1\MetricsController;
@@ -23,6 +25,9 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('faqs', FaqController::class)->name('faqs');
     Route::get('offices', OfficeController::class)->name('offices');
     Route::post('numbers', NumberController::class)->name('numbers');
+    Route::get('cdma-numbers/filters', [CdmaNumberController::class, 'filters'])->name('cdma-numbers.filters');
+    Route::post('cdma-numbers', [CdmaNumberController::class, 'search'])->name('cdma-numbers.search');
+    Route::post('applications', ApplicationController::class)->middleware('throttle:10,1')->name('applications.store');
     Route::get('blocks/{page}', BlockController::class)->name('blocks.show');
     Route::get('pages/{page}', PageController::class)->name('pages.show');
 

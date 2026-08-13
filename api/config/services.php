@@ -47,4 +47,14 @@ return [
         ],
     ],
 
+    'cdma' => [
+        'url' => env('CDMA_API_URL', 'http://pk.cdma.uz'),
+        'timeout' => env('CDMA_API_TIMEOUT', 20),
+
+        'endpoints' => [
+            'numbers' => '/PC_PERF/load_function.php',
+            'prices' => '/PC/load_function.php',
+        ],
+    ],
+
 ];

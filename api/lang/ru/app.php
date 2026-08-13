@@ -24,7 +24,15 @@ return [
         'resources' => 'Ресурсы',
     ],
     'label' => [
-        'faq_pages' => 'Где показывать',
+        'application_single' => 'Заявка',
+        'application_plural' => 'Заявки',
+        'application_theme' => 'Тема обращения',
+        'message' => 'Сообщение',
+        'ip_address' => 'IP-адрес',
+        'created' => 'Создано',
+        'free_number_filter_single' => 'Фильтр номеров CDMA',
+        'free_number_filter_plural' => 'Номера CDMA',
+        'filter_type' => 'Тип фильтра',
         'faq_pages' => 'Где показывать',
         'department' => 'Департамент',
         'meta_title' => 'Meta-заголовок',
@@ -234,7 +242,7 @@ return [
     ],
 
     'helper' => [
-        'faq_pages' => 'Страницы, на которых выходит вопрос — можно выбрать несколько',
+        'filter_value' => 'Значение, которое уходит в биллинг при поиске',
         'faq_pages' => 'Страницы, на которых выходит вопрос — все три или любая из них',
         'page_key' => 'К какой странице сайта относятся эти настройки',
         'type_category' => 'В какой категории показывается эта подкатегория; пустая — видна во всех',
@@ -416,6 +424,24 @@ return [
         'sms' => 'SMS',
         'globe' => 'Интернет',
         'speed' => 'Скорость',
+    ],
+
+    'application_status' => [
+        'new' => 'Новая',
+        'processed' => 'Обработана',
+    ],
+
+    'application_theme' => [
+        'connection' => 'Подключение',
+        'tariffs' => 'Тарифы и оплата',
+        'support' => 'Техническая поддержка',
+        'other' => 'Другое',
+    ],
+
+    'filter_type' => [
+        'prefix' => 'Префикс',
+        'number' => 'Серия',
+        'price' => 'Цена',
     ],
 
     'faq_page' => [

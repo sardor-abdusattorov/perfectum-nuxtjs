@@ -24,7 +24,15 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
-        'faq_pages' => 'Qayerda koʻrsatiladi',
+        'application_single' => 'Ariza',
+        'application_plural' => 'Arizalar',
+        'application_theme' => 'Murojaat mavzusi',
+        'message' => 'Xabar',
+        'ip_address' => 'IP-manzil',
+        'created' => 'Yaratilgan',
+        'free_number_filter_single' => 'CDMA raqamlar filtri',
+        'free_number_filter_plural' => 'CDMA raqamlar',
+        'filter_type' => 'Filtr turi',
         'faq_pages' => 'Qayerda koʻrsatish',
         'department' => 'Departament',
         'meta_title' => 'Meta sarlavha',
@@ -234,7 +242,7 @@ return [
     ],
 
     'helper' => [
-        'faq_pages' => 'Savol chiqadigan sahifalar — bir nechtasini tanlash mumkin',
+        'filter_value' => 'Qidiruvda billingga yuboriladigan qiymat',
         'faq_pages' => 'Savol chiqadigan sahifalar — uchalasi ham yoki istalgan biri',
         'page_key' => 'Ushbu sozlamalar saytning qaysi sahifasiga tegishli',
         'type_category' => 'Ushbu kichik toifa qaysi toifada koʻrsatiladi; boʻsh boʻlsa — hammasida',
@@ -416,6 +424,24 @@ return [
         'sms' => 'SMS',
         'globe' => 'Internet',
         'speed' => 'Tezlik',
+    ],
+
+    'application_status' => [
+        'new' => 'Yangi',
+        'processed' => 'Koʻrib chiqilgan',
+    ],
+
+    'application_theme' => [
+        'connection' => 'Ulanish',
+        'tariffs' => 'Tariflar va toʻlov',
+        'support' => 'Texnik yordam',
+        'other' => 'Boshqa',
+    ],
+
+    'filter_type' => [
+        'prefix' => 'Prefiks',
+        'number' => 'Seriya',
+        'price' => 'Narx',
     ],
 
     'faq_page' => [

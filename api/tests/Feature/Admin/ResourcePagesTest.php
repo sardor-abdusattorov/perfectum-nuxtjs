@@ -42,6 +42,7 @@ it('renders the list and create page of every resource', function (string $resou
     ['offices', 'Office'],
     ['devices', 'Device'],
     ['faqs', 'Faq'],
+    ['free-number-filters', 'FreeNumberFilter'],
     ['menus', 'Menu'],
     ['news', 'News'],
     ['pages', 'Page'],

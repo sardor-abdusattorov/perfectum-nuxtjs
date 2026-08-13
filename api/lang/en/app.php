@@ -24,7 +24,15 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
-        'faq_pages' => 'Where to show',
+        'application_single' => 'Application',
+        'application_plural' => 'Applications',
+        'application_theme' => 'Subject',
+        'message' => 'Message',
+        'ip_address' => 'IP address',
+        'created' => 'Created',
+        'free_number_filter_single' => 'CDMA number filter',
+        'free_number_filter_plural' => 'CDMA numbers',
+        'filter_type' => 'Filter type',
         'faq_pages' => 'Show on',
         'department' => 'Department',
         'meta_title' => 'Meta title',
@@ -234,7 +242,7 @@ return [
     ],
 
     'helper' => [
-        'faq_pages' => 'Pages the question appears on — several can be picked',
+        'filter_value' => 'The value sent to billing on search',
         'faq_pages' => 'The pages the question appears on — all three or any of them',
         'page_key' => 'Which page of the site these settings belong to',
         'type_category' => 'Which category this subcategory is shown in; empty means all',
@@ -416,6 +424,24 @@ return [
         'sms' => 'SMS',
         'globe' => 'Internet',
         'speed' => 'Speed',
+    ],
+
+    'application_status' => [
+        'new' => 'New',
+        'processed' => 'Processed',
+    ],
+
+    'application_theme' => [
+        'connection' => 'Connection',
+        'tariffs' => 'Tariffs and payment',
+        'support' => 'Technical support',
+        'other' => 'Other',
+    ],
+
+    'filter_type' => [
+        'prefix' => 'Prefix',
+        'number' => 'Series',
+        'price' => 'Price',
     ],
 
     'faq_page' => [
