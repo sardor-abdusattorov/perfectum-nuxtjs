@@ -19,9 +19,8 @@ class FaqController
         $faqs = Faq::query()
             ->published()
             ->with('category')
-            ->forNetwork($this->network($request))
+            ->onPage($request->query('page'))
             ->inCategory($request->query('category'))
-            ->when($request->boolean('featured'), fn ($query) => $query->where('is_featured', true))
             ->orderBy('sort')
             ->get();
 

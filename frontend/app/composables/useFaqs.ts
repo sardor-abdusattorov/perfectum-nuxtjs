@@ -7,32 +7,29 @@ export interface FaqItem {
   category: Taxonomy | null
 }
 
+export type FaqPage = 'faq' | 'help' | 'cdma'
+
 export interface FaqQuery {
-  network?: MaybeRefOrGetter<string | undefined>
-  featured?: boolean
+  page: FaqPage
   withCategories?: boolean
 }
 
-export function useFaqs(query: FaqQuery = {}) {
+export function useFaqs(query: FaqQuery) {
   const { locale } = useI18n()
   const { $api } = useNuxtApp()
 
-  const network = computed(() => toValue(query.network))
-
   return useAsyncData(
-    () => `faqs:${network.value ?? 'all'}:${query.featured ? 'featured' : 'all'}`,
+    `faqs:${query.page}`,
     async () => {
-      const params = { network: network.value, featured: query.featured ? 1 : undefined }
-
       const [faqs, categories] = await Promise.all([
-        $api<ApiResponse<FaqItem[]>>('/faqs', { params }),
+        $api<ApiResponse<FaqItem[]>>('/faqs', { params: { page: query.page } }),
         query.withCategories
-          ? $api<ApiResponse<Taxonomy[]>>('/categories/faq-categories', { params: { network: network.value } })
+          ? $api<ApiResponse<Taxonomy[]>>('/categories/faq-categories')
           : Promise.resolve({ data: [] as Taxonomy[] }),
       ])
 
       return { faqs: faqs.data, categories: categories.data }
     },
-    { watch: [locale, network], default: () => ({ faqs: [], categories: [] }) },
+    { watch: [locale], default: () => ({ faqs: [], categories: [] }) },
   )
 }

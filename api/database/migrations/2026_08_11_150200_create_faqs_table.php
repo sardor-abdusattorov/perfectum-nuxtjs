@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('faq_categories')->nullOnDelete();
             $table->json('question');
             $table->json('answer');
-            $table->boolean('is_featured')->default(false);
+            $table->json('pages');
             $table->integer('sort')->default(0);
             $table->boolean('status')->default(true);
             $table->timestamps();

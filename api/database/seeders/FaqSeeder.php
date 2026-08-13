@@ -17,7 +17,6 @@ class FaqSeeder extends Seeder
         foreach ($data['categories'] ?? [] as $sort => $category) {
             FaqCategory::updateOrCreate(['slug' => $category['slug']], [
                 'name' => $category['name'],
-                'network' => $category['network'],
                 'sort' => $sort + 1,
             ]);
         }
@@ -29,7 +28,7 @@ class FaqSeeder extends Seeder
                 'category_id' => $categories[$row['category']] ?? null,
                 'question' => $row['question'],
                 'answer' => $row['answer'],
-                'is_featured' => $row['is_featured'],
+                'pages' => $row['pages'],
                 'sort' => $row['sort'],
             ]);
         }

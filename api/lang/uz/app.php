@@ -24,8 +24,9 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'faq_pages' => 'Qayerda koʻrsatiladi',
+        'faq_pages' => 'Qayerda koʻrsatish',
         'department' => 'Departament',
-        'faq_featured' => '«Yordam»da koʻrsatish',
         'meta_title' => 'Meta sarlavha',
         'meta_description' => 'Meta tavsif',
         'tariff_categories_single' => 'Tarif toifasi',
@@ -233,7 +234,8 @@ return [
     ],
 
     'helper' => [
-        'faq_featured' => 'Savol «Yordam» sahifasidagi tanlovga chiqadi',
+        'faq_pages' => 'Savol chiqadigan sahifalar — bir nechtasini tanlash mumkin',
+        'faq_pages' => 'Savol chiqadigan sahifalar — uchalasi ham yoki istalgan biri',
         'page_key' => 'Ushbu sozlamalar saytning qaysi sahifasiga tegishli',
         'type_category' => 'Ushbu kichik toifa qaysi toifada koʻrsatiladi; boʻsh boʻlsa — hammasida',
         'tariff_file_name' => 'Arxiv sahifasidagi roʻyxatda koʻrinadigan nom',
@@ -414,6 +416,12 @@ return [
         'sms' => 'SMS',
         'globe' => 'Internet',
         'speed' => 'Tezlik',
+    ],
+
+    'faq_page' => [
+        'faq' => 'Savol-javoblar',
+        'help' => 'Yordam',
+        'cdma' => 'CDMA',
     ],
 
     'office_type' => [

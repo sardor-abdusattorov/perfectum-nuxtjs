@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Faqs\Tables;
 
 use App\Filament\Support\Tables;
 use App\Models\FaqCategory;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -30,9 +29,10 @@ class FaqsTable
                     ->label(__('app.label.sort'))
                     ->sortable(),
 
-                IconColumn::make('is_featured')
-                    ->label(__('app.label.faq_featured'))
-                    ->boolean(),
+                TextColumn::make('pages')
+                    ->label(__('app.label.faq_pages'))
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => __("app.faq_page.{$state}")),
 
                 Tables::statusColumn(),
             ])

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 const t = useT()
-const network = useNetwork()
 
 useSeo({ page: 'faq', titleKey: 'seo.faq' })
 
-const { data } = await useFaqs({ network, withCategories: true })
+const { data } = await useFaqs({ page: 'faq', withCategories: true })
 
 const category = ref('')
 const search = ref('')

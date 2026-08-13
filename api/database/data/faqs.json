@@ -5,56 +5,42 @@
             "name": {
                 "ru": "Подключение",
                 "uz": "Ulanish"
-            },
-            "network": "5g"
+            }
         },
         {
             "slug": "tarify-i-oplata",
             "name": {
                 "ru": "Тарифы и оплата",
                 "uz": "Tariflar va toʻlov"
-            },
-            "network": "5g"
+            }
         },
         {
             "slug": "sim-i-esim",
             "name": {
                 "ru": "SIM и eSIM",
                 "uz": "SIM va eSIM"
-            },
-            "network": "5g"
+            }
         },
         {
             "slug": "domashniy-internet",
             "name": {
                 "ru": "Домашний интернет",
                 "uz": "Uy interneti"
-            },
-            "network": "5g"
+            }
         },
         {
             "slug": "lichnyy-kabinet",
             "name": {
                 "ru": "Личный кабинет",
                 "uz": "Shaxsiy kabinet"
-            },
-            "network": "5g"
+            }
         },
         {
             "slug": "tekhnicheskaya-podderzhka",
             "name": {
                 "ru": "Техническая поддержка",
                 "uz": "Texnik yordam"
-            },
-            "network": "5g"
-        },
-        {
-            "slug": "cdma",
-            "name": {
-                "ru": "CDMA",
-                "uz": "CDMA"
-            },
-            "network": "cdma"
+            }
         }
     ],
     "faqs": [
@@ -66,8 +52,11 @@
             "answer": {
                 "ru": "<p>Оставьте заявку на сайте или в приложении, выберите тариф — специалист свяжется с вами и поможет с активацией.</p>"
             },
-            "is_featured": true,
-            "sort": 1
+            "sort": 1,
+            "pages": [
+                "faq",
+                "help"
+            ]
         },
         {
             "category": "podklyuchenie",
@@ -77,8 +66,10 @@
             "answer": {
                 "ru": "<p>В зоне покрытия 5G SA подключение обычно занимает 1–2 дня после оформления заявки и установки оборудования.</p>"
             },
-            "is_featured": false,
-            "sort": 2
+            "sort": 2,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "domashniy-internet",
@@ -88,8 +79,10 @@
             "answer": {
                 "ru": "<p>Да, для домашнего интернета используется 5G-роутер — его можно приобрести или взять в аренду при подключении.</p>"
             },
-            "is_featured": false,
-            "sort": 3
+            "sort": 3,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "tarify-i-oplata",
@@ -99,8 +92,11 @@
             "answer": {
                 "ru": "<p>Сменить тариф можно в личном кабинете или приложении в разделе «Тариф» — изменения вступают в силу со следующего расчётного периода.</p>"
             },
-            "is_featured": true,
-            "sort": 4
+            "sort": 4,
+            "pages": [
+                "faq",
+                "help"
+            ]
         },
         {
             "category": "tarify-i-oplata",
@@ -110,8 +106,10 @@
             "answer": {
                 "ru": "<p>Да, доступна услуга «Добровольная блокировка» — номер сохраняется, а абонентская плата не списывается.</p>"
             },
-            "is_featured": false,
-            "sort": 5
+            "sort": 5,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "tarify-i-oplata",
@@ -121,8 +119,10 @@
             "answer": {
                 "ru": "<p>Банковские карты, платёжные системы (Payme, Click, Uzum), терминалы и оплата через личный кабинет.</p>"
             },
-            "is_featured": false,
-            "sort": 6
+            "sort": 6,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "sim-i-esim",
@@ -132,8 +132,11 @@
             "answer": {
                 "ru": "<p>Выберите eSIM при оформлении, оплатите и отсканируйте QR-код в настройках телефона — номер активируется сразу.</p>"
             },
-            "is_featured": true,
-            "sort": 7
+            "sort": 7,
+            "pages": [
+                "faq",
+                "help"
+            ]
         },
         {
             "category": "sim-i-esim",
@@ -143,8 +146,10 @@
             "answer": {
                 "ru": "<p>Заблокируйте номер в приложении или по звонку в поддержку и восстановите SIM в любом офисе продаж с документом.</p>"
             },
-            "is_featured": false,
-            "sort": 8
+            "sort": 8,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "sim-i-esim",
@@ -154,8 +159,10 @@
             "answer": {
                 "ru": "<p>Большинство современных смартфонов поддерживают eSIM. Проверить можно в настройках устройства или в списке совместимых моделей.</p>"
             },
-            "is_featured": false,
-            "sort": 9
+            "sort": 9,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "domashniy-internet",
@@ -165,8 +172,10 @@
             "answer": {
                 "ru": "<p>Проверьте доступность на странице «Карта покрытия» — там показаны все зоны, где работает 5G SA интернет.</p>"
             },
-            "is_featured": false,
-            "sort": 10
+            "sort": 10,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "tekhnicheskaya-podderzhka",
@@ -176,8 +185,10 @@
             "answer": {
                 "ru": "<p>Перезагрузите роутер, проверьте баланс и статус услуги в кабинете. Если не помогло — напишите в поддержку.</p>"
             },
-            "is_featured": false,
-            "sort": 11
+            "sort": 11,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "lichnyy-kabinet",
@@ -187,8 +198,10 @@
             "answer": {
                 "ru": "<p>Нажмите «Забыли пароль» на странице входа и восстановите доступ по SMS-коду на ваш номер.</p>"
             },
-            "is_featured": false,
-            "sort": 12
+            "sort": 12,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "lichnyy-kabinet",
@@ -198,8 +211,10 @@
             "answer": {
                 "ru": "<p>Да, к одному аккаунту можно привязать несколько номеров и переключаться между ними в приложении.</p>"
             },
-            "is_featured": false,
-            "sort": 13
+            "sort": 13,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "tekhnicheskaya-podderzhka",
@@ -209,8 +224,11 @@
             "answer": {
                 "ru": "<p>Позвоните на 077, напишите в Telegram @Perfectum_Support или на hotline@perfectum.uz — поможем в любое время.</p>"
             },
-            "is_featured": true,
-            "sort": 14
+            "sort": 14,
+            "pages": [
+                "faq",
+                "help"
+            ]
         },
         {
             "category": "lichnyy-kabinet",
@@ -220,8 +238,10 @@
             "answer": {
                 "ru": "<p>Детализация доступна в личном кабинете и приложении в разделе «История» — можно выгрузить за нужный период.</p>"
             },
-            "is_featured": false,
-            "sort": 15
+            "sort": 15,
+            "pages": [
+                "faq"
+            ]
         },
         {
             "category": "podklyuchenie",
@@ -231,74 +251,89 @@
             "answer": {
                 "ru": "<p>Проверьте доступность сети на странице «Карта покрытия» — выберите город и посмотрите зону обслуживания 5G Standalone.</p>"
             },
-            "is_featured": true,
-            "sort": 16
+            "sort": 16,
+            "pages": [
+                "faq",
+                "help"
+            ]
         },
         {
-            "category": "cdma",
+            "category": null,
             "question": {
                 "ru": "Как проверить баланс?"
             },
             "answer": {
                 "ru": "<p>Наберите *100# и нажмите вызов — баланс придёт ответным сообщением.</p>"
             },
-            "is_featured": false,
-            "sort": 17
+            "sort": 17,
+            "pages": [
+                "cdma"
+            ]
         },
         {
-            "category": "cdma",
+            "category": null,
             "question": {
                 "ru": "Можно ли переехать со своим номером на 5G?"
             },
             "answer": {
                 "ru": "<p>Да, номер сохраняется. Обратитесь в любой офис обслуживания с паспортом.</p>"
             },
-            "is_featured": false,
-            "sort": 18
+            "sort": 18,
+            "pages": [
+                "cdma"
+            ]
         },
         {
-            "category": "cdma",
+            "category": null,
             "question": {
                 "ru": "Что делать при потере SIM-карты?"
             },
             "answer": {
                 "ru": "<p>Заблокируйте номер по телефону 077 и восстановите SIM-карту в офисе продаж.</p>"
             },
-            "is_featured": false,
-            "sort": 19
+            "sort": 19,
+            "pages": [
+                "cdma"
+            ]
         },
         {
-            "category": "cdma",
+            "category": null,
             "question": {
                 "ru": "Как настроить мобильный интернет?"
             },
             "answer": {
                 "ru": "<p>Отправьте пустое SMS на номер 1234 — настройки придут автоматически.</p>"
             },
-            "is_featured": false,
-            "sort": 20
+            "sort": 20,
+            "pages": [
+                "cdma"
+            ]
         },
         {
-            "category": "cdma",
+            "category": null,
             "question": {
                 "ru": "Работает ли номер в других странах?"
             },
             "answer": {
                 "ru": "<p>Да, при подключённом роуминге. Тарифы зависят от страны пребывания.</p>"
             },
-            "is_featured": false,
-            "sort": 21
+            "sort": 21,
+            "pages": [
+                "cdma"
+            ]
         },
         {
-            "category": "cdma",
+            "category": null,
             "question": {
                 "ru": "Как отключить автоматически списавшуюся услугу?"
             },
             "answer": {
                 "ru": "<p>Наберите *100*0# для списка активных услуг и отключите ненужные.</p>"
             },
-            "is_featured": false,
-            "sort": 22
+            "sort": 22,
+            "pages": [
+                "cdma"
+            ]
         }
     ]
 }

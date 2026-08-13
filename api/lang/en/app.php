@@ -24,8 +24,9 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'faq_pages' => 'Where to show',
+        'faq_pages' => 'Show on',
         'department' => 'Department',
-        'faq_featured' => 'Show on the Help page',
         'meta_title' => 'Meta title',
         'meta_description' => 'Meta description',
         'tariff_categories_single' => 'Tariff category',
@@ -233,7 +234,8 @@ return [
     ],
 
     'helper' => [
-        'faq_featured' => 'The question joins the selection on the Help page',
+        'faq_pages' => 'Pages the question appears on — several can be picked',
+        'faq_pages' => 'The pages the question appears on — all three or any of them',
         'page_key' => 'Which page of the site these settings belong to',
         'type_category' => 'Which category this subcategory is shown in; empty means all',
         'tariff_file_name' => 'The name shown in the archive page list',
@@ -414,6 +416,12 @@ return [
         'sms' => 'SMS',
         'globe' => 'Internet',
         'speed' => 'Speed',
+    ],
+
+    'faq_page' => [
+        'faq' => 'FAQ',
+        'help' => 'Help',
+        'cdma' => 'CDMA',
     ],
 
     'office_type' => [

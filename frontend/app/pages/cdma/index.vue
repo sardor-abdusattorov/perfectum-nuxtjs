@@ -5,7 +5,7 @@ const t = useT()
 definePageMeta({ layout: 'cdma' })
 useSeo({ page: 'cdma', titleKey: 'seo.cdma' })
 
-const { data: faqData } = await useFaqs({ network: 'cdma' })
+const { data: faqData } = await useFaqs({ page: 'cdma' })
 const { data: newsData } = await useNewsList({ network: 'cdma', perPage: 24 })
 const { data: actionsData } = await useActionsList({ network: 'cdma', perPage: 12 })
 

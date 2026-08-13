@@ -104,25 +104,24 @@ it('rejects an unknown category type', function (): void {
     $this->getJson('/api/v1/categories/not-a-type')->assertNotFound();
 });
 
-it('serves faqs of the requested network', function (): void {
+it('serves faqs of the requested page only', function (): void {
     Faq::create([
-        'category_id' => category(FaqCategory::class, Network::Cdma, 'cdma-help')->id,
         'question' => ['ru' => 'Как проверить баланс?'],
         'answer' => ['ru' => '<p>Наберите *100#</p>'],
+        'pages' => [Faq::PAGE_CDMA],
+    ]);
+    Faq::create([
+        'question' => ['ru' => 'Как подключиться?'],
+        'answer' => ['ru' => '<p>Через приложение</p>'],
+        'pages' => [Faq::PAGE_FAQ, Faq::PAGE_HELP],
     ]);
 
-    $this->getJson(route('api.v1.faqs', ['network' => 'cdma']))->assertOk()->assertJsonCount(1, 'data');
-    $this->getJson(route('api.v1.faqs', ['network' => '5g']))->assertOk()->assertJsonCount(0, 'data');
-});
-
-it('serves only featured faqs when asked', function (): void {
-    Faq::create(['question' => ['ru' => 'Обычный'], 'answer' => ['ru' => '<p>a</p>'], 'is_featured' => false]);
-    Faq::create(['question' => ['ru' => 'Популярный'], 'answer' => ['ru' => '<p>b</p>'], 'is_featured' => true]);
-
-    $this->getJson(route('api.v1.faqs', ['featured' => 1]))
-        ->assertOk()
-        ->assertJsonCount(1, 'data')
-        ->assertJsonPath('data.0.question', 'Популярный');
+    $this->getJson(route('api.v1.faqs', ['page' => 'cdma']))->assertOk()->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.question', 'Как проверить баланс?');
+    $this->getJson(route('api.v1.faqs', ['page' => 'help']))->assertOk()->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.question', 'Как подключиться?');
+    $this->getJson(route('api.v1.faqs', ['page' => 'faq']))->assertOk()->assertJsonCount(1, 'data');
+    $this->getJson(route('api.v1.faqs'))->assertOk()->assertJsonCount(2, 'data');
 });
 
 it('paginates a long list', function (): void {

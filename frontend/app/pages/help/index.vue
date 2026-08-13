@@ -4,7 +4,7 @@ const t = useT()
 
 useSeo({ page: 'help', titleKey: 'seo.help' })
 
-const { data } = await useFaqs({ network: '5g', featured: true })
+const { data } = await useFaqs({ page: 'help' })
 
 const faqs = computed(() => data.value?.faqs ?? [])
 </script>
