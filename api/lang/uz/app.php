@@ -24,6 +24,8 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'preview_image' => 'Kartochka uchun rasm',
+        'main_image' => 'Sahifadagi rasm',
         'application_single' => 'Ariza',
         'application_plural' => 'Arizalar',
         'application_theme' => 'Murojaat mavzusi',
@@ -242,6 +244,8 @@ return [
     ],
 
     'helper' => [
+        'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
+        'main_image' => 'Yangilik yoki aksiya ichidagi katta rasm',
         'filter_value' => 'Qidiruvda billingga yuboriladigan qiymat',
         'faq_pages' => 'Savol chiqadigan sahifalar — uchalasi ham yoki istalgan biri',
         'page_key' => 'Ushbu sozlamalar saytning qaysi sahifasiga tegishli',

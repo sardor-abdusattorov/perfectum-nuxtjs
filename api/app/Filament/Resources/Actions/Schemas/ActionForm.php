@@ -54,7 +54,13 @@ class ActionForm
 
                         Fields::slug(),
 
-                        Fields::image('actions'),
+                        Fields::image('actions', 'preview_image')
+                            ->label(__('app.label.preview_image'))
+                            ->helperText(__('app.helper.preview_image')),
+
+                        Fields::image('actions', 'main_image')
+                            ->label(__('app.label.main_image'))
+                            ->helperText(__('app.helper.main_image')),
 
                         DatePicker::make('starts_at')
                             ->label(__('app.label.starts_at')),

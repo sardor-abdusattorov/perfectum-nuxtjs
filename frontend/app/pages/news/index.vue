@@ -82,7 +82,11 @@ watch([category, search], () => {
       </div>
 
       <article v-if="featured" class="news-feature">
-        <div class="news-feature__media">
+        <div
+          class="news-feature__media"
+          :class="featured.preview_image && 'news-feature__media_photo'"
+          :style="cover(featured.preview_image)"
+        >
           <span v-if="featured.category" class="news-feature__cat">{{ featured.category.name }}</span>
           <h2 class="news-feature__title">{{ featured.title }}</h2>
         </div>
@@ -104,7 +108,11 @@ watch([category, search], () => {
       <ul v-if="rest.length" class="news-grid">
         <li v-for="item in rest" :key="item.slug" class="news-card">
           <NuxtLink class="news-card__link" :to="localePath(`/news/${item.slug}`)">
-            <div class="news-card__media">
+            <div
+              class="news-card__media"
+              :class="item.preview_image && 'news-card__media_photo'"
+              :style="cover(item.preview_image)"
+            >
               <span v-if="item.category" class="news-card__cat">{{ item.category.name }}</span>
             </div>
             <div class="news-card__body">

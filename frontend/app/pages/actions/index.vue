@@ -81,7 +81,11 @@ watch([category, search], () => {
       <ul v-if="items.length" class="promo-grid">
         <li v-for="item in items" :key="item.slug" class="promo-card">
           <NuxtLink class="promo-card__link" :to="localePath(`/actions/${item.slug}`)">
-            <div class="promo-card__media">
+            <div
+              class="promo-card__media"
+              :class="item.preview_image && 'promo-card__media_photo'"
+              :style="cover(item.preview_image)"
+            >
               <span v-if="item.badge" class="promo-card__badge">{{ item.badge }}</span>
               <span v-else></span>
               <span v-if="item.category" class="promo-card__cat">{{ item.category.name }}</span>

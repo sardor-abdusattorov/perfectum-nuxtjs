@@ -17,7 +17,8 @@ return new class extends Migration
             $table->json('badge')->nullable();
             $table->json('excerpt')->nullable();
             $table->json('content');
-            $table->string('image')->nullable();
+            $table->string('preview_image')->nullable();
+            $table->string('main_image')->nullable();
             $table->date('starts_at')->nullable();
             $table->date('ends_at')->nullable();
             $table->boolean('status')->default(true);

@@ -5632,6 +5632,34 @@ body.overflow__hidden {
   background: radial-gradient(68.4% 171.3% at 85.7% 90.3%, var(--media-glow));
 }
 
+/* a photo replaces the colour panel, so the panel's disc goes and a scrim
+   takes over keeping the chips and the title readable */
+.news-card__media_photo,
+.news-feature__media_photo,
+.promo-card__media_photo,
+.article__cover_photo {
+  background-color: var(--color-black);
+  background-repeat: no-repeat;
+}
+
+.news-card__media_photo::after,
+.news-feature__media_photo::after,
+.promo-card__media_photo::after,
+.article__cover_photo::before,
+.article__cover_photo::after {
+  display: none;
+}
+
+.news-card__media_photo::before,
+.news-feature__media_photo::before,
+.promo-card__media_photo::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.58) 100%);
+}
+
 .news-card__cat {
   position: relative;
   z-index: 1;
@@ -7134,9 +7162,7 @@ body.overflow__hidden {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.62);
-  -webkit-backdrop-filter: blur(26px) saturate(120%);
-  backdrop-filter: blur(26px) saturate(120%);
+  background: var(--color-white);
   opacity: 0;
   visibility: hidden;
   transition:

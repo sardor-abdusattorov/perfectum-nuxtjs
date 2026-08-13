@@ -51,7 +51,13 @@ class NewsForm
 
                         Fields::slug(),
 
-                        Fields::image('news'),
+                        Fields::image('news', 'preview_image')
+                            ->label(__('app.label.preview_image'))
+                            ->helperText(__('app.helper.preview_image')),
+
+                        Fields::image('news', 'main_image')
+                            ->label(__('app.label.main_image'))
+                            ->helperText(__('app.helper.main_image')),
 
                         DateTimePicker::make('published_at')
                             ->label(__('app.label.published_at'))

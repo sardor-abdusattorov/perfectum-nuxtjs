@@ -32,7 +32,8 @@ class Action extends Model
         'badge',
         'excerpt',
         'content',
-        'image',
+        'preview_image',
+        'main_image',
         'starts_at',
         'ends_at',
         'status',
@@ -46,6 +47,9 @@ class Action extends Model
         'ends_at' => 'date',
         'status' => 'boolean',
     ];
+
+    /** @var array<int, string> */
+    public array $attachedFileFields = ['preview_image', 'main_image'];
 
     public static function categoryModel(): string
     {

@@ -15,7 +15,7 @@ class NewsTable
         return $table
             ->defaultSort('published_at', 'desc')
             ->columns([
-                ImageColumn::make('image')
+                ImageColumn::make('preview_image')
                     ->label(__('app.label.image'))
                     ->disk('public')
                     ->square(),

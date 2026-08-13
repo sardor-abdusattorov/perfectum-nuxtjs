@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->json('excerpt')->nullable();
             $table->json('content');
-            $table->string('image')->nullable();
+            $table->string('preview_image')->nullable();
+            $table->string('main_image')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->boolean('status')->default(true);

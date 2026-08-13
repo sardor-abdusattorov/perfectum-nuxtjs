@@ -24,6 +24,8 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'preview_image' => 'Card image',
+        'main_image' => 'Page image',
         'application_single' => 'Application',
         'application_plural' => 'Applications',
         'application_theme' => 'Subject',
@@ -242,6 +244,8 @@ return [
     ],
 
     'helper' => [
+        'preview_image' => 'Shown in the list; without it the card keeps its colour panel',
+        'main_image' => 'The large image inside the news item or promotion',
         'filter_value' => 'The value sent to billing on search',
         'faq_pages' => 'The pages the question appears on — all three or any of them',
         'page_key' => 'Which page of the site these settings belong to',

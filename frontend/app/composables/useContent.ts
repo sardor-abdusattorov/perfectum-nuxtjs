@@ -11,7 +11,8 @@ export interface NewsItem {
   title: string
   excerpt: string | null
   content: string
-  image: string | null
+  preview_image: string | null
+  main_image: string | null
   is_featured: boolean
   published_at: string | null
   category: Taxonomy | null
@@ -23,7 +24,8 @@ export interface ActionItem {
   badge: string | null
   excerpt: string | null
   content: string
-  image: string | null
+  preview_image: string | null
+  main_image: string | null
   starts_at: string | null
   ends_at: string | null
   category: Taxonomy | null

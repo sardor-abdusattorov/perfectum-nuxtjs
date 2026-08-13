@@ -31,7 +31,8 @@ class News extends Model
         'slug',
         'excerpt',
         'content',
-        'image',
+        'preview_image',
+        'main_image',
         'is_featured',
         'published_at',
         'status',
@@ -45,6 +46,26 @@ class News extends Model
         'published_at' => 'datetime',
         'status' => 'boolean',
     ];
+
+    /** @var array<int, string> */
+    public array $attachedFileFields = ['preview_image', 'main_image'];
+
+    /**
+     * The list shows one large card above the grid, so the flag is a
+     * position rather than a property — claiming it releases whoever
+     * held it before.
+     */
+    protected static function booted(): void
+    {
+        static::saved(function (self $news): void {
+            if ($news->is_featured) {
+                static::query()
+                    ->whereKeyNot($news->getKey())
+                    ->where('is_featured', true)
+                    ->update(['is_featured' => false]);
+            }
+        });
+    }
 
     public static function categoryModel(): string
     {

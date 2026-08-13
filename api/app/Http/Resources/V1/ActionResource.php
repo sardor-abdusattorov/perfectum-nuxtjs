@@ -26,7 +26,8 @@ class ActionResource extends JsonResource
             'badge' => $this->badge,
             'excerpt' => $this->excerpt,
             'content' => $this->content,
-            'image' => $this->imageUrl(),
+            'preview_image' => $this->mediaUrl('preview_image'),
+            'main_image' => $this->mediaUrl('main_image'),
             'starts_at' => $this->starts_at?->toDateString(),
             'ends_at' => $this->ends_at?->toDateString(),
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [

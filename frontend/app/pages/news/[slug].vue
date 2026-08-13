@@ -36,11 +36,11 @@ useSeo({ title: () => item.value?.title ?? '' })
         </p>
 
         <div
-          v-if="item.image"
-          class="article__cover"
+          v-if="item.main_image"
+          class="article__cover article__cover_photo"
           role="img"
           :aria-label="item.title"
-          :style="{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
+          :style="cover(item.main_image)"
         ></div>
         <div v-else class="article__cover" aria-hidden="true"></div>
 

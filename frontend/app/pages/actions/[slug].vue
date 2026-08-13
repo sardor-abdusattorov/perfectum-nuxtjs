@@ -39,6 +39,14 @@ const period = computed(() => {
           <h1 class="article__hero-title">{{ item.title }}</h1>
         </div>
 
+        <div
+          v-if="item.main_image"
+          class="article__cover article__cover_photo"
+          role="img"
+          :aria-label="item.title"
+          :style="cover(item.main_image)"
+        ></div>
+
         <div class="article__card">
           <div class="article__meta">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">

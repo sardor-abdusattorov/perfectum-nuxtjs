@@ -70,12 +70,12 @@ html {
 /* the page itself gets a wider gutter — an 8px inset thumb is fine inside a
    table but too thin to grab for a whole page */
 html::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
+  width: 19px;
+  height: 19px;
 }
 
 html::-webkit-scrollbar-thumb {
-  border-width: 3px;
+  border-width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-white);
@@ -95,8 +95,8 @@ html::-webkit-scrollbar-thumb {
     height: 4px;
   }
   html::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   html::-webkit-scrollbar-thumb {
     border-width: 1px;

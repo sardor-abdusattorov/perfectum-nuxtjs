@@ -15,7 +15,7 @@ class ActionsTable
         return $table
             ->defaultSort('ends_at', 'desc')
             ->columns([
-                ImageColumn::make('image')
+                ImageColumn::make('preview_image')
                     ->label(__('app.label.image'))
                     ->disk('public')
                     ->square(),

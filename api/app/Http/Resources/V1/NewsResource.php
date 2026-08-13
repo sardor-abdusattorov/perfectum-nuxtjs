@@ -25,7 +25,8 @@ class NewsResource extends JsonResource
             'title' => $this->title,
             'excerpt' => $this->excerpt,
             'content' => $this->content,
-            'image' => $this->imageUrl(),
+            'preview_image' => $this->mediaUrl('preview_image'),
+            'main_image' => $this->mediaUrl('main_image'),
             'is_featured' => $this->is_featured,
             'published_at' => $this->published_at?->toDateString(),
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
