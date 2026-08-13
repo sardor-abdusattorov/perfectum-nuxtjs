@@ -1,4 +1,5 @@
 const MIN_VISIBLE = 600
+const SETTLE = 200
 const FAILSAFE = 6000
 
 export function useLocaleLoader() {
@@ -18,9 +19,14 @@ export function useLocaleLoader() {
     close(FAILSAFE, shownAt.value)
   }
 
+  /**
+   * Called when the new page has finished loading. The fade starts no
+   * sooner than SETTLE after that, so the content swap and the scroll
+   * jump repaint fully behind the veil.
+   */
   function hide(): void {
     if (active.value) {
-      close(Math.max(0, MIN_VISIBLE - (Date.now() - shownAt.value)), shownAt.value)
+      close(Math.max(SETTLE, MIN_VISIBLE - (Date.now() - shownAt.value)), shownAt.value)
     }
   }
 

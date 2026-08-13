@@ -4,6 +4,16 @@ const t = useT()
 const router = useRouter()
 const nuxtApp = useNuxtApp()
 
+watch(active, value => {
+  document.body.classList.toggle('overflow__hidden', value)
+})
+
+onScopeDispose(() => {
+  if (import.meta.client) {
+    document.body.classList.remove('overflow__hidden')
+  }
+})
+
 nuxtApp.hook('page:finish', hide)
 nuxtApp.hook('vue:error', () => (active.value = false))
 
