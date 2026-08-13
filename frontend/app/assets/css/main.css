@@ -7132,11 +7132,11 @@ body.overflow__hidden {
   inset: 0;
   z-index: 300;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
-  background: var(--color-white);
+  background: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -7147,11 +7147,6 @@ body.overflow__hidden {
 .locale-loader_active {
   opacity: 1;
   visibility: visible;
-}
-
-.locale-loader__logo {
-  height: 36px;
-  width: auto;
 }
 
 .locale-loader__spinner {
