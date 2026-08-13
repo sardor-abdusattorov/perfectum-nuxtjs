@@ -95,6 +95,7 @@ class SiteTranslationSeeder extends Seeder
             'common.read_more' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
 
             'common.pagination' => ['ru' => 'Пагинация', 'uz' => 'Sahifalash'],
+            'common.loading' => ['ru' => 'Загрузка…', 'uz' => 'Yuklanmoqda…'],
 
             'news.title' => ['ru' => 'Новости <span class="color" data-color="accent">Perfectum</span>', 'uz' => 'Perfectum <span class="color" data-color="accent">yangiliklari</span>'],
             'news.search_placeholder' => ['ru' => 'Поиск по новостям…', 'uz' => 'Yangiliklar boʻyicha qidirish…'],

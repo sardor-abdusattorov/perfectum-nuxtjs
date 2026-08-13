@@ -2,11 +2,28 @@
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const route = useRoute()
+const { show } = useLocaleLoader()
 
 const open = ref(false)
 const root = ref<HTMLElement | null>(null)
 
 const codes = computed(() => locales.value.map(item => (typeof item === 'string' ? item : item.code)))
+
+/**
+ * Only a plain left-click on another locale starts a navigation here —
+ * modified clicks open a new tab and would leave the loader hanging.
+ */
+function onSwitch(code: string, event: MouseEvent): void {
+  open.value = false
+
+  if (
+    code !== locale.value
+    && event.button === 0
+    && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey
+  ) {
+    show()
+  }
+}
 
 watch(() => route.fullPath, () => {
   open.value = false
@@ -40,7 +57,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocumentClick))
         :to="switchLocalePath(code)"
         :hreflang="code"
         rel="alternate"
-        @click="open = false"
+        @click="onSwitch(code, $event)"
       >
         {{ code.toUpperCase() }}
       </NuxtLink>

@@ -6,4 +6,5 @@ await useSite()
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <LayoutLocaleLoader />
 </template>

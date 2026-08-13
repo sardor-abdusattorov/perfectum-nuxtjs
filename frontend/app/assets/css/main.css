@@ -7124,6 +7124,46 @@ body.overflow__hidden {
 }
 
 /* ==========================================================
+   LOCALE LOADER
+   ========================================================== */
+
+.locale-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: var(--color-white);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.locale-loader_active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.locale-loader__logo {
+  height: 36px;
+  width: auto;
+}
+
+.locale-loader__spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(230, 0, 0, 0.18);
+  border-top-color: var(--color-red);
+  border-radius: 50%;
+  animation: numbers-spin 0.8s linear infinite;
+}
+
+/* ==========================================================
    TOAST
    ========================================================== */
 
