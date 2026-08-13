@@ -1,5 +1,3 @@
-import Swiper from 'swiper/bundle'
-
 const documentHandlers = new Map()
 const teardown = []
 
@@ -89,30 +87,6 @@ function initBlock1() {
     marquee.addEventListener("mouseenter", stop);
     marquee.addEventListener("mouseleave", start);
     start();
-  }
-
-  const heroSlider = document.querySelector(".hero__slider");
-  if (heroSlider && typeof Swiper !== "undefined") {
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    new Swiper(heroSlider, {
-      slidesPerView: 1,
-      loop: true,
-      speed: 700,
-      watchOverflow: true,
-      autoHeight: false,
-      autoplay: still ? false : { delay: 6000, disableOnInteraction: false },
-      pagination: {
-        el: ".hero__pagination",
-        clickable: true,
-        bulletElement: "button",
-      },
-      a11y: {
-        containerMessage: "Главный баннер",
-        prevSlideMessage: "Предыдущий слайд",
-        nextSlideMessage: "Следующий слайд",
-        paginationBulletMessage: "Перейти к слайду {{index}}",
-      },
-    });
   }
 
   const cookies = document.querySelector(".cookies");
@@ -466,40 +440,11 @@ function initBlock2() {
   }
 }
 
-function initBlock3() {
-  if (typeof Swiper === "undefined") return;
-
-  document.querySelectorAll(".cdma-rail").forEach(function (rail) {
-    new Swiper(rail, {
-      spaceBetween: 16,
-      watchOverflow: true,
-      freeMode: true,
-      breakpoints: {
-        0: { slidesPerView: 1.06, spaceBetween: 16 },
-        440: { slidesPerView: 1.2, spaceBetween: 16 },
-        520: { slidesPerView: 1.42, spaceBetween: 16 },
-        600: { slidesPerView: 1.6, spaceBetween: 20 },
-        769: { slidesPerView: 2.05, spaceBetween: 20 },
-        900: { slidesPerView: 2.25, spaceBetween: 20 },
-        993: { slidesPerView: 2.7, spaceBetween: 24 },
-        1201: { slidesPerView: 3.2, spaceBetween: 24 },
-        1401: { slidesPerView: 3.75, spaceBetween: 24 },
-        1700: { slidesPerView: 4.5, spaceBetween: 24 },
-      },
-      scrollbar: {
-        el: rail.querySelector(".cdma-rail__bar"),
-        draggable: true,
-      },
-    });
-  });
-}
-
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {
     release()
     initBlock1()
     initBlock2()
-    initBlock3()
   })
 })

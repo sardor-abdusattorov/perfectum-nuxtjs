@@ -3,11 +3,33 @@ const block = useBlock('home', 'hero')
 
 const slides = computed(() => published(block.value.slides))
 const buttons = (slide: Record<string, any>) => published(slide.buttons)
+
+const t = useT()
+const slider = useTemplateRef('slider')
+const still = import.meta.client && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+useSlider(slider, {
+  slidesPerView: 1,
+  loop: slides.value.length > 1,
+  speed: 700,
+  watchOverflow: true,
+  autoHeight: false,
+  autoplay: still ? false : { delay: 6000, disableOnInteraction: false },
+  pagination: {
+    el: '.hero__pagination',
+    clickable: true,
+    bulletElement: 'button',
+  },
+  a11y: {
+    prevSlideMessage: t('common.prev'),
+    nextSlideMessage: t('common.next'),
+  },
+}, () => slides.value)
 </script>
 
 <template>
   <section v-if="slides.length" class="hero">
-    <div class="hero__slider swiper">
+    <div ref="slider" class="hero__slider swiper">
       <div class="swiper-wrapper">
         <div v-for="(slide, index) in slides" :key="index" class="swiper-slide">
           <div class="container">

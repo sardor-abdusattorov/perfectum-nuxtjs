@@ -42,7 +42,31 @@ function monthName(month: string): string {
 
 const promos = computed(() => actionsData.value?.items ?? [])
 const PROMO_COVERS = ['cdma-promo-card__cover_orange', 'cdma-promo-card__cover_red', 'cdma-promo-card__cover_sale']
+const RAIL_OPTIONS = {
+  spaceBetween: 16,
+  watchOverflow: true,
+  freeMode: true,
+  breakpoints: {
+    0: { slidesPerView: 1.06, spaceBetween: 16 },
+    440: { slidesPerView: 1.2, spaceBetween: 16 },
+    520: { slidesPerView: 1.42, spaceBetween: 16 },
+    600: { slidesPerView: 1.6, spaceBetween: 20 },
+    769: { slidesPerView: 2.05, spaceBetween: 20 },
+    900: { slidesPerView: 2.25, spaceBetween: 20 },
+    993: { slidesPerView: 2.7, spaceBetween: 24 },
+    1201: { slidesPerView: 3.2, spaceBetween: 24 },
+    1401: { slidesPerView: 3.75, spaceBetween: 24 },
+    1700: { slidesPerView: 4.5, spaceBetween: 24 },
+  },
+}
+
+const tariffRail = useTemplateRef('tariffRail')
+const serviceRail = useTemplateRef('serviceRail')
+
+useSlider(tariffRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-tariffs .cdma-rail__bar', draggable: true } }, () => locale.value)
+useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma-rail__bar', draggable: true } }, () => locale.value)
 </script>
+
 
 <template>
   <!-- CDMA HERO -->
@@ -108,7 +132,7 @@ const PROMO_COVERS = ['cdma-promo-card__cover_orange', 'cdma-promo-card__cover_r
               </li>
           </ul>
 
-          <div class="cdma-rail swiper">
+          <div ref="tariffRail" class="cdma-rail swiper">
               <ul class="cdma-rail__track swiper-wrapper">
                   <li class="cdma-tariff-card swiper-slide">
                       <span class="cdma-tariff-card__badge">Qulay ежемесячные</span>
@@ -211,7 +235,7 @@ const PROMO_COVERS = ['cdma-promo-card__cover_orange', 'cdma-promo-card__cover_r
               </li>
           </ul>
 
-          <div class="cdma-rail swiper">
+          <div ref="serviceRail" class="cdma-rail swiper">
               <ul class="cdma-rail__track swiper-wrapper">
                   <li class="cdma-service-card swiper-slide"><NuxtLink class="cdma-service-card__link"
                           :to="localePath('/cdma/services/example')">
