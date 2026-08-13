@@ -644,7 +644,7 @@
 
 /* ============================================================
    11. CDMA INDEX — FAQ
-   Reuses the <details> faq-item block; only the CDMA skin differs:
+   Reuses the faq-item block; only the CDMA skin differs:
    a 60px pill row with a solid black toggle.
    ============================================================ */
 
@@ -656,7 +656,7 @@
 }
 
 .faq-accordion_cdma .faq-item,
-.faq-accordion_cdma .faq-item[open] {
+.faq-accordion_cdma .faq-item_open {
   border: 1px solid var(--cdma-border);
   border-radius: 16px;
 }
