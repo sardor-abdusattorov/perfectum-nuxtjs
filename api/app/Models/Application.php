@@ -61,4 +61,23 @@ class Application extends Model
             ->mapWithKeys(fn (string $theme): array => [$theme => __("app.application_theme.{$theme}")])
             ->all();
     }
+
+    public static function statusLabel(?string $status): string
+    {
+        return self::getStatusOptions()[$status] ?? (string) $status;
+    }
+
+    public static function statusColor(?string $status): string
+    {
+        return match ($status) {
+            self::STATUS_NEW => 'danger',
+            self::STATUS_PROCESSED => 'success',
+            default => 'gray',
+        };
+    }
+
+    public static function themeLabel(?string $theme): string
+    {
+        return self::getThemeOptions()[$theme] ?? (string) $theme;
+    }
 }

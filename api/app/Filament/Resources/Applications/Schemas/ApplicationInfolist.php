@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Applications\Schemas;
 
+use App\Filament\Resources\Applications\Actions\ChangeApplicationStatusAction;
 use App\Models\Application;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -20,11 +21,22 @@ class ApplicationInfolist
                         TextEntry::make('status')
                             ->label(__('app.label.status'))
                             ->badge()
-                            ->color(fn (string $state): string => $state === Application::STATUS_NEW ? 'danger' : 'success')
-                            ->formatStateUsing(fn (string $state): string => Application::getStatusOptions()[$state] ?? $state),
+                            ->color(fn (?string $state): string => Application::statusColor($state))
+                            ->formatStateUsing(fn (?string $state): string => Application::statusLabel($state))
+                            ->hintAction(ChangeApplicationStatusAction::make()),
+
+                        TextEntry::make('theme')
+                            ->label(__('app.label.application_theme'))
+                            ->badge()
+                            ->formatStateUsing(fn (?string $state): string => Application::themeLabel($state)),
 
                         TextEntry::make('created_at')
-                            ->label(__('app.label.created'))
+                            ->label(__('app.label.created_at'))
+                            ->dateTime('d.m.Y H:i')
+                            ->placeholder('—'),
+
+                        TextEntry::make('updated_at')
+                            ->label(__('app.label.updated_at'))
                             ->dateTime('d.m.Y H:i')
                             ->placeholder('—'),
 
@@ -39,19 +51,14 @@ class ApplicationInfolist
                             ->label(__('app.label.email'))
                             ->placeholder('—'),
 
-                        TextEntry::make('theme')
-                            ->label(__('app.label.application_theme'))
-                            ->badge()
-                            ->formatStateUsing(fn (string $state): string => Application::getThemeOptions()[$state] ?? $state),
+                        TextEntry::make('ip_address')
+                            ->label(__('app.label.ip_address'))
+                            ->placeholder('—'),
 
                         TextEntry::make('message')
                             ->label(__('app.label.message'))
                             ->placeholder('—')
                             ->columnSpanFull(),
-
-                        TextEntry::make('ip_address')
-                            ->label(__('app.label.ip_address'))
-                            ->placeholder('—'),
                     ]),
             ]);
     }

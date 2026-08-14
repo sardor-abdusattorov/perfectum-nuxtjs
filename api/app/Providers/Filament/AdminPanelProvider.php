@@ -54,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make()
                     ->label(fn () => __('app.label.go_to_site'))
-                    ->url(config('app.url'), shouldOpenInNewTab: true)
+                    ->url(fn () => config('app.frontend_url'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-globe-alt')
                     ->sort(2),
             ])

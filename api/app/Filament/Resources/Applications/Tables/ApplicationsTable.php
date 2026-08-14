@@ -2,16 +2,15 @@
 
 namespace App\Filament\Resources\Applications\Tables;
 
+use App\Filament\Resources\Applications\Actions\ChangeApplicationStatusAction;
 use App\Models\Application;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Gate;
 
 class ApplicationsTable
 {
@@ -33,7 +32,7 @@ class ApplicationsTable
                 TextColumn::make('theme')
                     ->label(__('app.label.application_theme'))
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Application::getThemeOptions()[$state] ?? $state),
+                    ->formatStateUsing(fn(?string $state): string => Application::themeLabel($state)),
 
                 TextColumn::make('message')
                     ->label(__('app.label.message'))
@@ -42,11 +41,12 @@ class ApplicationsTable
                     ->searchable()
                     ->placeholder('—'),
 
-                SelectColumn::make('status')
+                TextColumn::make('status')
                     ->label(__('app.label.status'))
-                    ->options(Application::getStatusOptions())
-                    ->selectablePlaceholder(false)
-                    ->disabled(fn (Application $record): bool => Gate::denies('update', $record)),
+                    ->badge()
+                    ->color(fn(?string $state): string => Application::statusColor($state))
+                    ->formatStateUsing(fn(?string $state): string => Application::statusLabel($state))
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label(__('app.label.created'))
@@ -64,11 +64,13 @@ class ApplicationsTable
                     ->options(Application::getThemeOptions()),
             ])
             ->recordActions([
+                ChangeApplicationStatusAction::make(),
                 ViewAction::make(),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    ChangeApplicationStatusAction::bulk(),
                     DeleteBulkAction::make(),
                 ]),
             ]);
