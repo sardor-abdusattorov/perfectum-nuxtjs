@@ -13,6 +13,11 @@ return [
     'color' => [
         'accent' => 'Urgʻu — qizil',
         'outline' => 'Urgʻu — kontur',
+        'red' => 'Qizil',
+        'scarlet' => 'Qip-qizil',
+        'dark' => 'Qora',
+        'ruby' => 'Yoqut',
+        'orange' => 'Toʻq sariq',
     ],
     'group' => [
         'offices' => 'Ofis va dilerlar',
@@ -24,6 +29,10 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'lead_text' => 'Lid matni',
+        'change_status' => 'Statusni o\'zgartirish',
+        'change_status_bulk' => 'Belgilanganlar statusini o\'zgartirish',
+        'status_updated' => 'Status yangilandi',
         'coverage_layer_single' => 'Qamrov qatlami',
         'coverage_layer_plural' => 'Qamrov xaritasi',
         'coverage_file' => 'Qamrov hududi arxivi',
@@ -313,7 +322,7 @@ return [
         'show_aside' => 'Telefondan oʻngdagi matn va doʻkon tugmalari, mobilda — telefon ostida',
         'show_gauge' => 'Telefon rasmi ustidagi spidometr',
         'gauge_value' => 'Shkala markazidagi son, maketda — 1 000',
-        'hero_title' => 'Soʻzni qizil yoki konturli qilib ajrating — maketda sarlavha shunday',
+        'hero_title' => 'So\'zni belgilang va panelda rangni tanlang: qizil yoki konturli',
         'hero_lead' => 'Telefon oʻng tomonidagi xatboshi; mobil qurilmada — uning ostida. Yonidagi doʻkon tugmalari sayt sozlamalaridan olinadi',
         'section_texts_only' => 'Bu boʻlimda faqat matnlar tahrirlanadi — yozuvlar oʻz boʻlimida yuritiladi',
         'marquee_items' => 'Satr aylanib takrorlanadi, soʻzlar tartibini surib oʻzgartirish mumkin',
@@ -420,11 +429,7 @@ return [
     ],
 
     'color' => [
-        'red' => 'Qizil',
-        'scarlet' => 'Qip-qizil',
-        'dark' => 'Qora',
-        'ruby' => 'Yoqut',
-        'orange' => 'Toʻq sariq',
+
     ],
 
     'button_style' => [

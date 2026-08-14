@@ -43,14 +43,11 @@ class HeroTab extends ContentTab
                                         TextInput::make('description')
                                             ->label(__('app.label.eyebrow')),
 
-                                        Fields::editor('title')
+                                        Fields::multiline('title')
                                             ->label(__('app.label.title'))
                                             ->helperText(__('app.helper.hero_title'))
-                                            ->extraInputAttributes([
-                                                'style' => 'min-height: 8rem; max-height: 30vh; overflow-y: auto;',
-                                            ])
                                             ->required(),
-
+                                            
                                         Fields::multiline('lead')
                                             ->label(__('app.label.lead_text'))
                                             ->helperText(__('app.helper.hero_lead')),
@@ -99,7 +96,7 @@ class HeroTab extends ContentTab
                                 TextInput::make('gauge_value')
                                     ->label(__('app.label.gauge_value'))
                                     ->helperText(__('app.helper.gauge_value'))
-                                    ->visible(fn (Get $get): bool => (bool) $get('show_gauge')),
+                                    ->visible(fn(Get $get): bool => (bool) $get('show_gauge')),
 
                                 Fields::status(),
                             ])

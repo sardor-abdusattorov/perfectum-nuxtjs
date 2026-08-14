@@ -16,15 +16,13 @@ class ChangeApplicationStatusAction
         return Action::make($name)
             ->label(__('app.label.change_status'))
             ->icon('heroicon-m-arrow-path')
-            ->iconButton()
-            ->tooltip(__('app.label.change_status'))
             ->modalWidth('md')
-            ->visible(fn (Application $record): bool => Gate::allows('update', $record))
+            ->visible(fn(Application $record): bool => Gate::allows('update', $record))
             ->schema(self::schema())
-            ->fillForm(fn (Application $record): array => [
+            ->fillForm(fn(Application $record): array => [
                 'status' => $record->status,
             ])
-            ->action(fn (Application $record, array $data) => $record->update($data))
+            ->action(fn(Application $record, array $data) => $record->update($data))
             ->successNotificationTitle(__('app.message.status_updated'));
     }
 
@@ -36,7 +34,7 @@ class ChangeApplicationStatusAction
             ->modalWidth('md')
             ->authorizeIndividualRecords('update')
             ->schema(self::schema())
-            ->action(fn (Builder $query, array $data) => $query->update([
+            ->action(fn(Builder $query, array $data) => $query->update([
                 'status' => $data['status'],
             ]))
             ->deselectRecordsAfterCompletion()

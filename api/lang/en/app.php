@@ -13,6 +13,11 @@ return [
     'color' => [
         'accent' => 'Accent — red',
         'outline' => 'Accent — outline',
+        'red' => 'Red',
+        'scarlet' => 'Scarlet',
+        'dark' => 'Black',
+        'ruby' => 'Ruby',
+        'orange' => 'Orange',
     ],
     'group' => [
         'offices' => 'Offices and dealers',
@@ -24,6 +29,10 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'lead_text' => 'Lead text',
+        'change_status' => 'Change status',
+        'change_status_bulk' => 'Change status of selected',
+        'status_updated' => 'Status updated',
         'coverage_layer_single' => 'Coverage layer',
         'coverage_layer_plural' => 'Coverage map',
         'coverage_file' => 'Coverage archive',
@@ -313,7 +322,7 @@ return [
         'show_aside' => 'The text beside the phone and the store buttons, below the phone on mobile',
         'show_gauge' => 'The speedometer over the phone image',
         'gauge_value' => 'The number in the middle of the dial, 1 000 in the design',
-        'hero_title' => 'Mark a word red or outlined — that is how the design styles the heading',
+        'hero_title' => 'Select a word and pick a colour on the toolbar: red or outlined',
         'hero_lead' => 'The paragraph beside the phone; on mobile it moves underneath. The store buttons next to it come from the site settings',
         'section_texts_only' => 'Only the texts are edited here — the records themselves live in their own section',
         'marquee_items' => 'The line loops, drag to reorder the words',
@@ -417,14 +426,6 @@ return [
         'features' => '5G features',
         'coverage' => 'Coverage',
         'app_promo' => 'Mobile app',
-    ],
-
-    'color' => [
-        'red' => 'Red',
-        'scarlet' => 'Scarlet',
-        'dark' => 'Black',
-        'ruby' => 'Ruby',
-        'orange' => 'Orange',
     ],
 
     'button_style' => [

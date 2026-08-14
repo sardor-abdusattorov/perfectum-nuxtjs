@@ -36,7 +36,6 @@ class ApplicationsTable
 
                 TextColumn::make('message')
                     ->label(__('app.label.message'))
-                    ->limit(60)
                     ->wrap()
                     ->searchable()
                     ->placeholder('—'),
