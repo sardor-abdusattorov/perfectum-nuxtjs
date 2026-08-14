@@ -57,11 +57,21 @@ function placemark(point: Office): any {
   const ymaps = (window as any).ymaps
   const title = escapeHtml(officeTitle(point))
 
+  const dealer = point.type === 'dealer'
+
+  /**
+   * The API's own chrome is stripped in CSS so the card can be ours, which
+   * means the whole balloon has to come out of one slot — a header and a body
+   * would be laid out by the API between them.
+   */
   const marker = new ymaps.Placemark([point.lat, point.lng], {
-    balloonContentHeader: title,
-    balloonContentBody:
-      `<p style="margin:0 0 10px">${escapeHtml(point.address)}</p>`
-      + `<a class="map__popup-btn" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps/?rtext=~${point.lat},${point.lng}&rtt=auto">${escapeHtml(t('offices.route'))}</a>`,
+    balloonContent:
+      `<div class="map__balloon">`
+      + `<span class="map__popup-tag${dealer ? ' map__popup-tag_dealer' : ''}">${escapeHtml(t(dealer ? 'offices.dealer' : 'offices.office'))}</span>`
+      + `<h3 class="map__popup-title">${title}</h3>`
+      + `<p class="map__popup-text">${escapeHtml(point.address)}</p>`
+      + `<a class="map__popup-btn" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps/?rtext=~${point.lat},${point.lng}&rtt=auto">${escapeHtml(t('offices.route'))}</a>`
+      + `</div>`,
     hintContent: title,
   }, {
     preset: point.type === 'dealer' ? 'islands#blueCircleDotIcon' : 'islands#redIcon',

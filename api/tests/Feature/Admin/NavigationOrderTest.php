@@ -10,6 +10,8 @@ use App\Filament\Pages\ManageHomepage;
 use App\Filament\Pages\Settings;
 use App\Filament\Resources\ActionCategories\ActionCategoryResource;
 use App\Filament\Resources\Actions\ActionResource;
+use App\Filament\Resources\Applications\ApplicationResource;
+use App\Filament\Resources\ApplicationThemes\ApplicationThemeResource;
 use App\Filament\Resources\CoverageLayers\CoverageLayerResource;
 use App\Filament\Resources\DeviceCategories\DeviceCategoryResource;
 use App\Filament\Resources\Devices\DeviceResource;
@@ -54,6 +56,10 @@ it('puts the working item at the top of its group and numbers the rest after it'
 
     expect($sorts)->toBe(range(1, count($classes)));
 })->with([
+    'applications' => ['applications', [
+        ApplicationResource::class,
+        ApplicationThemeResource::class,
+    ]],
     'content' => ['content', [
         ManageHomepage::class,
         ManageAboutCompany::class,

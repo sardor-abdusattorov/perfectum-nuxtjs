@@ -26,6 +26,7 @@ return [
         'devices' => 'Устройства',
         'tariffs' => 'Тарифы',
         'services' => 'Услуги',
+        'applications' => 'Обращения',
         'resources' => 'Ресурсы',
     ],
     'label' => [

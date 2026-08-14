@@ -22,6 +22,11 @@ class ApplicationThemeResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('app.group.applications');
+    }
+
     public static function getModelLabel(): string
     {
         return __('app.label.application_theme_single');
@@ -34,7 +39,7 @@ class ApplicationThemeResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 4;
+        return 2;
     }
 
     public static function getNavigationBadge(): ?string

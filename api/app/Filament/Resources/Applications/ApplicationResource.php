@@ -20,6 +20,11 @@ class ApplicationResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInbox;
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('app.group.applications');
+    }
+
     public static function getModelLabel(): string
     {
         return __('app.label.application_single');
@@ -32,7 +37,7 @@ class ApplicationResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 3;
+        return 1;
     }
 
     public static function getNavigationBadge(): ?string

@@ -26,6 +26,7 @@ return [
         'devices' => 'Qurilmalar',
         'tariffs' => 'Tariflar',
         'services' => 'Xizmatlar',
+        'applications' => 'Murojaatlar',
         'resources' => 'Resurslar',
     ],
     'label' => [
