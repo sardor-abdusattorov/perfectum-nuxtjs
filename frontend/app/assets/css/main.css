@@ -7646,7 +7646,9 @@ body.overflow__hidden {
   background: #f8f8f8;
   border-radius: var(--radius);
   box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
-  overflow: hidden;
+  /* `clip` trims the aside to the radius exactly as `hidden` did, without
+     turning the panel into a scrollport that pins the preloader's spinner */
+  overflow: clip;
 }
 
 .help__aside {
@@ -7751,6 +7753,9 @@ body.overflow__hidden {
   min-height: 320px;
 }
 
+/* one veil for both waits — the first load has nothing under it, a re-search
+   keeps the table readable behind it, and either way the spinner sits over
+   the block instead of shouldering the pager down the page */
 .help-numbers__preloader {
   display: none;
   position: absolute;
@@ -7764,11 +7769,21 @@ body.overflow__hidden {
   z-index: 5;
 }
 
-.help-numbers.is-loading .help-numbers__preloader {
+.help-numbers.is-loading .help-numbers__preloader,
+.help-numbers.is-busy .help-numbers__preloader {
   display: flex;
 }
 
+.help-numbers.is-busy:not(.is-loading) .help-numbers__preloader {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+/* the block runs taller than the viewport, so a spinner centred on it lands
+   off-screen for anyone who searched from the pager at the bottom */
 .help-numbers__spinner {
+  position: sticky;
+  top: calc(50vh - 24px);
+  bottom: calc(50vh - 24px);
   width: 48px;
   height: 48px;
   border: 4px solid rgba(230, 0, 0, 0.18);

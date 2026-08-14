@@ -131,8 +131,6 @@ useSeo({ titleKey: 'seo.numbers' })
 
               <p v-else-if="searched && !busy" class="help-numbers__empty">{{ t('help.numbers_empty') }}</p>
 
-              <div class="help-numbers__loader" :class="busy && 'is-active'"><span class="help-numbers__spinner"></span></div>
-
               <AppPagination :page="page" :pages="totalPages" @change="search($event)" />
             </div>
           </div>

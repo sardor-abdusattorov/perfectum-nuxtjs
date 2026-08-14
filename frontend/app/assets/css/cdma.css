@@ -601,7 +601,12 @@
   display: flex;
 }
 
+/* the block runs taller than the viewport, so a spinner centred on it lands
+   off-screen for anyone who searched from the pager at the bottom */
 .cdma-numbers-block__spinner {
+  position: sticky;
+  top: calc(50vh - 17px);
+  bottom: calc(50vh - 17px);
   width: 34px;
   height: 34px;
   border: 3px solid rgba(230, 0, 0, 0.2);
