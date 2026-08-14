@@ -16,13 +16,13 @@ class ApplicationInfolist
             ->columns(1)
             ->components([
                 Section::make(__('app.label.application_single'))
-                    ->columns(2)
+                    ->columns(1)
                     ->schema([
                         TextEntry::make('status')
                             ->label(__('app.label.status'))
                             ->badge()
-                            ->color(fn (?string $state): string => Application::statusColor($state))
-                            ->formatStateUsing(fn (?string $state): string => Application::statusLabel($state))
+                            ->color(fn(?string $state): string => Application::statusColor($state))
+                            ->formatStateUsing(fn(?string $state): string => Application::statusLabel($state))
                             ->hintAction(ChangeApplicationStatusAction::make()),
 
                         TextEntry::make('theme.name')
@@ -30,19 +30,14 @@ class ApplicationInfolist
                             ->badge()
                             ->placeholder('—'),
 
-                        TextEntry::make('created_at')
-                            ->label(__('app.label.created_at'))
-                            ->dateTime('d.m.Y H:i')
-                            ->placeholder('—'),
-
-                        TextEntry::make('updated_at')
-                            ->label(__('app.label.updated_at'))
-                            ->dateTime('d.m.Y H:i')
-                            ->placeholder('—'),
-
                         TextEntry::make('name')
                             ->label(__('app.label.name'))
                             ->placeholder('—'),
+
+                        TextEntry::make('message')
+                            ->label(__('app.label.message'))
+                            ->placeholder('—')
+                            ->columnSpanFull(),
 
                         TextEntry::make('phone')
                             ->label(__('app.label.phone')),
@@ -55,10 +50,15 @@ class ApplicationInfolist
                             ->label(__('app.label.ip_address'))
                             ->placeholder('—'),
 
-                        TextEntry::make('message')
-                            ->label(__('app.label.message'))
-                            ->placeholder('—')
-                            ->columnSpanFull(),
+                        TextEntry::make('created_at')
+                            ->label(__('app.label.created_at'))
+                            ->dateTime('d.m.Y H:i')
+                            ->placeholder('—'),
+
+                        TextEntry::make('updated_at')
+                            ->label(__('app.label.updated_at'))
+                            ->dateTime('d.m.Y H:i')
+                            ->placeholder('—'),
                     ]),
             ]);
     }
