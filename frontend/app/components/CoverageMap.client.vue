@@ -13,6 +13,7 @@ const failed = ref(false)
 
 let map: any = null
 let drawing = 0
+let pin: any = null
 const drawn: any[] = []
 
 const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
@@ -142,6 +143,40 @@ watch(() => props.center, (coords) => {
 function zoom(step: number): void {
   map?.setZoom(map.getZoom() + step, { duration: 200 })
 }
+
+/**
+ * Drops a pin on the geocoded address and flies to it, so the caller only has
+ * to know whether the address resolved at all.
+ */
+async function find(query: string): Promise<boolean> {
+  const ymaps = (window as any).ymaps
+
+  if (!map || !ymaps) {
+    return false
+  }
+
+  const found = await ymaps.geocode(`Uzbekistan, ${query}`, { results: 1 })
+    .then((result: any) => result.geoObjects.get(0))
+    .catch(() => null)
+
+  if (!found) {
+    return false
+  }
+
+  const coords = found.geometry.getCoordinates()
+
+  if (pin) {
+    map.geoObjects.remove(pin)
+  }
+
+  pin = new ymaps.Placemark(coords, { hintContent: found.getAddressLine() }, { preset: 'islands#redDotIcon' })
+  map.geoObjects.add(pin)
+  map.setCenter(coords, 14, { duration: 800 })
+
+  return true
+}
+
+defineExpose({ find })
 </script>
 
 <template>

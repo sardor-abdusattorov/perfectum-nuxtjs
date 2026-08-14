@@ -27,6 +27,39 @@ watchEffect(() => {
 })
 
 const center = computed(() => CITIES[city.value] ?? null)
+
+const map = useTemplateRef('map')
+const field = useTemplateRef('field')
+const address = ref('')
+const open = ref(false)
+const missing = ref(false)
+
+/**
+ * Collapsed, the round button is the handle that opens the field; once there is
+ * something to look for it becomes the search itself.
+ */
+async function find(): Promise<void> {
+  if (!address.value.trim()) {
+    open.value = true
+    field.value?.focus()
+
+    return
+  }
+
+  missing.value = !(await map.value?.find(address.value))
+}
+
+function clear(): void {
+  if (!address.value) {
+    open.value = false
+
+    return
+  }
+
+  address.value = ''
+  missing.value = false
+  field.value?.focus()
+}
 </script>
 
 <template>
@@ -41,9 +74,39 @@ const center = computed(() => CITIES[city.value] ?? null)
 
   <section class="coverage coverage_map">
     <div class="container">
-      <form class="coverage-search" @submit.prevent>
+      <form class="coverage-search" :class="open && 'coverage-search_searching'" @submit.prevent="find()">
         <p class="coverage-search__label">{{ t('coverage.search_label') }}</p>
         <div class="coverage-search__controls">
+          <div class="coverage-search__find" :class="open && 'coverage-search__find_open'">
+            <div class="coverage-search__field">
+              <input
+                ref="field"
+                v-model="address"
+                class="coverage-search__input"
+                type="search"
+                :placeholder="t('coverage.address_placeholder')"
+                :aria-label="t('coverage.address')"
+                @focus="open = true"
+              />
+              <button
+                type="button"
+                class="coverage-search__close"
+                :aria-label="t('coverage.address_clear')"
+                @click="clear()"
+              >
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </button>
+            </div>
+            <button class="coverage-search__btn" type="submit" :aria-label="t('coverage.address')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
+                <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              </svg>
+            </button>
+          </div>
+
           <div class="select coverage-search__select">
             <select v-model="city" class="select__control" :aria-label="t('coverage.city')">
               <option v-for="(coords, key) in CITIES" :key="key" :value="key">{{ t(`coverage.city_${key}`) }}</option>
@@ -67,7 +130,9 @@ const center = computed(() => CITIES[city.value] ?? null)
         </div>
       </form>
 
-      <CoverageMap :layers="available" :active="active" :center="center" />
+      <p v-if="missing" class="coverage-search__missing">{{ t('coverage.address_not_found') }}</p>
+
+      <CoverageMap ref="map" :layers="available" :active="active" :center="center" />
 
       <p v-if="!available.length" class="coverage__empty">{{ t('coverage.empty') }}</p>
     </div>

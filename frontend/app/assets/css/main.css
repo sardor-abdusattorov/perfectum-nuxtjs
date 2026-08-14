@@ -6532,6 +6532,14 @@ body.overflow__hidden {
   color: rgba(0, 0, 0, 0.5);
 }
 
+/* the bar carries a shadow and a 56px gap under it, so the miss sits in that
+   gap rather than growing the card and shifting the map */
+.coverage-search__missing {
+  margin: -36px 0 20px;
+  font-size: 15px;
+  color: var(--color-red);
+}
+
 
 .coverage-search__find {
   --field-width: 0px;
@@ -9870,7 +9878,8 @@ select {
   }
   /* the compact bar is a single 57-tall pill with no room for both, so the
      address field takes the city select's place while the search is open */
-  .coverage-search_searching .coverage-search__select {
+  .coverage-search_searching .coverage-search__select,
+  .coverage-search_searching .coverage-search__layers {
     display: none;
   }
   .coverage-search_searching .coverage-search__find {

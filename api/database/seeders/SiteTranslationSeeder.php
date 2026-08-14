@@ -258,6 +258,10 @@ class SiteTranslationSeeder extends Seeder
             'coverage.zoom_in' => ['ru' => 'Приблизить', 'uz' => 'Yaqinlashtirish'],
             'coverage.zoom_out' => ['ru' => 'Отдалить', 'uz' => 'Uzoqlashtirish'],
             'coverage.empty' => ['ru' => 'Зоны покрытия пока не загружены', 'uz' => 'Qamrov hududlari hali yuklanmagan'],
+            'coverage.address' => ['ru' => 'Поиск по адресу', 'uz' => 'Manzil boʻyicha qidirish'],
+            'coverage.address_placeholder' => ['ru' => 'Введите адрес', 'uz' => 'Manzilni kiriting'],
+            'coverage.address_clear' => ['ru' => 'Очистить', 'uz' => 'Tozalash'],
+            'coverage.address_not_found' => ['ru' => 'Адрес не найден. Уточните улицу и город.', 'uz' => 'Manzil topilmadi. Koʻcha va shaharni aniqlashtiring.'],
 
             'seo.about' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida'],
             'seo.actions' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
