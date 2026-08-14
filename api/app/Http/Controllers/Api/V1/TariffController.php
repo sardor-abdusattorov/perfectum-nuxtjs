@@ -11,7 +11,6 @@ use App\Models\TariffFile;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Storage;
 
 class TariffController
 {
@@ -38,8 +37,10 @@ class TariffController
             ->get()
             ->map(fn (TariffFile $file): array => [
                 'name' => $file->name,
-                'url' => Storage::disk('public')->url($file->file),
-            ]);
+                'url' => stored_url($file->file),
+            ])
+            ->filter(fn (array $file): bool => filled($file['url']))
+            ->values();
 
         return response()->json(['data' => $files]);
     }

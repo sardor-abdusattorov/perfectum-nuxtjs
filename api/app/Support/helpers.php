@@ -20,6 +20,7 @@ use App\Models\Social;
 use App\Models\TariffCategory;
 use App\Models\TariffType;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('app_locales')) {
     /**
@@ -28,6 +29,28 @@ if (! function_exists('app_locales')) {
     function app_locales(): array
     {
         return config('app.locales', [config('app.locale')]);
+    }
+}
+
+if (! function_exists('stored_url')) {
+    /**
+     * A row can outlive its file — a database restored without the storage
+     * folder leaves the column pointing at nothing. Answering null there lets
+     * the frontend fall back instead of laying out a broken image.
+     */
+    function stored_url(mixed $path): ?string
+    {
+        if (! is_string($path) || blank($path)) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http')) {
+            return $path;
+        }
+
+        $disk = Storage::disk('public');
+
+        return $disk->exists($path) ? $disk->url($path) : null;
     }
 }
 

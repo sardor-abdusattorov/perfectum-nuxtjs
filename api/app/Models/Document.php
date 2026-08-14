@@ -75,9 +75,7 @@ class Document extends Model
      */
     public function url(?string $locale = null): ?string
     {
-        $path = $this->translated('file', $locale);
-
-        return blank($path) ? null : Storage::disk('public')->url($path);
+        return stored_url($this->translated('file', $locale));
     }
 
     public function readableSize(?string $locale = null): ?string

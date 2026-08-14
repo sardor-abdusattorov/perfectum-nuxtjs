@@ -57,6 +57,12 @@
 }
 html {
   scroll-behavior: smooth;
+  /* the modal locks the page with `overflow: hidden` on body, which takes
+     the gutter away and slides every centred row sideways. Reserving it
+     here keeps the width the same locked or not — and it has to be `html`:
+     body hands its overflow to the viewport, so the gutter set on body is
+     never the one the viewport uses. */
+  scrollbar-gutter: stable;
 }
 
 /* `scrollbar-width` is deliberately left off — setting it makes Chrome drop

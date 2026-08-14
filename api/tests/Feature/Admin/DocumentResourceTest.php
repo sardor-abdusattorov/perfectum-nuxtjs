@@ -68,6 +68,10 @@ it('has no size before a file is attached', function (): void {
 });
 
 it('hands the locale the file it asked for', function (): void {
+    Storage::fake('public');
+    Storage::disk('public')->put('a.pdf', 'pdf');
+    Storage::disk('public')->put('b.pdf', 'pdf');
+
     $document = Document::create([
         'name' => ['ru' => 'Оферта'],
         'file' => ['ru' => 'a.pdf', 'uz' => 'b.pdf'],

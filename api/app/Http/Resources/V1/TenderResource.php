@@ -6,7 +6,6 @@ namespace App\Http\Resources\V1;
 
 use App\Models\Tender;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -28,7 +27,9 @@ class TenderResource extends JsonResource
             'state' => $this->state->value,
             'deadline_at' => $this->deadline_at?->toDateString(),
             'files' => collect($this->files ?? [])
-                ->map(fn (string $path): string => Storage::disk('public')->url($path))
+                ->map(fn (string $path): ?string => stored_url($path))
+                ->filter()
+                ->values()
                 ->all(),
         ];
     }

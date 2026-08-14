@@ -7,7 +7,6 @@ namespace App\Http\Resources\V1;
 use App\Models\Tariff;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * @mixin Tariff
@@ -77,9 +76,7 @@ class TariffResource extends JsonResource
         return collect($this->rows($this->buttons, ['name']))
             ->map(fn (array $button): array => [
                 ...$button,
-                'icon' => blank($button['icon'] ?? null)
-                    ? null
-                    : Storage::disk('public')->url($button['icon']),
+                'icon' => stored_url($button['icon'] ?? null),
             ])
             ->all();
     }

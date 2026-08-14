@@ -5,8 +5,13 @@ declare(strict_types=1);
 use App\Models\Document;
 use App\Models\DocumentCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function (): void {
+    Storage::fake('public');
+});
 
 function documentCategory(string $name, int $sort = 1): DocumentCategory
 {
@@ -18,6 +23,10 @@ function documentCategory(string $name, int $sort = 1): DocumentCategory
 
 function document(array $attributes = [], array $files = ['ru' => 'uploads/documents/offer-ru.pdf']): Document
 {
+    foreach ($files as $path) {
+        Storage::disk('public')->put($path, 'pdf');
+    }
+
     return Document::create(array_merge([
         'name' => ['ru' => 'Оферта', 'uz' => 'Oferta'],
         'file' => $files,

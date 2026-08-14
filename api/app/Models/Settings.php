@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 
 class Settings extends Model
 {
@@ -64,15 +63,7 @@ class Settings extends Model
 
     public static function getOgImage(): ?string
     {
-        $path = self::get('seo.og_image');
-
-        if (blank($path)) {
-            return null;
-        }
-
-        return str_starts_with($path, 'http')
-            ? $path
-            : Storage::disk('public')->url($path);
+        return stored_url(self::get('seo.og_image'));
     }
 
     /**

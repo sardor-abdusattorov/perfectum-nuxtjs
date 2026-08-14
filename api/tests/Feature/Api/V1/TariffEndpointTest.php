@@ -7,6 +7,7 @@ use App\Models\TariffCategory;
 use App\Models\TariffFile;
 use App\Models\TariffType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -72,6 +73,10 @@ it('filters the list by category and type', function (): void {
 });
 
 it('lists the published archive documents', function (): void {
+    Storage::fake('public');
+    Storage::disk('public')->put('files/archive.pdf', 'pdf');
+    Storage::disk('public')->put('files/draft.pdf', 'pdf');
+
     TariffFile::create(['name' => '#архивные ТП 2025.pdf', 'file' => 'files/archive.pdf', 'sort' => 1]);
     TariffFile::create(['name' => 'Черновик', 'file' => 'files/draft.pdf', 'status' => false]);
 
@@ -79,4 +84,14 @@ it('lists the published archive documents', function (): void {
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.name', '#архивные ТП 2025.pdf');
+});
+
+it('leaves out an archive document whose file is gone', function (): void {
+    Storage::fake('public');
+
+    TariffFile::create(['name' => 'Пропавший', 'file' => 'files/missing.pdf', 'sort' => 1]);
+
+    $this->getJson(route('api.v1.tariffs.files'))
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
 });
