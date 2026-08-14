@@ -1999,35 +1999,6 @@
   border-bottom: 0;
 }
 
-.cdma-connect .cdma-connect__note {
-  margin-bottom: 24px;
-  font-size: 20px;
-  line-height: 29px;
-  color: var(--color-black);
-}
-
-.cdma-connect .cdma-connect__legal p {
-  margin-bottom: 16px;
-  padding-bottom: 24px;
-  font-size: 20px;
-  line-height: 30px;
-  color: var(--cdma-text);
-  border-bottom: 1px solid var(--cdma-border);
-}
-
-.cdma-connect .cdma-connect__legal p:last-child {
-  margin-bottom: 0;
-}
-
-.cdma-connect .cdma-connect__legal b {
-  font-weight: 700;
-  color: var(--color-black);
-}
-
-.cdma-connect .cdma-connect__legal b u {
-  text-decoration: underline;
-}
-
 /* ============================================================
    23. MEDIA
    Same breakpoints, in the same order, as main.css.
@@ -2087,8 +2058,7 @@
     font-size: 16px;
     line-height: 24px;
   }
-  .cdma-connect .cdma-connect__note,
-  .cdma-connect .cdma-connect__legal p {
+  .cdma-connect .cdma-connect__article p {
     font-size: 18px;
     line-height: 27px;
   }
@@ -2212,8 +2182,7 @@
     font-size: 16px;
     line-height: 24px;
   }
-  .cdma-connect .cdma-connect__note,
-  .cdma-connect .cdma-connect__legal p {
+  .cdma-connect .cdma-connect__article p {
     font-size: 16px;
     line-height: 24px;
   }
@@ -2716,8 +2685,7 @@
   .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
     left: 175px;
   }
-  .cdma-connect .cdma-connect__note,
-  .cdma-connect .cdma-connect__legal p {
+  .cdma-connect .cdma-connect__article p {
     padding-bottom: 16px;
     font-size: 14px;
     line-height: 21px;

@@ -34,7 +34,10 @@ const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1,
         <li v-for="item in items" :key="item.slug" class="tender-card">
           <NuxtLink class="tender-card__link" :to="localePath(`/procurement/${item.slug}`)">
             <h3 class="tender-card__title">{{ item.title }}</h3>
-            <span class="tender-card__status">{{ t(`procurement.state_${item.state}`) }}</span>
+            <span
+              class="tender-card__status"
+              :class="item.state === 'closed' && 'tender-card__status_done'"
+            >{{ t(`procurement.state_${item.state}`) }}</span>
           </NuxtLink>
         </li>
       </ul>
