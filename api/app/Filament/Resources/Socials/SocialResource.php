@@ -40,7 +40,7 @@ class SocialResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 2;
+        return 13;
     }
 
     public static function getNavigationBadge(): ?string

@@ -39,7 +39,7 @@ class DocumentResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 9;
+        return 7;
     }
 
     public static function getNavigationBadge(): ?string

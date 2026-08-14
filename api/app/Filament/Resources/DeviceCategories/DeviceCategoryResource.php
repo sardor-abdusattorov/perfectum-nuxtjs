@@ -39,7 +39,7 @@ class DeviceCategoryResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 1;
+        return 2;
     }
 
     public static function getNavigationBadge(): ?string

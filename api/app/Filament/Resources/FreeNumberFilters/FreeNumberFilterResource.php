@@ -39,7 +39,7 @@ class FreeNumberFilterResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 7;
+        return 11;
     }
 
     public static function getNavigationBadge(): ?string

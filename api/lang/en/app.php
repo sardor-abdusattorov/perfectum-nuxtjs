@@ -71,6 +71,7 @@ return [
         'tariff_file_plural' => 'Tariff archive',
         'file' => 'File',
         'document_files' => 'Document files',
+        'documents_page' => 'Documents page',
         'language' => 'Language',
         'language_all' => 'For every language',
         'languages' => 'Languages',

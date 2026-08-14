@@ -38,7 +38,7 @@ class MenuResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 1;
+        return 12;
     }
 
     public static function getNavigationBadge(): ?string

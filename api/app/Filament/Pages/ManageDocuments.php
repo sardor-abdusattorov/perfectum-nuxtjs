@@ -19,7 +19,7 @@ class ManageDocuments extends ManageBlocks
 
     public static function getNavigationLabel(): string
     {
-        return __('app.page.documents');
+        return __('app.label.documents_page');
     }
 
     public static function getNavigationSort(): int
@@ -29,6 +29,6 @@ class ManageDocuments extends ManageBlocks
 
     public function getTitle(): string
     {
-        return __('app.page.documents');
+        return __('app.label.documents_page');
     }
 }

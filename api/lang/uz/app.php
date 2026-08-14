@@ -71,6 +71,7 @@ return [
         'tariff_file_plural' => 'Tariflar arxivi',
         'file' => 'Fayl',
         'document_files' => 'Hujjat fayllari',
+        'documents_page' => 'Hujjatlar sahifasi',
         'language' => 'Til',
         'language_all' => 'Barcha tillar uchun',
         'languages' => 'Tillar',

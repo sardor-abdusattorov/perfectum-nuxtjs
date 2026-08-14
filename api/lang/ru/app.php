@@ -71,6 +71,7 @@ return [
         'tariff_file_plural' => 'Архив тарифов',
         'file' => 'Файл',
         'document_files' => 'Файлы документа',
+        'documents_page' => 'Страница документов',
         'language' => 'Язык',
         'language_all' => 'Для всех языков',
         'languages' => 'Языки',

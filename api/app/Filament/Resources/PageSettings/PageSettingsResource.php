@@ -44,7 +44,7 @@ class PageSettingsResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 3;
+        return 7;
     }
 
     public static function getNavigationBadge(): ?string

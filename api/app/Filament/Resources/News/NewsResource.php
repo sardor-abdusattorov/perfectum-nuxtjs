@@ -40,7 +40,7 @@ class NewsResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 4;
+        return 1;
     }
 
     public static function getNavigationBadge(): ?string

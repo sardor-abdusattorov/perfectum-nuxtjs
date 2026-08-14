@@ -40,7 +40,7 @@ class TenderResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 8;
+        return 10;
     }
 
     public static function getNavigationBadge(): ?string
