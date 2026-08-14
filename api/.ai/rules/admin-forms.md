@@ -103,3 +103,25 @@ its own tab's state.
 A test may no longer assert one `->get()` sees fields from several tabs. Drive
 the page with `Livewire::test(...)->set('activeTab', 'coverage')` and assert
 per tab.
+
+## An application subject is retired, never deleted
+
+`ApplicationTheme` is the only taxonomy whose rows cannot be removed once
+something points at them. Applications are records of what a visitor sent;
+the subject is the only thing grouping them, and nobody can re-file 3586 of
+them by hand. Content taxonomies stay deletable — a news item without a
+category is still a news item.
+
+Three layers, and all three are load-bearing:
+
+- the foreign key is `restrictOnDelete`, so no route — Filament, tinker, a
+  future console command — can orphan an application;
+- the row action carries `->authorize(fn ($record) => ! $record->isInUse())`
+  with `->authorizationTooltip()`, so the button is disabled and says why
+  instead of throwing a query exception in the admin's face;
+- the bulk delete uses `->authorizeIndividualRecords(...)`, which drops the
+  used rows from the batch and deletes the rest.
+
+To take a subject out of the form, switch its status off: the public
+categories endpoint filters on `published()`, while the admin filter lists
+every row, so old applications stay groupable by a retired subject.

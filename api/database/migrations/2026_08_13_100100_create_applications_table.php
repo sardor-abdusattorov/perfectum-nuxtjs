@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('phone');
             $table->string('email')->nullable();
-            $table->foreignId('theme_id')->nullable()->constrained('application_themes')->nullOnDelete();
+            $table->foreignId('theme_id')->nullable()->constrained('application_themes')->restrictOnDelete();
             $table->text('message')->nullable();
             $table->string('status', 20)->default('new')->index();
             $table->string('ip_address', 45)->nullable();

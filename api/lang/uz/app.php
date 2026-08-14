@@ -282,6 +282,7 @@ return [
         'coverage_file' => 'Sheypfayl bilan ZIP (.shp va .prj). Konturlar yuklashda oʻqiladi',
         'document_file' => 'PDF yoki Word/Excel hujjati, 20 MB gacha',
         'document_language' => 'Fayl barcha tillarga mos kelsa, boʻsh qoldiring',
+        'theme_in_use' => 'Mavzu boʻyicha arizalar bor — uni faqat chop etishdan olib tashlash mumkin',
         'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',

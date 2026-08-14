@@ -282,6 +282,7 @@ return [
         'coverage_file' => 'A ZIP holding a shapefile (.shp and .prj). The shapes are read on upload',
         'document_file' => 'A PDF or a Word/Excel document, up to 20 MB',
         'document_language' => 'Leave empty when the file suits every language',
+        'theme_in_use' => 'The subject already has applications — it can only be unpublished',
         'cdma_article' => 'The page copy along with the office and opening-hours tables',
         'contact_card_type' => 'Decides which contacts are pulled in from the site settings',
         'preview_image' => 'Shown in the list; without it the card keeps its colour panel',
