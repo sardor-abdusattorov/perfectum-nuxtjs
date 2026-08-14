@@ -1114,6 +1114,7 @@ strong {
   height: 38px;
   display: grid;
   place-items: center;
+  color: #fff;
   background: rgba(255, 255, 255, 0.07);
   border-radius: 50%;
   transition: var(--transition);

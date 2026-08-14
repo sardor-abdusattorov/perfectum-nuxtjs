@@ -37,9 +37,13 @@ watch(() => route.fullPath, () => {
                       v-if="item.children.length"
                       type="button"
                       class="menu__link menu__link_toggle"
+                      :aria-expanded="expanded === item.id"
                       @click="expanded = expanded === item.id ? null : item.id"
                   >
                       {{ item.name }}
+                      <svg viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                          <path d="M1 1.5 6 6.5 11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
                   </button>
                   <LayoutMenuLink v-else :item="item" link-class="menu__link" />
 
@@ -51,6 +55,10 @@ watch(() => route.fullPath, () => {
               </li>
           </ul>
           <a :href="setting('account_url', '#')" class="menu__account" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
               {{ t('header.account') }}
           </a>
       </div>
