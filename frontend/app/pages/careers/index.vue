@@ -5,7 +5,7 @@ const t = useT()
 useSeo({ page: 'careers', titleKey: 'seo.careers' })
 
 const page = ref(1)
-const { data } = await useVacanciesList({ page, perPage: 20 })
+const { data } = await useVacanciesList({ page })
 
 const items = computed(() => data.value?.items ?? [])
 const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1, total: 0 })
@@ -31,6 +31,8 @@ const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1,
 
   <section class="company">
     <div class="container">
+      <CompanyNav active="careers" />
+
       <div class="careers-intro">
         <h2 class="careers-intro__title">{{ t('careers.intro_title') }}</h2>
         <p class="careers-intro__text">{{ t('careers.intro_text') }}</p>

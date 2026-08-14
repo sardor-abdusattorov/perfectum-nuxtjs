@@ -58,6 +58,8 @@ interface ListQuery {
   perPage?: number
 }
 
+const PER_PAGE = 9
+
 function useList<T>(endpoint: string, query: ListQuery, withCategories?: string) {
   const { locale } = useI18n()
   const { $api } = useNuxtApp()
@@ -67,7 +69,7 @@ function useList<T>(endpoint: string, query: ListQuery, withCategories?: string)
     category: toValue(query.category) || undefined,
     search: toValue(query.search) || undefined,
     page: toValue(query.page) ?? 1,
-    per_page: query.perPage,
+    per_page: query.perPage ?? PER_PAGE,
   }))
 
   return useAsyncData(

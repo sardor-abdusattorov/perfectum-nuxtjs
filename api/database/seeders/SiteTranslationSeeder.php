@@ -246,6 +246,7 @@ class SiteTranslationSeeder extends Seeder
             'offices.route' => ['ru' => 'Построить маршрут', 'uz' => 'Marshrut qurish'],
             'offices.you_here' => ['ru' => 'Вы здесь', 'uz' => 'Siz shu yerdasiz'],
 
+            'company.nav_label' => ['ru' => 'Разделы о компании', 'uz' => 'Kompaniya boʻlimlari'],
             'seo.about' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida'],
             'seo.actions' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'seo.action' => ['ru' => 'Акция', 'uz' => 'Aksiya'],
