@@ -1,121 +1,84 @@
 <script setup lang="ts">
-const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.contacts' })
+await useBlocks('contacts')
+
+const hero = useBlock('contacts', 'page_hero')
+const cards = useBlock('contacts', 'cards')
+
+const t = useT()
+const setting = useSetting()
+const socials = useSocials()
+
+useSeo({ page: 'contacts', titleKey: 'seo.contacts' })
+
+const items = computed(() => published(cards.value.items))
+
+function phones(): Array<{ label: string, href: string }> {
+  return [setting('phone_primary'), setting('phone_secondary')]
+    .filter(Boolean)
+    .map(phone => ({ label: phone, href: `tel:${phone.replace(/\s/g, '')}` }))
+}
+
+function emails(): Array<{ label: string, href: string }> {
+  return [setting('email_info'), setting('email_hotline')]
+    .filter(Boolean)
+    .map(email => ({ label: email, href: `mailto:${email}` }))
+}
 </script>
 
 <template>
-  <!-- PAGE HERO -->
-  <section class="page-hero page-hero_inner page-hero_company page-hero_contacts">
-      <div class="container">
-          <div class="page-hero__inner">
-              <nav class="page-hero__crumbs" aria-label="Хлебные крошки">
-                  <NuxtLink class="page-hero__crumb" :to="localePath('/')">Главная</NuxtLink>
-                  <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                      fill="none" aria-hidden="true">
-                      <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
-                          stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">Контакты</span>
-              </nav>
-              <p class="page-hero__eyebrow page-hero__eyebrow_silver">Свяжитесь с нами</p>
-              <h1 class="page-hero__title section__title">Контакты</h1>
-              <p class="page-hero__subtitle">Офисы, телефоны, почта и соцсети Perfectum.</p>
-          </div>
-      </div>
-  </section>
+  <PageHero
+    variant="page-hero_inner page-hero_company page-hero_contacts"
+    :crumb="t('seo.contacts')"
+    :eyebrow="hero.eyebrow"
+    eyebrow-silver
+    :title="rich(hero.title, { accent: 'page-hero__title-red' })"
+    :subtitle="hero.subtitle"
+  />
 
-  <!-- COMPANY -->
   <section class="company">
-      <div class="container">
-          <CompanyNav active="contacts" />
+    <div class="container">
+      <CompanyNav active="contacts" />
 
-          <ul class="contacts-grid">
-              <li class="contact-card">
-                  <span class="contact-card__icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29"
-                          fill="none">
-                          <path
-                              d="M16.9167 15.7083H19.3333V18.125H16.9167V15.7083ZM21.75 18.125H24.1667V15.7083H21.75V18.125ZM16.9167 22.9583H19.3333V20.5417H16.9167V22.9583ZM21.75 22.9583H24.1667V20.5417H21.75V22.9583ZM16.9167 8.45833H19.3333V6.04167H16.9167V8.45833ZM21.75 8.45833H24.1667V6.04167H21.75V8.45833ZM16.9167 13.2917H19.3333V10.875H16.9167V13.2917ZM21.75 13.2917H24.1667V10.875H21.75V13.2917ZM29 3.625V29H0V10.6684C0 9.7005 0.377 8.78942 1.06213 8.10429L4.33308 4.83333C5.89062 3.27458 8.60938 3.27458 10.1669 4.83333L12.0833 6.74975V3.625C12.0833 1.62642 13.7098 0 15.7083 0H25.375C27.3736 0 29 1.62642 29 3.625ZM12.0833 10.6684C12.0833 10.3458 11.9577 10.0413 11.7293 9.81288L8.45833 6.54192C7.82275 5.90633 6.67725 5.90633 6.04167 6.54192L2.77071 9.81288C2.54233 10.0413 2.41667 10.3445 2.41667 10.6684V26.5833H12.0833V10.6684ZM26.5833 3.625C26.5833 2.95921 26.0408 2.41667 25.375 2.41667H15.7083C15.0425 2.41667 14.5 2.95921 14.5 3.625V26.5833H26.5833V3.625ZM6.04167 18.125H8.45833V15.7083H6.04167V18.125ZM6.04167 13.2917H8.45833V10.875H6.04167V13.2917ZM6.04167 22.9583H8.45833V20.5417H6.04167V22.9583Z"
-                              fill="currentColor" />
-                      </svg>
-                  </span>
-                  <h2 class="contact-card__title">Центральный офис</h2>
-                  <p class="contact-card__text">100060, Узбекистан, г. Ташкент, ул. Шевченко, 21</p>
-                  <p class="contact-card__text">Пн–Вс 09:00–21:00</p>
-              </li>
-              <li class="contact-card">
-                  <span class="contact-card__icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"
-                          fill="none">
-                          <path
-                              d="M26.5607 20.5607L30.5328 24.5328C31.067 25.067 31.067 25.933 30.5328 26.4672C27.645 29.355 23.0732 29.6799 19.806 27.2295L17.4429 25.4571C14.8276 23.4957 12.5043 21.1724 10.5429 18.5571L8.77051 16.194C6.32011 12.9268 6.64502 8.35498 9.53285 5.46715C10.067 4.93301 10.933 4.93301 11.4672 5.46715L15.4393 9.43934C16.0251 10.0251 16.0251 10.9749 15.4393 11.5607L13.9076 13.0924C13.6642 13.3358 13.6038 13.7077 13.7578 14.0156C15.5378 17.5756 18.4244 20.4622 21.9844 22.2422C22.2923 22.3962 22.6642 22.3358 22.9076 22.0924L24.4393 20.5607C25.0251 19.9749 25.9749 19.9749 26.5607 20.5607Z"
-                              stroke="currentColor" stroke-width="3" />
-                      </svg>
-                  </span>
-                  <h2 class="contact-card__title">Контакт-центр</h2>
-                  <p class="contact-card__text"><a href="tel:+998981270077">+998 98 127 00 77</a><br /><a
-                          href="tel:+998983051111">+998 98 305 11 11</a></p>
-                  <p class="contact-card__text">077 — бесплатно с номеров Perfectum</p>
-              </li>
-              <li class="contact-card">
-                  <span class="contact-card__icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33"
-                          fill="none">
-                          <g clip-path="url(#clip0_1301_3287)">
-                              <path
-                                  d="M33 13.75V26.125C33 29.92 29.92 33 26.125 33H6.875C3.08 33 0 29.92 0 26.125V11C0 7.205 3.08 4.125 6.875 4.125H17.875C18.6313 4.125 19.25 4.74375 19.25 5.5C19.25 6.25625 18.6313 6.875 17.875 6.875H6.875C5.29375 6.875 3.9325 7.76875 3.23125 9.06125L13.585 19.415C15.1938 21.0238 17.8062 21.0238 19.415 19.415L24.6675 14.1625C25.2038 13.6263 26.07 13.6263 26.6063 14.1625C27.1425 14.6988 27.1425 15.565 26.6063 16.1012L21.3538 21.3538C20.02 22.6875 18.2463 23.3612 16.4862 23.3612C14.7262 23.3612 12.9662 22.6875 11.6187 21.3538L2.75 12.4712V26.125C2.75 28.3937 4.60625 30.25 6.875 30.25H26.125C28.3937 30.25 30.25 28.3937 30.25 26.125V13.75C30.25 12.9937 30.8687 12.375 31.625 12.375C32.3812 12.375 33 12.9937 33 13.75ZM22 5.5C22 2.46125 24.4613 0 27.5 0C30.5387 0 33 2.46125 33 5.5C33 8.53875 30.5387 11 27.5 11C24.4613 11 22 8.53875 22 5.5ZM24.75 5.5C24.75 7.0125 25.9875 8.25 27.5 8.25C29.0125 8.25 30.25 7.0125 30.25 5.5C30.25 3.9875 29.0125 2.75 27.5 2.75C25.9875 2.75 24.75 3.9875 24.75 5.5Z"
-                                  fill="currentColor" />
-                          </g>
-                          <defs>
-                              <clipPath id="clip0_1301_3287">
-                                  <rect width="33" height="33" fill="white" />
-                              </clipPath>
-                          </defs>
-                      </svg>
-                  </span>
-                  <h2 class="contact-card__title">Почта и реквизиты</h2>
-                  <p class="contact-card__text"><a
-                          href="mailto:info@perfectum.uz">info@perfectum.uz</a><br />ООО «Rubicon Wireless
-                      Communication»<br /><a href="mailto:press@perfectum.uz">press@perfectum.uz</a> — для СМИ
-                  </p>
-              </li>
-              <li class="contact-card">
-                  <span class="contact-card__icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
-                          fill="none">
-                          <g clip-path="url(#clip0_1301_3289)">
-                              <path
-                                  d="M16 0C12.8355 0 9.74207 0.938384 7.11088 2.69649C4.4797 4.45459 2.42894 6.95345 1.21793 9.87707C0.00693258 12.8007 -0.309921 16.0177 0.307443 19.1214C0.924806 22.2251 2.44866 25.0761 4.6863 27.3137C6.92394 29.5514 9.77487 31.0752 12.8786 31.6926C15.9823 32.3099 19.1993 31.9931 22.1229 30.7821C25.0466 29.5711 27.5454 27.5203 29.3035 24.8891C31.0616 22.2579 32 19.1645 32 16C31.9954 11.7579 30.3082 7.69095 27.3087 4.69136C24.3091 1.69177 20.2421 0.00458811 16 0ZM27.5293 9.33333H23.2347C22.2733 7.10531 21.0075 5.02145 19.4733 3.14133C22.8687 4.06524 25.7631 6.28996 27.5293 9.33333ZM22 16C21.9891 17.3575 21.7751 18.7058 21.3653 20H10.6347C10.2249 18.7058 10.011 17.3575 10 16C10.011 14.6425 10.2249 13.2942 10.6347 12H21.3653C21.7751 13.2942 21.9891 14.6425 22 16ZM11.704 22.6667H20.296C19.1643 24.901 17.7175 26.9611 16 28.784C14.2818 26.9616 12.835 24.9014 11.704 22.6667ZM11.704 9.33333C12.8357 7.09903 14.2825 5.03888 16 3.216C17.7182 5.03836 19.165 7.09861 20.296 9.33333H11.704ZM12.5333 3.14133C10.9969 5.02105 9.72879 7.10493 8.76534 9.33333H4.47067C6.23848 6.28858 9.13555 4.06367 12.5333 3.14133ZM3.28134 12H7.86667C7.52102 13.3055 7.34182 14.6495 7.33334 16C7.34182 17.3505 7.52102 18.6945 7.86667 20H3.28134C2.46179 17.3963 2.46179 14.6037 3.28134 12ZM4.47067 22.6667H8.76534C9.72879 24.8951 10.9969 26.979 12.5333 28.8587C9.13555 27.9363 6.23848 25.7114 4.47067 22.6667ZM19.4733 28.8587C21.0075 26.9786 22.2733 24.8947 23.2347 22.6667H27.5293C25.7631 25.71 22.8687 27.9348 19.4733 28.8587ZM28.7187 20H24.1333C24.479 18.6945 24.6582 17.3505 24.6667 16C24.6582 14.6495 24.479 13.3055 24.1333 12H28.716C29.5356 14.6037 29.5356 17.3963 28.716 20H28.7187Z"
-                                  fill="currentColor" />
-                          </g>
-                          <defs>
-                              <clipPath id="clip0_1301_3289">
-                                  <rect width="32" height="32" fill="white" />
-                              </clipPath>
-                          </defs>
-                      </svg>
-                  </span>
-                  <h2 class="contact-card__title">Мы в соцсетях</h2>
-                  <p class="contact-card__text">Будьте на связи и следите за новостями компании</p>
-                  <div class="contact-card__socials">
-                      <a class="contact-card__social" href="#">
-                          <img class="contact-card__social-icon" src="/images/social/instagram.svg"
-                              alt="" />Instagram
-                      </a>
-                      <a class="contact-card__social" href="#">
-                          <img class="contact-card__social-icon" src="/images/social/telegram.svg"
-                              alt="" />Telegram
-                      </a>
-                      <a class="contact-card__social" href="#">
-                          <img class="contact-card__social-icon" src="/images/social/facebook.svg"
-                              alt="" />Facebook
-                      </a>
-                  </div>
-              </li>
-          </ul>
+      <ul v-if="items.length" class="contacts-grid">
+        <li v-for="(card, index) in items" :key="index" class="contact-card">
+          <ContactCardIcon :type="card.type" />
+          <h2 class="contact-card__title">{{ card.title }}</h2>
 
-          <p class="contacts-note">Полный список офисов продаж и дилеров — на странице <NuxtLink
-                  :to="localePath('/offices')">«Офисы»</NuxtLink>.</p>
-      </div>
+          <p v-if="card.type === 'office'" class="contact-card__text">{{ t('footer.address') }}</p>
+
+          <p v-else-if="card.type === 'phones'" class="contact-card__text">
+            <template v-for="(phone, i) in phones()" :key="phone.href">
+              <br v-if="i" />
+              <a :href="phone.href">{{ phone.label }}</a>
+            </template>
+          </p>
+
+          <p v-else-if="card.type === 'emails'" class="contact-card__text">
+            <template v-for="(email, i) in emails()" :key="email.href">
+              <br v-if="i" />
+              <a :href="email.href">{{ email.label }}</a>
+            </template>
+          </p>
+
+          <p v-if="card.note" class="contact-card__text">{{ card.note }}</p>
+
+          <div v-if="card.type === 'socials' && socials.length" class="contact-card__socials">
+            <a
+              v-for="social in socials"
+              :key="social.url"
+              class="contact-card__social"
+              :href="social.url"
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="contact-card__social-icon" aria-hidden="true" v-html="social.svg ?? ''"></span>
+              {{ social.name }}
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      <div v-if="cards.note" class="contacts-note" v-html="cards.note"></div>
+    </div>
   </section>
 </template>

@@ -24,6 +24,9 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'cards' => 'Kartochkalar',
+        'card_type' => 'Kartochka turi',
+        'note' => 'Izoh',
         'stats' => 'Koʻrsatkichlar',
         'timeline' => 'Bosqichlar',
         'year' => 'Yil',
@@ -247,6 +250,7 @@ return [
     ],
 
     'helper' => [
+        'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
         'main_image' => 'Yangilik yoki aksiya ichidagi katta rasm',
         'filter_value' => 'Qidiruvda billingga yuboriladigan qiymat',
@@ -456,6 +460,13 @@ return [
         'prefix' => 'Prefiks',
         'number' => 'Seriya',
         'price' => 'Narx',
+    ],
+
+    'contact_card' => [
+        'office' => 'Bosh ofis',
+        'phones' => 'Telefonlar',
+        'emails' => 'Pochta',
+        'socials' => 'Ijtimoiy tarmoqlar',
     ],
 
     'faq_page' => [

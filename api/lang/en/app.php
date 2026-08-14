@@ -24,6 +24,9 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'cards' => 'Cards',
+        'card_type' => 'Card type',
+        'note' => 'Note',
         'stats' => 'Figures',
         'timeline' => 'Milestones',
         'year' => 'Year',
@@ -247,6 +250,7 @@ return [
     ],
 
     'helper' => [
+        'contact_card_type' => 'Decides which contacts are pulled in from the site settings',
         'preview_image' => 'Shown in the list; without it the card keeps its colour panel',
         'main_image' => 'The large image inside the news item or promotion',
         'filter_value' => 'The value sent to billing on search',
@@ -456,6 +460,13 @@ return [
         'prefix' => 'Prefix',
         'number' => 'Series',
         'price' => 'Price',
+    ],
+
+    'contact_card' => [
+        'office' => 'Head office',
+        'phones' => 'Phones',
+        'emails' => 'Email',
+        'socials' => 'Social networks',
     ],
 
     'faq_page' => [

@@ -1,0 +1,70 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Enums\ContactCard;
+use App\Enums\ContentBlockKey;
+use App\Enums\PageKey;
+use App\Filament\Pages\ManageContacts;
+use App\Models\ContentBlock;
+use App\Models\User;
+use Database\Seeders\ContactsSeeder;
+use Filament\Actions\Testing\TestAction;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
+use Spatie\Permission\Models\Permission;
+
+uses(RefreshDatabase::class);
+
+beforeEach(function (): void {
+    $this->withoutVite();
+
+    $this->admin = User::factory()->create();
+    $this->admin->givePermissionTo(Permission::findOrCreate('View:ManageContacts', 'web'));
+    $this->admin->refresh();
+});
+
+it('seeds every block the contacts manager offers', function (): void {
+    $this->seed(ContactsSeeder::class);
+
+    foreach (ManageContacts::tabs() as $tab) {
+        expect(ContentBlock::read(PageKey::Contacts, $tab::key()))
+            ->not->toBeEmpty("блок {$tab::key()->value} пустой");
+    }
+});
+
+it('renders both tabs of the contacts manager', function (): void {
+    $this->actingAs($this->admin)
+        ->get('/admin/contacts-page')
+        ->assertOk()
+        ->assertSee('page_hero.title')
+        ->assertSee('cards.items');
+});
+
+it('seeds one card per contact type', function (): void {
+    $this->seed(ContactsSeeder::class);
+
+    $types = collect(ContentBlock::read(PageKey::Contacts, ContentBlockKey::Cards)['items'])
+        ->pluck('type')
+        ->all();
+
+    expect($types)->toBe(array_column(ContactCard::cases(), 'value'));
+});
+
+it('writes a card back through its save action', function (): void {
+    $this->seed(ContactsSeeder::class);
+
+    $this->actingAs($this->admin);
+
+    $component = Livewire::test(ManageContacts::class);
+
+    // the repeater keys its rows by uuid, so the first one has to be looked up
+    $first = array_key_first($component->get('data')['cards']['items']);
+
+    $component
+        ->set("data.cards.items.{$first}.title", ['ru' => 'Новый офис', 'uz' => 'Yangi ofis'])
+        ->callAction(TestAction::make('save_cards')->schemaComponent(true));
+
+    expect(ContentBlock::read(PageKey::Contacts, ContentBlockKey::Cards)['items'][0]['title']['ru'])
+        ->toBe('Новый офис');
+});
