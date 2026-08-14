@@ -360,53 +360,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <section class="cdma-section" id="cdma-numbers">
       <div class="container">
           <h2 class="cdma-section__title">Свободные номера</h2>
-          <form class="cdma-numbers" action="#" method="get">
-              <div class="cdma-numbers__field">
-                  <label class="cdma-numbers__label" for="cdma-prefix">Префиксы</label>
-                  <div class="select">
-                      <select class="select__control" id="cdma-prefix" name="prefix">
-                          <option>Все префиксы</option>
-                          <option>90</option>
-                          <option>91</option>
-                          <option>93</option>
-                      </select>
-                      <svg class="select__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
-                              stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                  </div>
-              </div>
-              <div class="cdma-numbers__field">
-                  <label class="cdma-numbers__label" for="cdma-price">Цена</label>
-                  <div class="select">
-                      <select class="select__control" id="cdma-price" name="price">
-                          <option>Все цены</option>
-                          <option>До 100 000 сум</option>
-                          <option>До 500 000 сум</option>
-                      </select>
-                      <svg class="select__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
-                              stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                  </div>
-              </div>
-              <div class="cdma-numbers__field cdma-numbers__field_wide">
-                  <label class="cdma-numbers__label" for="cdma-number">Номер</label>
-                  <div class="cdma-numbers__search">
-                      <input class="cdma-numbers__input" id="cdma-number" name="number" type="search"
-                          placeholder="xx-xx" />
-                      <button class="cdma-numbers__btn" type="submit" aria-label="Найти номер">
-                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-                              <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </button>
-                  </div>
-              </div>
-          </form>
-          <p class="cdma-numbers__empty">По выбранным вами параметрам на данный момент свободных номеров
-              нет</p>
+          <CdmaFreeNumbers />
       </div>
   </section>
 
