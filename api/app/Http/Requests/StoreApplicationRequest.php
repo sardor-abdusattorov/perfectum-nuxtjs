@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Models\Application;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,7 +30,7 @@ class StoreApplicationRequest extends FormRequest
     {
         return [
             'phone' => ['required', 'string', 'regex:/^998\d{9}$/'],
-            'theme' => ['required', Rule::in(Application::THEMES)],
+            'theme' => ['required', 'string', Rule::exists('application_themes', 'slug')->where('status', true)],
             'message' => ['required', 'string', 'max:500'],
         ];
     }

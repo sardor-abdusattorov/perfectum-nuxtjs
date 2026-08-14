@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Application;
+use App\Models\ApplicationTheme;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,12 +19,16 @@ class ApplicationSeeder extends Seeder
 
         $rows = json_decode((string) file_get_contents(database_path('data/applications.json')), true);
 
+        // the dump carries no subject of its own, so the imported rows land
+        // under the first one the admin can rearrange them from
+        $theme = ApplicationTheme::query()->ordered()->value('id');
+
         collect($rows)
             ->map(fn (array $row): array => [
                 'name' => $row['name'],
                 'phone' => $row['phone'],
                 'email' => $row['email'],
-                'theme' => Application::THEME_CONNECTION,
+                'theme_id' => $theme,
                 'message' => $row['message'],
                 'status' => Application::STATUS_PROCESSED,
                 'ip_address' => null,

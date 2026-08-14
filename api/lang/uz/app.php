@@ -56,6 +56,8 @@ return [
         'application_single' => 'Ariza',
         'application_plural' => 'Arizalar',
         'application_theme' => 'Murojaat mavzusi',
+        'application_theme_single' => 'Murojaat mavzusi',
+        'application_theme_plural' => 'Murojaat mavzulari',
         'message' => 'Xabar',
         'ip_address' => 'IP-manzil',
         'created' => 'Yaratilgan',
@@ -476,13 +478,6 @@ return [
     'application_status' => [
         'new' => 'Yangi',
         'processed' => 'Koʻrib chiqilgan',
-    ],
-
-    'application_theme' => [
-        'connection' => 'Ulanish',
-        'tariffs' => 'Tariflar va toʻlov',
-        'support' => 'Texnik yordam',
-        'other' => 'Boshqa',
     ],
 
     'filter_type' => [

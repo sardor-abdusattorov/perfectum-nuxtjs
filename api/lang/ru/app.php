@@ -56,6 +56,8 @@ return [
         'application_single' => 'Заявка',
         'application_plural' => 'Заявки',
         'application_theme' => 'Тема обращения',
+        'application_theme_single' => 'Тема обращения',
+        'application_theme_plural' => 'Темы обращений',
         'message' => 'Сообщение',
         'ip_address' => 'IP-адрес',
         'created' => 'Создано',
@@ -471,13 +473,6 @@ return [
     'application_status' => [
         'new' => 'Новая',
         'processed' => 'Обработана',
-    ],
-
-    'application_theme' => [
-        'connection' => 'Подключение',
-        'tariffs' => 'Тарифы и оплата',
-        'support' => 'Техническая поддержка',
-        'other' => 'Другое',
     ],
 
     'filter_type' => [

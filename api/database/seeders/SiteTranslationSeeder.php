@@ -192,10 +192,6 @@ class SiteTranslationSeeder extends Seeder
             'help.contact_required' => ['ru' => 'Обязательное поле', 'uz' => 'Majburiy maydon'],
             'help.contact_success' => ['ru' => 'Заявка отправлена! Мы свяжемся с вами в течение рабочего дня.', 'uz' => 'Ariza yuborildi! Ish kuni davomida siz bilan bogʻlanamiz.'],
             'help.contact_error' => ['ru' => 'Не удалось отправить заявку. Попробуйте ещё раз.', 'uz' => 'Arizani yuborib boʻlmadi. Qayta urinib koʻring.'],
-            'help.theme_connection' => ['ru' => 'Подключение', 'uz' => 'Ulanish'],
-            'help.theme_tariffs' => ['ru' => 'Тарифы и оплата', 'uz' => 'Tariflar va toʻlov'],
-            'help.theme_support' => ['ru' => 'Техническая поддержка', 'uz' => 'Texnik yordam'],
-            'help.theme_other' => ['ru' => 'Другое', 'uz' => 'Boshqa'],
 
             'cdma.faq_title' => ['ru' => 'Частые вопросы', 'uz' => 'Koʻp beriladigan savollar'],
 

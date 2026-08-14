@@ -1,12 +1,21 @@
 <script setup lang="ts">
+import type { Taxonomy } from '~/composables/useTariffs'
+import type { ApiResponse } from '~/types/api'
+
 const localePath = useLocalePath()
 const t = useT()
+const { locale } = useI18n()
 const { $api } = useNuxtApp()
 
 useSeo({ titleKey: 'seo.help_contact' })
 
-const THEMES = ['connection', 'tariffs', 'support', 'other'] as const
 const MESSAGE_LIMIT = 500
+
+const { data: themes } = await useAsyncData(
+  'application-themes',
+  () => $api<ApiResponse<Taxonomy[]>>('/categories/application-themes').then(response => response.data),
+  { watch: [locale], default: () => [] as Taxonomy[] },
+)
 
 const phone = ref('')
 const theme = ref('')
@@ -154,7 +163,7 @@ async function submit(): Promise<void> {
                     @change="errors.theme = false"
                   >
                     <option value="" disabled>{{ t('help.contact_theme_placeholder') }}</option>
-                    <option v-for="item in THEMES" :key="item" :value="item">{{ t(`help.theme_${item}`) }}</option>
+                    <option v-for="item in themes" :key="item.slug" :value="item.slug">{{ item.name }}</option>
                   </select>
                   <svg class="select__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                     <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />

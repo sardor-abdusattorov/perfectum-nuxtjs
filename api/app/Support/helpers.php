@@ -3,6 +3,7 @@
 use App\Enums\MenuLocation;
 use App\Enums\PageKey;
 use App\Models\ActionCategory;
+use App\Models\ApplicationTheme;
 use App\Models\ContentBlock;
 use App\Models\DeviceCategory;
 use App\Models\DocumentCategory;
@@ -86,6 +87,7 @@ if (! function_exists('taxonomies')) {
             TariffType::class,
             ServiceCategory::class,
             DocumentCategory::class,
+            ApplicationTheme::class,
             Region::class,
         ];
     }

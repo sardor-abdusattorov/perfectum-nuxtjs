@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Applications\Tables;
 
 use App\Filament\Resources\Applications\Actions\ChangeApplicationStatusAction;
 use App\Models\Application;
+use App\Models\ApplicationTheme;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -29,10 +30,10 @@ class ApplicationsTable
                     ->placeholder('—')
                     ->toggleable(),
 
-                TextColumn::make('theme')
+                TextColumn::make('theme.name')
                     ->label(__('app.label.application_theme'))
                     ->badge()
-                    ->formatStateUsing(fn(?string $state): string => Application::themeLabel($state)),
+                    ->placeholder('—'),
 
                 TextColumn::make('message')
                     ->label(__('app.label.message'))
@@ -43,8 +44,8 @@ class ApplicationsTable
                 TextColumn::make('status')
                     ->label(__('app.label.status'))
                     ->badge()
-                    ->color(fn(?string $state): string => Application::statusColor($state))
-                    ->formatStateUsing(fn(?string $state): string => Application::statusLabel($state))
+                    ->color(fn (?string $state): string => Application::statusColor($state))
+                    ->formatStateUsing(fn (?string $state): string => Application::statusLabel($state))
                     ->sortable(),
 
                 TextColumn::make('created_at')
@@ -58,9 +59,9 @@ class ApplicationsTable
                     ->label(__('app.label.status'))
                     ->options(Application::getStatusOptions()),
 
-                SelectFilter::make('theme')
+                SelectFilter::make('theme_id')
                     ->label(__('app.label.application_theme'))
-                    ->options(Application::getThemeOptions()),
+                    ->options(ApplicationTheme::options()),
             ])
             ->recordActions([
                 ChangeApplicationStatusAction::make(),

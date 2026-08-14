@@ -56,6 +56,8 @@ return [
         'application_single' => 'Application',
         'application_plural' => 'Applications',
         'application_theme' => 'Subject',
+        'application_theme_single' => 'Application subject',
+        'application_theme_plural' => 'Application subjects',
         'message' => 'Message',
         'ip_address' => 'IP address',
         'created' => 'Created',
@@ -472,13 +474,6 @@ return [
     'application_status' => [
         'new' => 'New',
         'processed' => 'Processed',
-    ],
-
-    'application_theme' => [
-        'connection' => 'Connection',
-        'tariffs' => 'Tariffs and payment',
-        'support' => 'Technical support',
-        'other' => 'Other',
     ],
 
     'filter_type' => [

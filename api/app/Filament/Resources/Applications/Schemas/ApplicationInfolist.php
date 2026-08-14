@@ -25,10 +25,10 @@ class ApplicationInfolist
                             ->formatStateUsing(fn (?string $state): string => Application::statusLabel($state))
                             ->hintAction(ChangeApplicationStatusAction::make()),
 
-                        TextEntry::make('theme')
+                        TextEntry::make('theme.name')
                             ->label(__('app.label.application_theme'))
                             ->badge()
-                            ->formatStateUsing(fn (?string $state): string => Application::themeLabel($state)),
+                            ->placeholder('—'),
 
                         TextEntry::make('created_at')
                             ->label(__('app.label.created_at'))

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Application;
+use App\Models\ApplicationTheme;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class ApplicationFactory extends Factory
             'name' => fake()->name(),
             'phone' => '+998 (90) '.fake()->numerify('###-##-##'),
             'email' => fake()->safeEmail(),
-            'theme' => fake()->randomElement(Application::THEMES),
+            'theme_id' => ApplicationTheme::factory(),
             'message' => fake()->sentence(),
             'status' => Application::STATUS_NEW,
             'ip_address' => fake()->ipv4(),
