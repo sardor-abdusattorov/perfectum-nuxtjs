@@ -41,6 +41,8 @@ it('renders the list and create page of every resource', function (string $resou
     ['regions', 'Region'],
     ['offices', 'Office'],
     ['devices', 'Device'],
+    ['documents', 'Document'],
+    ['document-categories', 'DocumentCategory'],
     ['faqs', 'Faq'],
     ['free-number-filters', 'FreeNumberFilter'],
     ['menus', 'Menu'],

@@ -24,6 +24,11 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'document_single' => 'Document',
+        'document_plural' => 'Documents',
+        'document_category_single' => 'Document category',
+        'document_category_plural' => 'Document categories',
+        'size' => 'Size',
         'cards' => 'Cards',
         'card_type' => 'Card type',
         'note' => 'Note',
@@ -250,6 +255,7 @@ return [
     ],
 
     'helper' => [
+        'document_file' => 'A PDF or a Word/Excel document, up to 20 MB',
         'cdma_article' => 'The page copy along with the office and opening-hours tables',
         'contact_card_type' => 'Decides which contacts are pulled in from the site settings',
         'preview_image' => 'Shown in the list; without it the card keeps its colour panel',
@@ -469,6 +475,11 @@ return [
         'phones' => 'Phones',
         'emails' => 'Email',
         'socials' => 'Social networks',
+    ],
+
+    'unit' => [
+        'kb' => 'KB',
+        'mb' => 'MB',
     ],
 
     'faq_page' => [

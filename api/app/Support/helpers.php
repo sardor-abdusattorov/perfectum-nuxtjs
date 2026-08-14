@@ -5,6 +5,7 @@ use App\Enums\PageKey;
 use App\Models\ActionCategory;
 use App\Models\ContentBlock;
 use App\Models\DeviceCategory;
+use App\Models\DocumentCategory;
 use App\Models\FaqCategory;
 use App\Models\Menu;
 use App\Models\NewsCategory;
@@ -84,6 +85,7 @@ if (! function_exists('taxonomies')) {
             TariffCategory::class,
             TariffType::class,
             ServiceCategory::class,
+            DocumentCategory::class,
             Region::class,
         ];
     }

@@ -247,6 +247,9 @@ class SiteTranslationSeeder extends Seeder
             'offices.you_here' => ['ru' => 'Вы здесь', 'uz' => 'Siz shu yerdasiz'],
 
             'company.nav_label' => ['ru' => 'Разделы о компании', 'uz' => 'Kompaniya boʻlimlari'],
+            'documents.download' => ['ru' => 'Скачать', 'uz' => 'Yuklab olish'],
+            'documents.empty' => ['ru' => 'Документы пока не загружены', 'uz' => 'Hujjatlar hali yuklanmagan'],
+
             'seo.about' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida'],
             'seo.actions' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'seo.action' => ['ru' => 'Акция', 'uz' => 'Aksiya'],

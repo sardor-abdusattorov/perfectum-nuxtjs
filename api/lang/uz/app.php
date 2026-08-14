@@ -24,6 +24,11 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'document_single' => 'Hujjat',
+        'document_plural' => 'Hujjatlar',
+        'document_category_single' => 'Hujjatlar toifasi',
+        'document_category_plural' => 'Hujjatlar toifalari',
+        'size' => 'Hajmi',
         'cards' => 'Kartochkalar',
         'card_type' => 'Kartochka turi',
         'note' => 'Izoh',
@@ -250,6 +255,7 @@ return [
     ],
 
     'helper' => [
+        'document_file' => 'PDF yoki Word/Excel hujjati, 20 MB gacha',
         'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
@@ -469,6 +475,11 @@ return [
         'phones' => 'Telefonlar',
         'emails' => 'Pochta',
         'socials' => 'Ijtimoiy tarmoqlar',
+    ],
+
+    'unit' => [
+        'kb' => 'KB',
+        'mb' => 'MB',
     ],
 
     'faq_page' => [

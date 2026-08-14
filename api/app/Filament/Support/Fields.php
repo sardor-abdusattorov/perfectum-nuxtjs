@@ -124,6 +124,24 @@ class Fields
             ->nullable();
     }
 
+    public static function file(string $model, string $field = 'file'): FileUpload
+    {
+        return FileUpload::make($field)
+            ->label(__('app.label.file'))
+            ->disk('public')
+            ->directory(fn (): string => "uploads/{$model}/".now()->format('Y/m'))
+            ->visibility('public')
+            ->acceptedFileTypes([
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            ])
+            ->downloadable()
+            ->maxSize(20480);
+    }
+
     public static function icon(string $field = 'icon'): Select
     {
         return Select::make($field)
