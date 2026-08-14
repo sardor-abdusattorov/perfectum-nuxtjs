@@ -43,6 +43,7 @@ it('renders the list and create page of every resource', function (string $resou
     ['devices', 'Device'],
     ['documents', 'Document'],
     ['document-categories', 'DocumentCategory'],
+    ['coverage-layers', 'CoverageLayer'],
     ['faqs', 'Faq'],
     ['free-number-filters', 'FreeNumberFilter'],
     ['menus', 'Menu'],

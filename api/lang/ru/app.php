@@ -24,6 +24,13 @@ return [
         'resources' => 'Ресурсы',
     ],
     'label' => [
+        'coverage_layer_single' => 'Слой покрытия',
+        'coverage_layer_plural' => 'Карта покрытия',
+        'coverage_file' => 'Архив с зоной покрытия',
+        'coverage_unread' => 'архив не прочитан',
+        'key' => 'Ключ',
+        'color' => 'Цвет',
+        'shapes' => 'Контуров',
         'document_single' => 'Документ',
         'document_plural' => 'Документы',
         'document_category_single' => 'Категория документов',
@@ -255,6 +262,8 @@ return [
     ],
 
     'helper' => [
+        'coverage_key' => 'Латиницей, например 5g или voice — по нему слой включается на карте',
+        'coverage_file' => 'ZIP с шейпфайлом (.shp и .prj). Контуры читаются при загрузке',
         'document_file' => 'PDF или документ Word/Excel, до 20 МБ',
         'cdma_article' => 'Текст страницы вместе с таблицами офисов и режима работы',
         'contact_card_type' => 'Определяет, какие контакты подставятся автоматически из настроек сайта',

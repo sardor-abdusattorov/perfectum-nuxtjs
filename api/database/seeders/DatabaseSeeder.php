@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ContactsSeeder::class,
             CdmaConnectSeeder::class,
             DocumentSeeder::class,
+            CoverageSeeder::class,
         ]);
     }
 }

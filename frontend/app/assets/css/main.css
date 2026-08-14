@@ -5785,6 +5785,50 @@ body.overflow__hidden {
 /* prod opens an address field out of the search button. Collapsed it is a
    zero-width sliver, so the bar still reads exactly as the frame draws it;
    the three switches live on the group so there is one place to set them. */
+.coverage-search__layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.coverage-search__layer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--color-black);
+  transition: var(--transition);
+}
+
+.coverage-search__layer::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--layer-color, var(--color-red));
+}
+
+.coverage-search__layer:hover,
+.coverage-search__layer_active {
+  border-color: var(--layer-color, var(--color-red));
+}
+
+.coverage-search__layer_active {
+  font-weight: 600;
+}
+
+.coverage__empty {
+  margin-top: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+
 .coverage-search__find {
   --field-width: 0px;
   --field-padding: 0;

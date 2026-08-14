@@ -24,6 +24,13 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'coverage_layer_single' => 'Coverage layer',
+        'coverage_layer_plural' => 'Coverage map',
+        'coverage_file' => 'Coverage archive',
+        'coverage_unread' => 'archive unread',
+        'key' => 'Key',
+        'color' => 'Colour',
+        'shapes' => 'Shapes',
         'document_single' => 'Document',
         'document_plural' => 'Documents',
         'document_category_single' => 'Document category',
@@ -255,6 +262,8 @@ return [
     ],
 
     'helper' => [
+        'coverage_key' => 'Latin letters, e.g. 5g or voice — the map switches layers by it',
+        'coverage_file' => 'A ZIP holding a shapefile (.shp and .prj). The shapes are read on upload',
         'document_file' => 'A PDF or a Word/Excel document, up to 20 MB',
         'cdma_article' => 'The page copy along with the office and opening-hours tables',
         'contact_card_type' => 'Decides which contacts are pulled in from the site settings',

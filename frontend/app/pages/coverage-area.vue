@@ -1,87 +1,75 @@
 <script setup lang="ts">
-const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.coverage' })
+await useBlocks('coverage_area')
+
+const hero = useBlock('coverage_area', 'page_hero')
+const { data: layers } = await useCoverage()
+
+const t = useT()
+
+useSeo({ page: 'coverage_area', titleKey: 'seo.coverage' })
+
+const CITIES: Record<string, [number, number]> = {
+  tashkent: [41.311, 69.24],
+  samarkand: [39.654, 66.96],
+  bukhara: [39.767, 64.421],
+  nukus: [42.46, 59.617],
+  urgench: [41.55, 60.631],
+}
+
+const available = computed(() => layers.value ?? [])
+const active = ref('')
+const city = ref('tashkent')
+
+watchEffect(() => {
+  if (!active.value && available.value.length) {
+    active.value = available.value[0]!.key
+  }
+})
+
+const center = computed(() => CITIES[city.value] ?? null)
 </script>
 
 <template>
-  <!-- PAGE HERO -->
-  <section class="page-hero page-hero_inner page-hero_coverage">
-      <div class="container">
-          <div class="page-hero__inner">
-              <nav class="page-hero__crumbs" aria-label="Хлебные крошки">
-                  <NuxtLink class="page-hero__crumb" :to="localePath('/')">Главная</NuxtLink>
-                  <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                      fill="none" aria-hidden="true">
-                      <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
-                          stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">Карта
-                      покрытия</span>
-              </nav>
-              <p class="page-hero__eyebrow page-hero__eyebrow_silver">5G Standalone</p>
-              <h1 class="page-hero__title section__title">Карта<br /><span
-                      class="page-hero__title-red">покрытия</span></h1>
-              <p class="page-hero__subtitle">Проверьте доступность сети Perfectum 5G SA в вашем городе — в зоне
-                  покрытия работает и мобильная связь, и домашний интернет.</p>
-          </div>
-      </div>
-  </section>
+  <PageHero
+    variant="page-hero_inner page-hero_coverage"
+    :crumb="t('seo.coverage')"
+    :eyebrow="hero.eyebrow"
+    eyebrow-silver
+    :title="rich(hero.title, { accent: 'page-hero__title-red' })"
+    :subtitle="hero.subtitle"
+  />
 
-  <!-- COVERAGE -->
   <section class="coverage coverage_map">
-      <div class="container">
-          <form class="coverage-search">
-              <p class="coverage-search__label">Проверьте покрытие в вашем городе</p>
-              <div class="coverage-search__controls">
-                  <div class="select coverage-search__select">
-                      <select class="select__control" aria-label="Город">
-                          <option>Ташкент</option>
-                          <option>Самарканд</option>
-                          <option>Бухара</option>
-                          <option>Нукус</option>
-                          <option>Ургенч</option>
-                      </select>
-                      <svg class="select__chevron" viewBox="0 0 12 8" fill="none"
-                          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                          <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"
-                              stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                  </div>
-                  <div class="coverage-search__find">
-                      <div class="coverage-search__field">
-                          <button type="button" class="coverage-search__close"
-                              aria-label="Закрыть поиск по адресу">
-                              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                  aria-hidden="true">
-                                  <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8"
-                                      stroke-linecap="round" />
-                              </svg>
-                          </button>
-                          <input type="search" class="coverage-search__input"
-                              placeholder="Введите адрес для поиска" aria-label="Поиск по адресу" />
-                      </div>
-                      <button type="submit" class="coverage-search__btn" aria-label="Проверить покрытие">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                              aria-hidden="true">
-                              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-                              <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8"
-                                  stroke-linecap="round" />
-                          </svg>
-                      </button>
-                  </div>
-              </div>
-          </form>
-
-          <div class="map map_coverage">
-              <div class="map__canvas" id="coverage-map" role="application"
-                  aria-label="Карта покрытия сети Perfectum 5G по Узбекистану"></div>
-              <div class="map__zoom">
-                  <button class="map__zoom-btn" type="button" data-zoom="in"
-                      aria-label="Приблизить">+</button>
-                  <button class="map__zoom-btn" type="button" data-zoom="out"
-                      aria-label="Отдалить">−</button>
-              </div>
+    <div class="container">
+      <form class="coverage-search" @submit.prevent>
+        <p class="coverage-search__label">{{ t('coverage.search_label') }}</p>
+        <div class="coverage-search__controls">
+          <div class="select coverage-search__select">
+            <select v-model="city" class="select__control" :aria-label="t('coverage.city')">
+              <option v-for="(coords, key) in CITIES" :key="key" :value="key">{{ t(`coverage.city_${key}`) }}</option>
+            </select>
+            <svg class="select__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
           </div>
-      </div>
+
+          <div v-if="available.length > 1" class="coverage-search__layers">
+            <button
+              v-for="layer in available"
+              :key="layer.key"
+              type="button"
+              class="coverage-search__layer"
+              :class="layer.key === active && 'coverage-search__layer_active'"
+              :style="{ '--layer-color': layer.color }"
+              @click="active = layer.key"
+            >{{ layer.name }}</button>
+          </div>
+        </div>
+      </form>
+
+      <CoverageMap :layers="available" :active="active" :center="center" />
+
+      <p v-if="!available.length" class="coverage__empty">{{ t('coverage.empty') }}</p>
+    </div>
   </section>
 </template>

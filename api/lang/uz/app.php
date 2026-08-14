@@ -24,6 +24,13 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'coverage_layer_single' => 'Qamrov qatlami',
+        'coverage_layer_plural' => 'Qamrov xaritasi',
+        'coverage_file' => 'Qamrov hududi arxivi',
+        'coverage_unread' => 'arxiv oʻqilmadi',
+        'key' => 'Kalit',
+        'color' => 'Rang',
+        'shapes' => 'Konturlar',
         'document_single' => 'Hujjat',
         'document_plural' => 'Hujjatlar',
         'document_category_single' => 'Hujjatlar toifasi',
@@ -255,6 +262,8 @@ return [
     ],
 
     'helper' => [
+        'coverage_key' => 'Lotin harflarida, masalan 5g yoki voice — qatlam shu boʻyicha yoqiladi',
+        'coverage_file' => 'Sheypfayl bilan ZIP (.shp va .prj). Konturlar yuklashda oʻqiladi',
         'document_file' => 'PDF yoki Word/Excel hujjati, 20 MB gacha',
         'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
