@@ -18,7 +18,7 @@ const region = ref<number | ''>('')
 const city = ref('')
 const search = ref('')
 const suggestOpen = ref(false)
-const page = ref(1)
+const { page } = useListQuery({ search: false, category: false })
 const active = ref<number | null>(null)
 const hint = ref('')
 const userCoords = ref<[number, number] | null>(null)
@@ -68,40 +68,6 @@ const suggestions = computed(() => (
 const pages = computed(() => Math.max(1, Math.ceil(visible.value.length / PER_PAGE)))
 const shown = computed(() => visible.value.slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE))
 
-/**
- * Page numbers collapse around the current one — 1 … 4 5 6 … 22 — and the
- * window narrows on a phone so the row never wraps.
- */
-const pager = computed<Array<number | null>>(() => {
-  const total = pages.value
-  const current = page.value
-  const delta = 1
-
-  if (total <= 5 + delta * 2) {
-    return Array.from({ length: total }, (_, index) => index + 1)
-  }
-
-  const items: Array<number | null> = [1]
-  const left = Math.max(2, current - delta)
-  const right = Math.min(total - 1, current + delta)
-
-  if (left > 2) {
-    items.push(null)
-  }
-
-  for (let index = left; index <= right; index += 1) {
-    items.push(index)
-  }
-
-  if (right < total - 1) {
-    items.push(null)
-  }
-
-  items.push(total)
-
-  return items
-})
-
 const counts = computed(() => ({
   office: offices.value.filter(item => item.type === 'office').length,
   dealer: offices.value.filter(item => item.type === 'dealer').length,
@@ -123,12 +89,6 @@ watch([type, region, city, search], () => {
 watch(pages, (total) => {
   page.value = Math.min(page.value, total)
 })
-
-function turn(target: number | null): void {
-  if (target !== null && target >= 1 && target <= pages.value) {
-    page.value = target
-  }
-}
 
 function select(id: number): void {
   active.value = id
@@ -328,42 +288,7 @@ function locate(): void {
         <p v-else class="offices__empty">{{ t('offices.empty') }}</p>
       </div>
 
-      <nav v-if="pages > 1" class="vac-pagination" :aria-label="t('offices.pagination_label')">
-        <button
-          type="button"
-          class="vac-pagination__item vac-pagination__item_arrow"
-          :class="page === 1 && 'vac-pagination__item_disabled'"
-          :aria-label="t('common.prev')"
-          @click="turn(page - 1)"
-        >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-
-        <template v-for="(item, index) in pager" :key="index">
-          <span v-if="item === null" class="vac-pagination__ellipsis">…</span>
-          <button
-            v-else
-            type="button"
-            class="vac-pagination__item"
-            :class="item === page && 'vac-pagination__item_active'"
-            @click="turn(item)"
-          >{{ item }}</button>
-        </template>
-
-        <button
-          type="button"
-          class="vac-pagination__item vac-pagination__item_arrow"
-          :class="page === pages && 'vac-pagination__item_disabled'"
-          :aria-label="t('common.next')"
-          @click="turn(page + 1)"
-        >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-      </nav>
+      <AppPagination :page="page" :pages="pages" @change="page = $event" />
     </div>
   </section>
 </template>
