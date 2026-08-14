@@ -1668,6 +1668,73 @@
   color: var(--color-black);
 }
 
+/* the article comes from the editor, so its tables carry no classes of
+   their own and inherit the panel look by element */
+.cdma-connect .cdma-connect__article table {
+  width: 100%;
+  margin-bottom: 42px;
+  border-collapse: collapse;
+  background: #fbfbfb;
+  border: 1px solid var(--cdma-border);
+  border-radius: var(--radius);
+}
+
+.cdma-connect .cdma-connect__article caption {
+  padding: 15px 20px;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  color: var(--color-black);
+  background: #f2f2f2;
+  border-radius: 20px 20px 0 0;
+}
+
+.cdma-connect .cdma-connect__article thead th {
+  padding: 15px 20px 15px 34px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+  vertical-align: middle;
+  color: var(--color-black);
+  background: #f2f2f2;
+}
+
+.cdma-connect .cdma-connect__article tbody th {
+  width: 305px;
+  padding: 20px 20px 20px 17px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 29px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--color-black);
+  border-right: 1px solid var(--cdma-border);
+  border-bottom: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-connect__article tbody tr:last-child th,
+.cdma-connect .cdma-connect__article tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.cdma-connect .cdma-connect__article tbody td {
+  padding: 20px 20px 20px 34px;
+  font-size: 20px;
+  line-height: 29px;
+  vertical-align: top;
+  color: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid var(--cdma-border);
+}
+
+.cdma-connect .cdma-connect__article p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 26px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+
 .cdma-connect .cdma-table {
   margin-bottom: 42px;
   padding: 20px 20px 16px;

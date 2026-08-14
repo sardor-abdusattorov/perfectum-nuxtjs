@@ -19,8 +19,17 @@ class SaveAction
             Action::make("save_{$key}")
                 ->label(__('app.action.save'))
                 ->keyBindings(['mod+s'])
-                ->action(function ($livewire) use ($key, $tabClass): void {
-                    $state = $livewire->form->getState();
+                ->action(function (Action $action) use ($key, $tabClass): void {
+                    /**
+                     * The state is read from the tab this button sits in rather
+                     * than from the whole form: a page holds several tabs, and
+                     * validating all of them would let a required field the
+                     * editor never opened block a save it has nothing to do
+                     * with.
+                     */
+                    $tab = $action->getSchemaComponent()?->getContainer()->getParentComponent();
+
+                    $state = $tab?->getChildSchema()?->getState() ?? [];
 
                     $tabClass::save($state[$key] ?? []);
 

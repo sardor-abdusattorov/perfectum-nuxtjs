@@ -250,6 +250,7 @@ return [
     ],
 
     'helper' => [
+        'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
         'main_image' => 'Yangilik yoki aksiya ichidagi katta rasm',
@@ -418,6 +419,7 @@ return [
     ],
 
     'page' => [
+        'cdma_connect' => 'CDMA — qanday ulanish',
         'home' => 'Bosh sahifa',
         'tariffs' => 'Tariflar',
         'services' => 'Xizmatlar',

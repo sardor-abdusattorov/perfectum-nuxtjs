@@ -250,6 +250,7 @@ return [
     ],
 
     'helper' => [
+        'cdma_article' => 'The page copy along with the office and opening-hours tables',
         'contact_card_type' => 'Decides which contacts are pulled in from the site settings',
         'preview_image' => 'Shown in the list; without it the card keeps its colour panel',
         'main_image' => 'The large image inside the news item or promotion',
@@ -418,6 +419,7 @@ return [
     ],
 
     'page' => [
+        'cdma_connect' => 'CDMA — how to connect',
         'home' => 'Home',
         'tariffs' => 'Tariffs',
         'services' => 'Services',

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             HomepageSeeder::class,
             AboutCompanySeeder::class,
             ContactsSeeder::class,
+            CdmaConnectSeeder::class,
         ]);
     }
 }
