@@ -6,6 +6,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
+use Livewire\Attributes\Url;
 
 /**
  * @property-read Schema $form
@@ -18,6 +19,9 @@ abstract class ManageBlocks extends Page
      * @var array<string, mixed>
      */
     public array $data = [];
+
+    #[Url(as: 'tab')]
+    public string $activeTab = '';
 
     /**
      * @return array<int, class-string<ContentTab>>
@@ -35,18 +39,34 @@ abstract class ManageBlocks extends Page
             $this->data[$tab::key()->value] = $tab::load();
         }
 
+        if (! array_key_exists($this->activeTab, $this->data)) {
+            $this->activeTab = (string) array_key_first($this->data);
+        }
+
         $this->form->fill($this->data);
     }
 
+    /**
+     * Only the open tab is rendered: a page holds several of them, and building
+     * the markup of every editor, repeater and upload on load is what made
+     * these pages heavy. The state of the closed ones still travels in `data`,
+     * so unsaved edits survive a switch.
+     */
     public function form(Schema $schema): Schema
     {
+        $tabs = [];
+
+        foreach (static::tabs() as $tab) {
+            $tabs[$tab::key()->value] = $tab::make();
+        }
+
         return $schema
             ->components([
                 Form::make([
                     Tabs::make('sections')
                         ->columnSpanFull()
-                        ->persistTabInQueryString()
-                        ->schema(array_map(fn (string $tab) => $tab::make(), static::tabs())),
+                        ->livewireProperty('activeTab')
+                        ->schema($tabs),
                 ]),
             ])
             ->statePath('data');

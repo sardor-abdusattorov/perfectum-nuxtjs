@@ -32,11 +32,13 @@ it('seeds every block the cdma connect manager offers', function (): void {
     }
 });
 
-it('renders both tabs of the cdma connect manager', function (): void {
-    $this->actingAs($this->admin)
-        ->get('/admin/cdma-connect')
-        ->assertOk()
+it('renders one tab at a time and builds the other on demand', function (): void {
+    $this->actingAs($this->admin);
+
+    Livewire::test(ManageCdmaConnect::class)
         ->assertSee('page_hero.title')
+        ->assertDontSee('intro.content')
+        ->set('activeTab', 'intro')
         ->assertSee('intro.content');
 });
 

@@ -9,6 +9,7 @@ use App\Models\ContentBlock;
 use App\Models\User;
 use Database\Seeders\HomepageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Spatie\Permission\Models\Permission;
 
 uses(RefreshDatabase::class);
@@ -26,12 +27,19 @@ function homepageAdmin(): User
     return $user->refresh();
 }
 
-it('renders every tab of the homepage manager', function (): void {
-    $this->actingAs(homepageAdmin())
-        ->get('/admin/homepage')
-        ->assertOk()
+it('renders one tab at a time and builds the rest on demand', function (): void {
+    $this->actingAs(homepageAdmin());
+
+    $page = Livewire::test(ManageHomepage::class)
         ->assertSee('hero.slides')
+        ->assertDontSee('choose.cards')
+        ->assertDontSee('app_promo.watermark');
+
+    $page->set('activeTab', 'choose')
         ->assertSee('choose.cards')
+        ->assertDontSee('hero.slides');
+
+    $page->set('activeTab', 'app_promo')
         ->assertSee('app_promo.watermark');
 });
 
@@ -100,22 +108,24 @@ it('keeps the coverage status text and the publish switch apart', function (): v
     expect($city['status_text']['ru'])->toBe('Полное покрытие')
         ->and($city['status'])->toBeFalse();
 
-    $this->actingAs(homepageAdmin())
-        ->get('/admin/homepage')
-        ->assertOk()
+    $this->actingAs(homepageAdmin());
+
+    Livewire::test(ManageHomepage::class)
+        ->set('activeTab', 'coverage')
         ->assertSee('status_text');
 });
 
 it('loads the seeded copy back into the forms', function (): void {
     $this->seed(HomepageSeeder::class);
 
-    $this->actingAs(homepageAdmin())
-        ->get('/admin/homepage')
-        ->assertOk()
+    $this->actingAs(homepageAdmin());
+
+    $page = Livewire::test(ManageHomepage::class)
         ->assertSee('Скорость')
-        ->assertSee('Подключиться')
-        ->assertSee('Ташкент')
-        ->assertSee('STANDALONE');
+        ->assertSee('Подключиться');
+
+    $page->set('activeTab', 'coverage')->assertSee('Ташкент');
+    $page->set('activeTab', 'marquee')->assertSee('STANDALONE');
 });
 
 it('seeds every block of the home page', function (): void {
@@ -128,13 +138,14 @@ it('seeds every block of the home page', function (): void {
 });
 
 it('requires the title in ru and uz but not in en', function (): void {
-    $html = $this->actingAs(homepageAdmin())
-        ->get('/admin/homepage')
-        ->assertOk()
-        ->getContent();
+    $this->actingAs(homepageAdmin());
+
+    $html = Livewire::test(ManageHomepage::class)
+        ->set('activeTab', 'app_promo')
+        ->html();
 
     $marked = function (string $locale) use ($html): bool {
-        $label = strpos($html, "form.app_promo.title.{$locale}-label");
+        $label = strpos($html, "app_promo.title.{$locale}-label");
 
         return $label !== false
             && str_contains(substr($html, $label, 400), 'fi-fo-field-label-required-mark');

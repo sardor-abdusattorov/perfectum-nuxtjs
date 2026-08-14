@@ -33,11 +33,13 @@ it('seeds every block the contacts manager offers', function (): void {
     }
 });
 
-it('renders both tabs of the contacts manager', function (): void {
-    $this->actingAs($this->admin)
-        ->get('/admin/contacts-page')
-        ->assertOk()
+it('renders one tab at a time and builds the other on demand', function (): void {
+    $this->actingAs($this->admin);
+
+    Livewire::test(ManageContacts::class)
         ->assertSee('page_hero.title')
+        ->assertDontSee('cards.items')
+        ->set('activeTab', 'cards')
         ->assertSee('cards.items');
 });
 

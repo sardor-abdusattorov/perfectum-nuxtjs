@@ -32,14 +32,16 @@ it('seeds every block the about company manager offers', function (): void {
     }
 });
 
-it('renders every tab of the about company manager', function (): void {
-    $this->actingAs($this->admin)
-        ->get('/admin/about-company')
-        ->assertOk()
+it('renders one tab at a time and builds the rest on demand', function (): void {
+    $this->actingAs($this->admin);
+
+    $page = Livewire::test(ManageAboutCompany::class)
         ->assertSee('page_hero.title')
-        ->assertSee('stats.items')
-        ->assertSee('intro.content')
-        ->assertSee('timeline.items');
+        ->assertDontSee('stats.items');
+
+    $page->set('activeTab', 'stats')->assertSee('stats.items');
+    $page->set('activeTab', 'intro')->assertSee('intro.content');
+    $page->set('activeTab', 'timeline')->assertSee('timeline.items');
 });
 
 it('loads the seeded blocks into the form', function (): void {

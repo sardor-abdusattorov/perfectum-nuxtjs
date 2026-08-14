@@ -83,3 +83,23 @@ lists the same rows the form offers. A raw
 slugs and skips the cached options. Both return a plain Filament component, so
 override the label when the taxonomy is not a category:
 `Fields::category(Region::class, 'region_id')->label(__('app.label.region_single'))`.
+
+## Only the open tab of a block manager is rendered
+
+`ManageBlocks` sets `Tabs::livewireProperty('activeTab')`, so Filament emits
+markup for the active tab alone and rebuilds a neighbour on `wire:click`.
+Every tab of the homepage at once was 3.3 MB of HTML; one tab is 0.76 MB.
+
+The tabs are keyed by their `ContentBlockKey`, which becomes the value of
+`activeTab` and of the `?tab=` query parameter (`#[Url(as: 'tab')]` on the
+property, since `persistTabInQueryString()` only works for the Alpine-driven
+variant). The key also joins the DOM ids of the fields inside, so an id reads
+`form.hero.hero.slides…` — match a suffix, never the whole id.
+
+State is untouched by any of this: `mount()` still loads every block into
+`$data`, so a closed tab keeps its unsaved edits and `SaveAction` still finds
+its own tab's state.
+
+A test may no longer assert one `->get()` sees fields from several tabs. Drive
+the page with `Livewire::test(...)->set('activeTab', 'coverage')` and assert
+per tab.
