@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Homepage;
+namespace App\Filament\Pages\Blocks;
 
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;

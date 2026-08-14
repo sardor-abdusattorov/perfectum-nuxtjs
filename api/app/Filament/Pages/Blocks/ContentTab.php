@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Homepage;
+namespace App\Filament\Pages\Blocks;
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
@@ -13,10 +13,7 @@ abstract class ContentTab
 
     abstract public static function make(): Tab;
 
-    public static function page(): PageKey
-    {
-        return PageKey::Home;
-    }
+    abstract public static function page(): PageKey;
 
     /**
      * @return array<string, mixed>

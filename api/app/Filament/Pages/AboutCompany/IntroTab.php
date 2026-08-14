@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Homepage;
+namespace App\Filament\Pages\AboutCompany;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
@@ -8,37 +8,31 @@ use App\Enums\PageKey;
 use App\Filament\Pages\Blocks\ContentTab;
 use App\Filament\Pages\Blocks\SaveAction;
 use App\Filament\Support\Fields;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 
-class TariffsTab extends ContentTab
+class IntroTab extends ContentTab
 {
     public static function key(): ContentBlockKey
     {
-        return ContentBlockKey::Tariffs;
+        return ContentBlockKey::Intro;
     }
 
     public static function page(): PageKey
     {
-        return PageKey::Home;
+        return PageKey::AboutCompany;
     }
 
     public static function make(): Tab
     {
-        return Tab::make(__('app.section.tariffs'))
+        return Tab::make(__('app.section.intro'))
             ->schema([
                 Section::make(__('app.label.section_texts'))
-                    ->description(__('app.helper.section_texts_only'))
                     ->schema([
                         TranslatableTabs::make('translations')
                             ->schema([
-                                TextInput::make('tariffs.eyebrow')
-                                    ->label(__('app.label.eyebrow')),
-
-                                Fields::multiline('tariffs.title')
-                                    ->label(__('app.label.title'))
-                                    ->required(),
+                                Fields::editor('intro.content')
+                                    ->label(__('app.label.content')),
                             ]),
                     ]),
 

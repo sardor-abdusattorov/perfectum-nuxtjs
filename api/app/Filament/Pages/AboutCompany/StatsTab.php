@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Homepage;
+namespace App\Filament\Pages\AboutCompany;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
@@ -8,38 +8,45 @@ use App\Enums\PageKey;
 use App\Filament\Pages\Blocks\ContentTab;
 use App\Filament\Pages\Blocks\SaveAction;
 use App\Filament\Support\Fields;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 
-class TariffsTab extends ContentTab
+class StatsTab extends ContentTab
 {
     public static function key(): ContentBlockKey
     {
-        return ContentBlockKey::Tariffs;
+        return ContentBlockKey::Stats;
     }
 
     public static function page(): PageKey
     {
-        return PageKey::Home;
+        return PageKey::AboutCompany;
     }
 
     public static function make(): Tab
     {
-        return Tab::make(__('app.section.tariffs'))
+        return Tab::make(__('app.section.stats'))
             ->schema([
-                Section::make(__('app.label.section_texts'))
-                    ->description(__('app.helper.section_texts_only'))
+                Repeater::make('stats.items')
+                    ->label(__('app.label.stats'))
+                    ->itemLabel(Fields::itemLabel('label'))
+                    ->collapsible()
+                    ->reorderable()
+                    ->defaultItems(0)
                     ->schema([
+                        TextInput::make('value')
+                            ->label(__('app.label.value'))
+                            ->required(),
+
                         TranslatableTabs::make('translations')
                             ->schema([
-                                TextInput::make('tariffs.eyebrow')
-                                    ->label(__('app.label.eyebrow')),
-
-                                Fields::multiline('tariffs.title')
+                                TextInput::make('label')
                                     ->label(__('app.label.title'))
                                     ->required(),
                             ]),
+
+                        Fields::status(),
                     ]),
 
                 SaveAction::make(self::class),

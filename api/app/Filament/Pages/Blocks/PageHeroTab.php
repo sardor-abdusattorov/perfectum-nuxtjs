@@ -1,48 +1,46 @@
 <?php
 
-namespace App\Filament\Pages\Homepage;
+namespace App\Filament\Pages\Blocks;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContentBlockKey;
-use App\Enums\PageKey;
-use App\Filament\Pages\Blocks\ContentTab;
-use App\Filament\Pages\Blocks\SaveAction;
 use App\Filament\Support\Fields;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 
-class TariffsTab extends ContentTab
+/**
+ * Every inner page opens with the same eyebrow, title and subtitle, so the
+ * tab is written once and each manager only says which page it edits.
+ */
+abstract class PageHeroTab extends ContentTab
 {
     public static function key(): ContentBlockKey
     {
-        return ContentBlockKey::Tariffs;
-    }
-
-    public static function page(): PageKey
-    {
-        return PageKey::Home;
+        return ContentBlockKey::PageHero;
     }
 
     public static function make(): Tab
     {
-        return Tab::make(__('app.section.tariffs'))
+        return Tab::make(__('app.section.page_hero'))
             ->schema([
                 Section::make(__('app.label.section_texts'))
-                    ->description(__('app.helper.section_texts_only'))
                     ->schema([
                         TranslatableTabs::make('translations')
                             ->schema([
-                                TextInput::make('tariffs.eyebrow')
+                                TextInput::make('page_hero.eyebrow')
                                     ->label(__('app.label.eyebrow')),
 
-                                Fields::multiline('tariffs.title')
+                                Fields::multiline('page_hero.title')
                                     ->label(__('app.label.title'))
                                     ->required(),
+
+                                Fields::multiline('page_hero.subtitle')
+                                    ->label(__('app.label.subtitle')),
                             ]),
                     ]),
 
-                SaveAction::make(self::class),
+                SaveAction::make(static::class),
             ]);
     }
 }

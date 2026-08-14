@@ -24,6 +24,9 @@ return [
         'resources' => 'Resources',
     ],
     'label' => [
+        'stats' => 'Figures',
+        'timeline' => 'Milestones',
+        'year' => 'Year',
         'preview_image' => 'Card image',
         'main_image' => 'Page image',
         'application_single' => 'Application',
@@ -374,6 +377,13 @@ return [
     ],
 
     'section' => [
+        'page_hero' => 'Page header',
+        'stats' => 'Figures',
+        'intro' => 'Intro',
+        'timeline' => 'History',
+        'cards' => 'Cards',
+        'steps' => 'Steps',
+        'support' => 'Support',
         'hero' => 'Hero',
         'marquee' => 'Marquee',
         'choose' => 'Choose yours',

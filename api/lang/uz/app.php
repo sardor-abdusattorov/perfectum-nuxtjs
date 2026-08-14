@@ -24,6 +24,9 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'stats' => 'Koʻrsatkichlar',
+        'timeline' => 'Bosqichlar',
+        'year' => 'Yil',
         'preview_image' => 'Kartochka uchun rasm',
         'main_image' => 'Sahifadagi rasm',
         'application_single' => 'Ariza',
@@ -374,6 +377,13 @@ return [
     ],
 
     'section' => [
+        'page_hero' => 'Sahifa sarlavhasi',
+        'stats' => 'Raqamlar',
+        'intro' => 'Kirish',
+        'timeline' => 'Tarix',
+        'cards' => 'Kartochkalar',
+        'steps' => 'Qadamlar',
+        'support' => 'Qoʻllab-quvvatlash',
         'hero' => 'Bosh ekran',
         'marquee' => 'Yuguruvchi satr',
         'choose' => 'Oʻzingnikini tanla',

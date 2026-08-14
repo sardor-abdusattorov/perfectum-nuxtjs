@@ -24,6 +24,9 @@ return [
         'resources' => 'Ресурсы',
     ],
     'label' => [
+        'stats' => 'Показатели',
+        'timeline' => 'Этапы',
+        'year' => 'Год',
         'preview_image' => 'Фото для карточки',
         'main_image' => 'Фото на странице',
         'application_single' => 'Заявка',
@@ -374,6 +377,13 @@ return [
     ],
 
     'section' => [
+        'page_hero' => 'Шапка страницы',
+        'stats' => 'Цифры',
+        'intro' => 'Вступление',
+        'timeline' => 'История',
+        'cards' => 'Карточки',
+        'steps' => 'Шаги',
+        'support' => 'Поддержка',
         'hero' => 'Главный экран',
         'marquee' => 'Бегущая строка',
         'choose' => 'Выбери своё',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
+use App\Filament\Pages\ManageHomepage;
 use App\Models\ContentBlock;
 use App\Models\User;
 use Database\Seeders\HomepageSeeder;
@@ -120,9 +121,9 @@ it('loads the seeded copy back into the forms', function (): void {
 it('seeds every block of the home page', function (): void {
     $this->seed(HomepageSeeder::class);
 
-    foreach (ContentBlockKey::cases() as $key) {
-        expect(ContentBlock::read(PageKey::Home, $key))
-            ->not->toBeEmpty("блок {$key->value} пустой");
+    foreach (ManageHomepage::tabs() as $tab) {
+        expect(ContentBlock::read(PageKey::Home, $tab::key()))
+            ->not->toBeEmpty("блок {$tab::key()->value} пустой");
     }
 });
 
