@@ -4,9 +4,7 @@ const t = useT()
 
 useSeo({ page: 'news', titleKey: 'seo.news' })
 
-const category = ref<number | ''>('')
-const search = ref('')
-const page = ref(1)
+const { search, category, page } = useListQuery()
 
 const { data } = await useNewsList({ network: '5g', category, search, page }, true)
 
@@ -22,9 +20,6 @@ const featured = computed(() => (
 
 const rest = computed(() => items.value.filter(item => item !== featured.value))
 
-watch([category, search], () => {
-  page.value = 1
-})
 </script>
 
 <template>
@@ -46,19 +41,11 @@ watch([category, search], () => {
   <section class="news">
     <div class="container">
       <div class="filter-search">
-        <div class="filter-search__field">
-          <input
-            v-model.trim="search"
-            type="search"
-            class="filter-search__input"
-            :placeholder="t('news.search_placeholder')"
-            :aria-label="t('news.search_label')"
-          />
-          <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-          </svg>
-        </div>
+        <SearchField
+          v-model="search"
+          :placeholder="t('news.search_placeholder')"
+          :label="t('news.search_label')"
+        />
         <div class="filter-search__chips" role="tablist" :aria-label="t('news.categories_label')">
           <button
             type="button"

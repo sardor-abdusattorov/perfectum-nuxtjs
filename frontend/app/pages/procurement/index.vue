@@ -4,7 +4,7 @@ const t = useT()
 
 useSeo({ page: 'procurement', titleKey: 'seo.procurement' })
 
-const page = ref(1)
+const { page } = useListQuery({ search: false, category: false })
 const { data } = await useTendersList({ page })
 
 const items = computed(() => data.value?.items ?? [])

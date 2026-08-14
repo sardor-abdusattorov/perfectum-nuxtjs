@@ -4,9 +4,7 @@ const t = useT()
 
 useSeo({ page: 'actions', titleKey: 'seo.actions' })
 
-const category = ref<number | ''>('')
-const search = ref('')
-const page = ref(1)
+const { search, category, page } = useListQuery()
 
 const { data } = await useActionsList({ network: '5g', category, search, page }, true)
 
@@ -14,9 +12,6 @@ const items = computed(() => data.value?.items ?? [])
 const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1, total: 0 })
 const categories = computed(() => data.value?.categories ?? [])
 
-watch([category, search], () => {
-  page.value = 1
-})
 </script>
 
 <template>
@@ -38,19 +33,11 @@ watch([category, search], () => {
   <section class="actions">
     <div class="container">
       <div class="filter-search">
-        <div class="filter-search__field">
-          <input
-            v-model.trim="search"
-            type="search"
-            class="filter-search__input"
-            :placeholder="t('actions.search_placeholder')"
-            :aria-label="t('actions.search_label')"
-          />
-          <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-          </svg>
-        </div>
+        <SearchField
+          v-model="search"
+          :placeholder="t('actions.search_placeholder')"
+          :label="t('actions.search_label')"
+        />
         <div class="filter-search__chips" role="tablist" :aria-label="t('actions.categories_label')">
           <button
             type="button"

@@ -52,19 +52,11 @@ const heading = computed(() => (
   <section class="faq">
     <div class="container">
       <div class="filter-search">
-        <div class="filter-search__field">
-          <input
-            v-model.trim="search"
-            type="search"
-            class="filter-search__input"
-            :placeholder="t('faq.search_placeholder')"
-            :aria-label="t('faq.search_label')"
-          />
-          <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-          </svg>
-        </div>
+        <SearchField
+          v-model="search"
+          :placeholder="t('faq.search_placeholder')"
+          :label="t('faq.search_label')"
+        />
 
         <div class="filter-search__chips" role="tablist" :aria-label="t('faq.categories_label')">
           <button

@@ -4,7 +4,7 @@ const t = useT()
 
 useSeo({ page: 'careers', titleKey: 'seo.careers' })
 
-const page = ref(1)
+const { page } = useListQuery({ search: false, category: false })
 const { data } = await useVacanciesList({ page })
 
 const items = computed(() => data.value?.items ?? [])

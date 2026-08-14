@@ -33,17 +33,18 @@ useSeo({ titleKey: 'seo.services' })
       <div class="container">
           <div class="filter-search">
               <h2 class="filter-search__heading">Каталог услуг Perfectum</h2>
-              <div class="filter-search__field">
+              <form class="filter-search__field" role="search" @submit.prevent>
                   <input type="search" class="filter-search__input"
                       placeholder="Найти услугу: “статический IP”, “баланс”, “роуминг”…"
                       aria-label="Поиск по услугам" />
-                  <svg class="filter-search__btn" viewBox="0 0 24 24" fill="none"
-                      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
-                      <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8"
-                          stroke-linecap="round" />
-                  </svg>
-              </div>
+                  <button type="submit" class="filter-search__btn" aria-label="Поиск по услугам">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
+                          <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8"
+                              stroke-linecap="round" />
+                      </svg>
+                  </button>
+              </form>
               <div class="filter-search__chips" role="tablist" aria-label="Категории услуг">
                   <button type="button" class="filter-search__chip filter-search__chip_active" role="tab"
                       aria-selected="true">Все <span class="filter-search__chip-count">22</span></button>
