@@ -555,6 +555,17 @@ strong {
 .contacts-note th {
   font-weight: 700;
   color: var(--color-black);
+}
+
+.article__body thead th,
+.article__content thead th,
+.about-intro thead th,
+.vacancy__section thead th,
+.cdma-article__body thead th,
+.cdma-connect__article thead th,
+.tariff-detail__more-content thead th,
+.faq-item__answer thead th,
+.contacts-note thead th {
   background: rgba(0, 0, 0, 0.03);
 }
 
