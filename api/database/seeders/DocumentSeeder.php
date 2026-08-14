@@ -14,7 +14,7 @@ use Illuminate\Database\Seeder;
 class DocumentSeeder extends Seeder
 {
     /**
-     * The files themselves are uploaded from the admin, one per language, so
+     * The files themselves are uploaded from the admin, one per locale tab, so
      * the rows carry the names the page listed and wait for their attachment.
      *
      * @var array<string, array<int, array<string, string>>>

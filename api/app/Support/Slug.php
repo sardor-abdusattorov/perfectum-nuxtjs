@@ -62,9 +62,7 @@ class Slug
             return '';
         }
 
-        $order = array_unique(array_merge(['en'], app_locales()));
-
-        foreach ($order as $locale) {
+        foreach (app_locales() as $locale) {
             if (filled($source[$locale] ?? null)) {
                 return strip_tags((string) $source[$locale]);
             }

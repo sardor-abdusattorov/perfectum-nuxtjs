@@ -125,3 +125,16 @@ Three layers, and all three are load-bearing:
 To take a subject out of the form, switch its status off: the public
 categories endpoint filters on `published()`, while the admin filter lists
 every row, so old applications stay groupable by a retired subject.
+
+## A translated upload lives on the locale tabs, not in a repeater
+
+`Document` keeps its file in a translated JSON column beside the name, so
+`TranslatableTabs` shows one upload per locale — no language select, no way
+to file two rows under the same language. `CleansUpAttachedFiles` reads
+`getTranslations()` for any field that is also in `$translatable`, so every
+locale's upload is removed with the row.
+
+A locale with nothing of its own falls back to the default one and then to
+whatever is filled, so a document uploaded once is still offered everywhere.
+Reach for a repeater only when a record genuinely needs several files per
+locale.

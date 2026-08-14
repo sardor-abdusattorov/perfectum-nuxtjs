@@ -2,7 +2,7 @@
 import type { ApiResponse } from '~/types/api'
 
 interface DocumentDownload {
-  language: string | null
+  language: string
   url: string | null
   size: string | null
 }
@@ -42,7 +42,7 @@ const groups = computed(() => data.value ?? [])
  * to it so a document translated three ways stays one row.
  */
 function translations(doc: DocumentItem): DocumentDownload[] {
-  return doc.files.filter(file => file.language !== null && file.url !== null && file.url !== doc.url)
+  return doc.files.filter(file => file.url !== null && file.url !== doc.url)
 }
 </script>
 
@@ -86,9 +86,9 @@ function translations(doc: DocumentItem): DocumentDownload[] {
                   :key="file.url!"
                   class="doc-item__lang"
                   :href="file.url!"
-                  :hreflang="file.language!"
+                  :hreflang="file.language"
                   download
-                >{{ file.language!.toUpperCase() }}</a>
+                >{{ file.language.toUpperCase() }}</a>
               </p>
             </div>
             <a v-if="doc.url" class="doc-item__download" :href="doc.url" download>

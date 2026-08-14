@@ -30,11 +30,11 @@ function admin(string $subject): User
 /**
  * @return array<string, array<string, string>>
  */
-function newsPayload(string $ru, string $en = ''): array
+function newsPayload(string $ru): array
 {
     return [
-        'title' => ['ru' => $ru, 'uz' => $ru, 'en' => $en === '' ? $ru : $en],
-        'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>', 'en' => '<p>Text</p>'],
+        'title' => ['ru' => $ru, 'uz' => $ru],
+        'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>'],
     ];
 }
 
@@ -42,11 +42,11 @@ it('builds a slug from the title when the admin leaves it empty', function (): v
     admin('News');
 
     Livewire::test(CreateNews::class)
-        ->fillForm([...newsPayload('Первая 5G сеть', 'The first 5G network'), 'slug' => ''])
+        ->fillForm([...newsPayload('Первая 5G сеть'), 'slug' => ''])
         ->call('create')
         ->assertHasNoFormErrors();
 
-    expect(News::query()->sole()->slug)->toBe('the-first-5g-network');
+    expect(News::query()->sole()->slug)->toBe('pervaia-5g-set');
 });
 
 it('transliterates the russian title when english is empty', function (): void {
@@ -54,8 +54,8 @@ it('transliterates the russian title when english is empty', function (): void {
 
     Livewire::test(CreateNews::class)
         ->fillForm([
-            'title' => ['ru' => 'Новости компании', 'uz' => 'Kompaniya yangiliklari', 'en' => ''],
-            'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>', 'en' => '<p>Text</p>'],
+            'title' => ['ru' => 'Новости компании', 'uz' => 'Kompaniya yangiliklari'],
+            'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>'],
             'slug' => '',
         ])
         ->call('create')
@@ -81,23 +81,23 @@ it('never repeats a slug that is already taken', function (): void {
     News::create([
         'title' => ['ru' => 'Старая'],
         'content' => ['ru' => '<p>x</p>'],
-        'slug' => 'the-first-5g-network',
+        'slug' => 'pervaia',
         'status' => true,
     ]);
 
     Livewire::test(CreateNews::class)
-        ->fillForm([...newsPayload('Первая', 'The first 5G network'), 'slug' => ''])
+        ->fillForm([...newsPayload('Первая'), 'slug' => ''])
         ->call('create')
         ->assertHasNoFormErrors();
 
-    expect(News::query()->orderByDesc('id')->first()->slug)->toBe('the-first-5g-network-2');
+    expect(News::query()->orderByDesc('id')->first()->slug)->toBe('pervaia-2');
 });
 
 it('regenerates the slug when it is cleared while editing', function (): void {
     admin('News');
 
     $news = News::create([
-        'title' => ['ru' => 'Была', 'uz' => 'Edi', 'en' => 'Renamed later'],
+        'title' => ['ru' => 'Переименована позже', 'uz' => 'Edi'],
         'content' => ['ru' => '<p>x</p>'],
         'slug' => 'old-address',
         'status' => true,
@@ -105,11 +105,11 @@ it('regenerates the slug when it is cleared while editing', function (): void {
 
     Livewire::test(EditNews::class, ['record' => $news->getRouteKey()])
         ->fillForm([
-            'content' => ['ru' => '<p>x</p>', 'uz' => '<p>x</p>', 'en' => ''],
+            'content' => ['ru' => '<p>x</p>', 'uz' => '<p>x</p>'],
             'slug' => '',
         ])
         ->call('save')
         ->assertHasNoFormErrors();
 
-    expect($news->refresh()->slug)->toBe('renamed-later');
+    expect($news->refresh()->slug)->toBe('pereimenovana-pozze');
 });

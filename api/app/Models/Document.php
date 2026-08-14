@@ -2,42 +2,60 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Document extends Model
 {
+    use CleansUpAttachedFiles;
     use HasCategory;
     use HasTranslations;
     use Publishable;
 
     protected $table = 'documents';
 
+    /** @var array<int, string> */
+    protected array $attachedFileFields = ['file'];
+
     protected $fillable = [
         'category_id',
         'name',
+        'file',
+        'size',
         'sort',
         'status',
     ];
 
-    public $translatable = ['name'];
+    public $translatable = ['name', 'file', 'size'];
 
     protected $casts = [
         'status' => 'boolean',
     ];
 
     /**
-     * The foreign key cascades in the database, which never reaches the model
-     * events, so the rows are removed here to take their uploads with them.
+     * The size is stamped on upload so the list never stats every file.
      */
     protected static function booted(): void
     {
-        static::deleting(function (self $document): void {
-            $document->files->each->delete();
+        static::saving(function (self $document): void {
+            if (! $document->isDirty('file')) {
+                return;
+            }
+
+            $sizes = [];
+
+            foreach ($document->getTranslations('file') as $locale => $path) {
+                if (filled($path) && Storage::disk('public')->exists($path)) {
+                    $sizes[$locale] = Storage::disk('public')->size($path);
+                }
+            }
+
+            $document->setTranslations('size', $sizes);
         });
     }
 
@@ -46,26 +64,42 @@ class Document extends Model
         return DocumentCategory::class;
     }
 
-    public function files(): HasMany
-    {
-        return $this->hasMany(DocumentFile::class)->orderBy('sort')->orderBy('id');
-    }
-
     public function scopeOrdered(Builder $query): Builder
     {
         return $query->orderBy('sort')->orderBy('id');
     }
 
     /**
-     * A file left without a language stands in for every locale, and a locale
-     * with nothing of its own is handed the default one.
+     * A locale with no file of its own is handed the default one, so a
+     * document uploaded once is still offered everywhere.
      */
-    public function fileFor(?string $locale = null): ?DocumentFile
+    public function url(?string $locale = null): ?string
     {
+        $path = $this->translated('file', $locale);
+
+        return blank($path) ? null : Storage::disk('public')->url($path);
+    }
+
+    public function readableSize(?string $locale = null): ?string
+    {
+        $size = (int) $this->translated('size', $locale);
+
+        if ($size <= 0) {
+            return null;
+        }
+
+        return $size >= 1048576
+            ? round($size / 1048576, 1).' '.__('app.unit.mb')
+            : max(1, (int) round($size / 1024)).' '.__('app.unit.kb');
+    }
+
+    private function translated(string $field, ?string $locale): mixed
+    {
+        $translations = $this->getTranslations($field);
         $locale ??= app()->getLocale();
 
-        return $this->files->firstWhere('language', $locale)
-            ?? $this->files->first(fn (DocumentFile $file): bool => blank($file->language))
-            ?? $this->files->firstWhere('language', config('app.fallback_locale'));
+        return $translations[$locale]
+            ?? $translations[config('app.fallback_locale')]
+            ?? collect($translations)->first(fn (mixed $value): bool => filled($value));
     }
 }

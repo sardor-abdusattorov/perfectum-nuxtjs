@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\DocumentFile;
 use Illuminate\Http\JsonResponse;
 
 class DocumentController
@@ -19,8 +18,7 @@ class DocumentController
     {
         $documents = Document::query()
             ->published()
-            ->has('files')
-            ->with(['category', 'files'])
+            ->with('category')
             ->ordered()
             ->get()
             ->groupBy(fn (Document $document): string => (string) $document->category_id);
@@ -55,22 +53,20 @@ class DocumentController
     private static function documents(mixed $documents): array
     {
         return collect($documents)
-            ->map(function (Document $document): array {
-                $current = $document->fileFor();
-
-                return [
-                    'name' => $document->name,
-                    'url' => $current?->url(),
-                    'size' => $current?->readableSize(),
-                    'files' => $document->files
-                        ->map(fn (DocumentFile $file): array => [
-                            'language' => $file->language,
-                            'url' => $file->url(),
-                            'size' => $file->readableSize(),
-                        ])
-                        ->all(),
-                ];
-            })
+            ->filter(fn (Document $document): bool => filled($document->getTranslations('file')))
+            ->map(fn (Document $document): array => [
+                'name' => $document->name,
+                'url' => $document->url(),
+                'size' => $document->readableSize(),
+                'files' => collect($document->getTranslations('file'))
+                    ->map(fn (string $path, string $locale): array => [
+                        'language' => $locale,
+                        'url' => $document->url($locale),
+                        'size' => $document->readableSize($locale),
+                    ])
+                    ->values()
+                    ->all(),
+            ])
             ->values()
             ->all();
     }

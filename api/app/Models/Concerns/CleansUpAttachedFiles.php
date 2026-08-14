@@ -16,8 +16,14 @@ trait CleansUpAttachedFiles
                 ? $model->attachedFileFields
                 : ['image'];
 
+            $translatable = (array) ($model->translatable ?? []);
+
             foreach ($fields as $field) {
-                foreach ((array) $model->{$field} as $path) {
+                $value = in_array($field, $translatable, true)
+                    ? $model->getTranslations($field)
+                    : $model->{$field};
+
+                foreach ((array) $value as $path) {
                     if (is_string($path) && filled($path)) {
                         Storage::disk('public')->delete($path);
                     }

@@ -16,22 +16,13 @@ function documentCategory(string $name, int $sort = 1): DocumentCategory
     ]);
 }
 
-function document(array $attributes = [], array $languages = [null]): Document
+function document(array $attributes = [], array $files = ['ru' => 'uploads/documents/offer-ru.pdf']): Document
 {
-    $document = Document::create(array_merge([
+    return Document::create(array_merge([
         'name' => ['ru' => 'Оферта', 'uz' => 'Oferta'],
+        'file' => $files,
         'sort' => 1,
     ], $attributes));
-
-    foreach ($languages as $sort => $language) {
-        $document->files()->create([
-            'language' => $language,
-            'file' => 'uploads/documents/offer'.($language === null ? '' : "-{$language}").'.pdf',
-            'sort' => $sort,
-        ]);
-    }
-
-    return $document;
 }
 
 it('groups the documents under their category', function (): void {
@@ -100,30 +91,22 @@ it('answers in the requested locale', function (): void {
 it('hands over the file of the asked language', function (): void {
     $category = documentCategory('dogovory');
 
-    document(['category_id' => $category->id], ['ru', 'uz', 'en']);
+    document(['category_id' => $category->id], [
+        'ru' => 'uploads/documents/offer-ru.pdf',
+        'uz' => 'uploads/documents/offer-uz.pdf',
+    ]);
 
     $this->getJson(route('api.v1.documents', ['lang' => 'uz']))
         ->assertOk()
         ->assertJsonPath('data.0.documents.0.url', fn (string $url): bool => str_ends_with($url, 'offer-uz.pdf'))
-        ->assertJsonCount(3, 'data.0.documents.0.files')
-        ->assertJsonPath('data.0.documents.0.files.2.language', 'en');
-});
-
-it('lets a file without a language stand in for every locale', function (): void {
-    $category = documentCategory('dogovory');
-
-    document(['category_id' => $category->id], [null]);
-
-    $this->getJson(route('api.v1.documents', ['lang' => 'uz']))
-        ->assertOk()
-        ->assertJsonPath('data.0.documents.0.url', fn (string $url): bool => str_ends_with($url, 'offer.pdf'))
-        ->assertJsonPath('data.0.documents.0.files.0.language', null);
+        ->assertJsonCount(2, 'data.0.documents.0.files')
+        ->assertJsonPath('data.0.documents.0.files.1.language', 'uz');
 });
 
 it('falls back to the default language when the locale has no file of its own', function (): void {
     $category = documentCategory('dogovory');
 
-    document(['category_id' => $category->id], ['ru', 'en']);
+    document(['category_id' => $category->id], ['ru' => 'uploads/documents/offer-ru.pdf']);
 
     $this->getJson(route('api.v1.documents', ['lang' => 'uz']))
         ->assertOk()

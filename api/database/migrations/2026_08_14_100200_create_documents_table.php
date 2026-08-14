@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('document_categories')->nullOnDelete();
             $table->json('name');
+            $table->json('file')->nullable();
+            $table->json('size')->nullable();
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();
             $table->timestamps();

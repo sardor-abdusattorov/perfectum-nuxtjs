@@ -5,10 +5,8 @@ namespace App\Filament\Resources\Documents\Tables;
 use App\Filament\Support\Tables;
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\DocumentFile;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class DocumentsTable
 {
@@ -16,7 +14,6 @@ class DocumentsTable
     {
         return $table
             ->defaultSort('sort')
-            ->modifyQueryUsing(fn (Builder $query): Builder => $query->with('files'))
             ->columns([
                 TextColumn::make('name')
                     ->label(__('app.label.name'))
@@ -32,10 +29,10 @@ class DocumentsTable
                 TextColumn::make('languages')
                     ->label(__('app.label.languages'))
                     ->badge()
-                    ->state(fn (Document $record): array => $record->files
-                        ->map(fn (DocumentFile $file): string => blank($file->language)
-                            ? __('app.label.language_all')
-                            : __("app.label.{$file->language}"))
+                    ->state(fn (Document $record): array => collect($record->getTranslations('file'))
+                        ->filter()
+                        ->keys()
+                        ->map(fn (string $locale): string => __("app.label.{$locale}"))
                         ->all())
                     ->placeholder('—'),
 
