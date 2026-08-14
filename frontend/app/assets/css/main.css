@@ -6777,6 +6777,33 @@ body.overflow__hidden {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.doc-item__langs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.doc-item__lang {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(0, 0, 0, 0.55);
+  background: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  transition: var(--transition);
+}
+
+.doc-item__lang:hover {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
 .doc-item__download {
   display: inline-flex;
   align-items: center;

@@ -15,6 +15,7 @@ class SetLocale
         $locales = app_locales();
 
         $locale = $request->query('locale')
+            ?? $request->query('lang')
             ?? $request->header('X-Locale')
             ?? $request->getPreferredLanguage($locales);
 

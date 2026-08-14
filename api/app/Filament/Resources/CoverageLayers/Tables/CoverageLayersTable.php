@@ -27,11 +27,11 @@ class CoverageLayersTable
                 ColorColumn::make('color')
                     ->label(__('app.label.color')),
 
-                TextColumn::make('geojson')
+                TextColumn::make('features')
                     ->label(__('app.label.shapes'))
                     ->state(fn (CoverageLayer $record): string => $record->geojson === null
                         ? __('app.label.coverage_unread')
-                        : (string) $record->featureCount()),
+                        : (string) $record->features),
 
                 Tables::statusColumn(),
             ])

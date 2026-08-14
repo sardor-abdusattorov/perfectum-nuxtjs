@@ -29,6 +29,7 @@ class CoverageLayer extends Model
         'color',
         'file',
         'geojson',
+        'features',
         'sort',
         'status',
     ];
@@ -37,32 +38,25 @@ class CoverageLayer extends Model
 
     protected $casts = [
         'geojson' => 'array',
+        'features' => 'integer',
         'status' => 'boolean',
     ];
 
     /**
      * The archive is read once, when it is uploaded, so the site is handed
      * plain GeoJSON instead of unpacking a shapefile in every visitor's
-     * browser.
+     * browser. The shape count is stamped alongside it so the layer list
+     * never has to load the whole collection to size it.
      */
     protected static function booted(): void
     {
         static::saving(function (self $layer): void {
-            if (! $layer->isDirty('file')) {
-                return;
+            if ($layer->isDirty('file')) {
+                $layer->geojson = self::read($layer);
             }
 
-            $layer->geojson = null;
-
-            if (blank($layer->file) || ! Storage::disk('public')->exists($layer->file)) {
-                return;
-            }
-
-            try {
-                $layer->geojson = app(ShapefileReader::class)
-                    ->fromZip(Storage::disk('public')->path($layer->file));
-            } catch (Throwable $exception) {
-                Log::warning("Coverage layer {$layer->key} could not be read: ".$exception->getMessage());
+            if ($layer->isDirty('geojson')) {
+                $layer->features = count($layer->geojson['features'] ?? []);
             }
         });
     }
@@ -72,8 +66,21 @@ class CoverageLayer extends Model
         return $query->orderBy('sort')->orderBy('id');
     }
 
-    public function featureCount(): int
+    /**
+     * @return array<string, mixed>|null
+     */
+    private static function read(self $layer): ?array
     {
-        return count($this->geojson['features'] ?? []);
+        if (blank($layer->file) || ! Storage::disk('public')->exists($layer->file)) {
+            return null;
+        }
+
+        try {
+            return app(ShapefileReader::class)->fromZip(Storage::disk('public')->path($layer->file));
+        } catch (Throwable $exception) {
+            Log::warning("Coverage layer {$layer->key} could not be read: ".$exception->getMessage());
+
+            return null;
+        }
     }
 }

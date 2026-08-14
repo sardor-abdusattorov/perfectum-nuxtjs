@@ -61,6 +61,10 @@ return [
         'tariff_file_single' => 'Archive document',
         'tariff_file_plural' => 'Tariff archive',
         'file' => 'File',
+        'document_files' => 'Document files',
+        'language' => 'Language',
+        'language_all' => 'For every language',
+        'languages' => 'Languages',
         'tariff_descriptions' => 'Description blocks',
         'office_single' => 'Point of sale',
         'office_plural' => 'Offices and dealers',
@@ -265,6 +269,7 @@ return [
         'coverage_key' => 'Latin letters, e.g. 5g or voice — the map switches layers by it',
         'coverage_file' => 'A ZIP holding a shapefile (.shp and .prj). The shapes are read on upload',
         'document_file' => 'A PDF or a Word/Excel document, up to 20 MB',
+        'document_language' => 'Leave empty when the file suits every language',
         'cdma_article' => 'The page copy along with the office and opening-hours tables',
         'contact_card_type' => 'Decides which contacts are pulled in from the site settings',
         'preview_image' => 'Shown in the list; without it the card keeps its colour panel',
@@ -364,6 +369,7 @@ return [
 
     'action' => [
         'add' => 'Add',
+        'add_file' => 'Add file',
         'save' => 'Save',
         'update' => 'Update',
         'confirm' => 'Confirm',

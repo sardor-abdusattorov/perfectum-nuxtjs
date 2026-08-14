@@ -57,10 +57,10 @@ it('reads the archive into geojson when it is attached', function (): void {
     $layer = coverageLayer();
     $layer->update(['file' => $path]);
 
-    expect($layer->fresh()->featureCount())->toBe(1);
+    expect($layer->fresh()->features)->toBe(1);
 });
 
-it('serves a published layer that has shapes', function (): void {
+it('lists a published layer that has shapes without its collection', function (): void {
     coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
 
     $this->getJson(route('api.v1.coverage'))
@@ -68,7 +68,24 @@ it('serves a published layer that has shapes', function (): void {
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.key', '5g')
         ->assertJsonPath('data.0.color', '#e60000')
-        ->assertJsonCount(1, 'data.0.geojson.features');
+        ->assertJsonPath('data.0.features', 1)
+        ->assertJsonMissingPath('data.0.geojson');
+});
+
+it('serves the collection of one layer', function (): void {
+    coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
+
+    $this->getJson(route('api.v1.coverage.show', '5g'))
+        ->assertOk()
+        ->assertJsonPath('type', 'FeatureCollection')
+        ->assertJsonCount(1, 'features');
+});
+
+it('has nothing to draw for an unknown or unread layer', function (): void {
+    coverageLayer(['key' => 'empty']);
+
+    $this->getJson(route('api.v1.coverage.show', 'empty'))->assertNotFound();
+    $this->getJson(route('api.v1.coverage.show', 'lte'))->assertNotFound();
 });
 
 it('leaves out a layer with no archive read and an unpublished one', function (): void {

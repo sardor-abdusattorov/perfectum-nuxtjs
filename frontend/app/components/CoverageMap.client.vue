@@ -4,6 +4,7 @@ import type { CoverageLayer } from '~/composables/useCoverage'
 const props = defineProps<{ layers: CoverageLayer[], active: string, center: [number, number] | null }>()
 
 const t = useT()
+const shapesOf = useCoverageShapes()
 const { locale } = useI18n()
 const config = useRuntimeConfig()
 
@@ -11,6 +12,7 @@ const canvas = useTemplateRef('canvas')
 const failed = ref(false)
 
 let map: any = null
+let drawing = 0
 const drawn: any[] = []
 
 const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
@@ -51,7 +53,9 @@ function flip(ring: number[][]): number[][] {
   return ring.map(([lng, lat]) => [lat, lng])
 }
 
-function draw(): void {
+async function draw(): Promise<void> {
+  const token = ++drawing
+
   if (!map) {
     return
   }
@@ -66,6 +70,12 @@ function draw(): void {
     return
   }
 
+  const shapes = await shapesOf(layer.key).catch(() => null)
+
+  if (!shapes || !map || token !== drawing) {
+    return
+  }
+
   const ymaps = (window as any).ymaps
   const style = {
     strokeColor: layer.color,
@@ -74,7 +84,7 @@ function draw(): void {
     fillOpacity: 0.22,
   }
 
-  for (const feature of layer.geojson?.features ?? []) {
+  for (const feature of shapes.features) {
     const geometry = feature.geometry
     const shape = geometry.type === 'Polygon'
       ? new ymaps.Polygon((geometry.coordinates as number[][][]).map(flip), { hintContent: layer.name }, style)

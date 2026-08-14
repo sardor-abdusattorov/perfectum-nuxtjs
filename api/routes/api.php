@@ -26,7 +26,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('categories/{taxonomy}', CategoryController::class)->name('categories');
     Route::get('faqs', FaqController::class)->name('faqs');
     Route::get('documents', DocumentController::class)->name('documents');
-    Route::get('coverage', CoverageController::class)->name('coverage');
+    Route::get('coverage', [CoverageController::class, 'index'])->name('coverage');
+    Route::get('coverage/{layer}', [CoverageController::class, 'show'])->name('coverage.show');
     Route::get('offices', OfficeController::class)->name('offices');
     Route::post('numbers', NumberController::class)->name('numbers');
     Route::get('cdma-numbers/filters', [CdmaNumberController::class, 'filters'])->name('cdma-numbers.filters');

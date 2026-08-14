@@ -8,18 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('document_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('document_categories')->nullOnDelete();
-            $table->json('name');
+            $table->foreignId('document_id')->constrained()->cascadeOnDelete();
+            $table->string('language', 5)->nullable()->index();
+            $table->string('file');
+            $table->unsignedBigInteger('size')->nullable();
             $table->unsignedInteger('sort')->default(0);
-            $table->boolean('status')->default(true)->index();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('document_files');
     }
 };

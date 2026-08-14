@@ -14,8 +14,8 @@ use Illuminate\Database\Seeder;
 class DocumentSeeder extends Seeder
 {
     /**
-     * The files themselves are uploaded from the admin, so the rows carry the
-     * names the page listed and wait for their attachment.
+     * The files themselves are uploaded from the admin, one per language, so
+     * the rows carry the names the page listed and wait for their attachment.
      *
      * @var array<string, array<int, array<string, string>>>
      */
@@ -74,7 +74,6 @@ class DocumentSeeder extends Seeder
                 Document::updateOrCreate(['name->ru' => $name['ru']], [
                     'category_id' => $categories[$slug] ?? null,
                     'name' => $name,
-                    'file' => '',
                     'sort' => $index + 1,
                     'status' => false,
                 ]);

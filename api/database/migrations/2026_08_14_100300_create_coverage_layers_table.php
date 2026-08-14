@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('color', 20)->default('#e60000');
             $table->string('file')->nullable();
             $table->json('geojson')->nullable();
+            $table->unsignedInteger('features')->default(0);
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();
             $table->timestamps();

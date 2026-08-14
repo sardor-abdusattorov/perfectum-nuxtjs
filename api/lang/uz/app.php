@@ -61,6 +61,10 @@ return [
         'tariff_file_single' => 'Arxiv hujjati',
         'tariff_file_plural' => 'Tariflar arxivi',
         'file' => 'Fayl',
+        'document_files' => 'Hujjat fayllari',
+        'language' => 'Til',
+        'language_all' => 'Barcha tillar uchun',
+        'languages' => 'Tillar',
         'tariff_descriptions' => 'Tavsif bloklari',
         'office_single' => 'Savdo nuqtasi',
         'office_plural' => 'Ofis va dilerlar',
@@ -265,6 +269,7 @@ return [
         'coverage_key' => 'Lotin harflarida, masalan 5g yoki voice — qatlam shu boʻyicha yoqiladi',
         'coverage_file' => 'Sheypfayl bilan ZIP (.shp va .prj). Konturlar yuklashda oʻqiladi',
         'document_file' => 'PDF yoki Word/Excel hujjati, 20 MB gacha',
+        'document_language' => 'Fayl barcha tillarga mos kelsa, boʻsh qoldiring',
         'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
@@ -364,6 +369,7 @@ return [
 
     'action' => [
         'add' => 'Qoʻshish',
+        'add_file' => 'Fayl qoʻshish',
         'save' => 'Saqlash',
         'update' => 'Saqlash',
         'confirm' => 'Tasdiqlash',

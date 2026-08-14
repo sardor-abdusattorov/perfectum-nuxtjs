@@ -142,6 +142,16 @@ class Fields
             ->maxSize(20480);
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public static function localeOptions(): array
+    {
+        return collect(app_locales())
+            ->mapWithKeys(fn (string $locale): array => [$locale => __("app.label.{$locale}")])
+            ->all();
+    }
+
     public static function icon(string $field = 'icon'): Select
     {
         return Select::make($field)

@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import type { ApiResponse } from '~/types/api'
 
-interface DocumentFile {
+interface DocumentDownload {
+  language: string | null
+  url: string | null
+  size: string | null
+}
+
+interface DocumentItem {
   name: string
   url: string | null
   size: string | null
+  files: DocumentDownload[]
 }
 
 interface DocumentGroup {
   slug: string | null
   name: string | null
-  documents: DocumentFile[]
+  documents: DocumentItem[]
 }
 
 const { locale } = useI18n()
@@ -29,6 +36,14 @@ const { data } = await useAsyncData(
 )
 
 const groups = computed(() => data.value ?? [])
+
+/**
+ * The card downloads the visitor's own language; the rest are offered next
+ * to it so a document translated three ways stays one row.
+ */
+function translations(doc: DocumentItem): DocumentDownload[] {
+  return doc.files.filter(file => file.language !== null && file.url !== null && file.url !== doc.url)
+}
 </script>
 
 <template>
@@ -65,6 +80,16 @@ const groups = computed(() => data.value ?? [])
             <div class="doc-item__body">
               <h3 class="doc-item__name">{{ doc.name }}</h3>
               <p v-if="doc.size" class="doc-item__size">{{ doc.size }}</p>
+              <p v-if="translations(doc).length" class="doc-item__langs">
+                <a
+                  v-for="file in translations(doc)"
+                  :key="file.url!"
+                  class="doc-item__lang"
+                  :href="file.url!"
+                  :hreflang="file.language!"
+                  download
+                >{{ file.language!.toUpperCase() }}</a>
+              </p>
             </div>
             <a v-if="doc.url" class="doc-item__download" :href="doc.url" download>
               {{ t('documents.download') }}
