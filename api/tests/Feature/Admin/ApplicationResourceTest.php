@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Models\Application;
 use App\Models\User;
+use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Permission;
@@ -62,25 +63,22 @@ it('changes the status of one application only', function (): void {
     $this->actingAs($this->admin->refresh());
 
     Livewire::test(ListApplications::class)
-        ->call('updateTableColumnState', 'status', (string) $target->getKey(), Application::STATUS_PROCESSED);
+        ->callAction(TestAction::make('changeStatus')->table($target), [
+            'status' => Application::STATUS_PROCESSED,
+        ]);
 
     expect($target->fresh()->status)->toBe(Application::STATUS_PROCESSED);
     expect($applications->get(1)->fresh()->status)->toBe(Application::STATUS_NEW);
     expect($applications->get(2)->fresh()->status)->toBe(Application::STATUS_NEW);
 });
 
-/**
- * The inline select saves straight to the model, so Filament checks only
- * its disabled state — the policy has to be wired into that state or a
- * read-only account could still rewrite a status.
- */
-it('refuses the status change without the update permission', function (): void {
+it('hides the status change from an account without the update permission', function (): void {
     $application = Application::factory()->create();
 
     $this->actingAs($this->admin);
 
     Livewire::test(ListApplications::class)
-        ->call('updateTableColumnState', 'status', (string) $application->getKey(), Application::STATUS_PROCESSED);
+        ->assertActionHidden(TestAction::make('changeStatus')->table($application));
 
     expect($application->fresh()->status)->toBe(Application::STATUS_NEW);
 });
