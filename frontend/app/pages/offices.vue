@@ -14,7 +14,7 @@ const { data } = await useOffices({ network })
 const offices = computed(() => data.value?.offices ?? [])
 
 const type = ref<OfficeType | ''>('')
-const region = ref('')
+const region = ref<number | ''>('')
 const city = ref('')
 const search = ref('')
 const suggestOpen = ref(false)
@@ -32,13 +32,13 @@ const byType = computed(() => (
 ))
 
 const regions = computed(() => {
-  const present = new Set(byType.value.map(item => item.region?.slug).filter(Boolean))
+  const present = new Set(byType.value.map(item => item.region?.id).filter(Boolean))
 
-  return (data.value?.regions ?? []).filter(item => present.has(item.slug))
+  return (data.value?.regions ?? []).filter(item => present.has(item.id))
 })
 
 const inRegion = computed(() => (
-  region.value ? byType.value.filter(item => item.region?.slug === region.value) : byType.value
+  region.value ? byType.value.filter(item => item.region?.id === region.value) : byType.value
 ))
 
 const cities = computed(() => [...new Set(inRegion.value.map(item => item.district).filter(Boolean))] as string[])
@@ -261,7 +261,7 @@ function locate(): void {
             <div class="select">
               <select id="offices-region" v-model="region" class="select__control">
                 <option value="">{{ t('offices.all_regions') }}</option>
-                <option v-for="item in regions" :key="item.slug" :value="item.slug">{{ item.name }}</option>
+                <option v-for="item in regions" :key="item.id" :value="item.id">{{ item.name }}</option>
               </select>
               <svg class="select__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                 <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />

@@ -14,14 +14,14 @@ class OfficeSeeder extends Seeder
     {
         $data = json_decode((string) file_get_contents(database_path('data/offices.json')), true);
 
-        foreach ($data['regions'] ?? [] as $region) {
-            Region::updateOrCreate(['slug' => $region['slug']], [
-                'name' => $region['name'],
-                'sort' => $region['sort'],
-            ]);
-        }
+        $regions = [];
 
-        $regions = Region::query()->pluck('id', 'slug')->all();
+        foreach ($data['regions'] ?? [] as $region) {
+            $regions[$region['slug']] = Region::updateOrCreate(
+                ['name->ru' => $region['name']['ru']],
+                ['name' => $region['name'], 'sort' => $region['sort']],
+            )->getKey();
+        }
 
         foreach ($data['offices'] ?? [] as $index => $row) {
             Office::updateOrCreate(['type' => $row['type'], 'sort' => $index + 1], [

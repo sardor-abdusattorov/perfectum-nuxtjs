@@ -18,10 +18,6 @@ class RegionsTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('slug')
-                    ->label(__('app.label.slug'))
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('offices_count')
                     ->label(__('app.label.office_plural'))
                     ->counts('offices')

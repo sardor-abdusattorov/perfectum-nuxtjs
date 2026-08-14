@@ -26,10 +26,6 @@ class ApplicationThemesTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('slug')
-                    ->label(__('app.label.slug'))
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('applications_count')
                     ->label(__('app.label.application_plural'))
                     ->badge()

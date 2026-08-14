@@ -11,11 +11,6 @@ trait IsTaxonomy
 {
     public const CACHE_TTL = 86400;
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', true);

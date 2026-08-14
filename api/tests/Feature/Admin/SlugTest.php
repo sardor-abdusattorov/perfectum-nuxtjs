@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 use App\Filament\Resources\News\Pages\CreateNews;
 use App\Filament\Resources\News\Pages\EditNews;
-use App\Filament\Resources\NewsCategories\Pages\CreateNewsCategory;
-use App\Models\ActionCategory;
 use App\Models\News;
-use App\Models\NewsCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -115,24 +112,4 @@ it('regenerates the slug when it is cleared while editing', function (): void {
         ->assertHasNoFormErrors();
 
     expect($news->refresh()->slug)->toBe('renamed-later');
-});
-
-it('lets two taxonomies hold the same slug', function (): void {
-    admin('NewsCategory');
-
-    ActionCategory::create([
-        'name' => ['ru' => 'Акции'],
-        'slug' => 'akcii',
-        'status' => true,
-    ]);
-
-    Livewire::test(CreateNewsCategory::class)
-        ->fillForm([
-            'name' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
-            'slug' => '',
-        ])
-        ->call('create')
-        ->assertHasNoFormErrors();
-
-    expect(NewsCategory::query()->sole()->slug)->toBe('akcii');
 });

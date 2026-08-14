@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\StoreApplicationRequest;
 use App\Models\Application;
-use App\Models\ApplicationTheme;
 use Illuminate\Http\JsonResponse;
 
 class ApplicationController
@@ -15,7 +14,7 @@ class ApplicationController
     {
         Application::create([
             'phone' => $request->formattedPhone(),
-            'theme_id' => ApplicationTheme::query()->where('slug', $request->validated('theme'))->value('id'),
+            'theme_id' => $request->validated('theme'),
             'message' => $request->validated('message'),
             'status' => Application::STATUS_NEW,
             'ip_address' => $request->ip(),

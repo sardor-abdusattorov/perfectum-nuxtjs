@@ -20,7 +20,7 @@ class ApplicationThemeResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
-    protected static ?string $recordTitleAttribute = 'slug';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function getModelLabel(): string
     {

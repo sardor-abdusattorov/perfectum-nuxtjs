@@ -36,13 +36,11 @@ it('creates a tariff with its features and connect buttons', function (): void {
 
     $section = TariffCategory::create([
         'name' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa'],
-        'slug' => 'mobile',
         'status' => true,
     ]);
 
     $chip = TariffType::create([
         'name' => ['ru' => 'Тариф 5G', 'uz' => '5G tarifi'],
-        'slug' => 'tariff-5g',
         'status' => true,
     ]);
 
@@ -76,8 +74,8 @@ it('creates a tariff with its features and connect buttons', function (): void {
         ->and($tariff->buttons)->toHaveCount(2)
         ->and($tariff->buttons[0]['type'])->toBe('tel')
         ->and($tariff->buttons[1]['url'])->toBe('https://lk.perfectum.uz')
-        ->and($tariff->category->slug)->toBe('mobile')
-        ->and($tariff->type->slug)->toBe('tariff-5g');
+        ->and($tariff->category->is($section))->toBeTrue()
+        ->and($tariff->type->is($chip))->toBeTrue();
 });
 
 it('translates a tariff into the requested locale', function (): void {
@@ -99,7 +97,6 @@ it('creates a service with its facts and steps', function (): void {
 
     $category = ServiceCategory::create([
         'name' => ['ru' => 'Сетевые услуги', 'uz' => 'Tarmoq xizmatlari'],
-        'slug' => 'network',
         'status' => true,
     ]);
 
@@ -126,7 +123,7 @@ it('creates a service with its facts and steps', function (): void {
         ->and($service->facts)->toHaveCount(1)
         ->and($service->facts[0]['value']['ru'])->toBe('Бесплатно')
         ->and($service->steps[0]['code'])->toBe('*100*5#')
-        ->and($service->category->slug)->toBe('network');
+        ->and($service->category->is($category))->toBeTrue();
 });
 
 it('lists both resources in the panel', function (): void {

@@ -12,21 +12,21 @@ class ApplicationThemeSeeder extends Seeder
     /**
      * The subjects the contact form used to carry in its own markup.
      *
-     * @var array<string, array<string, string>>
+     * @var array<int, array<string, string>>
      */
     private const THEMES = [
-        'podklyuchenie' => ['ru' => 'Подключение', 'uz' => 'Ulanish'],
-        'tarify-i-oplata' => ['ru' => 'Тарифы и оплата', 'uz' => 'Tariflar va toʻlov'],
-        'tehnicheskaya-podderzhka' => ['ru' => 'Техническая поддержка', 'uz' => 'Texnik yordam'],
-        'drugoe' => ['ru' => 'Другое', 'uz' => 'Boshqa'],
+        ['ru' => 'Подключение', 'uz' => 'Ulanish'],
+        ['ru' => 'Тарифы и оплата', 'uz' => 'Tariflar va toʻlov'],
+        ['ru' => 'Техническая поддержка', 'uz' => 'Texnik yordam'],
+        ['ru' => 'Другое', 'uz' => 'Boshqa'],
     ];
 
     public function run(): void
     {
         $sort = 0;
 
-        foreach (self::THEMES as $slug => $name) {
-            ApplicationTheme::updateOrCreate(['slug' => $slug], [
+        foreach (self::THEMES as $name) {
+            ApplicationTheme::updateOrCreate(['name->ru' => $name['ru']], [
                 'name' => $name,
                 'sort' => ++$sort,
             ]);

@@ -3,14 +3,11 @@
 namespace App\Filament\Resources\ApplicationThemes\Pages;
 
 use App\Filament\Resources\ApplicationThemes\ApplicationThemeResource;
-use App\Filament\Resources\Concerns\GeneratesSlug;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditApplicationTheme extends EditRecord
 {
-    use GeneratesSlug;
-
     protected static string $resource = ApplicationThemeResource::class;
 
     protected function getHeaderActions(): array

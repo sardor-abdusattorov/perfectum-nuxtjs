@@ -8,6 +8,7 @@ use App\Models\Tariff;
 use App\Models\TariffCategory;
 use App\Models\TariffFile;
 use App\Models\TariffType;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class TariffSeeder extends Seeder
@@ -55,10 +56,12 @@ class TariffSeeder extends Seeder
      */
     private function map(string $model, array $rows): array
     {
-        $bySlug = $model::query()->pluck('id', 'slug')->all();
+        $byName = $model::query()->get(['id', 'name'])->mapWithKeys(
+            fn (Model $row): array => [$row->getTranslation('name', 'ru') => $row->getKey()]
+        );
 
         return collect($rows)
-            ->mapWithKeys(fn (array $row): array => [$row['id'] => $bySlug[$row['slug']] ?? null])
+            ->mapWithKeys(fn (array $row): array => [$row['id'] => $byName[$row['name']['ru']] ?? null])
             ->filter()
             ->all();
     }

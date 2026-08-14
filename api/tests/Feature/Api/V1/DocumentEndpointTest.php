@@ -8,11 +8,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-function documentCategory(string $slug, int $sort = 1): DocumentCategory
+function documentCategory(string $name, int $sort = 1): DocumentCategory
 {
     return DocumentCategory::create([
-        'name' => ['ru' => ucfirst($slug), 'uz' => ucfirst($slug)],
-        'slug' => $slug,
+        'name' => ['ru' => ucfirst($name), 'uz' => ucfirst($name)],
         'sort' => $sort,
     ]);
 }
@@ -45,9 +44,9 @@ it('groups the documents under their category', function (): void {
     $this->getJson(route('api.v1.documents'))
         ->assertOk()
         ->assertJsonCount(2, 'data')
-        ->assertJsonPath('data.0.slug', 'dogovory')
+        ->assertJsonPath('data.0.name', 'Dogovory')
         ->assertJsonPath('data.0.documents.0.name', 'Оферта')
-        ->assertJsonPath('data.1.slug', 'politiki');
+        ->assertJsonPath('data.1.name', 'Politiki');
 });
 
 it('skips a category with nothing published in it', function (): void {
@@ -59,7 +58,7 @@ it('skips a category with nothing published in it', function (): void {
     $this->getJson(route('api.v1.documents'))
         ->assertOk()
         ->assertJsonCount(1, 'data')
-        ->assertJsonPath('data.0.slug', 'dogovory');
+        ->assertJsonPath('data.0.name', 'Dogovory');
 });
 
 it('leaves out an unpublished document and one without a file', function (): void {
@@ -84,7 +83,7 @@ it('puts an uncategorised document in a trailing group', function (): void {
     $this->getJson(route('api.v1.documents'))
         ->assertOk()
         ->assertJsonCount(2, 'data')
-        ->assertJsonPath('data.1.slug', null)
+        ->assertJsonPath('data.1.id', null)
         ->assertJsonPath('data.1.documents.0.name', 'Сам по себе');
 });
 

@@ -31,7 +31,7 @@ class ActionResource extends JsonResource
             'starts_at' => $this->starts_at?->toDateString(),
             'ends_at' => $this->ends_at?->toDateString(),
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'slug' => $this->category->slug,
+                'id' => $this->category->id,
                 'name' => $this->category->name,
             ]),
         ];

@@ -6,14 +6,14 @@ useSeo({ page: 'faq', titleKey: 'seo.faq' })
 
 const { data } = await useFaqs({ page: 'faq', withCategories: true })
 
-const category = ref('')
+const category = ref<number | ''>('')
 const search = ref('')
 
 const faqs = computed(() => data.value?.faqs ?? [])
 const categories = computed(() => data.value?.categories ?? [])
 
-function inCategory(slug: string) {
-  return slug ? faqs.value.filter(item => item.category?.slug === slug) : faqs.value
+function inCategory(id: number | '') {
+  return id ? faqs.value.filter(item => item.category?.id === id) : faqs.value
 }
 
 const visible = computed(() => {
@@ -27,7 +27,7 @@ const visible = computed(() => {
 })
 
 const heading = computed(() => (
-  categories.value.find(item => item.slug === category.value)?.name ?? t('faq.all_questions')
+  categories.value.find(item => item.id === category.value)?.name ?? t('faq.all_questions')
 ))
 </script>
 
@@ -78,14 +78,14 @@ const heading = computed(() => (
 
           <button
             v-for="item in categories"
-            :key="item.slug"
+            :key="item.id"
             type="button"
             class="filter-search__chip"
-            :class="item.slug === category && 'filter-search__chip_active'"
+            :class="item.id === category && 'filter-search__chip_active'"
             role="tab"
-            :aria-selected="item.slug === category"
-            @click="category = item.slug"
-          >{{ item.name }} <span class="filter-search__chip-count">{{ inCategory(item.slug).length }}</span></button>
+            :aria-selected="item.id === category"
+            @click="category = item.id"
+          >{{ item.name }} <span class="filter-search__chip-count">{{ inCategory(item.id).length }}</span></button>
         </div>
       </div>
 

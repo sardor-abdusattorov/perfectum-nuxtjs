@@ -30,7 +30,7 @@ class OfficeResource extends JsonResource
             'lat' => $this->lat,
             'lng' => $this->lng,
             'region' => $this->whenLoaded('region', fn (): ?array => $this->region === null ? null : [
-                'slug' => $this->region->slug,
+                'id' => $this->region->id,
                 'name' => $this->region->name,
             ]),
         ];

@@ -24,10 +24,6 @@ class TariffTypesTable
                     ->badge()
                     ->placeholder('—'),
 
-                TextColumn::make('slug')
-                    ->label(__('app.label.slug'))
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('sort')
                     ->label(__('app.label.sort'))
                     ->sortable(),

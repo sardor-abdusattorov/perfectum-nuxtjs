@@ -30,7 +30,7 @@ class NewsResource extends JsonResource
             'is_featured' => $this->is_featured,
             'published_at' => $this->published_at?->toDateString(),
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'slug' => $this->category->slug,
+                'id' => $this->category->id,
                 'name' => $this->category->name,
             ]),
         ];

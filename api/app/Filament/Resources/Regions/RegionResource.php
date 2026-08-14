@@ -20,7 +20,7 @@ class RegionResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGlobeAsiaAustralia;
 
-    protected static ?string $recordTitleAttribute = 'slug';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function getNavigationGroup(): ?string
     {

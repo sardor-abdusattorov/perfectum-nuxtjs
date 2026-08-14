@@ -60,19 +60,19 @@ class DocumentSeeder extends Seeder
 
         $sort = 0;
 
-        foreach (self::CATEGORIES as $slug => $name) {
-            DocumentCategory::updateOrCreate(['slug' => $slug], [
-                'name' => $name,
-                'sort' => ++$sort,
-            ]);
+        $categories = [];
+
+        foreach (self::CATEGORIES as $key => $name) {
+            $categories[$key] = DocumentCategory::updateOrCreate(
+                ['name->ru' => $name['ru']],
+                ['name' => $name, 'sort' => ++$sort],
+            )->getKey();
         }
 
-        $categories = DocumentCategory::query()->pluck('id', 'slug')->all();
-
-        foreach (self::DOCUMENTS as $slug => $documents) {
+        foreach (self::DOCUMENTS as $key => $documents) {
             foreach ($documents as $index => $name) {
                 Document::updateOrCreate(['name->ru' => $name['ru']], [
-                    'category_id' => $categories[$slug] ?? null,
+                    'category_id' => $categories[$key] ?? null,
                     'name' => $name,
                     'sort' => $index + 1,
                     'status' => false,

@@ -23,23 +23,23 @@ class DocumentController
             ->with(['category', 'files'])
             ->ordered()
             ->get()
-            ->groupBy(fn (Document $document): string => (string) $document->category?->slug);
+            ->groupBy(fn (Document $document): string => (string) $document->category_id);
 
         $groups = DocumentCategory::query()
             ->published()
             ->ordered()
             ->get()
             ->map(fn (DocumentCategory $category): array => [
-                'slug' => $category->slug,
+                'id' => $category->id,
                 'name' => $category->name,
-                'documents' => self::documents($documents->get($category->slug)),
+                'documents' => self::documents($documents->get((string) $category->id)),
             ])
             ->filter(fn (array $group): bool => $group['documents'] !== [])
             ->values()
             ->all();
 
         if ($loose = self::documents($documents->get(''))) {
-            $groups[] = ['slug' => null, 'name' => null, 'documents' => $loose];
+            $groups[] = ['id' => null, 'name' => null, 'documents' => $loose];
         }
 
         return response()->json(['data' => $groups]);

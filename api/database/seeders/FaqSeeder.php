@@ -14,14 +14,14 @@ class FaqSeeder extends Seeder
     {
         $data = json_decode((string) file_get_contents(database_path('data/faqs.json')), true);
 
-        foreach ($data['categories'] ?? [] as $sort => $category) {
-            FaqCategory::updateOrCreate(['slug' => $category['slug']], [
-                'name' => $category['name'],
-                'sort' => $sort + 1,
-            ]);
-        }
+        $categories = [];
 
-        $categories = FaqCategory::query()->pluck('id', 'slug')->all();
+        foreach ($data['categories'] ?? [] as $sort => $category) {
+            $categories[$category['slug']] = FaqCategory::updateOrCreate(
+                ['name->ru' => $category['name']['ru']],
+                ['name' => $category['name'], 'sort' => $sort + 1],
+            )->getKey();
+        }
 
         foreach ($data['faqs'] ?? [] as $row) {
             Faq::updateOrCreate(['question->ru' => $row['question']['ru']], [

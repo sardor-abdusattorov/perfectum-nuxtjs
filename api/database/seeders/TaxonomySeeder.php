@@ -33,14 +33,14 @@ class TaxonomySeeder extends Seeder
     {
         $data = json_decode((string) file_get_contents(database_path('data/taxonomies.json')), true);
 
-        $this->seed(TariffCategory::class, $data['tariff_categories'] ?? []);
-        $this->seed(TariffType::class, $this->rankDescending($data['tariff_types'] ?? []));
+        $categories = $this->seed(TariffCategory::class, $data['tariff_categories'] ?? []);
+        $types = $this->seed(TariffType::class, $this->rankDescending($data['tariff_types'] ?? []));
         $this->seed(ServiceCategory::class, $data['service_types'] ?? []);
 
-        $categories = TariffCategory::query()->pluck('id', 'slug');
-
         foreach (self::TYPE_CATEGORIES as $type => $category) {
-            TariffType::query()->where('slug', $type)->update(['category_id' => $categories[$category] ?? null]);
+            TariffType::query()
+                ->whereKey($types[$type] ?? null)
+                ->update(['category_id' => $categories[$category] ?? null]);
         }
     }
 
@@ -62,11 +62,17 @@ class TaxonomySeeder extends Seeder
     }
 
     /**
+     * The dump identifies a row by its slug, which the table no longer keeps,
+     * so the ids are handed back for the links that follow.
+     *
      * @param  class-string  $model
      * @param  array<int, array<string, mixed>>  $rows
+     * @return array<string, int>
      */
-    private function seed(string $model, array $rows): void
+    private function seed(string $model, array $rows): array
     {
+        $ids = [];
+
         foreach ($rows as $row) {
             $values = [
                 'name' => $row['name'],
@@ -78,7 +84,9 @@ class TaxonomySeeder extends Seeder
                 $values['network'] = (self::NETWORKS[$row['slug']] ?? Network::Both)->value;
             }
 
-            $model::updateOrCreate(['slug' => $row['slug']], $values);
+            $ids[$row['slug']] = $model::updateOrCreate(['name->ru' => $row['name']['ru']], $values)->getKey();
         }
+
+        return $ids;
     }
 }

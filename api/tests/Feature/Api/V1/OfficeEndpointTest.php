@@ -10,10 +10,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-function region(string $slug): Region
+function region(string $name): Region
 {
-    return Region::firstOrCreate(['slug' => $slug], [
-        'name' => ['ru' => $slug, 'uz' => $slug],
+    return Region::firstOrCreate(['name->ru' => $name], [
+        'name' => ['ru' => $name, 'uz' => $name],
         'sort' => 1,
         'status' => true,
     ]);
@@ -40,7 +40,7 @@ it('serves offices and dealers with their region', function (): void {
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.type', 'office')
-        ->assertJsonPath('data.0.region.slug', 'toshkent')
+        ->assertJsonPath('data.0.region.name', 'toshkent')
         ->assertJsonPath('data.0.address', 'улица Шевченко, 21')
         ->assertJsonPath('data.0.lat', 41.2975);
 });
@@ -55,14 +55,15 @@ it('filters by type', function (): void {
         ->assertJsonPath('data.0.name', 'ABASA');
 });
 
-it('filters by region slug', function (): void {
+it('filters by region', function (): void {
     office();
-    office(['region_id' => region('buxoro-viloyati')->id, 'sort' => 2]);
+    $buxoro = region('buxoro-viloyati');
+    office(['region_id' => $buxoro->id, 'sort' => 2]);
 
-    $this->getJson(route('api.v1.offices', ['region' => 'buxoro-viloyati']))
+    $this->getJson(route('api.v1.offices', ['region' => $buxoro->id]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
-        ->assertJsonPath('data.0.region.slug', 'buxoro-viloyati');
+        ->assertJsonPath('data.0.region.name', 'buxoro-viloyati');
 });
 
 it('keeps a five g point out of the cdma section', function (): void {
@@ -101,5 +102,5 @@ it('lists the regions as a taxonomy', function (): void {
     $this->getJson(route('api.v1.categories', ['taxonomy' => 'regions']))
         ->assertOk()
         ->assertJsonCount(1, 'data')
-        ->assertJsonPath('data.0.slug', 'toshkent');
+        ->assertJsonPath('data.0.name', 'toshkent');
 });

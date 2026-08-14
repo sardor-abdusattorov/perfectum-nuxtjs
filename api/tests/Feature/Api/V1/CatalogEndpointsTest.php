@@ -12,11 +12,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-function category(string $model, Network $network, string $slug): mixed
+function category(string $model, Network $network, string $name): mixed
 {
     return $model::create([
-        'name' => ['ru' => $slug, 'uz' => $slug],
-        'slug' => $slug,
+        'name' => ['ru' => $name, 'uz' => $name],
         'network' => $network,
         'sort' => 1,
         'status' => true,
@@ -49,11 +48,12 @@ it('splits the news feed by the record network', function (): void {
         ->assertJsonPath('data.0.slug', 'zagolovok');
 });
 
-it('filters by category slug', function (): void {
+it('filters the list by category', function (): void {
     news(['category_id' => category(NewsCategory::class, Network::Both, 'razvitie')->id]);
-    news(['slug' => 'vtoraya', 'category_id' => category(NewsCategory::class, Network::Both, 'kompaniya')->id]);
+    $company = category(NewsCategory::class, Network::Both, 'kompaniya');
+    news(['slug' => 'vtoraya', 'category_id' => $company->id]);
 
-    $this->getJson(route('api.v1.news.index', ['category' => 'kompaniya']))
+    $this->getJson(route('api.v1.news.index', ['category' => $company->id]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.slug', 'vtoraya');
@@ -97,7 +97,7 @@ it('lists categories of one type only', function (): void {
     $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
         ->assertOk()
         ->assertJsonCount(1, 'data')
-        ->assertJsonPath('data.0.slug', 'kompaniya');
+        ->assertJsonPath('data.0.name', 'kompaniya');
 });
 
 it('rejects an unknown category type', function (): void {

@@ -75,13 +75,15 @@ class ContentSeeder extends Seeder
      */
     private function categories(string $model, array $rows): array
     {
+        $ids = [];
+
         foreach ($rows as $sort => $row) {
-            $model::updateOrCreate(['slug' => $row['slug']], [
-                'name' => $row['name'],
-                'sort' => $sort + 1,
-            ]);
+            $ids[$row['slug']] = $model::updateOrCreate(
+                ['name->ru' => $row['name']['ru']],
+                ['name' => $row['name'], 'sort' => $sort + 1],
+            )->getKey();
         }
 
-        return $model::query()->pluck('id', 'slug')->all();
+        return $ids;
     }
 }

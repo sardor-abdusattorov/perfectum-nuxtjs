@@ -17,7 +17,7 @@ class Region extends Model
 
     protected $table = 'regions';
 
-    protected $fillable = ['name', 'slug', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'network', 'sort', 'status'];
 
     public $translatable = ['name'];
 

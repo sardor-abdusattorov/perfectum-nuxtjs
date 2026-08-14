@@ -21,7 +21,6 @@ class ApplicationTheme extends Model
 
     protected $fillable = [
         'name',
-        'slug',
         'sort',
         'status',
     ];

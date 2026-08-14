@@ -37,12 +37,12 @@ trait HasCategory
         );
     }
 
-    public function scopeInCategory(Builder $query, ?string $slug, string $relation = 'category'): Builder
+    public function scopeInCategory(Builder $query, mixed $category, string $relation = 'category'): Builder
     {
-        if (blank($slug)) {
+        if (blank($category)) {
             return $query;
         }
 
-        return $query->whereHas($relation, fn (Builder $category) => $category->where('slug', $slug));
+        return $query->where($this->{$relation}()->getForeignKeyName(), $category);
     }
 }

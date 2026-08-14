@@ -52,7 +52,7 @@ export interface TenderItem {
 
 interface ListQuery {
   network?: string
-  category?: MaybeRefOrGetter<string | undefined>
+  category?: MaybeRefOrGetter<number | string | undefined>
   page?: MaybeRefOrGetter<number>
   search?: MaybeRefOrGetter<string | undefined>
   perPage?: number

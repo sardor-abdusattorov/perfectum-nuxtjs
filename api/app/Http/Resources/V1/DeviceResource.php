@@ -31,7 +31,7 @@ class DeviceResource extends JsonResource
             'price' => $this->price,
             'in_stock' => $this->in_stock,
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'slug' => $this->category->slug,
+                'id' => $this->category->id,
                 'name' => $this->category->name,
             ]),
         ];

@@ -18,10 +18,6 @@ class TariffCategoriesTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('slug')
-                    ->label(__('app.label.slug'))
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('network')
                     ->label(__('app.label.network'))
                     ->badge(),

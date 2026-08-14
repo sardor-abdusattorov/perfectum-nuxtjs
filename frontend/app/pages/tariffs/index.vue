@@ -58,13 +58,13 @@ function connect(tariff: Tariff): void {
       <div v-if="categories.length" class="tariffs-list__tabs" role="tablist" :aria-label="t('tariffs.categories_label')">
         <button
           v-for="item in categories"
-          :key="item.slug"
+          :key="item.id"
           type="button"
           class="tariffs-list__tab"
-          :class="item.slug === category && 'tariffs-list__tab_active'"
+          :class="item.id === category && 'tariffs-list__tab_active'"
           role="tab"
-          :aria-selected="item.slug === category"
-          @click="category = item.slug"
+          :aria-selected="item.id === category"
+          @click="category = item.id"
         >{{ item.name }}</button>
       </div>
 
@@ -80,13 +80,13 @@ function connect(tariff: Tariff): void {
 
         <button
           v-for="item in types"
-          :key="item.slug"
+          :key="item.id"
           type="button"
           class="tariffs-list__filter"
-          :class="item.slug === type && 'tariffs-list__filter_active'"
+          :class="item.id === type && 'tariffs-list__filter_active'"
           role="tab"
-          :aria-selected="item.slug === type"
-          @click="type = item.slug"
+          :aria-selected="item.id === type"
+          @click="type = item.id"
         >{{ item.name }}</button>
       </div>
 

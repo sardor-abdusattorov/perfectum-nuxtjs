@@ -1,7 +1,7 @@
 import type { ApiResponse, TariffButton } from '~/types/api'
 
 export interface Taxonomy {
-  slug: string
+  id: number
   name: string
   network: string | null
 }
@@ -77,25 +77,25 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
   const categories = computed(() => catalog.value?.categories ?? [])
   const tariffs = computed(() => catalog.value?.tariffs ?? [])
 
-  const category = ref('')
-  const type = ref('')
+  const category = ref<number | ''>('')
+  const type = ref<number | ''>('')
 
   watchEffect(() => {
     if (!category.value && categories.value.length) {
-      category.value = categories.value[0]!.slug
+      category.value = categories.value[0]!.id
     }
   })
 
-  const inCategory = computed(() => tariffs.value.filter(item => item.category?.slug === category.value))
+  const inCategory = computed(() => tariffs.value.filter(item => item.category?.id === category.value))
 
   const types = computed(() => {
-    const present = new Set(inCategory.value.map(item => item.type?.slug).filter(Boolean))
+    const present = new Set(inCategory.value.map(item => item.type?.id).filter(Boolean))
 
-    return (catalog.value?.types ?? []).filter(item => present.has(item.slug))
+    return (catalog.value?.types ?? []).filter(item => present.has(item.id))
   })
 
   const visible = computed(() => (
-    type.value ? inCategory.value.filter(item => item.type?.slug === type.value) : inCategory.value
+    type.value ? inCategory.value.filter(item => item.type?.id === type.value) : inCategory.value
   ))
 
   watch(category, () => {

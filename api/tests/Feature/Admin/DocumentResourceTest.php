@@ -30,10 +30,7 @@ beforeEach(function (): void {
 it('stamps the size of every uploaded file and keeps its language', function (): void {
     Storage::fake('public');
 
-    $category = DocumentCategory::create([
-        'name' => ['ru' => 'Договоры'],
-        'slug' => 'dogovory',
-    ]);
+    $category = DocumentCategory::create(['name' => ['ru' => 'Договоры']]);
 
     $this->actingAs($this->admin);
 

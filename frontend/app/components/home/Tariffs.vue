@@ -36,13 +36,13 @@ useSlider(slider, {
           <div class="tariffs__tabs" role="tablist" :aria-label="t('tariffs.categories_label')">
             <button
               v-for="item in categories"
-              :key="item.slug"
+              :key="item.id"
               type="button"
               class="tariffs__tab"
-              :class="item.slug === category && 'tariffs__tab_active'"
+              :class="item.id === category && 'tariffs__tab_active'"
               role="tab"
-              :aria-selected="item.slug === category"
-              @click="category = item.slug"
+              :aria-selected="item.id === category"
+              @click="category = item.id"
             >{{ item.name }}</button>
           </div>
 
@@ -58,13 +58,13 @@ useSlider(slider, {
 
             <button
               v-for="item in types"
-              :key="item.slug"
+              :key="item.id"
               type="button"
               class="tariffs__chip"
-              :class="item.slug === type && 'tariffs__chip_active'"
+              :class="item.id === type && 'tariffs__chip_active'"
               role="tab"
-              :aria-selected="item.slug === type"
-              @click="type = item.slug"
+              :aria-selected="item.id === type"
+              @click="type = item.id"
             >{{ item.name }}</button>
           </div>
         </div>

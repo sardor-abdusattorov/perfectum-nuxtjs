@@ -4,7 +4,7 @@ const t = useT()
 
 useSeo({ page: 'news', titleKey: 'seo.news' })
 
-const category = ref('')
+const category = ref<number | ''>('')
 const search = ref('')
 const page = ref(1)
 
@@ -70,13 +70,13 @@ watch([category, search], () => {
           >{{ t('news.all') }}</button>
           <button
             v-for="item in categories"
-            :key="item.slug"
+            :key="item.id"
             type="button"
             class="filter-search__chip"
-            :class="item.slug === category && 'filter-search__chip_active'"
+            :class="item.id === category && 'filter-search__chip_active'"
             role="tab"
-            :aria-selected="item.slug === category"
-            @click="category = item.slug"
+            :aria-selected="item.id === category"
+            @click="category = item.id"
           >{{ item.name }}</button>
         </div>
       </div>
@@ -106,7 +106,7 @@ watch([category, search], () => {
       </div>
 
       <ul v-if="rest.length" class="news-grid">
-        <li v-for="item in rest" :key="item.slug" class="news-card">
+        <li v-for="item in rest" :key="item.id" class="news-card">
           <NuxtLink class="news-card__link" :to="localePath(`/news/${item.slug}`)">
             <div
               class="news-card__media"

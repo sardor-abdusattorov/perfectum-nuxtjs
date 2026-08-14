@@ -16,7 +16,7 @@ class DeviceCategory extends Model
 
     protected $table = 'device_categories';
 
-    protected $fillable = ['name', 'slug', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'network', 'sort', 'status'];
 
     public $translatable = ['name'];
 

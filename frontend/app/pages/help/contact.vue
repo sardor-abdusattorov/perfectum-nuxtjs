@@ -18,7 +18,7 @@ const { data: themes } = await useAsyncData(
 )
 
 const phone = ref('')
-const theme = ref('')
+const theme = ref<number | ''>('')
 const message = ref('')
 const errors = reactive({ phone: false, theme: false, message: false })
 
@@ -163,7 +163,7 @@ async function submit(): Promise<void> {
                     @change="errors.theme = false"
                   >
                     <option value="" disabled>{{ t('help.contact_theme_placeholder') }}</option>
-                    <option v-for="item in themes" :key="item.slug" :value="item.slug">{{ item.name }}</option>
+                    <option v-for="item in themes" :key="item.id" :value="item.id">{{ item.name }}</option>
                   </select>
                   <svg class="select__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                     <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />

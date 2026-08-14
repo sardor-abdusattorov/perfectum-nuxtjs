@@ -53,13 +53,13 @@ class Office extends Model
         return $type === null ? $query : $query->where('type', $type);
     }
 
-    public function scopeInRegion(Builder $query, ?string $slug): Builder
+    public function scopeInRegion(Builder $query, mixed $region): Builder
     {
-        if (blank($slug)) {
+        if (blank($region)) {
             return $query;
         }
 
-        return $query->whereHas('region', fn (Builder $region) => $region->where('slug', $slug));
+        return $query->where('region_id', $region);
     }
 
     public function scopeOrdered(Builder $query): Builder

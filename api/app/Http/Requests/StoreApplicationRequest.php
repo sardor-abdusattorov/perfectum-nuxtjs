@@ -30,7 +30,7 @@ class StoreApplicationRequest extends FormRequest
     {
         return [
             'phone' => ['required', 'string', 'regex:/^998\d{9}$/'],
-            'theme' => ['required', 'string', Rule::exists('application_themes', 'slug')->where('status', true)],
+            'theme' => ['required', 'integer', Rule::exists('application_themes', 'id')->where('status', true)],
             'message' => ['required', 'string', 'max:500'],
         ];
     }

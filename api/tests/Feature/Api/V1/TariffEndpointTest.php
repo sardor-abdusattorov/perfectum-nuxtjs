@@ -53,19 +53,19 @@ it('serves the uz locale of every repeater row', function (): void {
         ->assertJsonPath('data.buttons.0.name', 'Chaqiruv 7*1*1');
 });
 
-it('filters the list by category and type slug', function (): void {
-    $category = TariffCategory::create(['name' => ['ru' => 'CDMA'], 'slug' => 'cdma', 'status' => true]);
-    $type = TariffType::create(['name' => ['ru' => 'Месячные'], 'slug' => 'monthly', 'status' => true]);
+it('filters the list by category and type', function (): void {
+    $category = TariffCategory::create(['name' => ['ru' => 'CDMA'], 'status' => true]);
+    $type = TariffType::create(['name' => ['ru' => 'Месячные'], 'status' => true]);
 
     tariff(['category_id' => $category->id, 'type_id' => $type->id]);
     tariff(['slug' => 'other']);
 
-    $this->getJson(route('api.v1.tariffs.index', ['category' => 'cdma']))
+    $this->getJson(route('api.v1.tariffs.index', ['category' => $category->id]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.slug', 'qulay-1');
 
-    $this->getJson(route('api.v1.tariffs.index', ['type' => 'monthly']))
+    $this->getJson(route('api.v1.tariffs.index', ['type' => $type->id]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.slug', 'qulay-1');

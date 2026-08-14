@@ -15,7 +15,6 @@ class DocumentCategory extends Model
 
     protected $fillable = [
         'name',
-        'slug',
         'sort',
         'status',
     ];

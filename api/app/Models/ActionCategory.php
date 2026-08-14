@@ -16,7 +16,7 @@ class ActionCategory extends Model
 
     protected $table = 'action_categories';
 
-    protected $fillable = ['name', 'slug', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'network', 'sort', 'status'];
 
     public $translatable = ['name'];
 

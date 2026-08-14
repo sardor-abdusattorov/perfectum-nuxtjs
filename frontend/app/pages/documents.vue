@@ -15,7 +15,7 @@ interface DocumentItem {
 }
 
 interface DocumentGroup {
-  slug: string | null
+  id: number | null
   name: string | null
   documents: DocumentItem[]
 }
@@ -60,7 +60,7 @@ function translations(doc: DocumentItem): DocumentDownload[] {
     <div class="container">
       <CompanyNav active="documents" />
 
-      <div v-for="group in groups" :key="group.slug ?? 'other'" class="doc-group">
+      <div v-for="group in groups" :key="group.id ?? 'other'" class="doc-group">
         <h2 v-if="group.name" class="doc-group__title">{{ group.name }}</h2>
         <ul class="doc-list">
           <li v-for="doc in group.documents" :key="doc.url ?? doc.name" class="doc-item">

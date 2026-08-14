@@ -21,7 +21,7 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'slug' => $this->slug,
+            'id' => $this->id,
             'name' => $this->name,
             'network' => array_key_exists('network', $this->resource->getAttributes()) ? $this->network?->value : null,
         ];
