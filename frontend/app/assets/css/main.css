@@ -9981,15 +9981,9 @@ select {
     width: 48px;
     height: 48px;
   }
-  .coverage .coverage__city {
-    padding: 0 14px;
-  }
   .coverage .coverage__pin {
     width: 6px;
     height: 6px;
-  }
-  .coverage .coverage__city:first-child {
-    padding-left: 0;
   }
   .coverage .coverage__name {
     font-size: 15px;
