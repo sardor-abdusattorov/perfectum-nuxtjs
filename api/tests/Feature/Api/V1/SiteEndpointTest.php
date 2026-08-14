@@ -8,6 +8,7 @@ use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
 use App\Models\Social;
+use Database\Seeders\SiteSettingsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 
@@ -207,4 +208,15 @@ it('caches the menus as plain data so a second request can read them back', func
     $second = $this->getJson(route('api.v1.site'), ['X-Locale' => 'ru'])->assertOk()->json('data.menus.header');
 
     expect($second)->toBe($first);
+});
+
+it('ships both stores of the mobile app', function (): void {
+    $this->seed(SiteSettingsSeeder::class);
+
+    $settings = $this->getJson(route('api.v1.site'))
+        ->assertOk()
+        ->json('data.settings.site');
+
+    expect($settings['app_store_url'])->toStartWith('https://apps.apple.com/');
+    expect($settings['google_play_url'])->toStartWith('https://play.google.com/');
 });

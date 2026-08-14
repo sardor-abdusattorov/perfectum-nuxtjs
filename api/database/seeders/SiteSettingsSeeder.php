@@ -36,8 +36,8 @@ class SiteSettingsSeeder extends Seeder
 
             'map_url' => 'https://yandex.uz/maps/-/CDvOZK1p',
 
-            'google_play_url' => 'https://play.google.com/store/apps/details?id=uz.perfectum',
-            'app_store_url' => '',
+            'google_play_url' => 'https://play.google.com/store/apps/details?id=uz.rwc.perfectum',
+            'app_store_url' => 'https://apps.apple.com/app/id6771314299',
         ];
     }
 }
