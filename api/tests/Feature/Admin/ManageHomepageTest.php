@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
+use App\Filament\Pages\Homepage\HeroTab;
 use App\Filament\Pages\ManageHomepage;
 use App\Models\ContentBlock;
 use App\Models\User;
@@ -89,6 +90,43 @@ it('keeps buttons and the two hero switches inside a slide', function (): void {
         ->and($slide['show_gauge'])->toBeTrue();
 
     expect(ContentBlock::query()->where('key', ContentBlockKey::Hero)->exists())->toBeTrue();
+});
+
+/**
+ * The needle reads the number, so a slide that keeps a value the dial cannot
+ * point at would show a speed the artwork never marks.
+ */
+it('keeps the gauge value inside the scale the artwork draws', function (): void {
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
+        'slides' => [
+            [
+                'title' => ['ru' => 'Скорость'],
+                'show_gauge' => true,
+                'gauge_value' => 300,
+                'status' => true,
+            ],
+        ],
+    ]);
+
+    $slide = ContentBlock::read(PageKey::Home, ContentBlockKey::Hero)['slides'][0];
+
+    expect($slide['gauge_value'])
+        ->toBe(300)
+        ->toBeLessThanOrEqual(HeroTab::GAUGE_MAX);
+});
+
+it('shows the gauge value next to its switch', function (): void {
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
+        'slides' => [
+            ['title' => ['ru' => 'Скорость'], 'show_gauge' => true, 'gauge_value' => 1000, 'status' => true],
+        ],
+    ]);
+
+    $this->actingAs(homepageAdmin())
+        ->get('/admin/homepage')
+        ->assertOk()
+        ->assertSee('gauge_value')
+        ->assertSee(__('app.suffix.mbps'));
 });
 
 it('keeps the coverage status text and the publish switch apart', function (): void {

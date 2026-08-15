@@ -326,7 +326,7 @@ return [
         'lead_text' => 'Telefon oʻng tomonidagi xatboshi; mobil qurilmada uning ostida chiqadi. Yonidagi doʻkon tugmalari sayt sozlamalaridan olinadi',
         'show_aside' => 'Telefondan oʻngdagi matn va doʻkon tugmalari, mobilda — telefon ostida',
         'show_gauge' => 'Telefon rasmi ustidagi spidometr',
-        'gauge_value' => 'Shkala markazidagi son, maketda — 1 000',
+        'gauge_value' => 'Shkala markazidagi son — strelka oʻzi shu songa keladi. Boʻlinmalar 1 000 gacha chizilgan: 0, 10, 50, 80, 100, 250, 500, 750',
         'hero_title' => 'So\'zni belgilang va panelda rangni tanlang: qizil yoki konturli',
         'hero_lead' => 'Telefon oʻng tomonidagi xatboshi; mobil qurilmada — uning ostida. Yonidagi doʻkon tugmalari sayt sozlamalaridan olinadi',
         'section_texts_only' => 'Bu boʻlimda faqat matnlar tahrirlanadi — yozuvlar oʻz boʻlimida yuritiladi',
@@ -435,6 +435,10 @@ return [
 
     'color' => [
 
+    ],
+
+    'suffix' => [
+        'mbps' => 'Mbit/s',
     ],
 
     'button_style' => [

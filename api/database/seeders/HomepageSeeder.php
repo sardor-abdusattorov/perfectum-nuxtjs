@@ -53,7 +53,7 @@ class HomepageSeeder extends Seeder
                         ],
                         'show_aside' => true,
                         'show_gauge' => true,
-                        'gauge_value' => '1 000',
+                        'gauge_value' => 1000,
                         'status' => true,
                     ],
                 ],

@@ -17,6 +17,12 @@ use Filament\Schemas\Components\Utilities\Get;
 
 class HeroTab extends ContentTab
 {
+    /**
+     * The dial's ticks are drawn into the artwork and stop at a thousand, so a
+     * larger number would only peg the needle at the end of the scale.
+     */
+    public const GAUGE_MAX = 1000;
+
     public static function key(): ContentBlockKey
     {
         return ContentBlockKey::Hero;
@@ -47,7 +53,7 @@ class HeroTab extends ContentTab
                                             ->label(__('app.label.title'))
                                             ->helperText(__('app.helper.hero_title'))
                                             ->required(),
-                                            
+
                                         Fields::multiline('lead')
                                             ->label(__('app.label.lead_text'))
                                             ->helperText(__('app.helper.hero_lead')),
@@ -96,7 +102,11 @@ class HeroTab extends ContentTab
                                 TextInput::make('gauge_value')
                                     ->label(__('app.label.gauge_value'))
                                     ->helperText(__('app.helper.gauge_value'))
-                                    ->visible(fn(Get $get): bool => (bool) $get('show_gauge')),
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->maxValue(self::GAUGE_MAX)
+                                    ->suffix(__('app.suffix.mbps'))
+                                    ->visible(fn (Get $get): bool => (bool) $get('show_gauge')),
 
                                 Fields::status(),
                             ])

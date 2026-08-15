@@ -1,3 +1,5 @@
+import { gaugeAngle, gaugeLabel, gaugeNeedle, gaugeValue } from '~/utils/gauge'
+
 const documentHandlers = new Map()
 const teardown = []
 
@@ -180,20 +182,21 @@ function initBlock1() {
     }
   }
 
-  const needles = document.querySelectorAll(".hero__gauge .hero__gauge-needle");
-  if (needles.length) {
-    const DIP = 0.03;
-    const readouts = [];
+  // one dial per slide, each resting on its own number: the sweep runs in the
+  // dial's own angles so the needle and the readout say the same thing at every
+  // frame, whatever the slide is set to
+  const gauges = [];
+  document.querySelectorAll(".hero__gauge").forEach(function (svg) {
+    const needle = svg.querySelector(".hero__gauge-needle");
+    const peak = Number(needle?.dataset.peak);
 
-    document.querySelectorAll(".hero__gauge .hero__gauge-value").forEach(function (el) {
-      const peak = Number((el.dataset.value ?? el.textContent).replace(/[^\d.]/g, ""));
-      if (peak > 0) {
-        el.dataset.value = String(peak);
-        readouts.push({ el, peak });
-      }
-    });
+    if (needle && peak > 0) {
+      gauges.push({ needle, readout: svg.querySelector(".hero__gauge-value"), rest: gaugeAngle(peak) });
+    }
+  });
 
-    const maxTilt = -5;
+  if (gauges.length) {
+    const DIP = 4;
     const duration = 1300;
     let start = null;
 
@@ -203,14 +206,14 @@ function initBlock1() {
       let p = elapsed < duration ? elapsed / duration : 1 - (elapsed - duration) / duration;
       p = p * p * (3 - 2 * p);
 
-      const transform = "rotate(" + maxTilt * p + "deg)";
-      needles.forEach(function (needle) {
-        needle.style.transform = transform;
-      });
+      gauges.forEach(function (gauge) {
+        const angle = gauge.rest - DIP * (1 - p);
 
-      readouts.forEach(function (readout) {
-        const value = readout.peak * (1 - DIP * (1 - p));
-        readout.el.textContent = String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        gauge.needle.style.transform = "rotate(" + gaugeNeedle(angle) + "deg)";
+
+        if (gauge.readout) {
+          gauge.readout.textContent = gaugeLabel(gaugeValue(angle));
+        }
       });
     });
   }
