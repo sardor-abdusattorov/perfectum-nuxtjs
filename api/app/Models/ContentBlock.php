@@ -32,9 +32,29 @@ class ContentBlock extends Model
     {
         return Attribute::make(
             get: fn (?string $value): array => $value
-                ? static::resolveLocale(json_decode($value, true) ?? [], app()->getLocale())
+                ? static::renderIcons(static::resolveLocale(json_decode($value, true) ?? [], app()->getLocale()))
                 : [],
             set: fn (mixed $value): string => json_encode($value, JSON_UNESCAPED_UNICODE),
+        );
+    }
+
+    /**
+     * A node whose `icon` names one from the panel's set gets an `icon_svg`
+     * sibling with the rendered mark, the way the socials payload carries
+     * theirs — the site only ever prints markup, never resolves names.
+     *
+     * @param  array<array-key, mixed>  $value
+     * @return array<array-key, mixed>
+     */
+    protected static function renderIcons(array $value): array
+    {
+        if (is_string($value['icon'] ?? null) && Social::hasIcon($value['icon'])) {
+            $value['icon_svg'] = Social::iconSvg($value['icon']);
+        }
+
+        return array_map(
+            fn ($item) => is_array($item) ? static::renderIcons($item) : $item,
+            $value,
         );
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Enums\ContactCard;
+use App\Enums\ContactCardIcon;
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Models\ContentBlock;
@@ -38,11 +39,13 @@ class ContactsSeeder extends Seeder
                 'items' => [
                     [
                         'type' => ContactCard::Office->value,
+                        'icon' => ContactCardIcon::Building->value,
                         'title' => ['ru' => 'Центральный офис', 'uz' => 'Bosh ofis'],
                         'note' => ['ru' => 'Пн–Вс 09:00–21:00', 'uz' => 'Du–Ya 09:00–21:00'],
                     ],
                     [
                         'type' => ContactCard::Phones->value,
+                        'icon' => ContactCardIcon::Phone->value,
                         'title' => ['ru' => 'Контакт-центр', 'uz' => 'Aloqa markazi'],
                         'note' => [
                             'ru' => '077 — бесплатно с номеров Perfectum',
@@ -51,11 +54,13 @@ class ContactsSeeder extends Seeder
                     ],
                     [
                         'type' => ContactCard::Emails->value,
+                        'icon' => ContactCardIcon::Envelope->value,
                         'title' => ['ru' => 'Почта и реквизиты', 'uz' => 'Pochta va rekvizitlar'],
                         'note' => ['ru' => '', 'uz' => ''],
                     ],
                     [
                         'type' => ContactCard::Socials->value,
+                        'icon' => ContactCardIcon::Globe->value,
                         'title' => ['ru' => 'Мы в соцсетях', 'uz' => 'Ijtimoiy tarmoqlarda'],
                         'note' => [
                             'ru' => 'Будьте на связи и следите за новостями компании',

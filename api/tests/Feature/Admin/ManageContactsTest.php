@@ -54,7 +54,7 @@ it('seeds one card per contact type', function (): void {
     expect($types)->toBe(array_column(ContactCard::cases(), 'value'));
 });
 
-it('keeps the picked icon and leaves an unset one to the type', function (): void {
+it('keeps the picked icon and serves it rendered', function (): void {
     $this->seed(ContactsSeeder::class);
 
     $this->actingAs($this->admin);
@@ -64,13 +64,17 @@ it('keeps the picked icon and leaves an unset one to the type', function (): voi
     $first = array_key_first($component->get('data')['cards']['items']);
 
     $component
-        ->set("data.cards.items.{$first}.icon", ContactCardIcon::Globe->value)
+        ->set("data.cards.items.{$first}.icon", ContactCardIcon::Lifebuoy->value)
         ->callAction(TestAction::make('save_cards')->schemaComponent(true));
 
-    $items = ContentBlock::read(PageKey::Contacts, ContentBlockKey::Cards)['items'];
+    expect(ContentBlock::read(PageKey::Contacts, ContentBlockKey::Cards)['items'][0]['icon'])
+        ->toBe('heroicon-o-lifebuoy');
 
-    expect($items[0]['icon'])->toBe('globe')
-        ->and($items[1]['icon'] ?? null)->toBeNull();
+    $card = $this->getJson(route('api.v1.blocks.show', ['page' => 'contacts']))
+        ->assertOk()
+        ->json('data.blocks.cards.items.0');
+
+    expect($card['icon_svg'])->toStartWith('<svg');
 });
 
 /**
@@ -96,9 +100,10 @@ it('keeps a card published across a save that never touched its switch', functio
     }
 });
 
-it('implies each icon from its card type', function (): void {
-    expect(collect(ContactCard::cases())->map(fn (ContactCard $type): string => ContactCardIcon::for($type)->value)->all())
-        ->toBe(['building', 'phone', 'envelope', 'globe']);
+it('offers every card icon rendered from the panel set', function (): void {
+    foreach (ContactCardIcon::getIconOptions() as $option) {
+        expect($option)->toContain('<svg');
+    }
 });
 
 it('writes a card back through its save action', function (): void {

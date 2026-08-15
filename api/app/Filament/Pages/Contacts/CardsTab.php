@@ -49,10 +49,11 @@ class CardsTab extends ContentTab
                         Select::make('icon')
                             ->label(__('app.label.card_icon'))
                             ->helperText(__('app.helper.contact_card_icon'))
-                            ->options(ContactCardIcon::getOptions())
+                            ->options(ContactCardIcon::getIconOptions())
                             ->allowHtml()
+                            ->searchable()
                             ->native(false)
-                            ->placeholder(__('app.placeholder.icon_by_type')),
+                            ->placeholder(__('app.placeholder.no_icon')),
 
                         TranslatableTabs::make('translations')
                             ->schema([
