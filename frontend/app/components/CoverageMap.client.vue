@@ -80,19 +80,45 @@ async function draw(): Promise<void> {
   const ymaps = (window as any).ymaps
   const style = {
     strokeColor: layer.color,
-    strokeWidth: 1.5,
+    strokeWidth: 1,
     fillColor: layer.color,
-    fillOpacity: 0.22,
+    fillOpacity: 0.28,
+    fillRule: 'evenOdd',
   }
+
+  /**
+   * The planning export is one MultiPolygon of tens of thousands of disjoint
+   * patches. They are drawn even-odd in batches: one geo-object per batch
+   * keeps the map responsive where one object per patch would bury it.
+   */
+  const BATCH = 2000
 
   for (const feature of shapes.features) {
     const geometry = feature.geometry
-    const shape = geometry.type === 'Polygon'
-      ? new ymaps.Polygon((geometry.coordinates as number[][][]).map(flip), { hintContent: layer.name }, style)
-      : new ymaps.Polyline(flip(geometry.coordinates as number[][]), { hintContent: layer.name }, style)
 
-    map.geoObjects.add(shape)
-    drawn.push(shape)
+    if (geometry.type === 'LineString') {
+      const line = new ymaps.Polyline(flip(geometry.coordinates as number[][]), { hintContent: layer.name }, style)
+
+      map.geoObjects.add(line)
+      drawn.push(line)
+
+      continue
+    }
+
+    const contours = geometry.type === 'MultiPolygon'
+      ? (geometry.coordinates as number[][][][]).flat()
+      : (geometry.coordinates as number[][][])
+
+    for (let index = 0; index < contours.length; index += BATCH) {
+      const shape = new ymaps.Polygon(
+        contours.slice(index, index + BATCH).map(flip),
+        { hintContent: layer.name },
+        style,
+      )
+
+      map.geoObjects.add(shape)
+      drawn.push(shape)
+    }
   }
 }
 
@@ -116,7 +142,7 @@ onMounted(async () => {
     map = new ymaps.Map(canvas.value, {
       center: [41.6, 64.5],
       zoom: 6,
-      controls: [],
+      controls: ['fullscreenControl'],
     }, {
       suppressMapOpenBlock: true,
     })
@@ -127,7 +153,32 @@ onMounted(async () => {
   })
 })
 
+/**
+ * The wheel scrolls the page until Ctrl joins in — then it zooms the map,
+ * the way every embedded map behaves.
+ */
+function onModifier(event: KeyboardEvent): void {
+  if (event.key !== 'Control' || !map) {
+    return
+  }
+
+  map.behaviors[event.type === 'keydown' ? 'enable' : 'disable']('scrollZoom')
+}
+
+function releaseScrollZoom(): void {
+  map?.behaviors.disable('scrollZoom')
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', onModifier)
+  window.addEventListener('keyup', onModifier)
+  window.addEventListener('blur', releaseScrollZoom)
+})
+
 onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onModifier)
+  window.removeEventListener('keyup', onModifier)
+  window.removeEventListener('blur', releaseScrollZoom)
   map?.destroy()
   map = null
 })

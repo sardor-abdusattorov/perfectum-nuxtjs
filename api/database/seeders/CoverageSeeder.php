@@ -9,6 +9,7 @@ use App\Enums\PageKey;
 use App\Models\ContentBlock;
 use App\Models\CoverageLayer;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class CoverageSeeder extends Seeder
 {
@@ -34,6 +35,8 @@ class CoverageSeeder extends Seeder
             ]);
         }
 
+        $this->attachExport('5g', 'coverage-5g.zip');
+
         ContentBlock::write(PageKey::CoverageArea, ContentBlockKey::PageHero, [
             'eyebrow' => ['ru' => '5G Standalone', 'uz' => '5G Standalone'],
             'title' => [
@@ -45,5 +48,25 @@ class CoverageSeeder extends Seeder
                 'uz' => 'Shahringizda Perfectum 5G SA tarmogʻi mavjudligini tekshiring — qamrov hududida mobil aloqa ham, uy interneti ham ishlaydi.',
             ],
         ]);
+    }
+
+    /**
+     * The network team's shapefile export ships with the repo, so a fresh
+     * database serves the real 5G outline at once; a layer that already has
+     * an upload keeps it.
+     */
+    private function attachExport(string $key, string $file): void
+    {
+        $layer = CoverageLayer::query()->where('key', $key)->first();
+
+        if ($layer === null || filled($layer->file)) {
+            return;
+        }
+
+        $path = "uploads/coverage/{$file}";
+
+        Storage::disk('public')->put($path, (string) file_get_contents(database_path("data/{$file}")));
+
+        $layer->update(['file' => $path]);
     }
 }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\CoverageLayer;
+use Database\Seeders\CoverageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -126,4 +127,26 @@ it('keeps the layer usable when the archive cannot be read', function (): void {
     $this->getJson(route('api.v1.coverage'))
         ->assertOk()
         ->assertJsonCount(0, 'data');
+});
+
+it('serves the shipped 5g export inside tashkent', function (): void {
+    Storage::fake('public');
+
+    $this->seed(CoverageSeeder::class);
+
+    $this->getJson(route('api.v1.coverage'))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.key', '5g');
+
+    $geometry = $this->getJson(route('api.v1.coverage.show', ['layer' => '5g']))
+        ->assertOk()
+        ->json('features.0.geometry');
+
+    expect($geometry['type'])->toBe('MultiPolygon');
+
+    [$lon, $lat] = $geometry['coordinates'][0][0][0];
+
+    expect($lon)->toBeGreaterThan(68.5)->toBeLessThan(70.5)
+        ->and($lat)->toBeGreaterThan(40.5)->toBeLessThan(42.0);
 });

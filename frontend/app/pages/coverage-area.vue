@@ -116,7 +116,7 @@ function clear(): void {
             </svg>
           </div>
 
-          <div v-if="available.length > 1" class="coverage-search__layers">
+          <div v-if="available.length" class="coverage-search__layers">
             <button
               v-for="layer in available"
               :key="layer.key"
