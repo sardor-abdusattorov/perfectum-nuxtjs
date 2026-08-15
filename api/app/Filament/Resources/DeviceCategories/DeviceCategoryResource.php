@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DeviceCategories;
 use App\Filament\Resources\DeviceCategories\Pages\CreateDeviceCategory;
 use App\Filament\Resources\DeviceCategories\Pages\EditDeviceCategory;
 use App\Filament\Resources\DeviceCategories\Pages\ListDeviceCategories;
+use App\Filament\Resources\DeviceCategories\Pages\ViewDeviceCategory;
 use App\Filament\Resources\DeviceCategories\Schemas\DeviceCategoryForm;
 use App\Filament\Resources\DeviceCategories\Tables\DeviceCategoriesTable;
 use App\Models\DeviceCategory;
@@ -67,6 +68,7 @@ class DeviceCategoryResource extends Resource
         return [
             'index' => ListDeviceCategories::route('/'),
             'create' => CreateDeviceCategory::route('/create'),
+            'view' => ViewDeviceCategory::route('/{record}'),
             'edit' => EditDeviceCategory::route('/{record}/edit'),
         ];
     }

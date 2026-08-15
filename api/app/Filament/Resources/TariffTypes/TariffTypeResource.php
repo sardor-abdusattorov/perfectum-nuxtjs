@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TariffTypes;
 use App\Filament\Resources\TariffTypes\Pages\CreateTariffType;
 use App\Filament\Resources\TariffTypes\Pages\EditTariffType;
 use App\Filament\Resources\TariffTypes\Pages\ListTariffTypes;
+use App\Filament\Resources\TariffTypes\Pages\ViewTariffType;
 use App\Filament\Resources\TariffTypes\Schemas\TariffTypeForm;
 use App\Filament\Resources\TariffTypes\Tables\TariffTypesTable;
 use App\Models\TariffType;
@@ -67,6 +68,7 @@ class TariffTypeResource extends Resource
         return [
             'index' => ListTariffTypes::route('/'),
             'create' => CreateTariffType::route('/create'),
+            'view' => ViewTariffType::route('/{record}'),
             'edit' => EditTariffType::route('/{record}/edit'),
         ];
     }

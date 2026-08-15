@@ -5,6 +5,7 @@ namespace App\Filament\Resources\FaqCategories;
 use App\Filament\Resources\FaqCategories\Pages\CreateFaqCategory;
 use App\Filament\Resources\FaqCategories\Pages\EditFaqCategory;
 use App\Filament\Resources\FaqCategories\Pages\ListFaqCategories;
+use App\Filament\Resources\FaqCategories\Pages\ViewFaqCategory;
 use App\Filament\Resources\FaqCategories\Schemas\FaqCategoryForm;
 use App\Filament\Resources\FaqCategories\Tables\FaqCategoriesTable;
 use App\Models\FaqCategory;
@@ -67,6 +68,7 @@ class FaqCategoryResource extends Resource
         return [
             'index' => ListFaqCategories::route('/'),
             'create' => CreateFaqCategory::route('/create'),
+            'view' => ViewFaqCategory::route('/{record}'),
             'edit' => EditFaqCategory::route('/{record}/edit'),
         ];
     }

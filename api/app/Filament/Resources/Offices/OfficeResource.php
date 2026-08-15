@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Offices;
 use App\Filament\Resources\Offices\Pages\CreateOffice;
 use App\Filament\Resources\Offices\Pages\EditOffice;
 use App\Filament\Resources\Offices\Pages\ListOffices;
+use App\Filament\Resources\Offices\Pages\ViewOffice;
 use App\Filament\Resources\Offices\Schemas\OfficeForm;
 use App\Filament\Resources\Offices\Tables\OfficesTable;
 use App\Models\Office;
@@ -67,6 +68,7 @@ class OfficeResource extends Resource
         return [
             'index' => ListOffices::route('/'),
             'create' => CreateOffice::route('/create'),
+            'view' => ViewOffice::route('/{record}'),
             'edit' => EditOffice::route('/{record}/edit'),
         ];
     }

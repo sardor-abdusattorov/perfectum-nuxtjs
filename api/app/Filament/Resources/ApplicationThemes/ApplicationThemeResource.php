@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ApplicationThemes;
 use App\Filament\Resources\ApplicationThemes\Pages\CreateApplicationTheme;
 use App\Filament\Resources\ApplicationThemes\Pages\EditApplicationTheme;
 use App\Filament\Resources\ApplicationThemes\Pages\ListApplicationThemes;
+use App\Filament\Resources\ApplicationThemes\Pages\ViewApplicationTheme;
 use App\Filament\Resources\ApplicationThemes\Schemas\ApplicationThemeForm;
 use App\Filament\Resources\ApplicationThemes\Tables\ApplicationThemesTable;
 use App\Models\ApplicationTheme;
@@ -62,6 +63,7 @@ class ApplicationThemeResource extends Resource
         return [
             'index' => ListApplicationThemes::route('/'),
             'create' => CreateApplicationTheme::route('/create'),
+            'view' => ViewApplicationTheme::route('/{record}'),
             'edit' => EditApplicationTheme::route('/{record}/edit'),
         ];
     }

@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\TariffFiles\Tables;
 
 use App\Filament\Support\Tables;
+use App\Models\TariffFile;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -17,6 +19,14 @@ class TariffFilesTable
                     ->label(__('app.label.name'))
                     ->searchable()
                     ->wrap(),
+
+                IconColumn::make('file')
+                    ->label(__('app.label.file'))
+                    ->state(fn (TariffFile $record): bool => filled(stored_url($record->file)))
+                    ->boolean()
+                    ->tooltip(fn (TariffFile $record): string => filled(stored_url($record->file))
+                        ? __('app.helper.file_attached')
+                        : __('app.helper.file_missing')),
 
                 TextColumn::make('created_at')
                     ->label(__('app.label.created_at'))

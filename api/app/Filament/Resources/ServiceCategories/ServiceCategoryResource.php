@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ServiceCategories;
 use App\Filament\Resources\ServiceCategories\Pages\CreateServiceCategory;
 use App\Filament\Resources\ServiceCategories\Pages\EditServiceCategory;
 use App\Filament\Resources\ServiceCategories\Pages\ListServiceCategories;
+use App\Filament\Resources\ServiceCategories\Pages\ViewServiceCategory;
 use App\Filament\Resources\ServiceCategories\Schemas\ServiceCategoryForm;
 use App\Filament\Resources\ServiceCategories\Tables\ServiceCategoriesTable;
 use App\Models\ServiceCategory;
@@ -67,6 +68,7 @@ class ServiceCategoryResource extends Resource
         return [
             'index' => ListServiceCategories::route('/'),
             'create' => CreateServiceCategory::route('/create'),
+            'view' => ViewServiceCategory::route('/{record}'),
             'edit' => EditServiceCategory::route('/{record}/edit'),
         ];
     }

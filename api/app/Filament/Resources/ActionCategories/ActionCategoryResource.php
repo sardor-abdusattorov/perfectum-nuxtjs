@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ActionCategories;
 use App\Filament\Resources\ActionCategories\Pages\CreateActionCategory;
 use App\Filament\Resources\ActionCategories\Pages\EditActionCategory;
 use App\Filament\Resources\ActionCategories\Pages\ListActionCategories;
+use App\Filament\Resources\ActionCategories\Pages\ViewActionCategory;
 use App\Filament\Resources\ActionCategories\Schemas\ActionCategoryForm;
 use App\Filament\Resources\ActionCategories\Tables\ActionCategoriesTable;
 use App\Models\ActionCategory;
@@ -67,6 +68,7 @@ class ActionCategoryResource extends Resource
         return [
             'index' => ListActionCategories::route('/'),
             'create' => CreateActionCategory::route('/create'),
+            'view' => ViewActionCategory::route('/{record}'),
             'edit' => EditActionCategory::route('/{record}/edit'),
         ];
     }

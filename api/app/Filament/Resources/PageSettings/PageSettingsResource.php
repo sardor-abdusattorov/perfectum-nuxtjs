@@ -5,6 +5,7 @@ namespace App\Filament\Resources\PageSettings;
 use App\Filament\Resources\PageSettings\Pages\CreatePageSettings;
 use App\Filament\Resources\PageSettings\Pages\EditPageSettings;
 use App\Filament\Resources\PageSettings\Pages\ListPageSettings;
+use App\Filament\Resources\PageSettings\Pages\ViewPageSettings;
 use App\Filament\Resources\PageSettings\Schemas\PageSettingsForm;
 use App\Filament\Resources\PageSettings\Tables\PageSettingsTable;
 use App\Models\PageSettings;
@@ -72,6 +73,7 @@ class PageSettingsResource extends Resource
         return [
             'index' => ListPageSettings::route('/'),
             'create' => CreatePageSettings::route('/create'),
+            'view' => ViewPageSettings::route('/{record}'),
             'edit' => EditPageSettings::route('/{record}/edit'),
         ];
     }

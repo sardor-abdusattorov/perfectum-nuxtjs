@@ -5,6 +5,7 @@ namespace App\Filament\Resources\FreeNumberFilters;
 use App\Filament\Resources\FreeNumberFilters\Pages\CreateFreeNumberFilter;
 use App\Filament\Resources\FreeNumberFilters\Pages\EditFreeNumberFilter;
 use App\Filament\Resources\FreeNumberFilters\Pages\ListFreeNumberFilters;
+use App\Filament\Resources\FreeNumberFilters\Pages\ViewFreeNumberFilter;
 use App\Filament\Resources\FreeNumberFilters\Schemas\FreeNumberFilterForm;
 use App\Filament\Resources\FreeNumberFilters\Tables\FreeNumberFiltersTable;
 use App\Models\FreeNumberFilter;
@@ -62,6 +63,7 @@ class FreeNumberFilterResource extends Resource
         return [
             'index' => ListFreeNumberFilters::route('/'),
             'create' => CreateFreeNumberFilter::route('/create'),
+            'view' => ViewFreeNumberFilter::route('/{record}'),
             'edit' => EditFreeNumberFilter::route('/{record}/edit'),
         ];
     }

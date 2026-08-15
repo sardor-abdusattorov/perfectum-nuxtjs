@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DocumentCategories;
 use App\Filament\Resources\DocumentCategories\Pages\CreateDocumentCategory;
 use App\Filament\Resources\DocumentCategories\Pages\EditDocumentCategory;
 use App\Filament\Resources\DocumentCategories\Pages\ListDocumentCategories;
+use App\Filament\Resources\DocumentCategories\Pages\ViewDocumentCategory;
 use App\Filament\Resources\DocumentCategories\Schemas\DocumentCategoryForm;
 use App\Filament\Resources\DocumentCategories\Tables\DocumentCategoriesTable;
 use App\Models\DocumentCategory;
@@ -67,6 +68,7 @@ class DocumentCategoryResource extends Resource
         return [
             'index' => ListDocumentCategories::route('/'),
             'create' => CreateDocumentCategory::route('/create'),
+            'view' => ViewDocumentCategory::route('/{record}'),
             'edit' => EditDocumentCategory::route('/{record}/edit'),
         ];
     }

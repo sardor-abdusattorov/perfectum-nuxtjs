@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TariffCategories;
 use App\Filament\Resources\TariffCategories\Pages\CreateTariffCategory;
 use App\Filament\Resources\TariffCategories\Pages\EditTariffCategory;
 use App\Filament\Resources\TariffCategories\Pages\ListTariffCategories;
+use App\Filament\Resources\TariffCategories\Pages\ViewTariffCategory;
 use App\Filament\Resources\TariffCategories\Schemas\TariffCategoryForm;
 use App\Filament\Resources\TariffCategories\Tables\TariffCategoriesTable;
 use App\Models\TariffCategory;
@@ -67,6 +68,7 @@ class TariffCategoryResource extends Resource
         return [
             'index' => ListTariffCategories::route('/'),
             'create' => CreateTariffCategory::route('/create'),
+            'view' => ViewTariffCategory::route('/{record}'),
             'edit' => EditTariffCategory::route('/{record}/edit'),
         ];
     }

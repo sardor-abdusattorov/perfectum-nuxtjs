@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CoverageLayers;
 use App\Filament\Resources\CoverageLayers\Pages\CreateCoverageLayer;
 use App\Filament\Resources\CoverageLayers\Pages\EditCoverageLayer;
 use App\Filament\Resources\CoverageLayers\Pages\ListCoverageLayers;
+use App\Filament\Resources\CoverageLayers\Pages\ViewCoverageLayer;
 use App\Filament\Resources\CoverageLayers\Schemas\CoverageLayerForm;
 use App\Filament\Resources\CoverageLayers\Tables\CoverageLayersTable;
 use App\Models\CoverageLayer;
@@ -62,6 +63,7 @@ class CoverageLayerResource extends Resource
         return [
             'index' => ListCoverageLayers::route('/'),
             'create' => CreateCoverageLayer::route('/create'),
+            'view' => ViewCoverageLayer::route('/{record}'),
             'edit' => EditCoverageLayer::route('/{record}/edit'),
         ];
     }

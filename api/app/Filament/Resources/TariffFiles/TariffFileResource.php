@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TariffFiles;
 use App\Filament\Resources\TariffFiles\Pages\CreateTariffFile;
 use App\Filament\Resources\TariffFiles\Pages\EditTariffFile;
 use App\Filament\Resources\TariffFiles\Pages\ListTariffFiles;
+use App\Filament\Resources\TariffFiles\Pages\ViewTariffFile;
 use App\Filament\Resources\TariffFiles\Schemas\TariffFileForm;
 use App\Filament\Resources\TariffFiles\Tables\TariffFilesTable;
 use App\Models\TariffFile;
@@ -67,6 +68,7 @@ class TariffFileResource extends Resource
         return [
             'index' => ListTariffFiles::route('/'),
             'create' => CreateTariffFile::route('/create'),
+            'view' => ViewTariffFile::route('/{record}'),
             'edit' => EditTariffFile::route('/{record}/edit'),
         ];
     }
