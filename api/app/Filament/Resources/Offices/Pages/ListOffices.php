@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Offices\Pages;
 
+use App\Enums\Network;
 use App\Enums\OfficeType;
 use App\Filament\Resources\Offices\OfficeResource;
 use App\Models\Office;
@@ -29,10 +30,14 @@ class ListOffices extends ListRecords
         ];
 
         foreach (OfficeType::cases() as $type) {
-            $tabs[$type->value] = Tab::make($type->getLabel())
-                ->badge(Office::query()->where('type', $type)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', $type));
+            $tabs[$type->value] = Tab::make($type->getLabel().' 5G')
+                ->badge(Office::query()->where('type', $type)->where('network', '!=', Network::Cdma)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', $type)->where('network', '!=', Network::Cdma));
         }
+
+        $tabs['cdma'] = Tab::make(__('app.label.cdma_dealers'))
+            ->badge(Office::query()->where('network', Network::Cdma)->count())
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('network', Network::Cdma));
 
         return $tabs;
     }

@@ -27,17 +27,20 @@ class Office extends Model
         'district',
         'address',
         'phone',
+        'dealers_count',
+        'content',
         'lat',
         'lng',
         'sort',
         'status',
     ];
 
-    public $translatable = ['district', 'address'];
+    public $translatable = ['district', 'address', 'content'];
 
     protected $casts = [
         'type' => OfficeType::class,
         'network' => Network::class,
+        'dealers_count' => 'integer',
         'lat' => 'float',
         'lng' => 'float',
         'status' => 'boolean',

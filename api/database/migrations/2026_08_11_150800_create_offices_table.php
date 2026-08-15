@@ -15,8 +15,10 @@ return new class extends Migration
             $table->string('network', 10)->default('both')->index();
             $table->string('name')->nullable();
             $table->json('district')->nullable();
-            $table->json('address');
+            $table->json('address')->nullable();
             $table->string('phone')->nullable();
+            $table->unsignedSmallInteger('dealers_count')->nullable();
+            $table->json('content')->nullable();
             $table->decimal('lat', 11, 8)->nullable();
             $table->decimal('lng', 11, 8)->nullable();
             $table->integer('sort')->default(0);

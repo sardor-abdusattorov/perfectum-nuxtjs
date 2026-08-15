@@ -29,6 +29,8 @@ class OfficeResource extends JsonResource
             'phone' => $this->phone,
             'lat' => $this->lat,
             'lng' => $this->lng,
+            'dealers_count' => $this->dealers_count,
+            'content' => $this->content,
             'region' => $this->whenLoaded('region', fn (): ?array => $this->region === null ? null : [
                 'id' => $this->region->id,
                 'name' => $this->region->name,

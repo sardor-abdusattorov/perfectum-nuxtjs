@@ -135,6 +135,7 @@ class SiteTranslationSeeder extends Seeder
             'procurement.files' => ['ru' => 'Документы', 'uz' => 'Hujjatlar'],
 
             'cdma.news_title' => ['ru' => 'Новости', 'uz' => 'Yangiliklar'],
+            'cdma.support_title' => ['ru' => 'Поддержка', 'uz' => 'Qoʻllab-quvvatlash'],
             'cdma.promo_title' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'cdma.year' => ['ru' => 'Год', 'uz' => 'Yil'],
             'cdma.month' => ['ru' => 'Месяц', 'uz' => 'Oy'],
@@ -221,7 +222,8 @@ class SiteTranslationSeeder extends Seeder
             'offices.office' => ['ru' => 'офис', 'uz' => 'ofis'],
             'offices.dealer' => ['ru' => 'Дилер', 'uz' => 'Diler'],
             'offices.offices_count' => ['ru' => 'Офисов', 'uz' => 'Ofis'],
-            'offices.dealers_count' => ['ru' => 'Дилеров', 'uz' => 'Diler'],
+            'offices.dealers_count' => ['ru' => 'дилеров', 'uz' => 'diler'],
+            'offices.dealers_empty' => ['ru' => 'Список дилеров пока не заполнен', 'uz' => 'Dilerlar roʻyxati hali toʻldirilmagan'],
             'offices.shown' => ['ru' => 'Показано', 'uz' => 'Koʻrsatilgan'],
             'offices.region' => ['ru' => 'Регион', 'uz' => 'Hudud'],
             'offices.all_regions' => ['ru' => 'Все регионы', 'uz' => 'Barcha hududlar'],

@@ -39,7 +39,13 @@ class OfficesTable
                 TextColumn::make('address')
                     ->label(__('app.label.address'))
                     ->searchable()
-                    ->wrap(),
+                    ->wrap()
+                    ->placeholder('—'),
+
+                TextColumn::make('dealers_count')
+                    ->label(__('app.label.dealers_count'))
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('phone')
                     ->label(__('app.label.phone'))

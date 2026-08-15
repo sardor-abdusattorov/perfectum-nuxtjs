@@ -1200,6 +1200,71 @@
   white-space: nowrap;
 }
 
+/* the region's table now comes out of the admin editor as bare tags, so the
+   frame's look is pinned to the wrapper: cream header, hairline rows, and a
+   full-width th row inside tbody reads as the district band */
+.cdma-dealers__content {
+  overflow-x: auto;
+  border: 1px solid #e1deda;
+  border-radius: var(--radius);
+}
+
+.cdma-dealers__content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cdma-dealers__content thead {
+  background: var(--cdma-cream);
+}
+
+.cdma-dealers__content thead th {
+  height: 64px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: middle;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #736f6e;
+}
+
+.cdma-dealers__content tr {
+  border-top: 1px solid #e1deda;
+}
+
+.cdma-dealers__content thead tr {
+  border-top: 0;
+}
+
+.cdma-dealers__content tbody th {
+  height: 48px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: middle;
+  background: #fcfaf5;
+  color: var(--color-black);
+}
+
+.cdma-dealers__content td {
+  height: 48px;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 22px;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--color-black);
+}
+
+.cdma-dealers__content thead th:first-child,
+.cdma-dealers__content tbody th,
+.cdma-dealers__content td:first-child {
+  padding-left: 40px;
+}
+
 /* ============================================================
    17. CDMA DETAIL — SHARED
    Tariff and service pages share a 195px orange band, a tinted

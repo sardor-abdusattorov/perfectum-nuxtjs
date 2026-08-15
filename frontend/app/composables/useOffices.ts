@@ -12,6 +12,8 @@ export interface Office {
   phone: string | null
   lat: number | null
   lng: number | null
+  dealers_count: number | null
+  content: string | null
   region: Taxonomy | null
 }
 

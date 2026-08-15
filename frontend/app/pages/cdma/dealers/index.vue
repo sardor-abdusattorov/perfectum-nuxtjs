@@ -7,13 +7,14 @@ useSeo({ titleKey: 'seo.cdma_dealers' })
 
 const { data } = await useOffices({ network: 'cdma', type: 'dealer' })
 
-const regions = computed(() => {
-  const dealers = data.value?.offices ?? []
-
-  return (data.value?.regions ?? [])
-    .map(region => ({ ...region, count: dealers.filter(item => item.region?.slug === region.slug).length }))
-    .filter(region => region.count > 0)
-})
+/** each CDMA entry is a region card: the name, a hand-kept count, a table inside */
+const cards = computed(() => (data.value?.offices ?? [])
+  .filter(office => office.region)
+  .map(office => ({
+    id: office.id,
+    name: office.region!.name,
+    count: office.dealers_count ?? 0,
+  })))
 </script>
 
 <template>
@@ -32,20 +33,21 @@ const regions = computed(() => {
 
   <section class="cdma-regions">
     <div class="container">
-      <ul v-if="regions.length" class="cdma-regions__list">
-        <li v-for="region in regions" :key="region.slug" class="cdma-region-card">
-          <NuxtLink class="cdma-region-card__link" :to="localePath(`/cdma/dealers/${region.slug}`)">
-            <h2 class="cdma-region-card__name">{{ region.name }}</h2>
-            <span class="cdma-region-card__count">{{ region.count }} {{ t('offices.dealers_count') }}</span>
+      <ul v-if="cards.length" class="cdma-regions__list">
+        <li v-for="card in cards" :key="card.id" class="cdma-region-card">
+          <NuxtLink class="cdma-region-card__link" :to="localePath(`/cdma/dealers/${card.id}`)">
+            <h2 class="cdma-region-card__name">{{ card.name }}</h2>
+            <span class="cdma-region-card__count">{{ card.count }} {{ t('offices.dealers_count') }}</span>
             <span class="cdma-region-card__arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
           </NuxtLink>
         </li>
       </ul>
-      <p v-else class="offices__empty">{{ t('offices.empty') }}</p>
+
+      <p v-else class="cdma-regions__empty">{{ t('offices.dealers_empty') }}</p>
     </div>
   </section>
 </template>
