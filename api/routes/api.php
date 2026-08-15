@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\V1\NewsController;
 use App\Http\Controllers\Api\V1\NumberController;
 use App\Http\Controllers\Api\V1\OfficeController;
 use App\Http\Controllers\Api\V1\PageController;
+use App\Http\Controllers\Api\V1\RedirectController;
 use App\Http\Controllers\Api\V1\SiteController;
 use App\Http\Controllers\Api\V1\TariffController;
 use App\Http\Controllers\Api\V1\TenderController;
@@ -35,6 +36,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::post('applications', ApplicationController::class)->middleware('throttle:10,1')->name('applications.store');
     Route::get('blocks/{page}', BlockController::class)->name('blocks.show');
     Route::get('pages/{page}', PageController::class)->name('pages.show');
+    Route::get('redirects', RedirectController::class)->name('redirects');
 
     Route::get('tariffs', [TariffController::class, 'index'])->name('tariffs.index');
     Route::get('tariffs/files', [TariffController::class, 'files'])->name('tariffs.files');

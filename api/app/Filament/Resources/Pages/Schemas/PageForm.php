@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Pages\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -34,6 +35,11 @@ class PageForm
 
                         Fields::slug()
                             ->helperText(__('app.helper.page_slug')),
+
+                        TagsInput::make('redirect_from')
+                            ->label(__('app.label.redirect_from'))
+                            ->helperText(__('app.helper.redirect_from'))
+                            ->placeholder('static-pages/oferta'),
 
                         Fields::image('pages')
                             ->label(__('app.label.image')),

@@ -113,3 +113,51 @@ it('caches the page as plain data so a second request can read it back', functio
 
     expect($second)->toBe($first);
 });
+
+it('maps every old address onto its page', function (): void {
+    makePage(['redirect_from' => ['static-pages/cookie-policy', 'static-pages/cookies']]);
+    makePage([
+        'slug' => 'oferta',
+        'redirect_from' => ['static-pages/oferta'],
+    ]);
+    makePage(['slug' => 'plain']);
+
+    $this->getJson(route('api.v1.redirects'))
+        ->assertOk()
+        ->assertExactJson(['data' => [
+            'static-pages/cookie-policy' => '/pages/cookie-policy',
+            'static-pages/cookies' => '/pages/cookie-policy',
+            'static-pages/oferta' => '/pages/oferta',
+        ]]);
+});
+
+it('drops an unpublished page from the redirect map', function (): void {
+    makePage(['status' => false, 'redirect_from' => ['static-pages/cookie-policy']]);
+
+    $this->getJson(route('api.v1.redirects'))
+        ->assertOk()
+        ->assertExactJson(['data' => []]);
+});
+
+it('boils a pasted address down to the bare path', function (): void {
+    $page = makePage(['redirect_from' => [
+        'https://perfectum.uz/static-pages/oferta?utm_source=ad',
+        '/ru/static-pages/oferta/',
+        ' static-pages/oferta ',
+        '',
+    ]]);
+
+    expect($page->redirect_from)->toBe(['static-pages/oferta']);
+});
+
+it('serves a fresh map as soon as a page changes its old addresses', function (): void {
+    $page = makePage(['redirect_from' => ['static-pages/old']]);
+
+    $this->getJson(route('api.v1.redirects'))
+        ->assertJsonPath('data.static-pages/old', '/pages/cookie-policy');
+
+    $page->update(['redirect_from' => ['static-pages/new']]);
+
+    $this->getJson(route('api.v1.redirects'))
+        ->assertExactJson(['data' => ['static-pages/new' => '/pages/cookie-policy']]);
+});

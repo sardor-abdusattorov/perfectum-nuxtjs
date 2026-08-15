@@ -26,14 +26,45 @@ class Page extends Model
         'image',
         'meta_title',
         'meta_description',
+        'redirect_from',
         'status',
     ];
 
     public $translatable = ['title', 'content', 'meta_title', 'meta_description'];
 
     protected $casts = [
+        'redirect_from' => 'array',
         'status' => 'boolean',
     ];
+
+    /**
+     * The admin pastes old addresses however the ad carried them — with the
+     * domain, a locale prefix, slashes on either end. Boiled down to the bare
+     * path here, the redirect map only ever has one spelling to match against.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (self $page): void {
+            if (! $page->isDirty('redirect_from')) {
+                return;
+            }
+
+            $paths = collect($page->redirect_from ?? [])
+                ->map(function (string $path): string {
+                    $path = preg_replace('#^https?://[^/]+#i', '', trim($path)) ?? '';
+                    $path = strtok($path, '?#') ?: '';
+                    $path = trim($path, '/');
+
+                    return preg_replace('#^(ru|uz)(/|$)#', '', $path) ?? '';
+                })
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
+
+            $page->redirect_from = $paths ?: null;
+        });
+    }
 
     public function getRouteKeyName(): string
     {
@@ -43,6 +74,11 @@ class Page extends Model
     public static function cacheKey(string $slug, string $locale): string
     {
         return "pages.{$slug}.{$locale}";
+    }
+
+    public static function redirectsCacheKey(): string
+    {
+        return 'pages.redirects';
     }
 
     public function resolveRouteBinding($value, $field = null): ?Model
