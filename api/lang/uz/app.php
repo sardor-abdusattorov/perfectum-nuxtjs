@@ -289,7 +289,7 @@ return [
         'theme_in_use' => 'Mavzu boʻyicha arizalar bor — uni faqat chop etishdan olib tashlash mumkin',
         'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
-        'contact_card_icon' => 'Kartochka boshidagi belgi; tanlanmasa — turi boʻyicha qoʻyiladi',
+        'contact_card_icon' => 'Kartochka doirasidagi belgi, ijtimoiy tarmoqlardagi ikonka tanlovi kabi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
         'main_image' => 'Yangilik yoki aksiya ichidagi katta rasm',
         'filter_value' => 'Qidiruvda billingga yuboriladigan qiymat',
@@ -305,6 +305,8 @@ return [
         'meta_title' => 'Brauzer yorligʻidagi va qidiruvdagi sarlavha',
         'meta_description' => 'Qidiruvdagi qisqa tavsif, 200 belgigacha',
         'meta_keywords' => 'Vergul bilan. Tarif va yangilik sahifalarida {name} nomga almashadi',
+        'file_attached' => 'Fayl joyida',
+        'file_missing' => 'Fayl biriktirilmagan — saytda qator chiqmaydi',
         'redirect_from' => 'Eski sayt yoʻllari, ulardan shu sahifaga 301-redirekt olib keladi. Manzilni qoʻyib Enter bosing — domen va sleshlar oʻzi kesiladi',
         'network' => 'Qaysi tarmoq uchun — 5G, CDMA yoki ikkalasi',
         'menu_key' => 'Lotin harflarida — sider qayta ishga tushganda bandni shu orqali topadi. Oʻz bandlaringizni kalitsiz qoldirsa ham boʻladi',
@@ -512,10 +514,18 @@ return [
         'phone' => 'Telefon goʻshagi',
         'envelope' => 'Konvert',
         'globe' => 'Globus',
+        'mappin' => 'Xarita belgisi',
+        'clock' => 'Soat',
+        'chat' => 'Suhbat',
+        'users' => 'Odamlar',
+        'lifebuoy' => 'Qutqaruv doirasi',
+        'briefcase' => 'Portfel',
+        'mobile' => 'Smartfon',
+        'atsymbol' => 'Kuchukcha (@)',
     ],
 
     'placeholder' => [
-        'icon_by_type' => 'Kartochka turi boʻyicha',
+        'no_icon' => 'Ikonkasiz',
     ],
 
     'unit' => [
