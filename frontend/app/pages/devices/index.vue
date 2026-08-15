@@ -1,6 +1,21 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 useSeo({ page: 'devices', titleKey: 'seo.devices' })
+
+const brands: { slug: string, label: string, logo?: string, tone?: string, mark?: string }[] = [
+  { slug: 'amgoo', label: 'AMGOO', tone: 'amgoo', mark: '<b>AM</b>GOO' },
+  { slug: 'apple', label: 'Apple', logo: 'apple.svg' },
+  { slug: 'artel', label: 'artel', logo: 'artel.svg' },
+  { slug: 'audiovox', label: 'AUDIOVOX', tone: 'blue' },
+  { slug: 'blackberry', label: 'BlackBerry', logo: 'blackberry.svg' },
+  { slug: 'bless', label: 'BLESS', tone: 'red' },
+  { slug: 'franklin-wireless', label: 'Franklin Wireless', tone: 'blue' },
+  { slug: 'hisense', label: 'Hisense', tone: 'blue' },
+  { slug: 'htc', label: 'HTC', logo: 'htc.svg' },
+  { slug: 'huawei', label: 'HUAWEI', tone: 'red' },
+  { slug: 'honor', label: 'HONOR' },
+  { slug: 'kyocera', label: 'KYOCERA', tone: 'red' },
+]
 </script>
 
 <template>
@@ -46,41 +61,15 @@ useSeo({ page: 'devices', titleKey: 'seo.devices' })
           </div>
 
           <ul class="brand-grid">
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_amgoo"><b>AM</b>GOO</span>
-              </li>
-              <li class="brand-card">
-                  <img class="brand-card__logo" src="/images/brands/apple.svg" alt="Apple" loading="lazy" />
-              </li>
-              <li class="brand-card">
-                  <img class="brand-card__logo" src="/images/brands/artel.svg" alt="artel" loading="lazy" />
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_blue">AUDIOVOX</span>
-              </li>
-              <li class="brand-card">
-                  <img class="brand-card__logo" src="/images/brands/blackberry.svg" alt="BlackBerry" loading="lazy" />
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_red">BLESS</span>
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_blue">Franklin Wireless</span>
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_blue">Hisense</span>
-              </li>
-              <li class="brand-card">
-                  <img class="brand-card__logo" src="/images/brands/htc.svg" alt="HTC" loading="lazy" />
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_red">HUAWEI</span>
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name">HONOR</span>
-              </li>
-              <li class="brand-card">
-                  <span class="brand-card__name brand-card__name_red">KYOCERA</span>
+              <li v-for="brand in brands" :key="brand.slug" class="brand-card">
+                  <img v-if="brand.logo" class="brand-card__logo" :src="`/images/brands/${brand.logo}`"
+                      :alt="brand.label" loading="lazy" />
+                  <span v-else-if="brand.mark" class="brand-card__name"
+                      :class="`brand-card__name_${brand.tone}`" v-html="brand.mark"></span>
+                  <span v-else class="brand-card__name"
+                      :class="brand.tone && `brand-card__name_${brand.tone}`">{{ brand.label }}</span>
+                  <NuxtLink class="brand-card__link" :to="localePath(`/devices/brands/${brand.slug}`)"
+                      :aria-label="`Устройства ${brand.label}`" />
               </li>
           </ul>
 
