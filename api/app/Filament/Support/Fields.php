@@ -64,7 +64,7 @@ class Fields
 
     public static function status(string $field = 'status'): Toggle
     {
-        return Toggle::make($field)
+        return StatusToggle::make($field)
             ->label(__('app.label.show_on_site'))
             ->helperText(__('app.helper.if_disabled_not_shown'))
             ->default(true);
