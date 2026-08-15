@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\Network;
 use App\Models\Service;
 use Database\Seeders\ServiceSeeder;
 use Database\Seeders\TaxonomySeeder;
@@ -17,7 +18,9 @@ beforeEach(function (): void {
 it('carries every service of the old site into its category', function (): void {
     expect(Service::count())->toBe(65)
         ->and(Service::query()->whereNull('category_id')->count())->toBe(0)
-        ->and(Service::query()->published()->count())->toBe(65);
+        ->and(Service::query()->published()->count())->toBe(65)
+        ->and(Service::query()->forNetwork(Network::Cdma)->count())->toBe(65)
+        ->and(Service::query()->forNetwork(Network::FiveG)->count())->toBe(0);
 });
 
 it('keeps both languages and the billing price of a service', function (): void {

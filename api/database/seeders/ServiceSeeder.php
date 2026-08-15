@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\Network;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Illuminate\Database\Seeder;
@@ -19,6 +20,7 @@ class ServiceSeeder extends Seeder
         foreach ($data['services'] ?? [] as $row) {
             Service::updateOrCreate(['slug' => $row['slug']], [
                 'category_id' => $categories[$row['category']] ?? null,
+                'network' => Network::Cdma,
                 'name' => $row['name'],
                 'excerpt' => $row['excerpt'] ?: null,
                 'lead' => $row['lead'] ?: null,

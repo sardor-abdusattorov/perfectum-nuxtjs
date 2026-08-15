@@ -23,6 +23,8 @@ class ServiceForm
                     ->schema([
                         Fields::category(ServiceCategory::class),
 
+                        Fields::network(),
+
                         TranslatableTabs::make('translations')
                             ->schema([
                                 TextInput::make('name')
