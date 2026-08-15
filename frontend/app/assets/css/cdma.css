@@ -592,7 +592,6 @@
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.72);
   border-radius: 12px;
 }
 
@@ -601,12 +600,20 @@
   display: flex;
 }
 
-/* the block runs taller than the viewport, so a spinner centred on it lands
-   off-screen for anyone who searched from the pager at the bottom */
-.cdma-numbers-block__spinner {
+/* only the re-search has a table to veil; the first load has nothing under it,
+   and only a loaded block runs past the viewport, so only there does the
+   spinner have to stick to stay in sight */
+.cdma-numbers-block.is-busy:not(.is-loading) .cdma-numbers-block__preloader {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.cdma-numbers-block.is-busy:not(.is-loading) .cdma-numbers-block__spinner {
   position: sticky;
   top: calc(50vh - 17px);
   bottom: calc(50vh - 17px);
+}
+
+.cdma-numbers-block__spinner {
   width: 34px;
   height: 34px;
   border: 3px solid rgba(230, 0, 0, 0.2);
