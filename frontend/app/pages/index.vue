@@ -1,7 +1,7 @@
 <script setup lang="ts">
 await useBlocks('home')
 
-useSeo()
+useSeo({ page: 'home' })
 </script>
 
 <template>

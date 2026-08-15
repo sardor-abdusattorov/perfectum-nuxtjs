@@ -17,9 +17,9 @@ class PageSettings extends Model
 
     protected $table = 'page_settings';
 
-    protected $fillable = ['key', 'meta_title', 'meta_description', 'og_image', 'is_indexed'];
+    protected $fillable = ['key', 'meta_title', 'meta_description', 'meta_keywords', 'og_image', 'is_indexed'];
 
-    public $translatable = ['meta_title', 'meta_description'];
+    public $translatable = ['meta_title', 'meta_description', 'meta_keywords'];
 
     protected $casts = [
         'key' => PageKey::class,
@@ -46,6 +46,7 @@ class PageSettings extends Model
                 ->mapWithKeys(fn (self $row): array => [$row->key->value => [
                     'title' => $row->meta_title,
                     'description' => $row->meta_description,
+                    'keywords' => $row->meta_keywords,
                     'og_image' => $row->mediaUrl('og_image'),
                     'indexed' => $row->is_indexed,
                 ]])

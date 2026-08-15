@@ -18,11 +18,30 @@ export function useSeo(input: SeoInput = {}) {
 
   const page = computed(() => (input.page ? settings.value?.pages?.[input.page] ?? null : null))
 
-  const name = computed(() => (
-    toValue(input.title)
-    || page.value?.title
-    || (input.titleKey ? t(input.titleKey) : '')
-  ))
+  const entity = computed(() => toValue(input.title) || '')
+
+  /**
+   * A page template may carry `{name}` where the record's own title belongs
+   * ("{name} — тариф 5G интернет"). With no record to name yet, the template
+   * yields to the site-wide default rather than printing the placeholder.
+   */
+  function fill(template: string): string {
+    if (!template.includes('{name}')) {
+      return template
+    }
+
+    return entity.value ? template.replaceAll('{name}', entity.value) : ''
+  }
+
+  const name = computed(() => {
+    const template = page.value?.title || ''
+
+    if (template.includes('{name}')) {
+      return fill(template)
+    }
+
+    return entity.value || template || (input.titleKey ? t(input.titleKey) : '')
+  })
 
   const title = computed(() => {
     if (!name.value) {
@@ -32,13 +51,14 @@ export function useSeo(input: SeoInput = {}) {
     return name.value.includes(BRAND) ? name.value : `${name.value} | ${BRAND}`
   })
 
-  const description = computed(() => toValue(input.description) || page.value?.description || settings.value?.seo.description || '')
+  const description = computed(() => fill(toValue(input.description) || page.value?.description || '') || settings.value?.seo.description || '')
+  const keywords = computed(() => fill(toValue(input.keywords) || page.value?.keywords || '') || settings.value?.seo.keywords || '')
   const image = computed(() => toValue(input.ogImage) || page.value?.og_image || settings.value?.seo.og_image || undefined)
 
   useSeoMeta({
     title,
     description,
-    keywords: () => toValue(input.keywords) || settings.value?.seo.keywords || '',
+    keywords,
     robots: () => toValue(input.robots)
       || (page.value && page.value.indexed === false ? 'noindex, nofollow' : null)
       || settings.value?.seo.robots

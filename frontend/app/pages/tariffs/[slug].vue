@@ -11,7 +11,7 @@ if (!tariff.value) {
   throw createError({ statusCode: 404, statusMessage: 'Not Found', fatal: true })
 }
 
-useSeo({ title: () => tariff.value?.name ?? '' })
+useSeo({ page: 'tariff', title: () => tariff.value?.name ?? '' })
 
 function connect(): void {
   if (!tariff.value) {

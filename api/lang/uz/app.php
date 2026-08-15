@@ -70,6 +70,8 @@ return [
         'department' => 'Departament',
         'meta_title' => 'Meta sarlavha',
         'meta_description' => 'Meta tavsif',
+        'meta_keywords' => 'Kalit soʻzlar',
+        'redirect_from' => 'Eski manzillar (redirekt)',
         'tariff_categories_single' => 'Tarif toifasi',
         'tariff_file_single' => 'Arxiv hujjati',
         'tariff_file_plural' => 'Tariflar arxivi',
@@ -302,6 +304,8 @@ return [
         'coordinates' => 'Xarita uchun koordinatalar, Google Maps’dan koʻchirish mumkin',
         'meta_title' => 'Brauzer yorligʻidagi va qidiruvdagi sarlavha',
         'meta_description' => 'Qidiruvdagi qisqa tavsif, 200 belgigacha',
+        'meta_keywords' => 'Vergul bilan. Tarif va yangilik sahifalarida {name} nomga almashadi',
+        'redirect_from' => 'Eski sayt yoʻllari, ulardan shu sahifaga 301-redirekt olib keladi. Manzilni qoʻyib Enter bosing — domen va sleshlar oʻzi kesiladi',
         'network' => 'Qaysi tarmoq uchun — 5G, CDMA yoki ikkalasi',
         'menu_key' => 'Lotin harflarida — sider qayta ishga tushganda bandni shu orqali topadi. Oʻz bandlaringizni kalitsiz qoldirsa ham boʻladi',
         'slug' => 'Lotin harflarida. Boʻsh qoldirsangiz — sarlavhadan yigʻiladi',
@@ -474,6 +478,8 @@ return [
         'careers' => 'Vakansiyalar',
         'procurement' => 'Xaridlar',
         'cdma' => 'CDMA',
+        'tariff' => 'Tarif sahifasi',
+        'news_item' => 'Yangilik sahifasi',
     ],
 
     'feature_icon' => [

@@ -9,6 +9,7 @@ export interface Seo {
 export interface PageSeo {
   title: string | null
   description: string | null
+  keywords: string | null
   og_image: string | null
   indexed: boolean
 }

@@ -26,6 +26,8 @@ enum PageKey: string implements HasLabel
     case Procurement = 'procurement';
     case Cdma = 'cdma';
     case CdmaConnect = 'cdma_connect';
+    case Tariff = 'tariff';
+    case NewsItem = 'news_item';
 
     public function getLabel(): string
     {

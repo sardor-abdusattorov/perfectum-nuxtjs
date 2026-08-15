@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('key', 40)->unique();
             $table->json('meta_title')->nullable();
             $table->json('meta_description')->nullable();
+            $table->json('meta_keywords')->nullable();
             $table->string('og_image')->nullable();
             $table->boolean('is_indexed')->default(true)->index();
             $table->timestamps();

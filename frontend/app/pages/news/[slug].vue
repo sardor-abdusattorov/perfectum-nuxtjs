@@ -10,7 +10,7 @@ if (!item.value) {
   throw createError({ statusCode: 404, statusMessage: 'Not Found', fatal: true })
 }
 
-useSeo({ title: () => item.value?.title ?? '' })
+useSeo({ page: 'news_item', title: () => item.value?.title ?? '' })
 </script>
 
 <template>

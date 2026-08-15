@@ -42,6 +42,11 @@ class PageSettingsForm
                                     ->helperText(__('app.helper.meta_description'))
                                     ->rows(3)
                                     ->maxLength(200),
+
+                                TextInput::make('meta_keywords')
+                                    ->label(__('app.label.meta_keywords'))
+                                    ->helperText(__('app.helper.meta_keywords'))
+                                    ->maxLength(255),
                             ]),
 
                         Fields::image('seo', 'og_image')

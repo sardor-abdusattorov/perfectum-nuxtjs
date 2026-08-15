@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.devices' })
+useSeo({ page: 'devices', titleKey: 'seo.devices' })
 </script>
 
 <template>
