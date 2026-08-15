@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             PageSettingsSeeder::class,
             TaxonomySeeder::class,
             TariffSeeder::class,
+            ServiceSeeder::class,
             OfficeSeeder::class,
             FaqSeeder::class,
             FreeNumberFilterSeeder::class,
