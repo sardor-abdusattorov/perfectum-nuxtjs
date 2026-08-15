@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Filament\Pages\ManageAboutCompany;
+use App\Filament\Pages\ManageCdma;
 use App\Filament\Pages\ManageCdmaConnect;
 use App\Filament\Pages\ManageContacts;
 use App\Filament\Pages\ManageDocuments;
@@ -64,6 +65,7 @@ it('puts the working item at the top of its group and numbers the rest after it'
         ManageHomepage::class,
         ManageAboutCompany::class,
         ManageContacts::class,
+        ManageCdma::class,
         ManageCdmaConnect::class,
         ManageDocuments::class,
         PageResource::class,

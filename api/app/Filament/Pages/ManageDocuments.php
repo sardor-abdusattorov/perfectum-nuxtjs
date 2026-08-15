@@ -24,7 +24,7 @@ class ManageDocuments extends ManageBlocks
 
     public static function getNavigationSort(): int
     {
-        return 5;
+        return 6;
     }
 
     public function getTitle(): string

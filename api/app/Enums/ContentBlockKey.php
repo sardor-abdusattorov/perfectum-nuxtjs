@@ -20,4 +20,5 @@ enum ContentBlockKey: string
     case Cards = 'cards';
     case Steps = 'steps';
     case Support = 'support';
+    case Cta = 'cta';
 }

@@ -40,7 +40,7 @@ class PageResource extends Resource
 
     public static function getNavigationSort(): int
     {
-        return 6;
+        return 7;
     }
 
     public static function getNavigationBadge(): ?string

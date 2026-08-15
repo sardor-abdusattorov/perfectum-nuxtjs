@@ -25,7 +25,7 @@ class ManageCdmaConnect extends ManageBlocks
 
     public static function getNavigationSort(): int
     {
-        return 4;
+        return 5;
     }
 
     public function getTitle(): string

@@ -5,6 +5,14 @@ const t = useT()
 definePageMeta({ layout: 'cdma' })
 useSeo({ page: 'cdma', titleKey: 'seo.cdma' })
 
+await useBlocks('cdma')
+
+const hero = useBlock('cdma', 'page_hero')
+const support = useBlock('cdma', 'support')
+const cta = useBlock('cdma', 'cta')
+
+const supportCards = computed(() => published(support.value.cards))
+
 const { data: faqData } = await useFaqs({ page: 'cdma' })
 const { data: newsData } = await useNewsList({ network: 'cdma', perPage: 24 })
 const { data: actionsData } = await useActionsList({ network: 'cdma', perPage: 12 })
@@ -72,8 +80,8 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <!-- CDMA HERO -->
   <section class="cdma-hero">
       <div class="container">
-          <h1 class="cdma-hero__title">CDMA</h1>
-          <p class="cdma-hero__subtitle">Всё для действующих и новых абонентов - в одном месте.</p>
+          <h1 class="cdma-hero__title">{{ hero.title }}</h1>
+          <p v-if="hero.subtitle" class="cdma-hero__subtitle">{{ hero.subtitle }}</p>
       </div>
   </section>
 
@@ -432,94 +440,32 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <!-- CDMA SUPPORT -->
   <section class="cdma-section" id="cdma-support">
       <div class="container">
-          <h2 class="cdma-section__title">Поддержка</h2>
-          <ul class="cdma-support">
-              <li class="cdma-support-card">
+          <h2 class="cdma-section__title">{{ t('cdma.support_title') }}</h2>
+          <ul v-if="supportCards.length" class="cdma-support">
+              <li v-for="(card, index) in supportCards" :key="index" class="cdma-support-card">
                   <div class="cdma-support-card__head">
-                      <span class="cdma-support-card__icon" aria-hidden="true">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none">
-                              <path
-                                  d="M17.7071 13.7071L20.3552 16.3552C20.7113 16.7113 20.7113 17.2887 20.3552 17.6448C18.43 19.57 15.3821 19.7866 13.204 18.153L11.6286 16.9714C9.88504 15.6638 8.33622 14.115 7.02857 12.3714L5.84701 10.796C4.21341 8.61788 4.43001 5.56999 6.35523 3.64477C6.71133 3.28867 7.28867 3.28867 7.64477 3.64477L10.2929 6.29289C10.6834 6.68342 10.6834 7.31658 10.2929 7.70711L9.27175 8.72825C9.10946 8.89054 9.06923 9.13846 9.17187 9.34373C10.3585 11.7171 12.2829 13.6415 14.6563 14.8281C14.8615 14.9308 15.1095 14.8905 15.2717 14.7283L16.2929 13.7071C16.6834 13.3166 17.3166 13.3166 17.7071 13.7071Z"
-                                  stroke="currentColor" stroke-width="2" />
-                          </svg>
-                      </span>
-                      <h3 class="cdma-support-card__title">Круглосуточно</h3>
+                      <span v-if="card.icon_svg" class="cdma-support-card__icon" aria-hidden="true" v-html="card.icon_svg"></span>
+                      <h3 class="cdma-support-card__title">{{ card.title }}</h3>
                   </div>
-                  <p class="cdma-support-card__value">077</p>
-                  <p class="cdma-support-card__note">Бесплатно с любого номера Perfectum</p>
-              </li>
-              <li class="cdma-support-card">
-                  <div class="cdma-support-card__head">
-                      <span class="cdma-support-card__icon" aria-hidden="true">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none">
-                              <path
-                                  d="M17.7071 13.7071L20.3552 16.3552C20.7113 16.7113 20.7113 17.2887 20.3552 17.6448C18.43 19.57 15.3821 19.7866 13.204 18.153L11.6286 16.9714C9.88504 15.6638 8.33622 14.115 7.02857 12.3714L5.84701 10.796C4.21341 8.61788 4.43001 5.56999 6.35523 3.64477C6.71133 3.28867 7.28867 3.28867 7.64477 3.64477L10.2929 6.29289C10.6834 6.68342 10.6834 7.31658 10.2929 7.70711L9.27175 8.72825C9.10946 8.89054 9.06923 9.13846 9.17187 9.34373C10.3585 11.7171 12.2829 13.6415 14.6563 14.8281C14.8615 14.9308 15.1095 14.8905 15.2717 14.7283L16.2929 13.7071C16.6834 13.3166 17.3166 13.3166 17.7071 13.7071Z"
-                                  stroke="currentColor" stroke-width="2" />
-                          </svg>
-                      </span>
-                      <h3 class="cdma-support-card__title">С других номеров</h3>
-                  </div>
-                  <p class="cdma-support-card__value">+998 98 127 0077</p>
-                  <p class="cdma-support-card__note">Стандартная тарификация</p>
-              </li>
-              <li class="cdma-support-card">
-                  <div class="cdma-support-card__head">
-                      <span class="cdma-support-card__icon" aria-hidden="true">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none">
-                              <path
-                                  d="M8.39893 8.39844H15.5989M8.39893 13.1984H12.5989M21.5989 11.9984C21.5989 13.3785 21.3077 14.6905 20.7834 15.8764L21.6007 21.5975L16.6978 20.3718C15.3089 21.1529 13.7059 21.5984 11.9989 21.5984C6.69699 21.5984 2.39893 17.3004 2.39893 11.9984C2.39893 6.6965 6.69699 2.39844 11.9989 2.39844C17.3009 2.39844 21.5989 6.6965 21.5989 11.9984Z"
-                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                  stroke-linejoin="round" />
-                          </svg>
-                      </span>
-                      <h3 class="cdma-support-card__title">Чат в Telegram</h3>
-                  </div>
-                  <p class="cdma-support-card__value">@Perfectum_Support</p>
-                  <p class="cdma-support-card__note">Ответ в течение 15 минут</p>
-              </li>
-              <li class="cdma-support-card">
-                  <div class="cdma-support-card__head">
-                      <span class="cdma-support-card__icon" aria-hidden="true">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none">
-                              <g clip-path="url(#clip0_1525_1618)">
-                                  <path
-                                      d="M11.9582 24.0065L11.2611 23.409C10.3001 22.6044 1.90918 15.3576 1.90918 10.0568C1.90918 4.50692 6.40829 0.0078125 11.9582 0.0078125C17.5081 0.0078125 22.0072 4.50692 22.0072 10.0568C22.0072 15.3577 13.6163 22.6044 12.6593 23.413L11.9582 24.0065ZM11.9582 2.1807C7.6104 2.18563 4.08704 5.70898 4.08212 10.0568C4.08212 13.3869 9.24455 18.7066 11.9582 21.1415C14.6719 18.7056 19.8343 13.3828 19.8343 10.0568C19.8294 5.70898 16.306 2.18567 11.9582 2.1807Z"
-                                      fill="currentColor" />
-                                  <path
-                                      d="M11.958 14.0409C9.75802 14.0409 7.97461 12.2575 7.97461 10.0576C7.97461 7.85762 9.75802 6.07422 11.958 6.07422C14.1579 6.07422 15.9413 7.85762 15.9413 10.0576C15.9413 12.2575 14.1579 14.0409 11.958 14.0409ZM11.958 8.06584C10.858 8.06584 9.96628 8.95755 9.96628 10.0575C9.96628 11.1575 10.858 12.0492 11.958 12.0492C13.0579 12.0492 13.9496 11.1575 13.9496 10.0575C13.9496 8.95755 13.058 8.06584 11.958 8.06584Z"
-                                      fill="currentColor" />
-                              </g>
-                              <defs>
-                                  <clipPath id="clip0_1525_1618">
-                                      <rect width="24" height="24" fill="white" />
-                                  </clipPath>
-                              </defs>
-                          </svg>
-                      </span>
-                      <h3 class="cdma-support-card__title">Офисы обслуживания</h3>
-                  </div>
-                  <p class="cdma-support-card__value"><NuxtLink class="cdma-support-card__link"
-                          :to="localePath('/offices')">Найти ближайший →</NuxtLink></p>
-                  <p class="cdma-support-card__note">18 офисов + 987 дилеров</p>
+                  <p class="cdma-support-card__value">
+                      <NuxtLink v-if="card.url" class="cdma-support-card__link" :to="localePath(card.url)">{{ card.value }}</NuxtLink>
+                      <template v-else>{{ card.value }}</template>
+                  </p>
+                  <p v-if="card.note" class="cdma-support-card__note">{{ card.note }}</p>
               </li>
           </ul>
       </div>
   </section>
 
   <!-- CDMA CTA -->
-  <section class="cdma-cta">
+  <section v-if="cta.title" class="cdma-cta">
       <div class="container">
-          <span class="cdma-cta__kicker">Когда будете готовы</span>
-          <h2 class="cdma-cta__title">Готовы к 5G?</h2>
-          <p class="cdma-cta__text">Скорости до 1 Гбит/с, VoNR-звонки, eSIM и домашний интернет без
-              проводов — всё, чего нет на CDMA.</p>
+          <span v-if="cta.kicker" class="cdma-cta__kicker">{{ cta.kicker }}</span>
+          <h2 class="cdma-cta__title">{{ cta.title }}</h2>
+          <p v-if="cta.text" class="cdma-cta__text">{{ cta.text }}</p>
           <div class="cdma-cta__actions">
-              <NuxtLink class="cdma-cta__btn cdma-cta__btn_primary" :to="localePath('/')">Узнать о 5G</NuxtLink>
-              <NuxtLink class="cdma-cta__btn cdma-cta__btn_ghost" :to="localePath('/coverage-area')">Проверить покрытие</NuxtLink>
+              <NuxtLink v-if="cta.primary_label" class="cdma-cta__btn cdma-cta__btn_primary" :to="localePath(cta.primary_url || '/')">{{ cta.primary_label }}</NuxtLink>
+              <NuxtLink v-if="cta.ghost_label" class="cdma-cta__btn cdma-cta__btn_ghost" :to="localePath(cta.ghost_url || '/')">{{ cta.ghost_label }}</NuxtLink>
           </div>
       </div>
   </section>

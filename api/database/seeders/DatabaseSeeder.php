@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             AboutCompanySeeder::class,
             ContactsSeeder::class,
             CdmaConnectSeeder::class,
+            CdmaSeeder::class,
             DocumentSeeder::class,
             CoverageSeeder::class,
         ]);
