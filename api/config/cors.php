@@ -31,10 +31,14 @@ return [
     /*
      * Only the site may read the API from a browser; the paths above are the
      * exception, App\Http\Middleware\HandleApiCors reopens them.
+     *
+     * The fallback is the Nuxt dev server, never APP_URL — the API's own
+     * address is never the origin a browser asks from, so defaulting to it
+     * blocked every request the site made.
      */
     'allowed_origins' => array_values(array_filter(array_map(
         'trim',
-        explode(',', (string) env('FRONTEND_URL', (string) env('APP_URL')))
+        explode(',', (string) env('FRONTEND_URL', 'http://localhost:3000,http://127.0.0.1:3000'))
     ))),
 
     'allowed_origins_patterns' => [],

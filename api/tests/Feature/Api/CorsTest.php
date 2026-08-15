@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Env;
+
 it('answers the site and turns a stranger away', function (string $path): void {
     $site = (string) config('cors.allowed_origins')[0];
 
@@ -18,3 +20,27 @@ it('leaves the feeds the old site published open to anyone', function (string $p
     $this->getJson("/api/v1/{$path}", ['Origin' => 'https://another-site.uz'])
         ->assertHeader('Access-Control-Allow-Origin', '*');
 })->with(['documents', 'coverage']);
+
+/**
+ * An .env written before FRONTEND_URL existed used to fall through to APP_URL,
+ * and the api would then name its own address as the one browser origin it
+ * trusted — which is nobody, so every page on the site went blank.
+ */
+it('falls back to the site, never to the api itself, when FRONTEND_URL is unset', function (): void {
+    $repository = Env::getRepository();
+    $previous = $repository->get('FRONTEND_URL');
+
+    $repository->clear('FRONTEND_URL');
+
+    try {
+        $origins = (require config_path('cors.php'))['allowed_origins'];
+    } finally {
+        if ($previous !== null) {
+            $repository->set('FRONTEND_URL', $previous);
+        }
+    }
+
+    expect($origins)
+        ->toBe(['http://localhost:3000', 'http://127.0.0.1:3000'])
+        ->not->toContain(config('app.url'));
+});
