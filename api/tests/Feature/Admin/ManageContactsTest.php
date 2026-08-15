@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\ContactCard;
+use App\Enums\ContactCardIcon;
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Filament\Pages\ManageContacts;
@@ -51,6 +52,53 @@ it('seeds one card per contact type', function (): void {
         ->all();
 
     expect($types)->toBe(array_column(ContactCard::cases(), 'value'));
+});
+
+it('keeps the picked icon and leaves an unset one to the type', function (): void {
+    $this->seed(ContactsSeeder::class);
+
+    $this->actingAs($this->admin);
+
+    $component = Livewire::test(ManageContacts::class);
+
+    $first = array_key_first($component->get('data')['cards']['items']);
+
+    $component
+        ->set("data.cards.items.{$first}.icon", ContactCardIcon::Globe->value)
+        ->callAction(TestAction::make('save_cards')->schemaComponent(true));
+
+    $items = ContentBlock::read(PageKey::Contacts, ContentBlockKey::Cards)['items'];
+
+    expect($items[0]['icon'])->toBe('globe')
+        ->and($items[1]['icon'] ?? null)->toBeNull();
+});
+
+/**
+ * The seeded cards carry no status key — "not explicitly false" counts as
+ * published — so the toggle has to hydrate as on, or the first save through
+ * the form quietly unpublishes every card.
+ */
+it('keeps a card published across a save that never touched its switch', function (): void {
+    $this->seed(ContactsSeeder::class);
+
+    $this->actingAs($this->admin);
+
+    $component = Livewire::test(ManageContacts::class);
+
+    foreach ($component->get('data')['cards']['items'] as $item) {
+        expect($item['status'])->toBeTrue();
+    }
+
+    $component->callAction(TestAction::make('save_cards')->schemaComponent(true));
+
+    foreach (ContentBlock::read(PageKey::Contacts, ContentBlockKey::Cards)['items'] as $item) {
+        expect($item['status'])->toBeTrue();
+    }
+});
+
+it('implies each icon from its card type', function (): void {
+    expect(collect(ContactCard::cases())->map(fn (ContactCard $type): string => ContactCardIcon::for($type)->value)->all())
+        ->toBe(['building', 'phone', 'envelope', 'globe']);
 });
 
 it('writes a card back through its save action', function (): void {

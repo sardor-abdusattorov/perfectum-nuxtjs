@@ -1,10 +1,15 @@
 <script setup lang="ts">
-defineProps<{ type: string }>()
+const props = defineProps<{ type: string, icon?: string | null }>()
+
+const BY_TYPE: Record<string, string> = { office: 'building', phones: 'phone', emails: 'envelope' }
+
+/** the admin's pick wins; a card without one keeps the mark its type implies */
+const shape = computed(() => props.icon || BY_TYPE[props.type] || 'globe')
 </script>
 
 <template>
   <span class="contact-card__icon">
-    <template v-if="type === 'office'">
+    <template v-if="shape === 'building'">
       <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29"
       fill="none">
       <path
@@ -12,7 +17,7 @@ defineProps<{ type: string }>()
       fill="currentColor" />
       </svg>
     </template>
-    <template v-else-if="type === 'phones'">
+    <template v-else-if="shape === 'phone'">
       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"
       fill="none">
       <path
@@ -20,7 +25,7 @@ defineProps<{ type: string }>()
       stroke="currentColor" stroke-width="3" />
       </svg>
     </template>
-    <template v-else-if="type === 'emails'">
+    <template v-else-if="shape === 'envelope'">
       <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33"
       fill="none">
       <g clip-path="url(#clip0_1301_3287)">

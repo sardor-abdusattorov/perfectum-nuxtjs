@@ -4,6 +4,7 @@ namespace App\Filament\Pages\Contacts;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\ContactCard;
+use App\Enums\ContactCardIcon;
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Filament\Pages\Blocks\ContentTab;
@@ -44,6 +45,14 @@ class CardsTab extends ContentTab
                             ->helperText(__('app.helper.contact_card_type'))
                             ->options(ContactCard::getOptions())
                             ->required(),
+
+                        Select::make('icon')
+                            ->label(__('app.label.card_icon'))
+                            ->helperText(__('app.helper.contact_card_icon'))
+                            ->options(ContactCardIcon::getOptions())
+                            ->allowHtml()
+                            ->native(false)
+                            ->placeholder(__('app.placeholder.icon_by_type')),
 
                         TranslatableTabs::make('translations')
                             ->schema([

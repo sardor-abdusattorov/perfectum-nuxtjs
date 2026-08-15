@@ -41,7 +41,7 @@ function emails(): Array<{ label: string, href: string }> {
 
       <ul v-if="items.length" class="contacts-grid">
         <li v-for="(card, index) in items" :key="index" class="contact-card">
-          <ContactCardIcon :type="card.type" />
+          <ContactCardIcon :type="card.type" :icon="card.icon" />
           <h2 class="contact-card__title">{{ card.title }}</h2>
 
           <p v-if="card.type === 'office'" class="contact-card__text">{{ t('footer.address') }}</p>

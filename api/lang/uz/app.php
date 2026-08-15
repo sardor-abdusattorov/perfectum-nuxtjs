@@ -48,6 +48,7 @@ return [
         'size' => 'Hajmi',
         'cards' => 'Kartochkalar',
         'card_type' => 'Kartochka turi',
+        'card_icon' => 'Ikonka',
         'note' => 'Izoh',
         'stats' => 'Koʻrsatkichlar',
         'timeline' => 'Bosqichlar',
@@ -286,6 +287,7 @@ return [
         'theme_in_use' => 'Mavzu boʻyicha arizalar bor — uni faqat chop etishdan olib tashlash mumkin',
         'cdma_article' => 'Ofislar va ish tartibi jadvallari bilan sahifa matni',
         'contact_card_type' => 'Sayt sozlamalaridan qaysi kontaktlar avtomatik qoʻyilishini belgilaydi',
+        'contact_card_icon' => 'Kartochka boshidagi belgi; tanlanmasa — turi boʻyicha qoʻyiladi',
         'preview_image' => 'Roʻyxatda koʻrinadi; boʻlmasa kartochka rangli fonda qoladi',
         'main_image' => 'Yangilik yoki aksiya ichidagi katta rasm',
         'filter_value' => 'Qidiruvda billingga yuboriladigan qiymat',
@@ -497,6 +499,17 @@ return [
         'phones' => 'Telefonlar',
         'emails' => 'Pochta',
         'socials' => 'Ijtimoiy tarmoqlar',
+    ],
+
+    'contact_card_icon' => [
+        'building' => 'Bino',
+        'phone' => 'Telefon goʻshagi',
+        'envelope' => 'Konvert',
+        'globe' => 'Globus',
+    ],
+
+    'placeholder' => [
+        'icon_by_type' => 'Kartochka turi boʻyicha',
     ],
 
     'unit' => [
