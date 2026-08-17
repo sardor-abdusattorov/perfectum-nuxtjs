@@ -45,7 +45,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiBase: '',
     public: {
-      apiBase: 'http://localhost:8000/api/v1',
+      apiBase: '/api/v1',
       siteUrl: 'http://localhost:3000',
       yandexMapsKey: '',
     },
