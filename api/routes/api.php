@@ -31,9 +31,9 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('coverage', [CoverageController::class, 'index'])->name('coverage');
     Route::get('coverage/{layer}', [CoverageController::class, 'show'])->name('coverage.show');
     Route::get('offices', OfficeController::class)->name('offices');
-    Route::post('numbers', NumberController::class)->name('numbers');
+    Route::post('numbers', NumberController::class)->middleware('throttle:upstream')->name('numbers');
     Route::get('cdma-numbers/filters', [CdmaNumberController::class, 'filters'])->name('cdma-numbers.filters');
-    Route::post('cdma-numbers', [CdmaNumberController::class, 'search'])->name('cdma-numbers.search');
+    Route::post('cdma-numbers', [CdmaNumberController::class, 'search'])->middleware('throttle:upstream')->name('cdma-numbers.search');
     Route::post('applications', ApplicationController::class)->middleware('throttle:10,1')->name('applications.store');
     Route::get('blocks/{page}', BlockController::class)->name('blocks.show');
     Route::get('pages/{page}', PageController::class)->name('pages.show');

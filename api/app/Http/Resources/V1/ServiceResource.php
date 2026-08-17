@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\V1\Concerns\OmitsBodyFromLists;
 use App\Http\Resources\V1\Concerns\TranslatesRepeaterRows;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class ServiceResource extends JsonResource
 {
+    use OmitsBodyFromLists;
     use TranslatesRepeaterRows;
 
     public static $wrap = null;
@@ -28,7 +30,7 @@ class ServiceResource extends JsonResource
             'name' => $this->name,
             'excerpt' => $this->excerpt,
             'lead' => $this->lead,
-            'content' => $this->content,
+            'content' => $this->body($request, $this->content),
             'price' => $this->price,
             'icon' => $this->mediaUrl('icon'),
             'image' => $this->imageUrl(),

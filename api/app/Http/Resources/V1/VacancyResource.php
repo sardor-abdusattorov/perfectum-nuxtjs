@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\V1\Concerns\OmitsBodyFromLists;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,6 +14,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class VacancyResource extends JsonResource
 {
+    use OmitsBodyFromLists;
+
     public static $wrap = null;
 
     /**
@@ -27,7 +30,7 @@ class VacancyResource extends JsonResource
             'city' => $this->city,
             'employment' => $this->employment,
             'salary' => $this->salary,
-            'content' => $this->content,
+            'content' => $this->body($request, $this->content),
         ];
     }
 }

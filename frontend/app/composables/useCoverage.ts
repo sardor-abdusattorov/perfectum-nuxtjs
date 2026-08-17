@@ -36,15 +36,16 @@ export function useCoverage() {
  * The map draws one layer at a time, so a collection is fetched when it is
  * first switched to and kept for the rest of the visit.
  */
+const shapes = new Map<string, Promise<CoverageShapes>>()
+
 export function useCoverageShapes() {
   const { $api } = useNuxtApp()
-  const cache = new Map<string, Promise<CoverageShapes>>()
 
   return (key: string): Promise<CoverageShapes> => {
-    if (!cache.has(key)) {
-      cache.set(key, $api<CoverageShapes>(`/coverage/${key}`))
+    if (!shapes.has(key)) {
+      shapes.set(key, $api<CoverageShapes>(`/coverage/${key}`))
     }
 
-    return cache.get(key)!
+    return shapes.get(key)!
   }
 }

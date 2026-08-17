@@ -9,6 +9,7 @@ use App\Filament\Support\Fields;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\RateLimiter;
 use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
@@ -112,8 +113,15 @@ it('does not let one block editor answer for another', function (): void {
         ->and(ManageContacts::canAccess())->toBeFalse();
 });
 
-it('throttles the public api', function (): void {
-    $response = $this->getJson(route('api.v1.news.index'));
+/**
+ * Server-side rendering funnels every visitor through the frontend host, so the
+ * read budget has to be generous while the calls that reach a paid upstream
+ * stay tight.
+ */
+it('throttles the reads generously and the upstream proxies tightly', function (): void {
+    expect($this->getJson(route('api.v1.news.index'))->headers->get('X-RateLimit-Limit'))->toBe('600');
 
-    expect($response->headers->get('X-RateLimit-Limit'))->not->toBeNull();
+    $this->postJson(route('api.v1.numbers'), ['sku' => 'x']);
+
+    expect(RateLimiter::limiter('upstream')(request())->maxAttempts)->toBe(30);
 });

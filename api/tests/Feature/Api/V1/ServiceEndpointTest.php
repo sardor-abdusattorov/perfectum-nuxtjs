@@ -86,3 +86,13 @@ it('hides an unpublished service from the list and the page', function (): void 
 
     expect(Service::query()->forNetwork(Network::Cdma)->published()->count())->toBe(55);
 });
+
+it('leaves the editor body out of a listing and keeps it on the record', function (): void {
+    $list = $this->getJson(route('api.v1.services.index', ['per_page' => 100]))->assertOk()->json('data');
+
+    expect($list[0])->not->toHaveKey('content');
+
+    $this->getJson(route('api.v1.services.show', ['service' => 'upravlyaemyi-antiaon-1']))
+        ->assertOk()
+        ->assertJsonStructure(['data' => ['content']]);
+});

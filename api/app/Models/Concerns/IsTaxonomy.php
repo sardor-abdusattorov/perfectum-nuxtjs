@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Concerns;
 
+use App\Enums\Network;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 
@@ -24,6 +25,11 @@ trait IsTaxonomy
     public static function cacheKey(string $locale): string
     {
         return 'taxonomy.'.static::make()->getTable().'.'.$locale;
+    }
+
+    public static function publicCacheKey(string $locale, ?Network $network): string
+    {
+        return static::cacheKey($locale).'.public.'.($network?->value ?? 'all');
     }
 
     /**

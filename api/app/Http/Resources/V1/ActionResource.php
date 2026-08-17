@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\V1\Concerns\OmitsBodyFromLists;
 use App\Models\Action;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,6 +14,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class ActionResource extends JsonResource
 {
+    use OmitsBodyFromLists;
+
     public static $wrap = null;
 
     /**
@@ -25,7 +28,7 @@ class ActionResource extends JsonResource
             'title' => $this->title,
             'badge' => $this->badge,
             'excerpt' => $this->excerpt,
-            'content' => $this->content,
+            'content' => $this->body($request, $this->content),
             'preview_image' => $this->mediaUrl('preview_image'),
             'main_image' => $this->mediaUrl('main_image'),
             'starts_at' => $this->starts_at?->toDateString(),

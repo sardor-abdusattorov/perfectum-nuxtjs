@@ -149,9 +149,19 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Rendering happens on the server, so every visitor's page issues its API
+     * calls from the one frontend host: a per-IP budget tight enough to matter
+     * would throttle the whole site rather than an abuser. The read endpoints
+     * are cheap and cached and get room accordingly, while the two proxies onto
+     * the billing and CDMA gateways — the only calls that cost anyone real
+     * money — are held to a rate a human search can live with.
+     */
     private function configureLimit(): void
     {
-        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(600)->by($request->user()?->id ?: $request->ip()));
+
+        RateLimiter::for('upstream', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
     }
 
     private function configureLanguageSwitch(): void

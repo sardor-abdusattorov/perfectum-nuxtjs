@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\MenuLocation;
+use App\Enums\Network;
 use App\Enums\PageKey;
 use App\Models\ActionCategory;
 use App\Models\ApplicationTheme;
@@ -65,6 +66,7 @@ if (! function_exists('clear_settings_cache')) {
     function clear_settings_cache(): void
     {
         Cache::forget(Settings::cacheKey());
+        Settings::forgetValues();
     }
 }
 
@@ -121,6 +123,10 @@ if (! function_exists('clear_taxonomy_cache')) {
     {
         foreach (app_locales() as $locale) {
             Cache::forget($model::cacheKey($locale));
+
+            foreach ([null, ...Network::cases()] as $network) {
+                Cache::forget($model::publicCacheKey($locale, $network));
+            }
         }
     }
 }

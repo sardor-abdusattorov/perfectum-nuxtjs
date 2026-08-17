@@ -9,6 +9,7 @@ use App\Http\Resources\V1\CategoryResource;
 use App\Models\Concerns\BelongsToNetwork;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController
@@ -25,14 +26,22 @@ class CategoryController
             throw new NotFoundHttpException;
         }
 
-        $query = $model::query()->published()->ordered();
-
-        if (in_array(BelongsToNetwork::class, class_uses_recursive($model), true)) {
-            $query->forNetwork($this->network($request));
-        }
+        $network = in_array(BelongsToNetwork::class, class_uses_recursive($model), true)
+            ? $this->network($request)
+            : null;
 
         return response()->json([
-            'data' => CategoryResource::collection($query->get())->resolve(),
+            'data' => Cache::remember(
+                $model::publicCacheKey(app()->getLocale(), $network),
+                $model::CACHE_TTL,
+                fn (): array => CategoryResource::collection(
+                    $model::query()
+                        ->published()
+                        ->ordered()
+                        ->when($network !== null, fn ($query) => $query->forNetwork($network))
+                        ->get()
+                )->resolve(),
+            ),
         ]);
     }
 }

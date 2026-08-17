@@ -143,3 +143,17 @@ it('caps an oversized page size', function (): void {
         ->assertOk()
         ->assertJsonPath('meta.per_page', 100);
 });
+
+it('serves a taxonomy from cache and drops it when a category changes', function (): void {
+    $company = category(NewsCategory::class, Network::Both, 'kompaniya');
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.name', 'kompaniya');
+
+    $company->update(['name' => ['ru' => 'novoe-imya', 'uz' => 'novoe-imya']]);
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.name', 'novoe-imya');
+});

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\V1\Concerns\OmitsBodyFromLists;
 use App\Http\Resources\V1\Concerns\TranslatesRepeaterRows;
 use App\Models\Tariff;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class TariffResource extends JsonResource
 {
+    use OmitsBodyFromLists;
     use TranslatesRepeaterRows;
 
     public static $wrap = null;
@@ -30,7 +32,7 @@ class TariffResource extends JsonResource
             'price_currency' => $this->price_currency,
             'price_period' => $this->price_period,
             'features' => $this->rows($this->features, ['title', 'note']),
-            'descriptions' => $this->rows($this->descriptions, ['name', 'content']),
+            'descriptions' => $this->body($request, $this->rows($this->descriptions, ['name', 'content'])),
             'image' => $this->imageUrl(),
             'modal_image' => $this->modalImageUrl(),
             'buttons' => $this->buttonRows(),

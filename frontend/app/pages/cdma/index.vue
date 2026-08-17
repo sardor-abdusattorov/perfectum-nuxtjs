@@ -13,11 +13,23 @@ const cta = useBlock('cdma', 'cta')
 
 const supportCards = computed(() => published(support.value.cards))
 
-const { data: faqData } = await useFaqs({ page: 'cdma' })
-const { data: newsData } = await useNewsList({ network: 'cdma', perPage: 24 })
-const { data: actionsData } = await useActionsList({ network: 'cdma', perPage: 12 })
-const { data: serviceCatalog } = await useServiceCatalog('cdma')
-const { data: tariffCatalog } = await useTariffCatalog()
+/**
+ * The page draws six independent sections, so they are fetched together: one
+ * round-trip of depth instead of six waiting on each other.
+ */
+const [
+  { data: faqData },
+  { data: newsData },
+  { data: actionsData },
+  { data: serviceCatalog },
+  { data: tariffCatalog },
+] = await Promise.all([
+  useFaqs({ page: 'cdma' }),
+  useNewsList({ network: 'cdma', perPage: 24 }),
+  useActionsList({ network: 'cdma', perPage: 12 }),
+  useServiceCatalog('cdma'),
+  useTariffCatalog(),
+])
 
 const tariffType = ref<number | ''>('')
 

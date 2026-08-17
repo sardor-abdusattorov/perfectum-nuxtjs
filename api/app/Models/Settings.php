@@ -35,17 +35,30 @@ class Settings extends Model
     }
 
     /**
+     * A warm request still pays a round-trip per cache read, and one request
+     * asks for these values seven times, so they are held for its duration.
+     *
+     * @var array<string, mixed>|null
+     */
+    protected static ?array $values = null;
+
+    /**
      * @return array<string, mixed>
      */
     public static function values(): array
     {
-        return Cache::remember(
+        return static::$values ??= Cache::remember(
             static::cacheKey(),
             static::CACHE_TTL,
             fn (): array => static::query()->get()->mapWithKeys(
                 fn (self $row): array => [$row->key => $row->value]
             )->all(),
         );
+    }
+
+    public static function forgetValues(): void
+    {
+        static::$values = null;
     }
 
     public static function get(string $key, mixed $default = null): mixed
