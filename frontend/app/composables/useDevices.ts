@@ -6,10 +6,17 @@ export interface DeviceSpec {
   value: string
 }
 
+export interface DeviceBrand {
+  name: string
+  slug: string
+  logo: string | null
+  color: string | null
+}
+
 export interface Device {
   slug: string
   name: string
-  brand: string | null
+  brand: DeviceBrand | null
   excerpt: string | null
   content: string | null
   specs: DeviceSpec[]
@@ -28,10 +35,6 @@ export interface DeviceTab {
   key: string
   label: string
   count: number
-}
-
-export function brandSlug(brand: string): string {
-  return brand.trim().toLowerCase().replace(/\s+/g, '-')
 }
 
 export function useDeviceCatalog() {

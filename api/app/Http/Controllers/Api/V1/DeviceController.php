@@ -19,7 +19,7 @@ class DeviceController
     {
         $records = Device::query()
             ->published()
-            ->with('category')
+            ->with(['category', 'brand'])
             ->forNetwork($this->network($request))
             ->inCategory($request->query('category'))
             ->orderBy('sort');
@@ -29,6 +29,6 @@ class DeviceController
 
     public function show(Device $device): JsonResponse
     {
-        return response()->json(['data' => DeviceResource::make($device->loadMissing('category'))->resolve()]);
+        return response()->json(['data' => DeviceResource::make($device->loadMissing(['category', 'brand']))->resolve()]);
     }
 }

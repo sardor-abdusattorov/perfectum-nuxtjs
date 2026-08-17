@@ -26,6 +26,15 @@ class RegionForm
 
                         Fields::network(),
 
+                        TextInput::make('latitude')
+                            ->label(__('app.label.latitude'))
+                            ->helperText(__('app.helper.region_coordinates'))
+                            ->numeric(),
+
+                        TextInput::make('longitude')
+                            ->label(__('app.label.longitude'))
+                            ->numeric(),
+
                         Fields::sort(),
 
                         Fields::status(),

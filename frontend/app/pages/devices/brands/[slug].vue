@@ -9,11 +9,11 @@ const { data: catalog } = await useDeviceCatalog()
 const tabs = useDeviceTabs(catalog)
 
 const models = computed(() => (
-  (catalog.value?.devices ?? []).filter(device => device.brand && brandSlug(device.brand) === slug.value)
+  (catalog.value?.devices ?? []).filter(device => device.brand?.slug === slug.value)
 ))
 
 const brand = computed(() => (
-  models.value[0]?.brand ?? slug.value.replace(/-/g, ' ').toUpperCase()
+  models.value[0]?.brand?.name ?? slug.value.replace(/-/g, ' ').toUpperCase()
 ))
 
 const network = computed(() => models.value[0]?.category?.network ?? 'cdma')

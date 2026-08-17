@@ -61,6 +61,11 @@ class CardsTab extends ContentTab
                                     ->label(__('app.label.title'))
                                     ->required(),
 
+                                Textarea::make('text')
+                                    ->label(__('app.label.text'))
+                                    ->helperText(__('app.helper.contact_card_text'))
+                                    ->rows(2),
+
                                 Textarea::make('note')
                                     ->label(__('app.label.note'))
                                     ->rows(2),

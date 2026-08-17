@@ -272,11 +272,6 @@ class SiteTranslationSeeder extends Seeder
 
             'coverage.search_label' => ['ru' => 'Проверьте покрытие в вашем городе', 'uz' => 'Shahringizdagi qamrovni tekshiring'],
             'coverage.city' => ['ru' => 'Город', 'uz' => 'Shahar'],
-            'coverage.city_tashkent' => ['ru' => 'Ташкент', 'uz' => 'Toshkent'],
-            'coverage.city_samarkand' => ['ru' => 'Самарканд', 'uz' => 'Samarqand'],
-            'coverage.city_bukhara' => ['ru' => 'Бухара', 'uz' => 'Buxoro'],
-            'coverage.city_nukus' => ['ru' => 'Нукус', 'uz' => 'Nukus'],
-            'coverage.city_urgench' => ['ru' => 'Ургенч', 'uz' => 'Urganch'],
             'coverage.map_label' => ['ru' => 'Карта покрытия сети Perfectum', 'uz' => 'Perfectum tarmogʻi qamrov xaritasi'],
             'coverage.map_unavailable' => ['ru' => 'Карта временно недоступна. Проверить покрытие можно у оператора поддержки.', 'uz' => 'Xarita vaqtincha ishlamayapti. Qamrovni qoʻllab-quvvatlash operatoridan bilib olishingiz mumkin.'],
             'coverage.zoom_in' => ['ru' => 'Приблизить', 'uz' => 'Yaqinlashtirish'],

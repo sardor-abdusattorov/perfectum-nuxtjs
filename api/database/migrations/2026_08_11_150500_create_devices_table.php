@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('device_categories')->nullOnDelete();
             $table->json('name');
             $table->string('slug')->unique();
-            $table->string('brand')->nullable();
+            $table->foreignId('brand_id')->nullable()->constrained('device_brands')->nullOnDelete();
             $table->json('excerpt')->nullable();
             $table->json('content')->nullable();
             $table->json('specs')->nullable();

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { DeviceBrand } from '~/composables/useDevices'
+
 const localePath = useLocalePath()
 const route = useRoute()
 const t = useT()
@@ -35,40 +37,16 @@ const isCdma = computed(() => (
  * did; the small 5G lists go straight to the device cards.
  */
 const brands = computed(() => {
-  const map = new Map<string, { name: string, count: number }>()
+  const found = new Map<string, DeviceBrand>()
 
   for (const device of visible.value) {
-    const name = device.brand?.trim()
-
-    if (!name) {
-      continue
+    if (device.brand) {
+      found.set(device.brand.slug, device.brand)
     }
-
-    const key = brandSlug(name)
-    const entry = map.get(key) ?? { name, count: 0 }
-
-    entry.count += 1
-    map.set(key, entry)
   }
 
-  return [...map.entries()]
-    .map(([slug, entry]) => ({ slug, ...entry }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+  return [...found.values()].sort((a, b) => a.name.localeCompare(b.name))
 })
-
-const BRAND_LOOKS: Record<string, { logo?: string, tone?: string, mark?: string }> = {
-  'amgoo': { tone: 'amgoo', mark: '<b>AM</b>GOO' },
-  'apple': { logo: 'apple.svg' },
-  'artel': { logo: 'artel.svg' },
-  'audiovox': { tone: 'blue' },
-  'blackberry': { logo: 'blackberry.svg' },
-  'bless': { tone: 'red' },
-  'franklin-wireless': { tone: 'blue' },
-  'hisense': { tone: 'blue' },
-  'htc': { logo: 'htc.svg' },
-  'huawei': { tone: 'red' },
-  'kyocera': { tone: 'red' },
-}
 </script>
 
 <template>
@@ -103,14 +81,9 @@ const BRAND_LOOKS: Record<string, { logo?: string, tone?: string, mark?: string 
 
           <ul v-if="isCdma && brands.length" class="brand-grid">
               <li v-for="brand in brands" :key="brand.slug" class="brand-card">
-                  <img v-if="BRAND_LOOKS[brand.slug]?.logo" class="brand-card__logo"
-                      :src="`/images/brands/${BRAND_LOOKS[brand.slug]!.logo}`" :alt="brand.name"
+                  <img v-if="brand.logo" class="brand-card__logo" :src="brand.logo" :alt="brand.name"
                       loading="lazy" />
-                  <span v-else-if="BRAND_LOOKS[brand.slug]?.mark" class="brand-card__name"
-                      :class="`brand-card__name_${BRAND_LOOKS[brand.slug]!.tone}`"
-                      v-html="BRAND_LOOKS[brand.slug]!.mark"></span>
-                  <span v-else class="brand-card__name"
-                      :class="BRAND_LOOKS[brand.slug]?.tone && `brand-card__name_${BRAND_LOOKS[brand.slug]!.tone}`">{{ brand.name }}</span>
+                  <span v-else class="brand-card__name" :style="brand.color && { color: brand.color }">{{ brand.name }}</span>
                   <NuxtLink class="brand-card__link" :to="localePath(`/devices/brands/${brand.slug}`)"
                       :aria-label="brand.name" />
               </li>

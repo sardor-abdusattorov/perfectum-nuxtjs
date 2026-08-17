@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Devices\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
+use App\Models\DeviceBrand;
 use App\Models\DeviceCategory;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -41,8 +43,11 @@ class DeviceForm
 
                         Fields::slug(),
 
-                        TextInput::make('brand')
-                            ->label(__('app.label.brand')),
+                        Select::make('brand_id')
+                            ->label(__('app.label.brand'))
+                            ->helperText(__('app.helper.device_brand'))
+                            ->options(DeviceBrand::options())
+                            ->searchable(),
 
                         Fields::image('devices'),
 

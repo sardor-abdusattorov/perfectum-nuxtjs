@@ -7,6 +7,7 @@ use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
 
 class Device extends Model
@@ -21,9 +22,9 @@ class Device extends Model
 
     protected $fillable = [
         'category_id',
+        'brand_id',
         'name',
         'slug',
-        'brand',
         'excerpt',
         'content',
         'specs',
@@ -41,6 +42,11 @@ class Device extends Model
         'in_stock' => 'boolean',
         'status' => 'boolean',
     ];
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(DeviceBrand::class);
+    }
 
     public static function categoryModel(): string
     {

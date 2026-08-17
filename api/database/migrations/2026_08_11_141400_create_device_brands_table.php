@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('regions', function (Blueprint $table) {
+        Schema::create('device_brands', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
-            $table->string('network', 10)->default('both')->index();
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('logo')->nullable();
+            $table->string('color', 16)->nullable();
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();
             $table->timestamps();
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('regions');
+        Schema::dropIfExists('device_brands');
     }
 };

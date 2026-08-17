@@ -2,31 +2,28 @@
 await useBlocks('coverage_area')
 
 const hero = useBlock('coverage_area', 'page_hero')
-const { data: layers } = await useCoverage()
+const { data: coverage } = await useCoverage()
 
 const t = useT()
 
 useSeo({ page: 'coverage_area', titleKey: 'seo.coverage' })
 
-const CITIES: Record<string, [number, number]> = {
-  tashkent: [41.311, 69.24],
-  samarkand: [39.654, 66.96],
-  bukhara: [39.767, 64.421],
-  nukus: [42.46, 59.617],
-  urgench: [41.55, 60.631],
-}
-
-const available = computed(() => layers.value ?? [])
+const available = computed(() => coverage.value?.layers ?? [])
+const cities = computed(() => coverage.value?.cities ?? [])
 const active = ref('')
-const city = ref('tashkent')
+const city = ref<number | ''>('')
 
 watchEffect(() => {
   if (!active.value && available.value.length) {
     active.value = available.value[0]!.key
   }
+
+  if (!city.value && cities.value.length) {
+    city.value = cities.value[0]!.id
+  }
 })
 
-const center = computed(() => CITIES[city.value] ?? null)
+const center = computed(() => cities.value.find(item => item.id === city.value)?.center ?? null)
 
 const map = useTemplateRef('map')
 const field = useTemplateRef('field')
@@ -107,9 +104,9 @@ function clear(): void {
             </button>
           </div>
 
-          <div class="select coverage-search__select">
+          <div v-if="cities.length" class="select coverage-search__select">
             <select v-model="city" class="select__control" :aria-label="t('coverage.city')">
-              <option v-for="(coords, key) in CITIES" :key="key" :value="key">{{ t(`coverage.city_${key}`) }}</option>
+              <option v-for="item in cities" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
             <svg class="select__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
               <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />

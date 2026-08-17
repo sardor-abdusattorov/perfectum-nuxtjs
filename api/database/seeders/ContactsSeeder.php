@@ -41,6 +41,10 @@ class ContactsSeeder extends Seeder
                         'type' => ContactCard::Office->value,
                         'icon' => ContactCardIcon::Building->value,
                         'title' => ['ru' => 'Центральный офис', 'uz' => 'Bosh ofis'],
+                        'text' => [
+                            'ru' => 'Узбекистан, Ташкент, ул. Тараса Шевченко 21',
+                            'uz' => 'Oʻzbekiston, Toshkent, Taras Shevchenko koʻchasi 21',
+                        ],
                         'note' => ['ru' => 'Пн–Вс 09:00–21:00', 'uz' => 'Du–Ya 09:00–21:00'],
                     ],
                     [

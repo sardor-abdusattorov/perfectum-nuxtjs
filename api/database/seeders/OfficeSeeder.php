@@ -21,7 +21,12 @@ class OfficeSeeder extends Seeder
         foreach ($data['regions'] ?? [] as $region) {
             $regions[$region['slug']] = Region::updateOrCreate(
                 ['name->ru' => $region['name']['ru']],
-                ['name' => $region['name'], 'sort' => $region['sort']],
+                [
+                    'name' => $region['name'],
+                    'latitude' => $region['latitude'] ?? null,
+                    'longitude' => $region['longitude'] ?? null,
+                    'sort' => $region['sort'],
+                ],
             )->getKey();
         }
 

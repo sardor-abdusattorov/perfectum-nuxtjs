@@ -6,7 +6,9 @@
                 "ru": "г. Ташкент",
                 "uz": "Toshkent sh."
             },
-            "sort": 1
+            "sort": 1,
+            "latitude": 41.2995,
+            "longitude": 69.2401
         },
         {
             "slug": "toshkent-viloyati",
@@ -14,7 +16,9 @@
                 "ru": "Ташкентская область",
                 "uz": "Toshkent viloyati"
             },
-            "sort": 2
+            "sort": 2,
+            "latitude": 41.0167,
+            "longitude": 69.35
         },
         {
             "slug": "andijon-viloyati",
@@ -22,7 +26,9 @@
                 "ru": "Андижанская область",
                 "uz": "Andijon viloyati"
             },
-            "sort": 3
+            "sort": 3,
+            "latitude": 40.7821,
+            "longitude": 72.3442
         },
         {
             "slug": "buxoro-viloyati",
@@ -30,7 +36,9 @@
                 "ru": "Бухарская область",
                 "uz": "Buxoro viloyati"
             },
-            "sort": 4
+            "sort": 4,
+            "latitude": 39.7681,
+            "longitude": 64.4556
         },
         {
             "slug": "jizzax-viloyati",
@@ -38,7 +46,9 @@
                 "ru": "Джизакская область",
                 "uz": "Jizzax viloyati"
             },
-            "sort": 5
+            "sort": 5,
+            "latitude": 40.1158,
+            "longitude": 67.8422
         },
         {
             "slug": "qashqadaryo-viloyati",
@@ -46,7 +56,9 @@
                 "ru": "Кашкадарьинская область",
                 "uz": "Qashqadaryo viloyati"
             },
-            "sort": 6
+            "sort": 6,
+            "latitude": 38.8606,
+            "longitude": 65.7847
         },
         {
             "slug": "navoiy-viloyati",
@@ -54,7 +66,9 @@
                 "ru": "Навоийская область",
                 "uz": "Navoiy viloyati"
             },
-            "sort": 7
+            "sort": 7,
+            "latitude": 40.0844,
+            "longitude": 65.3792
         },
         {
             "slug": "namangan-viloyati",
@@ -62,7 +76,9 @@
                 "ru": "Наманганская область",
                 "uz": "Namangan viloyati"
             },
-            "sort": 8
+            "sort": 8,
+            "latitude": 40.9983,
+            "longitude": 71.6726
         },
         {
             "slug": "samarqand-viloyati",
@@ -70,7 +86,9 @@
                 "ru": "Самаркандская область",
                 "uz": "Samarqand viloyati"
             },
-            "sort": 9
+            "sort": 9,
+            "latitude": 39.6542,
+            "longitude": 66.9597
         },
         {
             "slug": "surxondaryo-viloyati",
@@ -78,7 +96,9 @@
                 "ru": "Сурхандарьинская область",
                 "uz": "Surxondaryo viloyati"
             },
-            "sort": 10
+            "sort": 10,
+            "latitude": 37.2242,
+            "longitude": 67.2783
         },
         {
             "slug": "sirdaryo-viloyati",
@@ -86,7 +106,9 @@
                 "ru": "Сырдарьинская область",
                 "uz": "Sirdaryo viloyati"
             },
-            "sort": 11
+            "sort": 11,
+            "latitude": 40.4897,
+            "longitude": 68.7842
         },
         {
             "slug": "fargona-viloyati",
@@ -94,7 +116,9 @@
                 "ru": "Ферганская область",
                 "uz": "Farg'ona viloyati"
             },
-            "sort": 12
+            "sort": 12,
+            "latitude": 40.3864,
+            "longitude": 71.7864
         },
         {
             "slug": "xorazm-viloyati",
@@ -102,7 +126,9 @@
                 "ru": "Хорезмская область",
                 "uz": "Xorazm viloyati"
             },
-            "sort": 13
+            "sort": 13,
+            "latitude": 41.55,
+            "longitude": 60.6314
         },
         {
             "slug": "qoraqalpogiston",
@@ -110,7 +136,9 @@
                 "ru": "Республика Каракалпакстан",
                 "uz": "Qoraqalpog'iston Respublikasi"
             },
-            "sort": 14
+            "sort": 14,
+            "latitude": 42.4531,
+            "longitude": 59.6103
         }
     ],
     "offices": [

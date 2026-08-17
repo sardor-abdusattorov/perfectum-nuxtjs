@@ -6,10 +6,12 @@ namespace Database\Seeders;
 
 use App\Enums\Network;
 use App\Models\Device;
+use App\Models\DeviceBrand;
 use App\Models\DeviceCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DeviceSeeder extends Seeder
 {
@@ -22,11 +24,13 @@ class DeviceSeeder extends Seeder
     public function run(): void
     {
         $categories = $this->seedCategories();
+        $brands = $this->seedBrands();
 
         foreach ($this->devices() as $sort => $device) {
             Device::updateOrCreate(['slug' => $device['slug']], [
-                ...Arr::except($device, ['category', 'slug']),
+                ...Arr::except($device, ['category', 'brand', 'slug']),
                 'category_id' => $categories[$device['category']] ?? null,
+                'brand_id' => $brands[$device['brand']] ?? null,
                 'sort' => $sort + 1,
                 'status' => true,
             ]);
@@ -43,6 +47,27 @@ class DeviceSeeder extends Seeder
                 ['name->ru' => $category['name']['ru']],
                 [...$category, 'status' => true],
             )->getKey())
+            ->all();
+    }
+
+    /**
+     * The catalogue browses CDMA brand by brand, so a brand is a record with a
+     * logo an editor can replace rather than a name typed onto every device.
+     *
+     * @return array<string, int>
+     */
+    private function seedBrands(): array
+    {
+        $brands = ['AMGOO', 'Apple', 'artel', 'AUDIOVOX', 'BlackBerry', 'BLESS', 'Franklin Wireless',
+            'Hisense', 'HTC', 'HUAWEI', 'HONOR', 'KYOCERA', 'Tozed'];
+
+        return collect($brands)
+            ->mapWithKeys(fn (string $name, int $index): array => [
+                $name => DeviceBrand::updateOrCreate(
+                    ['slug' => Str::slug($name)],
+                    ['name' => $name, 'sort' => $index + 1, 'status' => true],
+                )->getKey(),
+            ])
             ->all();
     }
 

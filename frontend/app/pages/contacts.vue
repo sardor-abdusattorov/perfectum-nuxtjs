@@ -44,7 +44,7 @@ function emails(): Array<{ label: string, href: string }> {
           <ContactCardIcon :svg="card.icon_svg" />
           <h2 class="contact-card__title">{{ card.title }}</h2>
 
-          <p v-if="card.type === 'office'" class="contact-card__text">{{ t('footer.address') }}</p>
+          <p v-if="card.type === 'office'" class="contact-card__text">{{ card.text || t('footer.address') }}</p>
 
           <p v-else-if="card.type === 'phones'" class="contact-card__text">
             <template v-for="(phone, i) in phones()" :key="phone.href">

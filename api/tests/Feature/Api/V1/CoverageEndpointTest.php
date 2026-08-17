@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Models\CoverageLayer;
+use App\Models\Region;
 use Database\Seeders\CoverageSeeder;
+use Database\Seeders\OfficeSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -149,4 +151,24 @@ it('serves the shipped 5g export inside tashkent', function (): void {
 
     expect($lon)->toBeGreaterThan(68.5)->toBeLessThan(70.5)
         ->and($lat)->toBeGreaterThan(40.5)->toBeLessThan(42.0);
+});
+
+it('offers the located regions as the map cities', function (): void {
+    $this->seed(OfficeSeeder::class);
+
+    $response = $this->getJson(route('api.v1.coverage'))->assertOk();
+
+    expect($response->json('cities'))->not->toBeEmpty();
+
+    $tashkent = collect($response->json('cities'))->firstWhere('name', 'г. Ташкент');
+
+    expect($tashkent['center'])->toBe([41.2995, 69.2401]);
+});
+
+it('leaves a region without coordinates out of the city list', function (): void {
+    Region::create(['name' => ['ru' => 'Без точки'], 'sort' => 99, 'status' => true]);
+
+    $names = collect($this->getJson(route('api.v1.coverage'))->assertOk()->json('cities'))->pluck('name');
+
+    expect($names)->not->toContain('Без точки');
 });

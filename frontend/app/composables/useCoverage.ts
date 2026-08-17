@@ -21,14 +21,27 @@ export interface CoverageLayer {
   url: string
 }
 
+export interface CoverageCity {
+  id: number
+  name: string
+  center: [number, number]
+}
+
+interface CoveragePayload extends ApiResponse<CoverageLayer[]> {
+  cities: CoverageCity[]
+}
+
 export function useCoverage() {
   const { locale } = useI18n()
   const { $api } = useNuxtApp()
 
   return useAsyncData(
     'coverage',
-    () => $api<ApiResponse<CoverageLayer[]>>('/coverage').then(response => response.data),
-    { watch: [locale], default: () => [] as CoverageLayer[] },
+    () => $api<CoveragePayload>('/coverage').then(response => ({
+      layers: response.data,
+      cities: response.cities,
+    })),
+    { watch: [locale], default: () => ({ layers: [] as CoverageLayer[], cities: [] as CoverageCity[] }) },
   )
 }
 

@@ -94,10 +94,10 @@ function connect(): void {
         </details>
 
         <nav class="tariff-detail__switch" :aria-label="t('tariffs.nav_label')">
-          <NuxtLink class="tariff-detail__switch-btn" :to="localePath('/tariffs')">
+          <NuxtLink class="tariff-detail__switch-btn tariff-detail__switch-btn_active" :to="localePath('/tariffs')">
             {{ t('tariffs.all_tariffs') }}
           </NuxtLink>
-          <NuxtLink class="tariff-detail__switch-btn tariff-detail__switch-btn_active" :to="localePath('/devices')">
+          <NuxtLink class="tariff-detail__switch-btn" :to="localePath('/devices')">
             {{ t('tariffs.routers') }}
           </NuxtLink>
         </nav>

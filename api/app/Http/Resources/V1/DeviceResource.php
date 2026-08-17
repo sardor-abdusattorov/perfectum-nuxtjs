@@ -28,7 +28,12 @@ class DeviceResource extends JsonResource
         return [
             'slug' => $this->slug,
             'name' => $this->name,
-            'brand' => $this->brand,
+            'brand' => $this->whenLoaded('brand', fn (): ?array => $this->brand === null ? null : [
+                'name' => $this->brand->name,
+                'slug' => $this->brand->slug,
+                'logo' => $this->brand->logoUrl(),
+                'color' => $this->brand->color,
+            ]),
             'excerpt' => $this->excerpt,
             'content' => $this->body($request, $this->content),
             'specs' => $this->rows($this->specs, ['label', 'value']),

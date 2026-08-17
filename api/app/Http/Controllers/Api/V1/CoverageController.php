@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\CoverageLayer;
+use App\Models\Region;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 
@@ -27,7 +28,19 @@ class CoverageController
                 'url' => route('api.v1.coverage.show', $layer->key),
             ]);
 
-        return response()->json(['data' => $layers]);
+        return response()->json([
+            'data' => $layers,
+            'cities' => Region::query()
+                ->published()
+                ->located()
+                ->ordered()
+                ->get(['id', 'name', 'latitude', 'longitude'])
+                ->map(fn (Region $region): array => [
+                    'id' => $region->id,
+                    'name' => $region->name,
+                    'center' => [$region->latitude, $region->longitude],
+                ]),
+        ]);
     }
 
     public function show(string $layer): JsonResponse

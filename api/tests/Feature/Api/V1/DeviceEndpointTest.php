@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\DeviceBrand;
 use Database\Seeders\DeviceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -18,7 +19,8 @@ it('lists the seeded devices with their categories', function (): void {
         ->assertJsonPath('data.0.slug', 'tozed-zlt-x25-max2')
         ->assertJsonPath('data.0.category.network', '5g')
         ->assertJsonPath('data.1.slug', 'amgoo-cx8r')
-        ->assertJsonPath('data.1.brand', 'AMGOO')
+        ->assertJsonPath('data.1.brand.name', 'AMGOO')
+        ->assertJsonPath('data.1.brand.slug', 'amgoo')
         ->assertJsonPath('data.1.category.network', 'cdma');
 });
 
@@ -60,4 +62,15 @@ it('lists the device categories with their networks', function (): void {
         ->assertJsonPath('data.0.network', 'cdma')
         ->assertJsonPath('data.2.name', 'Роутеры')
         ->assertJsonPath('data.2.network', '5g');
+});
+
+it('hands the brand over as a record the admin owns', function (): void {
+    $brand = DeviceBrand::query()->where('slug', 'amgoo')->firstOrFail();
+    $brand->update(['color' => '#b56a3a']);
+
+    $this->getJson(route('api.v1.devices.show', ['device' => 'amgoo-cx8r']))
+        ->assertOk()
+        ->assertJsonPath('data.brand.name', 'AMGOO')
+        ->assertJsonPath('data.brand.color', '#b56a3a')
+        ->assertJsonPath('data.brand.logo', null);
 });
