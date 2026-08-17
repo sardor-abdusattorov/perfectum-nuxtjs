@@ -17,28 +17,16 @@ class UserSeeder extends Seeder
      * password anyone could guess: it takes ADMIN_PASSWORD, and without one it
      * draws a random password and prints it once for the operator to store.
      */
-    public function run(): void
+     public function run(): void
     {
-        $role = Role::findOrCreate('super_admin', 'web');
-
-        $email = (string) env('ADMIN_EMAIL', 'admin@perfectum.uz');
-        $password = (string) env('ADMIN_PASSWORD', '');
-
-        if ($password === '') {
-            $password = Str::password(16);
-            $this->command?->warn("Admin password for {$email}: {$password}");
-        }
-
-        $user = User::firstOrNew(['email' => $email]);
-
-        if (! $user->exists) {
-            $user->fill([
-                'name' => (string) env('ADMIN_NAME', 'Administrator'),
-                'password' => Hash::make($password),
+        $superadmin = User::updateOrCreate(
+            ['email' => 'admin@test.com'],
+            [
+                'name' => 'Fayzullo Abduhakimov',
+                'password' => bcrypt('123456'),
                 'email_verified_at' => now(),
-            ])->save();
-        }
-
-        $user->assignRole($role);
+            ]
+        );
+        $superadmin->assignRole('super_admin');
     }
 }

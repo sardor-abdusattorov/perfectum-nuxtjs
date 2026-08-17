@@ -45,7 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->login()
             ->brandLogo(asset('images/logo.svg'))
-            ->brandLogoHeight('3.5rem')
+            ->brandLogoHeight('3rem')
             ->defaultThemeMode(ThemeMode::Light)
             ->colors([
                 'primary' => Color::Blue,
