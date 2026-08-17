@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Device;
 use App\Models\DeviceBrand;
 use Database\Seeders\DeviceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,20 +16,20 @@ beforeEach(function (): void {
 it('lists the seeded devices with their categories', function (): void {
     $this->getJson(route('api.v1.devices.index'))
         ->assertOk()
-        ->assertJsonCount(2, 'data')
-        ->assertJsonPath('data.0.slug', 'tozed-zlt-x25-max2')
-        ->assertJsonPath('data.0.category.network', '5g')
-        ->assertJsonPath('data.1.slug', 'amgoo-cx8r')
-        ->assertJsonPath('data.1.brand.name', 'AMGOO')
-        ->assertJsonPath('data.1.brand.slug', 'amgoo')
-        ->assertJsonPath('data.1.category.network', 'cdma');
+        ->assertJsonPath('meta.total', Device::query()->published()->count())
+        ->assertJsonPath('data.0.slug', 'amgoo-cx8r')
+        ->assertJsonPath('data.0.brand.name', 'AMGOO')
+        ->assertJsonPath('data.0.brand.slug', 'amgoo')
+        ->assertJsonPath('data.0.category.network', 'cdma');
 });
 
 it('filters devices by network', function (): void {
-    $this->getJson(route('api.v1.devices.index', ['network' => 'cdma']))
+    $networks = collect($this->getJson(route('api.v1.devices.index', ['network' => '5g']))
         ->assertOk()
-        ->assertJsonCount(1, 'data')
-        ->assertJsonPath('data.0.slug', 'amgoo-cx8r');
+        ->json('data'))
+        ->pluck('category.network');
+
+    expect($networks)->not->toBeEmpty()->each->toBe('5g');
 });
 
 it('serves a device with specs resolved to the locale', function (): void {

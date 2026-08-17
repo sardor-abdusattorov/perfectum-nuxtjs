@@ -1,0 +1,3205 @@
+{
+    "brands": [
+        {
+            "name": "AMGOO",
+            "slug": "amgoo",
+            "sort": 1
+        },
+        {
+            "name": "Apple",
+            "slug": "apple",
+            "sort": 2
+        },
+        {
+            "name": "Artel",
+            "slug": "artel",
+            "sort": 3
+        },
+        {
+            "name": "Audiovox",
+            "slug": "audiovox",
+            "sort": 4
+        },
+        {
+            "name": "Blackberry",
+            "slug": "blackberry",
+            "sort": 5
+        },
+        {
+            "name": "Bless",
+            "slug": "bless",
+            "sort": 6
+        },
+        {
+            "name": "Franklin Wireless",
+            "slug": "franklin-wireless",
+            "sort": 7
+        },
+        {
+            "name": "Hisense",
+            "slug": "hisense",
+            "sort": 8
+        },
+        {
+            "name": "HTC",
+            "slug": "htc",
+            "sort": 9
+        },
+        {
+            "name": "Huawei",
+            "slug": "huawei",
+            "sort": 10
+        },
+        {
+            "name": "Kyocera",
+            "slug": "kyocera",
+            "sort": 11
+        },
+        {
+            "name": "Lenovo",
+            "slug": "lenovo",
+            "sort": 12
+        },
+        {
+            "name": "LG",
+            "slug": "lg",
+            "sort": 13
+        },
+        {
+            "name": "Meizu",
+            "slug": "meizu",
+            "sort": 14
+        },
+        {
+            "name": "Motorola",
+            "slug": "motorola",
+            "sort": 15
+        },
+        {
+            "name": "Nokia",
+            "slug": "nokia",
+            "sort": 16
+        },
+        {
+            "name": "Novey",
+            "slug": "novey",
+            "sort": 17
+        },
+        {
+            "name": "Samsung",
+            "slug": "samsung",
+            "sort": 18
+        },
+        {
+            "name": "Sanyo",
+            "slug": "sanyo",
+            "sort": 19
+        },
+        {
+            "name": "Sky",
+            "slug": "sky",
+            "sort": 20
+        },
+        {
+            "name": "Vivo",
+            "slug": "vivo",
+            "sort": 21
+        },
+        {
+            "name": "Xiaomi",
+            "slug": "xiaomi",
+            "sort": 23
+        },
+        {
+            "name": "ZTE",
+            "slug": "zte",
+            "sort": 24
+        },
+        {
+            "name": "F1",
+            "slug": "f1",
+            "sort": 25
+        },
+        {
+            "name": "Tozed",
+            "slug": "tozed",
+            "sort": 26
+        }
+    ],
+    "models": [
+        {
+            "category": "cdma",
+            "brand": "amgoo",
+            "slug": "amgoo-cx8r",
+            "name": {
+                "ru": "AMGOO CX8R",
+                "uz": "AMGOO CX8R"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 1
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-5",
+            "name": {
+                "ru": "iphone 5"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 2
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-5s",
+            "name": {
+                "ru": "iPhone 5s"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 3
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-6s",
+            "name": {
+                "ru": "iPhone 6s"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 4
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-6-plus",
+            "name": {
+                "ru": "iPhone 6 Plus"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 5
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-7",
+            "name": {
+                "ru": "iPhone 7"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 6
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-7-plus",
+            "name": {
+                "ru": "iPhone 7 Plus"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 7
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-8",
+            "name": {
+                "ru": "iPhone 8"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 8
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-x",
+            "name": {
+                "ru": "iPhone X"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 9
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-11",
+            "name": {
+                "ru": "iPhone 11"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 10
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-11-pro",
+            "name": {
+                "ru": "iPhone 11 PRO"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 11
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-xr",
+            "name": {
+                "ru": "iPhone XR"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 12
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-xs-max",
+            "name": {
+                "ru": "iPhone XS Max"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 13
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-pro-max",
+            "name": {
+                "ru": "iPhone PRO Max"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 14
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-12",
+            "name": {
+                "ru": "iPhone 12"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 15
+        },
+        {
+            "category": "cdma",
+            "brand": "apple",
+            "slug": "iphone-13",
+            "name": {
+                "ru": "iPhone 13"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 16
+        },
+        {
+            "category": "cdma",
+            "brand": "artel",
+            "slug": "artel-c226",
+            "name": {
+                "ru": "Artel C226"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 17
+        },
+        {
+            "category": "cdma",
+            "brand": "artel",
+            "slug": "artel-adi5",
+            "name": {
+                "ru": "Artel Adi5"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 18
+        },
+        {
+            "category": "cdma",
+            "brand": "audiovox",
+            "slug": "audiovox-8410",
+            "name": {
+                "ru": "Audiovox 8410"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 19
+        },
+        {
+            "category": "cdma",
+            "brand": "audiovox",
+            "slug": "audiovox-8450",
+            "name": {
+                "ru": "Audiovox 8450"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 20
+        },
+        {
+            "category": "cdma",
+            "brand": "audiovox",
+            "slug": "audiovox-8900",
+            "name": {
+                "ru": "Audiovox 8900"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 21
+        },
+        {
+            "category": "cdma",
+            "brand": "blackberry",
+            "slug": "blackberry-9670",
+            "name": {
+                "ru": "Blackberry 9670"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 22
+        },
+        {
+            "category": "cdma",
+            "brand": "blackberry",
+            "slug": "blackberry-9930",
+            "name": {
+                "ru": "Blackberry 9930"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 23
+        },
+        {
+            "category": "cdma",
+            "brand": "blackberry",
+            "slug": "blackberry-keyone",
+            "name": {
+                "ru": "Blackberry Keyone"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 24
+        },
+        {
+            "category": "cdma",
+            "brand": "blackberry",
+            "slug": "blackberry-priv",
+            "name": {
+                "ru": "Blackberry Priv"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 25
+        },
+        {
+            "category": "cdma",
+            "brand": "bless",
+            "slug": "bless-ds808",
+            "name": {
+                "ru": "Bless DS808"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 26
+        },
+        {
+            "category": "cdma",
+            "brand": "bless",
+            "slug": "bless-ds812",
+            "name": {
+                "ru": "Bless DS812"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 27
+        },
+        {
+            "category": "cdma",
+            "brand": "franklin-wireless",
+            "slug": "aircard-franklin-u300",
+            "name": {
+                "ru": "Aircard Franklin U300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 28
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "hisense-c1100",
+            "name": {
+                "ru": "Hisense C1100"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 29
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "hisense-c177",
+            "name": {
+                "ru": "Hisense C177"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 30
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "hisense-c199",
+            "name": {
+                "ru": "Hisense C199"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 31
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "hisense-c568",
+            "name": {
+                "ru": "Hisense C568"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 32
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "hisense-s319",
+            "name": {
+                "ru": "Hisense С319"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 33
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "hisense-s677",
+            "name": {
+                "ru": "Hisense С677"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 34
+        },
+        {
+            "category": "cdma",
+            "brand": "hisense",
+            "slug": "micromax-c-100",
+            "name": {
+                "ru": "Micromax C 100"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 35
+        },
+        {
+            "category": "cdma",
+            "brand": "htc",
+            "slug": "htc-smt-6175-snap-sprint",
+            "name": {
+                "ru": "HTC SMT 6175 (\"Snap Sprint\")"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 36
+        },
+        {
+            "category": "cdma",
+            "brand": "htc",
+            "slug": "htc-one-m8-cdma",
+            "name": {
+                "ru": "HTC One (M8) (CDMA)"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 37
+        },
+        {
+            "category": "cdma",
+            "brand": "htc",
+            "slug": "htc-wildfire-s-adr6230-cdma",
+            "name": {
+                "ru": "HTC Wildfire S ADR6230 CDMA"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 38
+        },
+        {
+            "category": "cdma",
+            "brand": "htc",
+            "slug": "htc-desire-826",
+            "name": {
+                "ru": "HTC Desire 826"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 39
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-c2205",
+            "name": {
+                "ru": "HUAWEI C2205"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 40
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-c366",
+            "name": {
+                "ru": "HUAWEI C366"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 41
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-m318",
+            "name": {
+                "ru": "Huawei M318"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 42
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-ascend-g6",
+            "name": {
+                "ru": "Huawei Ascend G6"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 44
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-ascend-p6-c00",
+            "name": {
+                "ru": "Huawei Ascend P6-C00"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 45
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-a199",
+            "name": {
+                "ru": "Huawei A199"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 46
+        },
+        {
+            "category": "cdma",
+            "brand": "huawei",
+            "slug": "huawei-ascend-p7-l09",
+            "name": {
+                "ru": "Huawei Ascend P7-L09"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 47
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-424-blade",
+            "name": {
+                "ru": "Kyocera 424 Blade"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 48
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-a5305k-revolver",
+            "name": {
+                "ru": "Kyocera A5305K (Revolver)"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 49
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-koi-kx2",
+            "name": {
+                "ru": "Kyocera Koi KX2"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 50
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-kz-820",
+            "name": {
+                "ru": "Kyocera KZ 820"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 51
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-kz-850",
+            "name": {
+                "ru": "Kyocera KZ 850"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 52
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-kz-870",
+            "name": {
+                "ru": "Kyocera KZ 870"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 53
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-se47",
+            "name": {
+                "ru": "Kyocera SE47"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 55
+        },
+        {
+            "category": "cdma",
+            "brand": "kyocera",
+            "slug": "kyocera-k494-pulse",
+            "name": {
+                "ru": "Kyocera К494 Pulse"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 56
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-s870e",
+            "name": {
+                "ru": "Lenovo s870E"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 57
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-k30-e",
+            "name": {
+                "ru": "Lenovo K30-E"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 58
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-a3910e70",
+            "name": {
+                "ru": "Lenovo A3910e70"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 59
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-s90-e-sisley",
+            "name": {
+                "ru": "Lenovo S90-e Sisley"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 60
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-vibe-p1-p1c72",
+            "name": {
+                "ru": "Lenovo Vibe P1 P1c72"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 61
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-lemon-x3-lite-k51c78",
+            "name": {
+                "ru": "Lenovo Lemon X3 Lite K51c78"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 62
+        },
+        {
+            "category": "cdma",
+            "brand": "lenovo",
+            "slug": "lenovo-a805e",
+            "name": {
+                "ru": "Lenovo A805e"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 63
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-ad-2535",
+            "name": {
+                "ru": "LG AD 2535"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 64
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-rd-2330",
+            "name": {
+                "ru": "LG RD 2330"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 65
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-rd-2670",
+            "name": {
+                "ru": "LG RD 2670"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 66
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-sd-1250",
+            "name": {
+                "ru": "LG SD 1250"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 67
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-sd-290",
+            "name": {
+                "ru": "LG SD 290"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 68
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-sv-590-chocolate",
+            "name": {
+                "ru": "LG SV 590 Chocolate"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 69
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-sv-600-black-label",
+            "name": {
+                "ru": "LG SV 600 Black Label"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 70
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-ux-280",
+            "name": {
+                "ru": "LG UX 280"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 71
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-vx-5550",
+            "name": {
+                "ru": "LG VX 5550"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 72
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-vx-5600",
+            "name": {
+                "ru": "LG VX 5600"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 73
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-vx-9800",
+            "name": {
+                "ru": "LG VX 9800"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 74
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-optimus-elite-ls696",
+            "name": {
+                "ru": "LG Optimus Elite LS696"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 75
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-vx-5500",
+            "name": {
+                "ru": "LG VX-5500"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 76
+        },
+        {
+            "category": "cdma",
+            "brand": "lg",
+            "slug": "lg-g3-d859-cdmagsm",
+            "name": {
+                "ru": "LG G3 D859 cdma+gsm"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 77
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-m2-note",
+            "name": {
+                "ru": "Meizu m2 note"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 78
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-m3-note-m681q",
+            "name": {
+                "ru": "Meizu m3 note M681Q"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 79
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-m3s",
+            "name": {
+                "ru": "Meizu m3s"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 80
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-m5",
+            "name": {
+                "ru": "Meizu m5"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 81
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-pro-6",
+            "name": {
+                "ru": "Meizu Pro 6"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 82
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-u20",
+            "name": {
+                "ru": "Meizu U20"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 83
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-krzr-k1m",
+            "name": {
+                "ru": "Motorola KRZR K1m"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 84
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-100",
+            "name": {
+                "ru": "Motorola MS-100"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 85
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-150",
+            "name": {
+                "ru": "Motorola MS-150"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 86
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-200",
+            "name": {
+                "ru": "Motorola MS-200"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 87
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-230",
+            "name": {
+                "ru": "Motorola MS-230"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 88
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-250",
+            "name": {
+                "ru": "Motorola MS-250"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 89
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-280",
+            "name": {
+                "ru": "Motorola MS-280"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 90
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-300",
+            "name": {
+                "ru": "Motorola MS-300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 91
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-330",
+            "name": {
+                "ru": "Motorola MS-330"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 92
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-340",
+            "name": {
+                "ru": "Motorola MS-340"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 93
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-350",
+            "name": {
+                "ru": "Motorola MS-350"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 94
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-400",
+            "name": {
+                "ru": "Motorola MS-400"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 95
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-550",
+            "name": {
+                "ru": "Motorola MS-550"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 96
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-600",
+            "name": {
+                "ru": "Motorola MS-600"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 97
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-ms-700",
+            "name": {
+                "ru": "Motorola MS-700"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 98
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-razr-v3m",
+            "name": {
+                "ru": "Motorola RAZR V3m"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 99
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-rms-500",
+            "name": {
+                "ru": "Motorola RMS-500"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 100
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-startac-2004",
+            "name": {
+                "ru": "Motorola Startac 2004"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 101
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-v13",
+            "name": {
+                "ru": "Motorola V13"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 102
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-v265",
+            "name": {
+                "ru": "Motorola V265"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 103
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-v680",
+            "name": {
+                "ru": "Motorola V680"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 104
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-v810",
+            "name": {
+                "ru": "Motorola V810"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 105
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-v868",
+            "name": {
+                "ru": "Motorola V868"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 106
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-w200",
+            "name": {
+                "ru": "Motorola W200"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 107
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-w210",
+            "name": {
+                "ru": "Motorola W210"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 108
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-w315",
+            "name": {
+                "ru": "Motorola W315"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 109
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "motorola-xyboard-mz-609-82-16-gb-cdmagsm",
+            "name": {
+                "ru": "Motorola XYBOARD MZ 609 8.2 16 GB (CDMA+GSM)"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 110
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "moto-razr-5g",
+            "name": {
+                "ru": "Moto RAZR 5G"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 111
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "moto-g6-play",
+            "name": {
+                "ru": "Moto g6 Play"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 112
+        },
+        {
+            "category": "cdma",
+            "brand": "motorola",
+            "slug": "moto-g7-play",
+            "name": {
+                "ru": "Moto g7 Play"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 113
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-1006",
+            "name": {
+                "ru": "Nokia 1006"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 114
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-1255",
+            "name": {
+                "ru": "Nokia 1255"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 115
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-1325",
+            "name": {
+                "ru": "Nokia 1325"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 116
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-1506",
+            "name": {
+                "ru": "Nokia 1506"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 117
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-1606",
+            "name": {
+                "ru": "Nokia 1606"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 118
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-2126-i",
+            "name": {
+                "ru": "Nokia 2126 I"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 119
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-2285",
+            "name": {
+                "ru": "Nokia 2285"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 120
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-2865",
+            "name": {
+                "ru": "Nokia 2865"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 121
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-2865-i",
+            "name": {
+                "ru": "Nokia 2865 I"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 122
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-3105",
+            "name": {
+                "ru": "Nokia 3105"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 123
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-3155",
+            "name": {
+                "ru": "Nokia 3155"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 124
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-6155",
+            "name": {
+                "ru": "Nokia 6155"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 125
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-6225",
+            "name": {
+                "ru": "Nokia 6225"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 126
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-6235-i",
+            "name": {
+                "ru": "Nokia 6235 I"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 127
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-6585",
+            "name": {
+                "ru": "Nokia 6585"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 128
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-8280",
+            "name": {
+                "ru": "Nokia 8280"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 129
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-8587",
+            "name": {
+                "ru": "Nokia 8587"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 130
+        },
+        {
+            "category": "cdma",
+            "brand": "nokia",
+            "slug": "nokia-8600i",
+            "name": {
+                "ru": "Nokia 8600i"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 131
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-a740",
+            "name": {
+                "ru": "Samsung A740"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 133
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-a870",
+            "name": {
+                "ru": "Samsung A870"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 134
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-omnia-2-i920",
+            "name": {
+                "ru": "Samsung Omnia 2 i920"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 135
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-rv840",
+            "name": {
+                "ru": "Samsung RV840"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 136
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-r300",
+            "name": {
+                "ru": "Samsung SCH R300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 137
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-a530",
+            "name": {
+                "ru": "Samsung SCH-A530"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 138
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-a605",
+            "name": {
+                "ru": "Samsung SCH-A605"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 139
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-a790",
+            "name": {
+                "ru": "Samsung SCH-A790"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 140
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-b200",
+            "name": {
+                "ru": "Samsung SCH-B200"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 141
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-b250",
+            "name": {
+                "ru": "Samsung SCH-B250"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 142
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e120",
+            "name": {
+                "ru": "Samsung SCH-E120"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 143
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e135",
+            "name": {
+                "ru": "Samsung SCH-E135"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 144
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e170",
+            "name": {
+                "ru": "Samsung SCH-E170"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 145
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e200",
+            "name": {
+                "ru": "Samsung SCH-E200"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 146
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e250",
+            "name": {
+                "ru": "Samsung SCH-E250"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 147
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsungsch-e300",
+            "name": {
+                "ru": "SamsungSCH-E300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 148
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e370",
+            "name": {
+                "ru": "Samsung SCH-E370"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 149
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e380",
+            "name": {
+                "ru": "Samsung SCH-E380"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 150
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e470",
+            "name": {
+                "ru": "Samsung SCH-E470"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 151
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-e560",
+            "name": {
+                "ru": "Samsung SCH-E560"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 152
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-n330",
+            "name": {
+                "ru": "Samsung SCH-N330"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 153
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-n356",
+            "name": {
+                "ru": "Samsung SCH-N356"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 154
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-n370",
+            "name": {
+                "ru": "Samsung SCH-N370"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 155
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-n380",
+            "name": {
+                "ru": "Samsung SCH-N380"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 156
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-n500",
+            "name": {
+                "ru": "Samsung SCH-N500"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 157
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s140",
+            "name": {
+                "ru": "Samsung SCH-S140"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 158
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s230",
+            "name": {
+                "ru": "Samsung SCH-S230"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 159
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s250",
+            "name": {
+                "ru": "Samsung SCH-S250"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 160
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s260",
+            "name": {
+                "ru": "Samsung SCH-S260"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 161
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s310",
+            "name": {
+                "ru": "Samsung SCH-S310"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 162
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s350",
+            "name": {
+                "ru": "Samsung SCH-S350"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 163
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-s380",
+            "name": {
+                "ru": "Samsung SCH-S380"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 164
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v300",
+            "name": {
+                "ru": "Samsung SCH-V300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 165
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v410",
+            "name": {
+                "ru": "Samsung SCH-V410"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 166
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v420",
+            "name": {
+                "ru": "Samsung SCH-V420"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 167
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v450",
+            "name": {
+                "ru": "Samsung SCH-V450"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 168
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v500",
+            "name": {
+                "ru": "Samsung SCH-V500"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 169
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v540",
+            "name": {
+                "ru": "Samsung SCH-V540"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 170
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v600",
+            "name": {
+                "ru": "Samsung SCH-V600"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 171
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsungsch-v650",
+            "name": {
+                "ru": "SamsungSCH-V650"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 172
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v730",
+            "name": {
+                "ru": "Samsung SCH-V730"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 173
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v740",
+            "name": {
+                "ru": "Samsung SCH-V740"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 174
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-v770",
+            "name": {
+                "ru": "Samsung SCH-V770"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 175
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sch-x850",
+            "name": {
+                "ru": "Samsung SCH-Х850"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 176
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sph-a513",
+            "name": {
+                "ru": "Samsung SPH-A513"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 177
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sph-a580",
+            "name": {
+                "ru": "Samsung SPH-A580"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 178
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-sph-a900",
+            "name": {
+                "ru": "Samsung SPH-A900"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 179
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-u350",
+            "name": {
+                "ru": "Samsung U350"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 180
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s2",
+            "name": {
+                "ru": "Samsung Galaxy s2"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 181
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-gusto-2",
+            "name": {
+                "ru": "Samsung Gusto 2"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 182
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-gusto-3",
+            "name": {
+                "ru": "Samsung Gusto 3"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 183
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-google-nexus-s-4g",
+            "name": {
+                "ru": "Samsung Google Nexus S 4G"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 184
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-note-4",
+            "name": {
+                "ru": "Samsung Note 4"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 185
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-c5",
+            "name": {
+                "ru": "Samsung Galaxy C5"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 186
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s6-sm-g9209",
+            "name": {
+                "ru": "Samsung Galaxy S6 SM-G9209"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 187
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-e7-sm-e7009",
+            "name": {
+                "ru": "Samsung Galaxy E7 SM-E7009"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 188
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-j3-pro-sm-j3119",
+            "name": {
+                "ru": "Samsung Galaxy J3 Pro SM-J3119"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 189
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s7-edge-sm-g935p",
+            "name": {
+                "ru": "Samsung Galaxy S7 Edge SM-G935p"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 190
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-a5-sm-a5009",
+            "name": {
+                "ru": "Samsung Galaxy A5 SM-A5009"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 191
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-j7-sm-j7109",
+            "name": {
+                "ru": "Samsung Galaxy J7 SM-J7109"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 192
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-a3-sm-a3009",
+            "name": {
+                "ru": "Samsung Galaxy A3 SM-A3009"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 193
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-note-3-sm-n9009",
+            "name": {
+                "ru": "Samsung Galaxy Note 3 SM-N9009"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 194
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-a9-pro-2016-sm-a9100",
+            "name": {
+                "ru": "Samsung Galaxy A9 Pro 2016 SM-A9100"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 195
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-note-8-sm-n950u",
+            "name": {
+                "ru": "Samsung Galaxy Note 8 SM-N950U"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 196
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s20",
+            "name": {
+                "ru": "Samsung Galaxy S20"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 197
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s21",
+            "name": {
+                "ru": "Samsung Galaxy S21"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 198
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s20-ultra-5g",
+            "name": {
+                "ru": "Samsung Galaxy S20 Ultra 5G"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 199
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-s21-ultra-5g",
+            "name": {
+                "ru": "Samsung Galaxy S21 Ultra 5G"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 200
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-note-20",
+            "name": {
+                "ru": "Samsung Galaxy Note 20"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 201
+        },
+        {
+            "category": "cdma",
+            "brand": "samsung",
+            "slug": "samsung-galaxy-z-flip",
+            "name": {
+                "ru": "Samsung Galaxy Z Flip"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 202
+        },
+        {
+            "category": "cdma",
+            "brand": "sanyo",
+            "slug": "sanyo-m666",
+            "name": {
+                "ru": "Sanyo M666"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 203
+        },
+        {
+            "category": "cdma",
+            "brand": "sanyo",
+            "slug": "sanyo-scp-8600-zio",
+            "name": {
+                "ru": "Sanyo SCP-8600 Zio"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 204
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-5400",
+            "name": {
+                "ru": "sky IM 5400"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 205
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-6200",
+            "name": {
+                "ru": "sky IM 6200"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 206
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-6400",
+            "name": {
+                "ru": "sky IM 6400"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 207
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-6500",
+            "name": {
+                "ru": "sky IM 6500"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 208
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-7200",
+            "name": {
+                "ru": "sky IM 7200"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 209
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-7300",
+            "name": {
+                "ru": "sky IM 7300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 210
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-7400",
+            "name": {
+                "ru": "sky IM 7400"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 211
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-7700",
+            "name": {
+                "ru": "sky IM 7700"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 212
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-8100",
+            "name": {
+                "ru": "sky IM 8100"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 213
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-8300",
+            "name": {
+                "ru": "sky IM 8300"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 214
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-im-8400",
+            "name": {
+                "ru": "sky IM 8400"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 215
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-imb-1000",
+            "name": {
+                "ru": "sky IMB 1000"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 216
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-ims-110",
+            "name": {
+                "ru": "sky IMS 110"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 217
+        },
+        {
+            "category": "cdma",
+            "brand": "sky",
+            "slug": "sky-s-100",
+            "name": {
+                "ru": "sky S 100"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 218
+        },
+        {
+            "category": "cdma",
+            "brand": "vivo",
+            "slug": "vivo-y1s-232-blackblue",
+            "name": {
+                "ru": "Vivo Y1s 2/32 black/blue"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 219
+        },
+        {
+            "category": "cdma",
+            "brand": "vivo",
+            "slug": "vivo-y12s-332-black-vivo-y12s-332-blue",
+            "name": {
+                "ru": "Vivo Y12s 3/32 black; Vivo Y12s 3/32 blue"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 220
+        },
+        {
+            "category": "cdma",
+            "brand": "vivo",
+            "slug": "vivo-y31-4128-black-vivo-y31-4128-blue",
+            "name": {
+                "ru": "Vivo Y31 4/128 black; Vivo Y31 4/128 blue"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 221
+        },
+        {
+            "category": "cdma",
+            "brand": "vivo",
+            "slug": "vivo-y31-464-black-vivo-y31-464-blue",
+            "name": {
+                "ru": "Vivo Y31 4/64 black; Vivo Y31 4/64 blue"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 222
+        },
+        {
+            "category": "cdma",
+            "brand": "vivo",
+            "slug": "vivo-v21-8128-blue",
+            "name": {
+                "ru": "Vivo V21 8/128 Blue"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 223
+        },
+        {
+            "category": "cdma",
+            "brand": "vivo",
+            "slug": "vivo-v21e-8128-black-vivo-v21e-8128-blue",
+            "name": {
+                "ru": "Vivo V21e 8/128 Black; Vivo V21e 8/128 Blue"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 224
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-note-4x",
+            "name": {
+                "ru": "Xiaomi Redmi Note 4X",
+                "uz": "Xiaomi Redmi Note 4X"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 225
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-4x-pro",
+            "name": {
+                "ru": "Xiaomi Redmi 4X Pro"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 226
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-3x",
+            "name": {
+                "ru": "Xiaomi Redmi 3x"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 227
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi5-pro-edition",
+            "name": {
+                "ru": "Xiaomi Mi5 Pro Edition"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 228
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi5s",
+            "name": {
+                "ru": "Xiaomi Mi5s"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 229
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-3s",
+            "name": {
+                "ru": "Xiaomi Redmi 3s"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 230
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-max",
+            "name": {
+                "ru": "Xiaomi Mi Max"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 231
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-4",
+            "name": {
+                "ru": "Xiaomi Redmi 4"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 232
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-4-pro",
+            "name": {
+                "ru": "Xiaomi Redmi 4 Pro"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 233
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-note-4",
+            "name": {
+                "ru": "Xiaomi Redmi Note 4"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 234
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-6-pro",
+            "name": {
+                "ru": "Xiaomi Redmi 6 Pro"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 235
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-8",
+            "name": {
+                "ru": "Xiaomi Mi 8"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 236
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-8-se",
+            "name": {
+                "ru": "Xiaomi Mi 8 SE"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 237
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-note-8r",
+            "name": {
+                "ru": "Xiaomi Redmi Note 8r"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 238
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-9",
+            "name": {
+                "ru": "Xiaomi Mi 9"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 239
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-9t",
+            "name": {
+                "ru": "Xiaomi Mi 9T"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 240
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-k20-pro",
+            "name": {
+                "ru": "Xiaomi Redmi K20 Pro"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 241
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-10",
+            "name": {
+                "ru": "Xiaomi Mi 10"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 242
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-10t",
+            "name": {
+                "ru": "Xiaomi Mi 10T"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 243
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-mi-11",
+            "name": {
+                "ru": "Xiaomi Mi 11"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 244
+        },
+        {
+            "category": "cdma",
+            "brand": "xiaomi",
+            "slug": "xiaomi-redmi-k40",
+            "name": {
+                "ru": "Xiaomi Redmi K40"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 245
+        },
+        {
+            "category": "cdma",
+            "brand": "zte",
+            "slug": "zte-g717c-cdmagsm-1",
+            "name": {
+                "ru": "ZTE G717c CDMA+GSM"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 246
+        },
+        {
+            "category": "cdma",
+            "brand": "zte",
+            "slug": "zte-nubiya-z5s-1",
+            "name": {
+                "ru": "ZTE Нубия Z5S"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 247
+        },
+        {
+            "category": "cdma",
+            "brand": "zte",
+            "slug": "zte-g719c",
+            "name": {
+                "ru": "ZTE G719C"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 248
+        },
+        {
+            "category": "cdma",
+            "brand": "zte",
+            "slug": "zte-grand-memo-2-m901c",
+            "name": {
+                "ru": "ZTE Grand Memo 2 M901c"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 249
+        },
+        {
+            "category": "cdma",
+            "brand": "zte",
+            "slug": "zte-nubia-z7-nx506j",
+            "name": {
+                "ru": "ZTE Nubia Z7 NX506J"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 250
+        },
+        {
+            "category": "cdma",
+            "brand": "zte",
+            "slug": "zte-nubia-z9-mini-nx511j",
+            "name": {
+                "ru": "ZTE Nubia Z9 Mini NX511J"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 251
+        },
+        {
+            "category": "cdma",
+            "brand": "meizu",
+            "slug": "meizu-m3",
+            "name": {
+                "ru": "Meizu m3"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 252
+        },
+        {
+            "category": "cdma",
+            "brand": "novey",
+            "slug": "novey-senat-sc1-cdma",
+            "name": {
+                "ru": "Novey Senat SC1 CDMA"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": true,
+            "sort": 253
+        },
+        {
+            "category": "cdma",
+            "brand": "f1",
+            "slug": "device-288",
+            "name": {
+                "ru": "F1",
+                "uz": "F1"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 254
+        },
+        {
+            "category": "cdma",
+            "brand": "novey",
+            "slug": "novey-c10",
+            "name": {
+                "ru": "Novey C10"
+            },
+            "excerpt": null,
+            "price": null,
+            "in_stock": false,
+            "sort": 255
+        },
+        {
+            "category": "cdma",
+            "brand": "novey",
+            "slug": "novey-z1",
+            "name": {
+                "ru": "Novey Z1+",
+                "uz": "Novey Z1+"
+            },
+            "excerpt": {
+                "ru": "акция"
+            },
+            "price": null,
+            "in_stock": true,
+            "sort": 256
+        },
+        {
+            "category": "routers",
+            "brand": "tozed",
+            "slug": "tozed-zlt-x25-max2",
+            "name": {
+                "ru": "Tozed ZLT X25 MAX2",
+                "uz": "Tozed ZLT X25 MAX2"
+            },
+            "excerpt": {
+                "ru": "Надежность и высокая передача данных. Поддержка 5G, 4G и Wi-Fi 6. Стабильное соединение. Простая установка - без специалистов и сложных установок.",
+                "uz": "Ishonchlilik va yuqori ma'lumotlar uzatish. 5G, 4G va Wi-Fi 6-ni qo'llab-quvvatlash. Barqaror ulanish va yuqori tezlik."
+            },
+            "price": 1850000,
+            "in_stock": true,
+            "sort": 258
+        },
+        {
+            "category": "routers",
+            "brand": "tozed",
+            "slug": "tozed-zlt-s200",
+            "name": {
+                "ru": "Tozed ZLT С200",
+                "uz": "Tozed ZLT С200"
+            },
+            "excerpt": {
+                "ru": "Надежность и высокая передача данных. Поддержка 5G, 4G и Wi-Fi 6. Стабильное соединение. Простая установка - без специалистов и сложных установок.",
+                "uz": "Ishonchlilik va yuqori ma'lumotlar uzatish. 5G, 4G va Wi-Fi 6-ni qo'llab-quvvatlash. Barqaror ulanish va yuqori tezlik."
+            },
+            "price": 1250000,
+            "in_stock": true,
+            "sort": 262
+        }
+    ]
+}

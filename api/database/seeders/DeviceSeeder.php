@@ -11,7 +11,6 @@ use App\Models\DeviceCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class DeviceSeeder extends Seeder
 {
@@ -23,14 +22,17 @@ class DeviceSeeder extends Seeder
 
     public function run(): void
     {
-        $categories = $this->seedCategories();
-        $brands = $this->seedBrands();
+        $data = json_decode((string) file_get_contents(database_path('data/devices.json')), true);
 
-        foreach ($this->devices() as $sort => $device) {
-            Device::updateOrCreate(['slug' => $device['slug']], [
-                ...Arr::except($device, ['category', 'brand', 'slug']),
-                'category_id' => $categories[$device['category']] ?? null,
-                'brand_id' => $brands[$device['brand']] ?? null,
+        $categories = $this->seedCategories();
+        $brands = $this->seedBrands($data['brands'] ?? []);
+
+        foreach ($data['models'] ?? [] as $sort => $model) {
+            Device::updateOrCreate(['slug' => $model['slug']], [
+                ...Arr::except($model, ['category', 'brand', 'slug', 'sort']),
+                ...$this->extras($model['slug']),
+                'category_id' => $categories[$model['category']] ?? null,
+                'brand_id' => $brands[$model['brand']] ?? null,
                 'sort' => $sort + 1,
                 'status' => true,
             ]);
@@ -54,61 +56,37 @@ class DeviceSeeder extends Seeder
      * The catalogue browses CDMA brand by brand, so a brand is a record with a
      * logo an editor can replace rather than a name typed onto every device.
      *
+     * @param  array<int, array<string, mixed>>  $brands
      * @return array<string, int>
      */
-    private function seedBrands(): array
+    private function seedBrands(array $brands): array
     {
-        $brands = ['AMGOO', 'Apple', 'artel', 'AUDIOVOX', 'BlackBerry', 'BLESS', 'Franklin Wireless',
-            'Hisense', 'HTC', 'HUAWEI', 'HONOR', 'KYOCERA', 'Tozed'];
-
         return collect($brands)
-            ->mapWithKeys(fn (string $name, int $index): array => [
-                $name => DeviceBrand::updateOrCreate(
-                    ['slug' => Str::slug($name)],
-                    ['name' => $name, 'sort' => $index + 1, 'status' => true],
+            ->mapWithKeys(fn (array $brand): array => [
+                $brand['slug'] => DeviceBrand::updateOrCreate(
+                    ['slug' => $brand['slug']],
+                    ['name' => $brand['name'], 'sort' => $brand['sort'], 'status' => true],
                 )->getKey(),
             ])
             ->all();
     }
 
     /**
-     * The old catalogue is gone with its dump; the rows below are the devices
-     * the new site's content confirms. The CDMA list grows from the dump once
-     * it is available again.
+     * The old catalogue listed the specification headings and none of their
+     * values, so the router the site actually sells keeps its own table and
+     * the photo that ships with the seeder.
      *
-     * @return array<int, array<string, mixed>>
+     * @return array<string, mixed>
      */
-    private function devices(): array
+    private function extras(string $slug): array
     {
-        return [
-            [
-                'category' => 'routers',
-                'slug' => 'tozed-zlt-x25-max2',
-                'brand' => 'Tozed',
-                'name' => ['ru' => 'Tozed ZLT X25 MAX2', 'uz' => 'Tozed ZLT X25 MAX2'],
-                'excerpt' => [
-                    'ru' => 'Домашний 5G роутер (Indoor CPE) с Wi-Fi 6 для сети 5G Standalone.',
-                    'uz' => '5G Standalone tarmogʻi uchun Wi-Fi 6 bilan uy 5G routeri (Indoor CPE).',
-                ],
+        return match ($slug) {
+            'tozed-zlt-x25-max2' => [
                 'specs' => $this->tozedSpecs(),
                 'image' => $this->attachImage('tozed-zlt-x25-max2.jpg'),
-                'price' => 1850000,
-                'in_stock' => true,
             ],
-            [
-                'category' => 'cdma',
-                'slug' => 'amgoo-cx8r',
-                'brand' => 'AMGOO',
-                'name' => ['ru' => 'AMGOO CX8R', 'uz' => 'AMGOO CX8R'],
-                'excerpt' => [
-                    'ru' => 'Кнопочный телефон, совместимый с сетью Perfectum CDMA.',
-                    'uz' => 'Perfectum CDMA tarmogʻiga mos tugmali telefon.',
-                ],
-                'specs' => [],
-                'price' => null,
-                'in_stock' => false,
-            ],
-        ];
+            default => [],
+        };
     }
 
     /**
