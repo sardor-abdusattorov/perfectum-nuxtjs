@@ -17,16 +17,17 @@ class UserSeeder extends Seeder
      * password anyone could guess: it takes ADMIN_PASSWORD, and without one it
      * draws a random password and prints it once for the operator to store.
      */
-     public function run(): void
+    public function run(): void
     {
-        $superadmin = User::updateOrCreate(
-            ['email' => 'admin@test.com'],
+        $superadmin = User::firstOrCreate(
+            ['email' => 'mr.silverwind1998@gmail.com'],
             [
-                'name' => 'Fayzullo Abduhakimov',
+                'name' => 'Sardor Abdusattorov',
                 'password' => bcrypt('123456'),
                 'email_verified_at' => now(),
             ]
         );
         $superadmin->assignRole('super_admin');
+
     }
 }
