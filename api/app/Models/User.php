@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable(['name', 'avatar_url', 'email', 'password'])]
@@ -25,16 +24,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     use HasRoles;
     use Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
     protected function casts(): array
     {
         return [
@@ -45,6 +34,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->avatar_url ? Storage::disk('public')->url($this->avatar_url) : null;
+        return $this->avatar_url ? stored_url($this->avatar_url) : null;
     }
 }

@@ -337,14 +337,6 @@ function initBlock2() {
       });
     }
 
-    const textarea = helpSection.querySelector(".field__textarea");
-    const counter = helpSection.querySelector("[data-help-counter]");
-    if (textarea && counter) {
-      const max = Number(textarea.getAttribute("maxlength")) || 500;
-      textarea.addEventListener("input", function () {
-        counter.textContent = max - textarea.value.length;
-      });
-    }
   }
 
   document.querySelectorAll(".company-nav").forEach(function (nav) {
@@ -407,40 +399,6 @@ function initBlock2() {
       });
     }
   });
-
-  const vacFilter = document.querySelector(".vac-filter");
-  const vacGrid = document.querySelector(".vac-grid");
-  if (vacFilter && vacGrid) {
-    const chips = vacFilter.querySelectorAll(".vac-filter__chip");
-    const items = Array.prototype.slice.call(vacGrid.children);
-    const countEl = document.querySelector(".vac__count b");
-    function vacPlural(n) {
-      const m10 = n % 10, m100 = n % 100;
-      if (m10 === 1 && m100 !== 11) return "вакансия";
-      if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return "вакансии";
-      return "вакансий";
-    }
-    chips.forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        chips.forEach(function (c) {
-          c.classList.remove("vac-filter__chip_active");
-          c.setAttribute("aria-selected", "false");
-        });
-        chip.classList.add("vac-filter__chip_active");
-        chip.setAttribute("aria-selected", "true");
-        const label = chip.textContent.trim().toLowerCase();
-        let shown = 0;
-        items.forEach(function (li) {
-          const cat = li.querySelector(".vac-card__cat");
-          const c = cat ? cat.textContent.trim().toLowerCase() : "";
-          const show = label === "все" || c === label;
-          li.style.display = show ? "" : "none";
-          if (show) shown++;
-        });
-        if (countEl) countEl.textContent = shown + " " + vacPlural(shown);
-      });
-    });
-  }
 }
 
 

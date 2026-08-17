@@ -21,7 +21,7 @@ const PIVOT = { x: 90.9324, y: 97.5113 }
 const CENTRE = { x: 98, y: 98 }
 const TIP = { x: 150.849, y: 156.018 }
 
-export const GAUGE_MAX = STOPS[STOPS.length - 1]!
+const GAUGE_MAX = STOPS[STOPS.length - 1]!
 
 function degrees(x: number, y: number): number {
   return Math.atan2(x, -y) * 180 / Math.PI

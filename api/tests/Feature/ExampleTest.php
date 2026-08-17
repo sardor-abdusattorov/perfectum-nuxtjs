@@ -1,7 +1,7 @@
 <?php
 
-test('the application returns a successful response', function () {
-    $response = $this->get('/');
+declare(strict_types=1);
 
-    $response->assertStatus(200);
+it('sends the backend root to the admin panel', function (): void {
+    $this->get('/')->assertRedirect('/admin');
 });
