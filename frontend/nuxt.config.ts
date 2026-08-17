@@ -21,7 +21,13 @@ export default defineNuxtConfig({
   },
 
   css: [
-    'swiper/css/bundle',
+    'swiper/css',
+    'swiper/css/a11y',
+    'swiper/css/autoplay',
+    'swiper/css/free-mode',
+    'swiper/css/navigation',
+    'swiper/css/pagination',
+    'swiper/css/scrollbar',
     '~/assets/css/settings.css',
     '~/assets/css/main.css',
   ],
@@ -39,6 +45,21 @@ export default defineNuxtConfig({
       useCookie: true,
       cookieKey: 'i18n_locale',
       redirectOn: 'root',
+    },
+  },
+
+  nitro: {
+    /**
+     * Nothing in front of Node is guaranteed to compress, and a stylesheet or a
+     * traced logo is mostly repeated text: the build writes .gz and .br beside
+     * every public asset and the server hands those over when it can.
+     */
+    compressPublicAssets: { gzip: true, brotli: true },
+
+    routeRules: {
+      '/_nuxt/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+      '/images/**': { headers: { 'cache-control': 'public, max-age=2592000' } },
+      '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
     },
   },
 

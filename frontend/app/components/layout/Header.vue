@@ -27,7 +27,7 @@ watch(() => route.fullPath, () => {
           <div class="header__row">
               <div class="header__logo">
                   <NuxtLink :to="localePath('/')" class="header__logo-link">
-                      <img src="/images/logo.svg" alt="Perfectum 5G" class="header__logo-img" />
+                      <img src="/images/logo.svg" alt="Perfectum 5G" class="header__logo-img" width="203" height="31" />
                   </NuxtLink>
                   <span class="header__logo-divider" aria-hidden="true"></span>
                   <NuxtLink :to="localePath('/cdma')" class="header__logo-brand">CDMA</NuxtLink>

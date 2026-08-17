@@ -30,7 +30,7 @@ function telHref(phone: string): string {
       <div class="footer__row">
         <div class="footer__brand">
           <NuxtLink :to="localePath('/')" class="footer__logo">
-            <img src="/images/logo.svg" alt="Perfectum 5G" />
+            <img src="/images/logo.svg" alt="Perfectum 5G" width="203" height="31" />
           </NuxtLink>
 
           <div class="footer__contacts">

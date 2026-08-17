@@ -1,6 +1,13 @@
-import Swiper from 'swiper/bundle'
+import Swiper from 'swiper'
+import { A11y, Autoplay, FreeMode, Navigation, Pagination, Scrollbar } from 'swiper/modules'
 import type { SwiperOptions } from 'swiper/types'
 import type { ShallowRef } from 'vue'
+
+/**
+ * The bundle build registers every effect and behaviour Swiper ships; these six
+ * are the ones the site's sliders ask for.
+ */
+const MODULES = [A11y, Autoplay, FreeMode, Navigation, Pagination, Scrollbar]
 
 /**
  * The slides come from the API and change whenever a tab or a chip is clicked,
@@ -17,7 +24,7 @@ export function useSlider(
 
   onMounted(() => {
     if (element.value) {
-      slider = new Swiper(element.value, options)
+      slider = new Swiper(element.value, { modules: MODULES, ...options })
     }
   })
 

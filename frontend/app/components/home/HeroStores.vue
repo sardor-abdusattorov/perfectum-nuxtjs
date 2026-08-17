@@ -12,10 +12,11 @@ const t = useT()
       :href="store.url"
       target="_blank"
       rel="noopener"
-      :aria-label="store.name"
+      :aria-label="`${t('common.store_prefix')} ${store.name}`"
     >
       <span class="hero__store-text">{{ t('common.store_prefix') }}</span>
-      <img class="hero__store-logo" :src="`/images/${store.icon}-dark.svg`" :alt="store.name" loading="lazy" />
+      <img class="hero__store-logo" :src="`/images/${store.icon}-dark.svg`" :alt="store.name"
+        :width="store.width" :height="store.height" loading="lazy" />
     </a>
   </div>
 </template>

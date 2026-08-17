@@ -18,7 +18,7 @@ watch(() => route.fullPath, () => {
       <div class="menu__panel">
           <div class="menu__head">
               <NuxtLink :to="localePath('/')" class="menu__logo">
-                  <img src="/images/logo-white.svg" alt="Perfectum 5G" />
+                  <img src="/images/logo-white.svg" alt="Perfectum 5G" width="203" height="31" />
               </NuxtLink>
               <button type="button" class="menu__close" :aria-label="t('header.close_menu')" @click="mobileMenu.close()">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

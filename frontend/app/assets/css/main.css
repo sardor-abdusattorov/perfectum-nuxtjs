@@ -2530,6 +2530,7 @@ strong {
 }
 
 .hero .hero__visual .hero__image {
+  object-fit: contain;
   pointer-events: none;
 }
 
@@ -3581,7 +3582,6 @@ strong {
   font-style: normal;
   font-weight: 400;
   line-height: 23px;
-  opacity: 0.65;
   margin-bottom: 40px;
 }
 
@@ -7749,6 +7749,9 @@ body.overflow__hidden {
 }
 
 .footer .footer__contact-phone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
   font-size: 18px;
   font-weight: 400;
   transition: var(--transition);
