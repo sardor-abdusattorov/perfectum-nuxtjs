@@ -121,35 +121,35 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   </section>
 
   <!-- CDMA TABS -->
-  <nav class="cdma-tabs" aria-label="Разделы CDMA">
+  <nav class="cdma-tabs" :aria-label="t('cdma.sections_label')">
       <div class="container">
           <ul class="cdma-tabs__list">
               <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link cdma-tabs__link_active" href="#cdma-tariffs">Тарифы</a>
+                  <a class="cdma-tabs__link cdma-tabs__link_active" href="#cdma-tariffs">{{ t('cdma.tariffs_title') }}</a>
               </li>
               <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-services">Услуги</a>
+                  <a class="cdma-tabs__link" href="#cdma-services">{{ t('cdma.services_title') }}</a>
               </li>
               <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-numbers">Номера</a>
+                  <a class="cdma-tabs__link" href="#cdma-numbers">{{ t('cdma.tab_numbers') }}</a>
               </li>
               <li class="cdma-tabs__item">
                   <a class="cdma-tabs__link" href="#cdma-faq">FAQ</a>
               </li>
               <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-support">Поддержка</a>
+                  <a class="cdma-tabs__link" href="#cdma-support">{{ t('cdma.support_title') }}</a>
               </li>
               <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-news">Новости</a>
+                  <a class="cdma-tabs__link" href="#cdma-news">{{ t('cdma.news_title') }}</a>
               </li>
               <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-promo">Акции</a>
+                  <a class="cdma-tabs__link" href="#cdma-promo">{{ t('cdma.promo_title') }}</a>
               </li>
               <li class="cdma-tabs__item">
-                  <NuxtLink class="cdma-tabs__link" :to="localePath('/cdma/dealers')">Дилеры</NuxtLink>
+                  <NuxtLink class="cdma-tabs__link" :to="localePath('/cdma/dealers')">{{ t('cdma.tab_dealers') }}</NuxtLink>
               </li>
           </ul>
-          <NuxtLink class="cdma-tabs__connect" :to="localePath('/cdma/connect')">Подключиться</NuxtLink>
+          <NuxtLink class="cdma-tabs__connect" :to="localePath('/cdma/connect')">{{ t('cdma.connect') }}</NuxtLink>
       </div>
   </nav>
 
@@ -233,7 +233,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <!-- CDMA NUMBERS -->
   <section class="cdma-section" id="cdma-numbers">
       <div class="container">
-          <h2 class="cdma-section__title">Свободные номера</h2>
+          <h2 class="cdma-section__title">{{ t('cdma.numbers_title') }}</h2>
           <CdmaFreeNumbers />
       </div>
   </section>
