@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Golos Text";
-  src: url("../fonts/GolosText.ttf") format("truetype");
+  src: url("../fonts/GolosText.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: "Inter";
-  src: url("../fonts/Inter.ttf") format("truetype");
+  src: url("../fonts/Inter.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;

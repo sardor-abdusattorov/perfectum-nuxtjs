@@ -74,7 +74,8 @@ useSlider(slider, {
 
               <div class="hero__visual">
                 <div class="hero__phone">
-                  <img class="hero__image" :src="slide.image ?? '/images/hero-image-2.png'" :alt="slide.image_alt ?? ''" />
+                  <img class="hero__image" :src="slide.image ?? '/images/hero-image-2.webp'" :alt="slide.image_alt ?? ''"
+                    width="829" height="830" fetchpriority="high" decoding="async" />
                   <HomeHeroGauge v-if="slide.show_gauge !== false" :uid="`hd-${index}`" :value="slide.gauge_value" class="hero__gauge_desktop" />
                 </div>
               </div>
