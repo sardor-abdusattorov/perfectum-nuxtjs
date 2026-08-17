@@ -21,7 +21,7 @@ beforeEach(function (): void {
 
 function homepageAdmin(): User
 {
-    $user = User::factory()->create();
+    $user = panelUser(['View:ManageHomepage']);
 
     $user->givePermissionTo(Permission::findOrCreate('View:ManageHomepage', 'web'));
 

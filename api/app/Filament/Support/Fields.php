@@ -18,6 +18,21 @@ use Filament\Schemas\Components\Utilities\Set;
 
 class Fields
 {
+    /**
+     * The public disk is served straight out of the web root, where nginx hands
+     * anything ending in .php to the interpreter, so every upload field that
+     * writes there must name the types it accepts.
+     *
+     * @var array<int, string>
+     */
+    public const DOCUMENT_TYPES = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ];
+
     public static function itemLabel(string $field): Closure
     {
         return function (array $state) use ($field): ?string {
@@ -131,13 +146,7 @@ class Fields
             ->disk('public')
             ->directory(fn (): string => "uploads/{$model}/".now()->format('Y/m'))
             ->visibility('public')
-            ->acceptedFileTypes([
-                'application/pdf',
-                'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            ])
+            ->acceptedFileTypes(self::DOCUMENT_TYPES)
             ->downloadable()
             ->maxSize(20480);
     }

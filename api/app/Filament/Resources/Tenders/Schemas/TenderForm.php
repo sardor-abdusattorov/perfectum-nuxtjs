@@ -51,6 +51,7 @@ class TenderForm
                             ->disk('public')
                             ->directory(fn () => 'uploads/tenders/'.now()->format('Y/m'))
                             ->visibility('public')
+                            ->acceptedFileTypes(Fields::DOCUMENT_TYPES)
                             ->multiple()
                             ->downloadable()
                             ->reorderable()

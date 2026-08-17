@@ -11,9 +11,12 @@ use App\Filament\Pages\Homepage\HeroTab;
 use App\Filament\Pages\Homepage\MarqueeTab;
 use App\Filament\Pages\Homepage\TariffsTab;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class ManageHomepage extends ManageBlocks
 {
+    use HasPageShield;
+
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-home';
 
     protected static ?string $slug = 'homepage';

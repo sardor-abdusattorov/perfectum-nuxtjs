@@ -28,6 +28,7 @@ class TariffFileForm
                             ->disk('public')
                             ->directory(fn (): string => 'uploads/tariff-files/'.now()->format('Y/m'))
                             ->visibility('public')
+                            ->acceptedFileTypes(Fields::DOCUMENT_TYPES)
                             ->downloadable()
                             ->maxSize(20480)
                             ->required(),

@@ -22,8 +22,6 @@ class NewsController
             ->with('category')
             ->forNetwork($this->network($request))
             ->inCategory($request->query('category'))
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now())
             ->orderByDesc('is_featured')
             ->orderByDesc('published_at');
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Enums\PageKey;
 use App\Filament\Pages\ManageCdma;
 use App\Models\ContentBlock;
-use App\Models\User;
 use Database\Seeders\CdmaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -16,7 +15,7 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->withoutVite();
 
-    $this->admin = User::factory()->create();
+    $this->admin = panelUser(['View:ManageCdma']);
     $this->admin->givePermissionTo(Permission::findOrCreate('View:ManageCdma', 'web'));
     $this->admin->refresh();
 });

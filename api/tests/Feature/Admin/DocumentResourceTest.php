@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Filament\Resources\Documents\Pages\CreateDocument;
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +16,7 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->withoutVite();
 
-    $this->admin = User::factory()->create();
+    $this->admin = panelUser();
 
     foreach (['ViewAny', 'View', 'Create', 'Update'] as $verb) {
         $this->admin->givePermissionTo(Permission::findOrCreate("{$verb}:Document", 'web'));

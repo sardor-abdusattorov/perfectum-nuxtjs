@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Filament\Resources\ApplicationThemes\Pages\ListApplicationThemes;
 use App\Models\Application;
 use App\Models\ApplicationTheme;
-use App\Models\User;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +16,7 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->withoutVite();
 
-    $this->admin = User::factory()->create();
+    $this->admin = panelUser();
 
     foreach (['ViewAny', 'View', 'Create', 'Update', 'Delete', 'DeleteAny'] as $verb) {
         $this->admin->givePermissionTo(Permission::findOrCreate("{$verb}:ApplicationTheme", 'web'));

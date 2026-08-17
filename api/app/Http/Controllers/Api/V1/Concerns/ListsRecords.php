@@ -20,7 +20,7 @@ trait ListsRecords
      */
     protected function paginate(Builder $query, Request $request, array $searchable = []): LengthAwarePaginator
     {
-        $search = trim((string) $request->query('search', ''));
+        $search = $this->searchTerm($request);
 
         return $query
             ->when($searchable !== [] && $search !== '', function (Builder $builder) use ($searchable, $search): void {
@@ -37,6 +37,17 @@ trait ListsRecords
     protected function network(Request $request): ?Network
     {
         return Network::tryFrom((string) $request->query('network', ''));
+    }
+
+    /**
+     * `%` and `_` are LIKE wildcards: left as they are, a single character
+     * would ask the database to scan every row of every searchable column.
+     */
+    private function searchTerm(Request $request): string
+    {
+        $search = trim(mb_substr((string) $request->query('search', ''), 0, 100));
+
+        return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $search);
     }
 
     private function perPage(Request $request): int

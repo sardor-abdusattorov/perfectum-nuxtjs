@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /*
@@ -44,7 +47,22 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * Reaching the panel takes a role, and every resource inside it takes its own
+ * permission, so a test that exercises one resource asks for panel entry here
+ * and grants itself just that resource's permissions.
+ */
+function panelUser(array $permissions = []): User
 {
-    // ..
+    $user = User::factory()->create();
+
+    $user->assignRole(Role::findOrCreate('panel_user', 'web'));
+
+    foreach ($permissions as $permission) {
+        $user->givePermissionTo(Permission::findOrCreate($permission, 'web'));
+    }
+
+    app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+    return $user->refresh();
 }

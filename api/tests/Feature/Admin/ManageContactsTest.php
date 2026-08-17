@@ -8,7 +8,6 @@ use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Filament\Pages\ManageContacts;
 use App\Models\ContentBlock;
-use App\Models\User;
 use Database\Seeders\ContactsSeeder;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +19,7 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->withoutVite();
 
-    $this->admin = User::factory()->create();
+    $this->admin = panelUser(['View:ManageContacts']);
     $this->admin->givePermissionTo(Permission::findOrCreate('View:ManageContacts', 'web'));
     $this->admin->refresh();
 });

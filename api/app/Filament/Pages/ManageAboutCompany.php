@@ -8,9 +8,12 @@ use App\Filament\Pages\AboutCompany\StatsTab;
 use App\Filament\Pages\AboutCompany\TimelineTab;
 use App\Filament\Pages\Blocks\ManageBlocks;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class ManageAboutCompany extends ManageBlocks
 {
+    use HasPageShield;
+
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $slug = 'about-company';

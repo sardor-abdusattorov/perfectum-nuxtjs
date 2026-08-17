@@ -6,9 +6,12 @@ use App\Filament\Pages\Blocks\ManageBlocks;
 use App\Filament\Pages\CdmaConnect\ArticleTab;
 use App\Filament\Pages\CdmaConnect\HeroTab;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class ManageCdmaConnect extends ManageBlocks
 {
+    use HasPageShield;
+
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-signal';
 
     protected static ?string $slug = 'cdma-connect';

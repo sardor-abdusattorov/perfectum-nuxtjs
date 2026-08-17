@@ -6,7 +6,6 @@ use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Filament\Pages\ManageCdmaConnect;
 use App\Models\ContentBlock;
-use App\Models\User;
 use Database\Seeders\CdmaConnectSeeder;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +17,7 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->withoutVite();
 
-    $this->admin = User::factory()->create();
+    $this->admin = panelUser(['View:ManageCdmaConnect']);
     $this->admin->givePermissionTo(Permission::findOrCreate('View:ManageCdmaConnect', 'web'));
     $this->admin->refresh();
 });

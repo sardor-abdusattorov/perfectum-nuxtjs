@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Models\Settings as SettingsModel;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
@@ -18,6 +19,7 @@ use Filament\Schemas\Schema;
 
 class Settings extends Page implements HasForms
 {
+    use HasPageShield;
     use InteractsWithFormActions;
     use InteractsWithForms;
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Enums\PageKey;
 use App\Models\PageSettings;
 use App\Models\TariffCategory;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
 
@@ -16,7 +15,7 @@ beforeEach(function (): void {
 });
 
 it('renders the list and create page of every resource', function (string $resource, string $model): void {
-    $user = User::factory()->create();
+    $user = panelUser();
 
     foreach (['ViewAny', 'View', 'Create', 'Update'] as $verb) {
         $user->givePermissionTo(Permission::findOrCreate("{$verb}:{$model}", 'web'));
@@ -63,7 +62,7 @@ it('renders the list and create page of every resource', function (string $resou
 ]);
 
 it('opens the edit page of a page settings row', function (): void {
-    $user = User::factory()->create();
+    $user = panelUser();
 
     foreach (['ViewAny', 'View', 'Create', 'Update'] as $verb) {
         $user->givePermissionTo(Permission::findOrCreate("{$verb}:PageSettings", 'web'));

@@ -15,7 +15,7 @@ beforeEach(function (): void {
 
 function socialsAdmin(): User
 {
-    $user = User::factory()->create();
+    $user = panelUser();
 
     foreach (['ViewAny:Social', 'View:Social', 'Create:Social', 'Update:Social'] as $permission) {
         $user->givePermissionTo(Permission::findOrCreate($permission, 'web'));

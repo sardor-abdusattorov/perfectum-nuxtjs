@@ -8,6 +8,7 @@ use App\Models\Concerns\CleansUpAttachedFiles;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
@@ -65,6 +66,19 @@ class News extends Model
                     ->update(['is_featured' => false]);
             }
         });
+    }
+
+    /**
+     * An editor holds a record back by dating it forward, so until that moment
+     * it is off the site entirely — the feed skips it and its own page is a 404
+     * rather than a guessable preview of an embargoed announcement.
+     */
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query
+            ->where('status', true)
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
     public static function categoryModel(): string

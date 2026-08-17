@@ -7,9 +7,12 @@ use App\Filament\Pages\Cdma\CtaTab;
 use App\Filament\Pages\Cdma\HeroTab;
 use App\Filament\Pages\Cdma\SupportTab;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class ManageCdma extends ManageBlocks
 {
+    use HasPageShield;
+
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-radio';
 
     protected static ?string $slug = 'cdma';

@@ -18,7 +18,7 @@ beforeEach(function (): void {
 
 function admin(string $subject): User
 {
-    $user = User::factory()->create();
+    $user = panelUser();
 
     foreach (['ViewAny', 'View', 'Create', 'Update'] as $ability) {
         $user->givePermissionTo(Permission::findOrCreate("{$ability}:{$subject}", 'web'));

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Models\Application;
-use App\Models\User;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -15,7 +14,7 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->withoutVite();
 
-    $this->admin = User::factory()->create();
+    $this->admin = panelUser();
 
     foreach (['ViewAny', 'View'] as $verb) {
         $this->admin->givePermissionTo(Permission::findOrCreate("{$verb}:Application", 'web'));
