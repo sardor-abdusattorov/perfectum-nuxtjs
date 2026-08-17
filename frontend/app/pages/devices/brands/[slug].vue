@@ -1,19 +1,33 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-useSeo({ titleKey: 'seo.devices' })
+const route = useRoute()
+const t = useT()
 
-const models = [
-  'AMGOO CX8R',
-  'AMGOO AM88',
-  'AMGOO AM89',
-  'AMGOO AM409',
-  'AMGOO AM415',
-  'AMGOO AM528',
-]
+const slug = computed(() => String(route.params.slug ?? ''))
 
-function deviceLink(model: string): string {
-  return localePath(`/devices/${model.toLowerCase().replace(/\s+/g, '-')}`)
+const { data: catalog } = await useDeviceCatalog()
+const tabs = useDeviceTabs(catalog)
+
+const models = computed(() => (
+  (catalog.value?.devices ?? []).filter(device => device.brand && brandSlug(device.brand) === slug.value)
+))
+
+const brand = computed(() => (
+  models.value[0]?.brand ?? slug.value.replace(/-/g, ' ').toUpperCase()
+))
+
+const network = computed(() => models.value[0]?.category?.network ?? 'cdma')
+const activeTab = computed(() => String(models.value[0]?.category?.id ?? ''))
+
+useSeo({ title: () => brand.value })
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
+
+const heroTitle = computed(() => t('devices.hero_brand_title').replace('{brand}', escapeHtml(brand.value)))
+const heroSubtitle = computed(() => t('devices.hero_brand_subtitle').replace('{brand}', brand.value))
+const modelsCount = computed(() => t('devices.models_count').replace('{n}', String(models.value.length)))
 </script>
 
 <template>
@@ -21,26 +35,24 @@ function deviceLink(model: string): string {
   <section class="page-hero page-hero_inner page-hero_devices">
       <div class="container">
           <div class="page-hero__inner">
-              <nav class="page-hero__crumbs" aria-label="Хлебные крошки">
-                  <NuxtLink class="page-hero__crumb" :to="localePath('/')">Главная</NuxtLink>
+              <nav class="page-hero__crumbs" :aria-label="t('common.breadcrumbs')">
+                  <NuxtLink class="page-hero__crumb" :to="localePath('/')">{{ t('common.home') }}</NuxtLink>
                   <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                       fill="none" aria-hidden="true">
                       <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
                           stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <NuxtLink class="page-hero__crumb" :to="localePath('/devices')">Устройства</NuxtLink>
+                  <NuxtLink class="page-hero__crumb" :to="localePath('/devices')">{{ t('seo.devices') }}</NuxtLink>
                   <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                       fill="none" aria-hidden="true">
                       <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
                           stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">AMGOO</span>
+                  <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">{{ brand }}</span>
               </nav>
-              <p class="page-hero__eyebrow page-hero__eyebrow_silver">Каталог устройств</p>
-              <h1 class="page-hero__title section__title">Устройства<br /><span
-                      class="page-hero__title-red">AMGOO</span></h1>
-              <p class="page-hero__subtitle">Модели AMGOO, проверенные и официально подтверждённые для работы
-                  в сети Perfectum.</p>
+              <p class="page-hero__eyebrow page-hero__eyebrow_silver">{{ t('seo.devices') }}</p>
+              <h1 class="page-hero__title section__title" v-html="heroTitle"></h1>
+              <p class="page-hero__subtitle">{{ heroSubtitle }}</p>
           </div>
       </div>
   </section>
@@ -48,63 +60,32 @@ function deviceLink(model: string): string {
   <!-- BRAND DEVICES -->
   <section class="devices">
       <div class="container">
-          <div class="filter-search">
-              <div class="filter-search__chips" role="tablist" aria-label="Категории устройств">
-                  <button type="button" class="filter-search__chip filter-search__chip_active" role="tab" aria-selected="true">Устройства CDMA <span class="filter-search__chip-count">22</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Устройства 5G SA <span class="filter-search__chip-count">3</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Роутеры <span class="filter-search__chip-count">3</span></button>
-                  <button type="button" class="filter-search__chip" role="tab" aria-selected="false">Сегодня в продаже <span class="filter-search__chip-count">3</span></button>
-              </div>
-          </div>
+          <DeviceChips :tabs="tabs" :active="activeTab" linked />
 
           <div class="callout">
-              <p><b>Устройства для сети CDMA.</b> Телефоны и модемы, проверенные на совместимость с сетью
-                  Perfectum CDMA. Устройства других производителей могут не поддерживать частоты сети —
-                  перед покупкой сверьтесь со списком.</p>
+              <p v-html="t(network === 'cdma' ? 'devices.callout_cdma' : 'devices.callout_5g')"></p>
           </div>
 
           <div class="brand-head">
-              <NuxtLink class="brand-head__back" :to="localePath('/devices')" aria-label="Все бренды">
+              <NuxtLink class="brand-head__back" :to="localePath('/devices')"
+                  :aria-label="t('devices.all_brands')">
                   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M20 12H6M12 6l-6 6 6 6" stroke="currentColor" stroke-width="1.6"
                           stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
               </NuxtLink>
-              <h2 class="brand-head__title">AMGOO</h2>
-              <span class="brand-head__count">6 моделей</span>
+              <h2 class="brand-head__title">{{ brand }}</h2>
+              <span class="brand-head__count">{{ modelsCount }}</span>
           </div>
 
-          <ul class="device-grid">
-              <li v-for="model in models" :key="model" class="device-card">
-                  <div class="device-card__media">
-                      <svg class="device-card__silhouette" viewBox="0 0 64 64" fill="none"
-                          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                          <rect x="19" y="5" width="26" height="54" rx="6" stroke="currentColor"
-                              stroke-width="2.4" />
-                          <rect x="24" y="11" width="16" height="13" rx="2" stroke="currentColor"
-                              stroke-width="2" />
-                          <circle cx="26" cy="31" r="1.7" fill="currentColor" />
-                          <circle cx="32" cy="31" r="1.7" fill="currentColor" />
-                          <circle cx="38" cy="31" r="1.7" fill="currentColor" />
-                          <circle cx="26" cy="36" r="1.7" fill="currentColor" />
-                          <circle cx="32" cy="36" r="1.7" fill="currentColor" />
-                          <circle cx="38" cy="36" r="1.7" fill="currentColor" />
-                          <circle cx="26" cy="41" r="1.7" fill="currentColor" />
-                          <circle cx="32" cy="41" r="1.7" fill="currentColor" />
-                          <circle cx="38" cy="41" r="1.7" fill="currentColor" />
-                          <circle cx="26" cy="46" r="1.7" fill="currentColor" />
-                          <circle cx="32" cy="46" r="1.7" fill="currentColor" />
-                          <circle cx="38" cy="46" r="1.7" fill="currentColor" />
-                      </svg>
-                  </div>
-                  <p class="device-card__label">Модель</p>
-                  <h3 class="device-card__name">{{ model }}</h3>
-                  <NuxtLink class="device-card__link" :to="deviceLink(model)" :aria-label="`Модель ${model}`" />
-              </li>
+          <ul v-if="models.length" class="device-grid">
+              <DeviceCard v-for="device in models" :key="device.slug" :device="device"
+                  :label="t('devices.model')" />
           </ul>
 
-          <p class="devices__note">Список моделей пополняется по мере сертификации устройств в сети
-              Perfectum.</p>
+          <p v-else class="devices__note">{{ t('devices.empty') }}</p>
+
+          <p v-if="models.length" class="devices__note">{{ t('devices.note_brand') }}</p>
       </div>
   </section>
 </template>

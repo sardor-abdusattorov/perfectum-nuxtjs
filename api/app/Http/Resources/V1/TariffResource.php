@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\V1\Concerns\TranslatesRepeaterRows;
 use App\Models\Tariff;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,6 +14,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class TariffResource extends JsonResource
 {
+    use TranslatesRepeaterRows;
+
     public static $wrap = null;
 
     /**
@@ -34,38 +37,6 @@ class TariffResource extends JsonResource
             'category' => CategoryResource::make($this->whenLoaded('category')),
             'type' => CategoryResource::make($this->whenLoaded('type')),
         ];
-    }
-
-    private function translate(mixed $value): string
-    {
-        if (! is_array($value)) {
-            return (string) $value;
-        }
-
-        return $value[app()->getLocale()]
-            ?? $value[config('app.fallback_locale')]
-            ?? (string) (collect($value)->first(fn ($item): bool => filled($item)) ?? '');
-    }
-
-    /**
-     * Repeater rows keep one value per locale, so every listed field is
-     * resolved down to the requested one before the row leaves the API.
-     *
-     * @param  array<int, array<string, mixed>>|null  $rows
-     * @param  array<int, string>  $fields
-     * @return array<int, array<string, mixed>>
-     */
-    private function rows(?array $rows, array $fields): array
-    {
-        return collect($rows ?? [])
-            ->map(function (array $row) use ($fields): array {
-                foreach ($fields as $field) {
-                    $row[$field] = $this->translate($row[$field] ?? null);
-                }
-
-                return $row;
-            })
-            ->all();
     }
 
     /**

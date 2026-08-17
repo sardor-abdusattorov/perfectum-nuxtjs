@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             CdmaSeeder::class,
             DocumentSeeder::class,
             CoverageSeeder::class,
+            DeviceSeeder::class,
         ]);
     }
 }

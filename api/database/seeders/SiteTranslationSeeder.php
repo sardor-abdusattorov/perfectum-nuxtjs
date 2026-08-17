@@ -265,6 +265,51 @@ class SiteTranslationSeeder extends Seeder
             'coverage.address_clear' => ['ru' => 'Очистить', 'uz' => 'Tozalash'],
             'coverage.address_not_found' => ['ru' => 'Адрес не найден. Уточните улицу и город.', 'uz' => 'Manzil topilmadi. Koʻcha va shaharni aniqlashtiring.'],
 
+            'devices.hero_eyebrow' => ['ru' => 'Проверка совместимости', 'uz' => 'Moslikni tekshirish'],
+            'devices.hero_title' => [
+                'ru' => 'Каталог<br /><span class="page-hero__title-red">устройств</span>',
+                'uz' => 'Qurilmalar<br /><span class="page-hero__title-red">katalogi</span>',
+            ],
+            'devices.hero_subtitle' => [
+                'ru' => 'Роутеры для домашнего интернета 5G SA и список смартфонов, уже получивших поддержку сети 5G Standalone.',
+                'uz' => '5G SA uy interneti uchun routerlar va 5G Standalone tarmogʻini qoʻllab-quvvatlaydigan smartfonlar roʻyxati.',
+            ],
+            'devices.hero_brand_title' => [
+                'ru' => 'Устройства<br /><span class="page-hero__title-red">{brand}</span>',
+                'uz' => '{brand}<br /><span class="page-hero__title-red">qurilmalari</span>',
+            ],
+            'devices.hero_brand_subtitle' => [
+                'ru' => 'Модели {brand}, проверенные и официально подтверждённые для работы в сети Perfectum.',
+                'uz' => 'Perfectum tarmogʻida ishlashi tekshirilgan va tasdiqlangan {brand} modellari.',
+            ],
+            'devices.tabs_label' => ['ru' => 'Категории устройств', 'uz' => 'Qurilma toifalari'],
+            'devices.in_stock' => ['ru' => 'Сегодня в продаже', 'uz' => 'Bugun sotuvda'],
+            'devices.callout_5g' => [
+                'ru' => '<b>Устройства для сети 5G Standalone (5G SA).</b> 5G SA — наша текущая технология, первая полностью самостоятельная сеть 5-го поколения в Центральной Азии. В отличие от CDMA, для подключения подходит большинство современных смартфонов с поддержкой 5G — отдельная проверка совместимости, как правило, не требуется.',
+                'uz' => '<b>5G Standalone (5G SA) tarmogʻi uchun qurilmalar.</b> 5G SA — bizning joriy texnologiyamiz, Markaziy Osiyodagi birinchi toʻliq mustaqil 5-avlod tarmogʻi. CDMAdan farqli oʻlaroq, ulanish uchun 5G-ni qoʻllab-quvvatlaydigan zamonaviy smartfonlarning aksariyati mos keladi — alohida moslik tekshiruvi odatda talab qilinmaydi.',
+            ],
+            'devices.callout_cdma' => [
+                'ru' => '<b>Устройства для сети CDMA.</b> Телефоны и модемы, проверенные на совместимость с сетью Perfectum CDMA. Устройства других производителей могут не поддерживать частоты сети — перед покупкой сверьтесь со списком.',
+                'uz' => '<b>CDMA tarmogʻi uchun qurilmalar.</b> Perfectum CDMA tarmogʻiga mosligi tekshirilgan telefonlar va modemlar. Boshqa ishlab chiqaruvchilarning qurilmalari tarmoq chastotalarini qoʻllab-quvvatlamasligi mumkin — xarid oldidan roʻyxat bilan solishtiring.',
+            ],
+            'devices.model' => ['ru' => 'Модель', 'uz' => 'Model'],
+            'devices.models_count' => ['ru' => 'Моделей: {n}', 'uz' => 'Modellar: {n}'],
+            'devices.all_brands' => ['ru' => 'Все бренды', 'uz' => 'Barcha brendlar'],
+            'devices.note' => [
+                'ru' => 'Список протестированных и официально подтверждённых моделей будет дополняться по мере расширения сети 5G SA.',
+                'uz' => 'Sinovdan oʻtgan va rasman tasdiqlangan modellar roʻyxati 5G SA tarmogʻi kengaygan sari toʻldirib boriladi.',
+            ],
+            'devices.note_brand' => [
+                'ru' => 'Список моделей пополняется по мере сертификации устройств в сети Perfectum.',
+                'uz' => 'Modellar roʻyxati qurilmalar Perfectum tarmogʻida sertifikatlanishi bilan toʻldiriladi.',
+            ],
+            'devices.empty' => ['ru' => 'Устройства не найдены', 'uz' => 'Qurilmalar topilmadi'],
+            'devices.buy' => ['ru' => 'Купить', 'uz' => 'Sotib olish'],
+            'devices.installment' => ['ru' => 'Рассрочка', 'uz' => 'Boʻlib toʻlash'],
+            'devices.specs_title' => ['ru' => 'Характеристики', 'uz' => 'Texnik xususiyatlar'],
+            'devices.currency' => ['ru' => 'сум', 'uz' => 'soʻm'],
+            'devices.pager_label' => ['ru' => 'Другие устройства', 'uz' => 'Boshqa qurilmalar'],
+
             'seo.about' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida'],
             'seo.actions' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'seo.action' => ['ru' => 'Акция', 'uz' => 'Aksiya'],
