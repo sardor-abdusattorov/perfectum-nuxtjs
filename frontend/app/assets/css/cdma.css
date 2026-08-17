@@ -35,11 +35,11 @@
 :root {
   --cdma-orange: #ec5901;
   --cdma-cream: #fbf7ef;
-  --cdma-muted: #93918b;
+  --cdma-muted: #726f68;
   --cdma-border: #e2e2e2;
   --cdma-tint: #fceaea;
   --cdma-track: #f5f5f5;
-  --cdma-date: #737373;
+  --cdma-date: #6f6f6f;
   --cdma-text: #3a3a3a;
 }
 
@@ -285,7 +285,7 @@
   line-height: 21px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: var(--radius-pill);
   margin-bottom: 16px;
@@ -303,7 +303,7 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .cdma-tariff-card .cdma-tariff-card__list {
@@ -389,7 +389,7 @@
   justify-content: center;
   width: 46px;
   height: 46px;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: 12px;
 }
@@ -430,7 +430,7 @@
   padding: 3px 12px;
   font-size: 14px;
   line-height: 21px;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: 8px;
 }
@@ -471,7 +471,7 @@
   margin-bottom: 8px;
   font-size: 14px;
   line-height: 17px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .cdma-numbers .cdma-numbers__search {
@@ -542,7 +542,7 @@
 }
 
 .cdma-numbers__accent {
-  color: var(--color-red);
+  color: var(--color-red-ink);
 }
 
 /* the gateway can answer with a hundred rows, so the table scrolls on its own
@@ -564,7 +564,7 @@
 .cdma-numbers__table th {
   padding: 14px 18px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   text-align: center;
   background: var(--cdma-track);
   white-space: nowrap;
@@ -674,7 +674,7 @@
 .cdma-news .cdma-news-card__date {
   font-size: 14px;
   line-height: 33px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   margin-bottom: 16px;
 }
 
@@ -690,7 +690,7 @@
   margin-top: auto;
   font-size: 14px;
   line-height: 33px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 /* ============================================================
@@ -750,7 +750,7 @@
 .cdma-promo .cdma-promo-card__date {
   font-size: 14px;
   line-height: 33px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .cdma-promo .cdma-promo-card__title {
@@ -763,7 +763,7 @@
 .cdma-promo .cdma-promo-card__cat {
   font-size: 14px;
   line-height: 33px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 /* ============================================================
@@ -836,7 +836,7 @@
   justify-content: center;
   width: 46px;
   height: 46px;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: 12px;
 }
@@ -879,7 +879,7 @@
   margin-top: 21px;
   font-size: 14px;
   line-height: 20px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 /* ============================================================
@@ -1226,7 +1226,7 @@
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: var(--radius-pill);
 }
@@ -1298,7 +1298,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .cdma-price .cdma-price__btn {
@@ -1345,7 +1345,7 @@
   justify-content: center;
   width: 46px;
   height: 46px;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: 12px;
 }
@@ -1361,7 +1361,7 @@
   align-self: end;
   font-size: 14px;
   line-height: 20px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .cdma-features .cdma-feature__value {
@@ -1399,7 +1399,7 @@
 .cdma-facts .cdma-fact__label {
   font-size: 16px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .cdma-facts .cdma-fact__value {
@@ -1453,7 +1453,7 @@
   padding: 3px 12px;
   font-size: 14px;
   line-height: 21px;
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: var(--cdma-tint);
   border-radius: 8px;
 }
@@ -1564,7 +1564,7 @@
   padding: 0 20px;
   font-size: 14px;
   color: var(--color-white);
-  background: #3f8f5f;
+  background: #2f7a4c;
   border-radius: var(--radius-pill);
 }
 
@@ -1648,7 +1648,7 @@
 
 .cdma-footer .cdma-footer__back {
   display: flex;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   transition: var(--transition);
 }
 
@@ -1665,7 +1665,7 @@
   font-size: 16px;
   line-height: 24px;
   white-space: nowrap;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   transition: var(--transition);
 }
 
@@ -1677,7 +1677,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: right;
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-muted);
 }
 
 /* ============================================================

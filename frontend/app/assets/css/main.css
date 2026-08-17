@@ -1263,7 +1263,7 @@ strong {
 }
 
 .page-hero .page-hero__eyebrow {
-  color: var(--color-red);
+  color: var(--color-red-glow);
   font-size: 18px;
   font-weight: 500;
   line-height: normal;
@@ -1530,7 +1530,7 @@ strong {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--color-muted);
 }
 
 .select {
@@ -1564,7 +1564,7 @@ strong {
   width: 16px;
   height: 16px;
   transform: translateY(-50%);
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   pointer-events: none;
 }
 
@@ -1591,7 +1591,7 @@ strong {
 
 .field__input::placeholder,
 .field__textarea::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-muted);
 }
 
 .field__input:focus,
@@ -1655,7 +1655,7 @@ strong {
 }
 
 .filter-search__input::placeholder {
-  color: rgba(0, 0, 0, 0.44);
+  color: var(--color-muted);
 }
 
 .filter-search__input:focus {
@@ -1675,7 +1675,7 @@ strong {
   height: 24px;
   padding: 0;
   transform: translateY(-50%);
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-muted);
   background: none;
   border: 0;
   cursor: pointer;
@@ -2156,7 +2156,7 @@ strong {
   font-size: 16px;
   line-height: normal;
   text-align: center;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   background: #f4f4f4;
 }
 
@@ -3763,7 +3763,7 @@ strong {
 .numbers .numbers__toggle-text {
   font-size: 18px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.44);
+  color: var(--color-muted);
   transition: var(--transition);
 }
 
@@ -3907,7 +3907,7 @@ strong {
   text-align: center;
   padding: 40px 0;
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.44);
+  color: var(--color-muted);
 }
 
 .numbers .numbers__pager[hidden] {
@@ -4593,7 +4593,7 @@ body.overflow__hidden {
 
 .tariff-modal .tariff-modal__price-period {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .tariff-modal .tariff-modal__heading {
@@ -4788,7 +4788,7 @@ body.overflow__hidden {
   box-sizing: border-box;
 }
 .offices-filter__search-input::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-muted);
 }
 .offices-filter__search-input:focus {
   outline: none;
@@ -4863,7 +4863,7 @@ body.overflow__hidden {
 }
 .offices-filter__hint {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 .offices-filter__stats {
   display: grid;
@@ -5062,12 +5062,12 @@ body.overflow__hidden {
 .offices-filter__suggest-address {
   margin-top: 2px;
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 .offices-filter__suggest-empty {
   padding: 14px 16px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 /* ==========================================================
@@ -5216,7 +5216,7 @@ body.overflow__hidden {
 
 .service-card__cat {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .service-card__arrow {
@@ -5321,7 +5321,7 @@ body.overflow__hidden {
 
 .devices__note {
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 /* ==========================================================
@@ -5437,7 +5437,7 @@ body.overflow__hidden {
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--color-muted);
 }
 
 .device-card__name {
@@ -5520,7 +5520,7 @@ body.overflow__hidden {
   margin-top: 16px;
   font-size: 16px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .device-view .device-view__price {
@@ -5611,7 +5611,7 @@ body.overflow__hidden {
 .spec-list .spec-list__term {
   font-size: 16px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .spec-list .spec-list__value {
@@ -5947,7 +5947,7 @@ body.overflow__hidden {
 }
 
 .article__cat_red {
-  color: var(--color-red);
+  color: var(--color-red-ink);
   background: rgba(230, 0, 0, 0.08);
 }
 
@@ -6045,7 +6045,7 @@ body.overflow__hidden {
 
 .article__meta-status {
   font-size: 15px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .article__body h2,
@@ -6106,7 +6106,7 @@ body.overflow__hidden {
   align-items: center;
   gap: 10px;
   font-size: 15px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   margin-bottom: 32px;
 }
 
@@ -6208,7 +6208,7 @@ body.overflow__hidden {
   margin-bottom: 20px;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .news-feature__text {
@@ -6332,7 +6332,7 @@ body.overflow__hidden {
   margin-bottom: 14px;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.44);
+  color: var(--color-muted);
 }
 
 .news-card__title {
@@ -6463,7 +6463,7 @@ body.overflow__hidden {
 .coverage__empty {
   margin-top: 20px;
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 /* the bar carries a shadow and a 56px gap under it, so the miss sits in that
@@ -6536,7 +6536,7 @@ body.overflow__hidden {
   flex: 0 0 auto;
   width: 24px;
   height: 24px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
   transition: var(--transition);
 }
 
@@ -6561,7 +6561,7 @@ body.overflow__hidden {
 }
 
 .coverage-search__input::placeholder {
-  color: rgba(0, 0, 0, 0.44);
+  color: var(--color-muted);
 }
 
 .coverage-search__input:focus {
@@ -6631,7 +6631,7 @@ body.overflow__hidden {
   font-weight: 500;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .about-intro {
@@ -6759,8 +6759,15 @@ body.overflow__hidden {
   margin-top: 12px;
 }
 
+.contact-card__text a[href^="tel"],
+.contact-card__text a[href^="mailto"] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
 .contact-card__text a[href^="tel"] {
-  color: var(--color-red);
+  color: var(--color-red-ink);
 }
 
 .contact-card__text a[href^="mailto"] {
@@ -6811,7 +6818,7 @@ body.overflow__hidden {
 
 .contacts-note {
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .contacts-note a {
@@ -6872,7 +6879,7 @@ body.overflow__hidden {
 .vac-row .vac-row__tag {
   font-size: 16px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .vac-row .vac-row__arrow {
@@ -7054,7 +7061,7 @@ body.overflow__hidden {
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .doc-list {
@@ -7099,7 +7106,7 @@ body.overflow__hidden {
 .doc-item__size {
   margin-top: 4px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .doc-item__langs {
@@ -7280,7 +7287,7 @@ body.overflow__hidden {
   margin-bottom: 53px;
   font-size: 18px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--color-muted);
 }
 
 .help__nav {
@@ -7451,12 +7458,12 @@ body.overflow__hidden {
 }
 
 .help-numbers__accent {
-  color: var(--color-red);
+  color: var(--color-red-ink);
   font-weight: 600;
 }
 
 .help-numbers__note a {
-  color: var(--color-red);
+  color: var(--color-red-ink);
   text-decoration: underline;
 }
 
@@ -7515,7 +7522,7 @@ body.overflow__hidden {
 .help__counter {
   margin-top: -6px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .help__counter b {
@@ -7541,11 +7548,12 @@ body.overflow__hidden {
 .help__agree {
   font-size: 13px;
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--color-muted);
 }
 
 .help__agree a {
-  color: var(--color-red);
+  color: var(--color-red-ink);
+  text-decoration: underline;
 }
 
 .help__aside-tab {
@@ -10994,7 +11002,7 @@ select {
     font-size: 12px;
     line-height: 12px;
     font-weight: 400;
-    color: var(--color-date);
+    color: var(--color-muted);
   }
   .news-card .news-card__more {
     display: inline-flex;
@@ -11013,7 +11021,7 @@ select {
   }
   .news-feature .news-feature__date {
     font-size: 12px;
-    color: var(--color-date);
+    color: var(--color-muted);
   }
   .news-feature .news-feature__link {
     font-size: 12px;
@@ -11076,7 +11084,7 @@ select {
     font-size: 12px;
     line-height: 12px;
     font-weight: 400;
-    color: var(--color-date);
+    color: var(--color-muted);
   }
   .promo-card .promo-card__arrow {
     width: 32px;

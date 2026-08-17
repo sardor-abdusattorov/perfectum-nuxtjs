@@ -10,6 +10,17 @@ import type { ShallowRef } from 'vue'
 const MODULES = [A11y, Autoplay, FreeMode, Navigation, Pagination, Scrollbar]
 
 /**
+ * A track written as a `<ul>` may only hold list items, so Swiper's own
+ * `role="group"` on each slide makes that markup invalid — and a `listitem`
+ * outside a list is just as wrong, which is why the track decides.
+ */
+function slideRole(track: Element | null): Pick<SwiperOptions, 'a11y'> {
+  return track?.tagName === 'UL' || track?.tagName === 'OL'
+    ? { a11y: { slideRole: 'listitem' } }
+    : {}
+}
+
+/**
  * The slides come from the API and change whenever a tab or a chip is clicked,
  * so the slider is owned by the component that renders them: a plugin that
  * queried the DOM once left the arrows pointing at slides that no longer
@@ -24,7 +35,11 @@ export function useSlider(
 
   onMounted(() => {
     if (element.value) {
-      slider = new Swiper(element.value, { modules: MODULES, ...options })
+      slider = new Swiper(element.value, {
+        modules: MODULES,
+        ...slideRole(element.value.querySelector('.swiper-wrapper')),
+        ...options,
+      })
     }
   })
 

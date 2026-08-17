@@ -16,11 +16,16 @@ export default defineNuxtPlugin(nuxtApp => {
         options.headers.set('X-Locale', value)
       }
     },
+    /**
+     * Every caller handles its own failure and says so on the page, so these
+     * lines are a trail for whoever is looking — a warning, not an error the
+     * browser had to swallow.
+     */
     onRequestError({ request, error }) {
-      console.error(`[api] ${import.meta.server ? 'SSR' : 'браузер'} не достучался до ${request}: ${error.message}`)
+      console.warn(`[api] ${import.meta.server ? 'SSR' : 'браузер'} не достучался до ${request}: ${error.message}`)
     },
     onResponseError({ request, response }) {
-      console.error(`[api] ${request} ответил ${response.status}`)
+      console.warn(`[api] ${request} ответил ${response.status}`)
     },
   })
 

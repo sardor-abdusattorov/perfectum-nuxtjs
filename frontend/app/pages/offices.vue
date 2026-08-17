@@ -266,14 +266,15 @@ function locate(): void {
       </div>
 
       <div class="offices__list">
-        <ul v-if="shown.length" class="offices__grid">
+        <ul v-if="shown.length" class="offices__grid" role="listbox" :aria-label="t('offices.title')">
           <li
             v-for="office in shown"
             :key="office.id"
             class="office-card"
             :class="[office.type === 'dealer' && 'office-card_dealer', office.id === active && 'office-card_active']"
             tabindex="0"
-            role="button"
+            role="option"
+            :aria-selected="office.id === active"
             @click="select(office.id)"
             @keydown.enter.prevent="select(office.id)"
             @keydown.space.prevent="select(office.id)"

@@ -292,7 +292,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
           <ul class="cdma-promo">
               <li v-for="(item, index) in promos" :key="item.slug" class="cdma-promo-card">
                   <NuxtLink class="cdma-promo-card__cover" :class="PROMO_COVERS[index % PROMO_COVERS.length]"
-                      :to="localePath(`/cdma/actions/${item.slug}`)">{{ item.badge ?? item.title }}</NuxtLink>
+                      :to="localePath(`/cdma/actions/${item.slug}`)">{{ item.badge || item.title }}</NuxtLink>
                   <div class="cdma-promo-card__body">
                       <span class="cdma-promo-card__date">{{ dateLong(item.starts_at) }}</span>
                       <h3 class="cdma-promo-card__title">{{ item.title }}</h3>

@@ -27,7 +27,9 @@
 
   --color-line: rgba(0, 0, 0, 0.1);
   --color-line-light: rgba(255, 255, 255, 0.12);
-  --color-date: #737373;
+  --color-muted: rgba(0, 0, 0, 0.56);
+  --color-red-ink: #d40000;
+  --color-red-glow: #ff3b3b;
 
   --radius: 24px;
   --radius-pill: 80px;
