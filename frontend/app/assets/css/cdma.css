@@ -360,8 +360,7 @@
   box-shadow: 0 2px 12px 0 rgba(87, 96, 141, 0.22);
 }
 
-.cdma-tariff-card .cdma-tariff-card__more:hover,
-.cdma-tariff-card .cdma-tariff-card__more_active {
+.cdma-tariff-card .cdma-tariff-card__more:hover {
   color: var(--color-white);
   background: var(--color-red);
   border-color: var(--color-red);
@@ -916,15 +915,6 @@
   z-index: 1;
 }
 
-.cdma-cta_compact {
-  margin-top: 60px;
-  padding: 67px 0 149px;
-}
-
-.cdma-cta.cdma-cta_compact .cdma-cta__title {
-  margin-top: 0;
-}
-
 .cdma-cta .cdma-cta__kicker {
   display: block;
   font-size: 14px;
@@ -1133,12 +1123,6 @@
   width: 24px;
   height: 24px;
 }
-
-.cdma-dealers .cdma-dealers__table-wrap {
-  overflow-x: auto;
-  border: 1px solid #e1deda;
-  border-radius: var(--radius);
-}
 .cdma-dealers .cdma-dealers__region {
   margin-top: 26px;
   font-size: 40px;
@@ -1146,64 +1130,6 @@
   line-height: 48px;
   color: var(--color-black);
   margin-bottom: 43px;
-}
-
-.cdma-dealers .cdma-dealers__table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.cdma-dealers .cdma-dealers__head {
-  background: var(--cdma-cream);
-}
-
-.cdma-dealers .cdma-dealers__th {
-  height: 64px;
-  padding: 0 20px;
-  font-size: 18px;
-  font-weight: 400;
-  text-align: left;
-  vertical-align: middle;
-  text-transform: uppercase;
-  color: #736f6e;
-}
-
-.cdma-dealers .cdma-dealers__th:first-child,
-.cdma-dealers .cdma-dealers__cell:first-child,
-.cdma-dealers .cdma-dealers__group {
-  padding-left: 40px;
-}
-
-.cdma-dealers .cdma-dealers__row {
-  border-top: 1px solid #e1deda;
-}
-
-.cdma-dealers .cdma-dealers__row_group {
-  background: #fcfaf5;
-}
-
-.cdma-dealers .cdma-dealers__group {
-  height: 48px;
-  padding-right: 20px;
-  font-size: 18px;
-  font-weight: 400;
-  text-align: left;
-  vertical-align: middle;
-  color: var(--color-black);
-}
-
-.cdma-dealers .cdma-dealers__cell {
-  height: 48px;
-  padding: 0 20px;
-  font-size: 18px;
-  line-height: 22px;
-  white-space: nowrap;
-  vertical-align: middle;
-  color: var(--color-black);
-}
-
-.cdma-dealers .cdma-dealers__th {
-  white-space: nowrap;
 }
 
 /* the region's table now comes out of the admin editor as bare tags, so the
@@ -1445,39 +1371,6 @@
   color: var(--color-black);
 }
 
-.cdma-detail .cdma-terms {
-  margin-top: 24px;
-  padding: 24px;
-  background: #fbfbfb;
-  border: 1px solid var(--cdma-border);
-  border-radius: var(--radius);
-}
-
-.cdma-terms .cdma-terms__list {
-  display: flex;
-  flex-direction: column;
-  gap: 19px 0;
-}
-
-.cdma-terms .cdma-terms__item {
-  position: relative;
-  padding-left: 22px;
-  font-size: 16px;
-  line-height: 22px;
-  color: var(--color-black);
-}
-
-.cdma-terms .cdma-terms__item::before {
-  content: "";
-  position: absolute;
-  top: 9px;
-  left: 4px;
-  width: 5px;
-  height: 5px;
-  background: var(--color-black);
-  border-radius: 50%;
-}
-
 /* ============================================================
    19. CDMA SERVICE VIEW
    ============================================================ */
@@ -1570,12 +1463,6 @@
   flex-direction: column;
   gap: 24px 0;
   margin-top: 24px;
-}
-
-.cdma-prose .cdma-prose__p {
-  font-size: 16px;
-  line-height: 26px;
-  color: var(--color-black);
 }
 
 /* The editor content of a wired service arrives as bare tags, so they read
@@ -1728,63 +1615,6 @@
   height: 5px;
   background: var(--color-black);
   border-radius: 50%;
-}
-
-.cdma-article-wrap .cdma-terms {
-  margin-top: 24px;
-  padding: 24px;
-}
-
-.cdma-article-wrap .cdma-terms__list {
-  gap: 4px 0;
-}
-
-.cdma-article-wrap .cdma-terms__item {
-  line-height: 26px;
-}
-
-.cdma-terms .cdma-terms__title {
-  margin-bottom: 24px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 22px;
-  color: var(--color-black);
-}
-
-.cdma-article-wrap .cdma-share {
-  display: flex;
-  align-items: center;
-  gap: 0 9px;
-  margin-top: 29px;
-}
-
-.cdma-share .cdma-share__label {
-  margin-right: 7px;
-  font-size: 14px;
-  line-height: 17px;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.cdma-share .cdma-share__btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 37px;
-  height: 37px;
-  color: var(--color-black);
-  border: 1px solid var(--cdma-border);
-  border-radius: 50%;
-  transition: var(--transition);
-}
-
-.cdma-share .cdma-share__btn:hover {
-  color: var(--color-red);
-  border-color: var(--color-red);
-}
-
-.cdma-share .cdma-share__btn svg {
-  width: 21px;
-  height: 21px;
 }
 
 .cdma-article-wrap .cdma-back {
@@ -1950,164 +1780,6 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
-
-.cdma-connect .cdma-table {
-  margin-bottom: 42px;
-  padding: 20px 20px 16px;
-  background: #fbfbfb;
-  border: 1px solid var(--cdma-border);
-  border-radius: var(--radius);
-}
-
-.cdma-connect .cdma-table__head {
-  margin-bottom: 8px;
-  padding: 15px 20px;
-  font-size: 20px;
-  line-height: 30px;
-  text-align: center;
-  color: var(--color-black);
-  background: #f2f2f2;
-  border-radius: 20px;
-}
-
-.cdma-connect .cdma-table__scroll {
-  overflow-x: auto;
-}
-
-.cdma-connect .cdma-table__grid {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.cdma-connect .cdma-table__col {
-  padding: 15px 20px 15px 34px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 30px;
-  text-align: left;
-  vertical-align: middle;
-  color: var(--color-black);
-  background: #f2f2f2;
-}
-
-.cdma-connect .cdma-table__col:first-child {
-  padding-left: 17px;
-  border-radius: 20px 0 0 20px;
-}
-
-.cdma-connect .cdma-table__col:last-child {
-  border-radius: 0 20px 20px 0;
-}
-
-.cdma-connect .cdma-table__label {
-  width: 305px;
-  padding: 20px 20px 20px 17px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 29px;
-  text-align: left;
-  vertical-align: top;
-  color: var(--color-black);
-  border-right: 1px solid var(--cdma-border);
-  border-bottom: 1px solid var(--cdma-border);
-}
-
-.cdma-connect .cdma-table__grid tr:last-child .cdma-table__label {
-  border-bottom: 0;
-}
-
-.cdma-connect .cdma-table__cell {
-  padding: 20px 20px 20px 34px;
-  font-size: 20px;
-  line-height: 29px;
-  vertical-align: top;
-  color: var(--cdma-text);
-}
-
-.cdma-connect .cdma-table__cell:last-child {
-  padding-right: 44px;
-}
-
-.cdma-connect .cdma-table__grid tr {
-  position: relative;
-}
-
-.cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  right: 44px;
-  bottom: 0;
-  left: 340px;
-  height: 1px;
-  background: var(--cdma-border);
-}
-
-.cdma-connect .cdma-table__cell_time {
-  text-align: right;
-  white-space: nowrap;
-  color: var(--color-red);
-}
-
-.cdma-connect .cdma-table__cell_phone {
-  border-left: 1px solid var(--cdma-border);
-}
-
-.cdma-connect .cdma-table__code {
-  color: var(--cdma-date);
-}
-
-.cdma-connect .cdma-table__time {
-  color: var(--color-red);
-}
-
-.cdma-connect .cdma-table__grid_regions .cdma-table__label,
-.cdma-connect .cdma-table__grid_regions .cdma-table__cell {
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
-
-.cdma-connect .cdma-table__grid_regions .cdma-table__cell {
-  font-size: 18px;
-  line-height: 26px;
-}
-
-.cdma-connect .cdma-table__grid_regions tbody tr:not(:last-child)::after {
-  content: none;
-}
-
-.cdma-connect .cdma-table__grid_regions .cdma-table__cell {
-  border-bottom: 1px solid var(--cdma-border);
-}
-
-.cdma-connect .cdma-table__grid_regions tr:last-child .cdma-table__cell {
-  border-bottom: 0;
-}
-
-.cdma-connect .cdma-table__grid_regions .cdma-table__cell_phone {
-  font-size: 20px;
-  line-height: 29px;
-  vertical-align: middle;
-  border-bottom: 0;
-}
-
-.cdma-connect .cdma-table__grid_price .cdma-table__label,
-.cdma-connect .cdma-table__grid_price .cdma-table__cell {
-  vertical-align: middle;
-}
-
-.cdma-connect .cdma-table__grid_price tbody tr:not(:last-child)::after {
-  content: none;
-}
-
-.cdma-connect .cdma-table__grid_price .cdma-table__cell:last-child {
-  border-bottom: 1px solid var(--cdma-border);
-  border-left: 1px solid var(--cdma-border);
-}
-
-.cdma-connect .cdma-table__grid_price tr:last-child .cdma-table__cell {
-  border-bottom: 0;
-}
-
 /* ============================================================
    23. MEDIA
    Same breakpoints, in the same order, as main.css.
@@ -2156,17 +1828,6 @@
   .cdma-tabs .cdma-tabs__link {
     font-size: 20px;
   }
-  .cdma-connect .cdma-table__head,
-  .cdma-connect .cdma-table__col,
-  .cdma-connect .cdma-table__label,
-  .cdma-connect .cdma-table__cell {
-    font-size: 18px;
-    line-height: 26px;
-  }
-  .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
-    font-size: 16px;
-    line-height: 24px;
-  }
   .cdma-connect .cdma-connect__article p {
     font-size: 18px;
     line-height: 27px;
@@ -2199,12 +1860,6 @@
   .cdma-dealers {
     padding-bottom: 150px;
   }
-  .cdma-connect .cdma-table__label {
-    width: 260px;
-  }
-  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
-    left: 295px;
-  }
 }
 
 @media all and (max-width: 992px) {
@@ -2236,60 +1891,6 @@
   }
   .cdma-connect .cdma-connect__date {
     margin-bottom: 32px;
-  }
-  .cdma-connect .cdma-table {
-    margin-bottom: 32px;
-    padding: 16px 16px 12px;
-    border-radius: 20px;
-  }
-  .cdma-connect .cdma-table__head {
-    padding: 12px 16px;
-    font-size: 16px;
-    line-height: 24px;
-    border-radius: 16px;
-  }
-  .cdma-connect .cdma-table__col {
-    padding: 12px 16px 12px 24px;
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .cdma-connect .cdma-table__col:first-child {
-    padding-left: 13px;
-    border-radius: 16px 0 0 16px;
-  }
-  .cdma-connect .cdma-table__col:last-child {
-    border-radius: 0 16px 16px 0;
-  }
-  .cdma-connect .cdma-table__label {
-    width: 220px;
-    padding: 16px 16px 16px 13px;
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .cdma-connect .cdma-table__cell {
-    padding: 16px 16px 16px 24px;
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .cdma-connect .cdma-table__cell:last-child {
-    padding-right: 24px;
-  }
-  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
-    right: 24px;
-    left: 245px;
-  }
-  .cdma-connect .cdma-table__grid_regions .cdma-table__label,
-  .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .cdma-connect .cdma-table__grid_regions .cdma-table__cell {
-    font-size: 15px;
-    line-height: 22px;
-  }
-  .cdma-connect .cdma-table__grid_regions .cdma-table__cell_phone {
-    font-size: 16px;
-    line-height: 24px;
   }
   .cdma-connect .cdma-connect__article p {
     font-size: 16px;
@@ -2334,18 +1935,6 @@
     margin-bottom: 16px;
     font-size: 20px;
     line-height: 26px;
-  }
-  .cdma-connect .cdma-table {
-    margin-bottom: 24px;
-  }
-  .cdma-connect .cdma-table__grid {
-    min-width: 640px;
-  }
-  .cdma-connect .cdma-table__label {
-    width: 180px;
-  }
-  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
-    left: 205px;
   }
 }
 
@@ -2547,9 +2136,6 @@
     margin-top: 32px;
     font-size: 18px;
   }
-  .cdma-detail .cdma-terms {
-    padding: 16px;
-  }
   .cdma-steps .cdma-step {
     gap: 0 12px;
     padding: 16px;
@@ -2645,12 +2231,10 @@
     padding-top: 24px;
   }
   .cdma-article .cdma-article__body p,
-  .cdma-article .cdma-article__body li,
-  .cdma-detail .cdma-detail__lead,
-  .cdma-prose p,
-  .cdma-prose li,
-  .cdma-prose .cdma-prose__p,
-  .cdma-terms .cdma-terms__item {
+.cdma-article .cdma-article__body li,
+.cdma-detail .cdma-detail__lead,
+.cdma-prose p,
+.cdma-prose li {
     font-size: 14px;
     line-height: 22px;
   }
@@ -2756,10 +2340,6 @@
   .cdma-promo .cdma-promo-card {
     min-height: 209px;
   }
-  .cdma-promo .cdma-promo-card__cover-title {
-    font-size: 32px;
-    line-height: 32px;
-  }
   .cdma-tariff-card {
     min-height: 389px;
   }
@@ -2780,22 +2360,6 @@
     font-size: 12px;
     line-height: 14px;
   }
-  .cdma-connect .cdma-table__grid {
-    min-width: 600px;
-  }
-  .cdma-connect .cdma-table__head,
-  .cdma-connect .cdma-table__col,
-  .cdma-connect .cdma-table__label,
-  .cdma-connect .cdma-table__cell {
-    font-size: 15px;
-    line-height: 22px;
-  }
-  .cdma-connect .cdma-table__label {
-    width: 150px;
-  }
-  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
-    left: 175px;
-  }
   .cdma-connect .cdma-connect__article p {
     padding-bottom: 16px;
     font-size: 14px;
@@ -2809,22 +2373,5 @@
   }
   .cdma-tabs .cdma-tabs__link {
     font-size: 16px;
-  }
-  .cdma-connect .cdma-table {
-    padding: 12px 12px 8px;
-  }
-  .cdma-connect .cdma-table__label {
-    width: 130px;
-    padding: 12px 12px 12px 8px;
-  }
-  .cdma-connect .cdma-table__cell {
-    padding: 12px 12px 12px 16px;
-  }
-  .cdma-connect .cdma-table__cell:last-child {
-    padding-right: 16px;
-  }
-  .cdma-connect .cdma-table__grid tbody tr:not(:last-child)::after {
-    right: 16px;
-    left: 147px;
   }
 }
