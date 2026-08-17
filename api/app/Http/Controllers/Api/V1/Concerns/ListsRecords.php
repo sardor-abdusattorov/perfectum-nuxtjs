@@ -13,7 +13,7 @@ trait ListsRecords
 {
     private const PER_PAGE = 12;
 
-    private const MAX_PER_PAGE = 48;
+    private const MAX_PER_PAGE = 100;
 
     /**
      * @param  array<int, string>  $searchable

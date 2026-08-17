@@ -395,6 +395,12 @@
   border-radius: 12px;
 }
 
+.cdma-service-card .cdma-service-card__icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 .cdma-service-card .cdma-service-card__icon svg {
   width: 24px;
   height: 24px;
@@ -1570,6 +1576,30 @@
   color: var(--color-black);
 }
 
+/* The editor content of a wired service arrives as bare tags, so they read
+   the same as the hand-classed paragraphs of the static mock-up. */
+.cdma-prose p,
+.cdma-prose li {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--color-black);
+}
+
+.cdma-prose ul,
+.cdma-prose ol {
+  display: grid;
+  gap: 8px;
+  padding-left: 24px;
+}
+
+.cdma-prose ul {
+  list-style: disc;
+}
+
+.cdma-prose ol {
+  list-style: decimal;
+}
+
 /* ============================================================
    20. CDMA ARTICLE — ACTION / NEWS
    Both article pages run in a 995px column centred in the grid.
@@ -2615,6 +2645,8 @@
   .cdma-article .cdma-article__body p,
   .cdma-article .cdma-article__body li,
   .cdma-detail .cdma-detail__lead,
+  .cdma-prose p,
+  .cdma-prose li,
   .cdma-prose .cdma-prose__p,
   .cdma-terms .cdma-terms__item {
     font-size: 14px;

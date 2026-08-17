@@ -135,6 +135,7 @@ class SiteTranslationSeeder extends Seeder
             'procurement.files' => ['ru' => 'Документы', 'uz' => 'Hujjatlar'],
 
             'cdma.news_title' => ['ru' => 'Новости', 'uz' => 'Yangiliklar'],
+            'cdma.services_title' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'],
             'cdma.support_title' => ['ru' => 'Поддержка', 'uz' => 'Qoʻllab-quvvatlash'],
             'cdma.promo_title' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'cdma.year' => ['ru' => 'Год', 'uz' => 'Yil'],
@@ -310,6 +311,34 @@ class SiteTranslationSeeder extends Seeder
             'devices.currency' => ['ru' => 'сум', 'uz' => 'soʻm'],
             'devices.pager_label' => ['ru' => 'Другие устройства', 'uz' => 'Boshqa qurilmalar'],
 
+            'services.hero_eyebrow' => ['ru' => 'Каталог сервисов', 'uz' => 'Xizmatlar katalogi'],
+            'services.hero_title' => [
+                'ru' => 'Все <span class="page-hero__title-red">услуги</span><br>в одном месте',
+                'uz' => 'Barcha <span class="page-hero__title-red">xizmatlar</span><br>bir joyda',
+            ],
+            'services.hero_subtitle' => [
+                'ru' => 'Мобильный кабинет, лояльность, дополнительные сервисы и услуги для абонентов домашнего интернета — выберите нужную категорию или найдите услугу по названию.',
+                'uz' => 'Mobil kabinet, sodiqlik dasturi, qoʻshimcha servislar va uy interneti abonentlari uchun xizmatlar — kerakli toifani tanlang yoki xizmatni nomi boʻyicha toping.',
+            ],
+            'services.catalog_heading' => ['ru' => 'Каталог услуг Perfectum', 'uz' => 'Perfectum xizmatlar katalogi'],
+            'services.search_placeholder' => [
+                'ru' => 'Найти услугу: “статический IP”, “баланс”, “роуминг”…',
+                'uz' => 'Xizmat topish: “statik IP”, “balans”, “rouming”…',
+            ],
+            'services.search_label' => ['ru' => 'Поиск по услугам', 'uz' => 'Xizmatlar boʻyicha qidirish'],
+            'services.count' => ['ru' => 'Услуг: {n}', 'uz' => 'Xizmatlar: {n}'],
+            'services.empty' => ['ru' => 'Услуги не найдены', 'uz' => 'Xizmatlar topilmadi'],
+            'services.support_title' => [
+                'ru' => 'Не нашли нужную услугу? Менеджеры поддержки помогут подобрать решение под ваши задачи.',
+                'uz' => 'Kerakli xizmatni topmadingizmi? Qoʻllab-quvvatlash menejerlari vazifangizga mos yechim tanlashga yordam beradi.',
+            ],
+            'services.support_btn' => ['ru' => 'Связаться с поддержкой', 'uz' => 'Qoʻllab-quvvatlash bilan bogʻlanish'],
+            'services.price_label' => ['ru' => 'Стоимость', 'uz' => 'Narxi'],
+            'services.ussd_label' => ['ru' => 'USSD-команда', 'uz' => 'USSD buyrugʻi'],
+            'services.steps_title' => ['ru' => 'Как подключить', 'uz' => 'Qanday ulash mumkin'],
+            'services.description_title' => ['ru' => 'Подробное описание', 'uz' => 'Batafsil tavsif'],
+            'services.all_services' => ['ru' => 'Все услуги', 'uz' => 'Barcha xizmatlar'],
+
             'seo.about' => ['ru' => 'О компании', 'uz' => 'Kompaniya haqida'],
             'seo.actions' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'seo.action' => ['ru' => 'Акция', 'uz' => 'Aksiya'],
@@ -330,6 +359,7 @@ class SiteTranslationSeeder extends Seeder
             'seo.procurement' => ['ru' => 'Закупки', 'uz' => 'Xaridlar'],
             'seo.tender' => ['ru' => 'Закупка', 'uz' => 'Xarid'],
             'seo.services' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'],
+            'seo.service' => ['ru' => 'Услуга', 'uz' => 'Xizmat'],
             'seo.tariffs' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'],
             'seo.tariffs_archive' => ['ru' => 'Архив тарифов', 'uz' => 'Tariflar arxivi'],
             'seo.tariff' => ['ru' => 'Тариф', 'uz' => 'Tarif'],

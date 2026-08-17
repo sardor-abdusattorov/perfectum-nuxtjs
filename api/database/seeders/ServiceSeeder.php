@@ -11,16 +11,27 @@ use Illuminate\Database\Seeder;
 
 class ServiceSeeder extends Seeder
 {
+    /**
+     * The home-internet and 5G SA mobile services belong to the 5G side of
+     * the site; everything else the old site offered is the CDMA legacy.
+     */
+    private const FIVE_G_CATEGORIES = [
+        'uslugi-dlya-domasnego-interneta',
+        'uslugi-mobilnoi-svyazi-5g-sa',
+    ];
+
     public function run(): void
     {
         $data = json_decode((string) file_get_contents(database_path('data/services.json')), true);
 
         $categories = $this->categoriesBySlug();
 
+        $this->assignCategoryNetworks($categories);
+
         foreach ($data['services'] ?? [] as $row) {
             Service::updateOrCreate(['slug' => $row['slug']], [
                 'category_id' => $categories[$row['category']] ?? null,
-                'network' => Network::Cdma,
+                'network' => $this->network($row['category']),
                 'name' => $row['name'],
                 'excerpt' => $row['excerpt'] ?: null,
                 'lead' => $row['lead'] ?: null,
@@ -29,6 +40,21 @@ class ServiceSeeder extends Seeder
                 'sort' => $row['sort'],
                 'status' => true,
             ]);
+        }
+    }
+
+    private function network(string $categorySlug): Network
+    {
+        return in_array($categorySlug, self::FIVE_G_CATEGORIES, true) ? Network::FiveG : Network::Cdma;
+    }
+
+    /**
+     * @param  array<string, int>  $categories
+     */
+    private function assignCategoryNetworks(array $categories): void
+    {
+        foreach ($categories as $slug => $id) {
+            ServiceCategory::query()->whereKey($id)->update(['network' => $this->network($slug)->value]);
         }
     }
 

@@ -5396,6 +5396,12 @@ body.overflow__hidden {
   color: var(--color-red);
 }
 
+.service-card__icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
 .service-card__icon svg {
   width: 26px;
   height: 26px;
@@ -11485,6 +11491,7 @@ select {
     height: 42px;
     margin-bottom: 0;
   }
+  .services .service-card .service-card__icon img,
   .services .service-card .service-card__icon svg {
     width: 22px;
     height: 22px;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\Network;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use Database\Seeders\ServiceSeeder;
 use Database\Seeders\TaxonomySeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,8 +20,14 @@ it('carries every service of the old site into its category', function (): void 
     expect(Service::count())->toBe(65)
         ->and(Service::query()->whereNull('category_id')->count())->toBe(0)
         ->and(Service::query()->published()->count())->toBe(65)
-        ->and(Service::query()->forNetwork(Network::Cdma)->count())->toBe(65)
-        ->and(Service::query()->forNetwork(Network::FiveG)->count())->toBe(0);
+        ->and(Service::query()->forNetwork(Network::Cdma)->count())->toBe(56)
+        ->and(Service::query()->forNetwork(Network::FiveG)->count())->toBe(9);
+});
+
+it('sides the home-internet and 5G SA categories with the 5G network', function (): void {
+    expect(Service::query()->forNetwork(Network::FiveG)->get()->pluck('category.name')->unique()->sort()->values()->all())
+        ->toBe(['Услуги для домашнего интернета', 'Услуги мобильной связи 5G SA'])
+        ->and(ServiceCategory::query()->forNetwork(Network::FiveG)->count())->toBe(2);
 });
 
 it('keeps both languages and the billing price of a service', function (): void {

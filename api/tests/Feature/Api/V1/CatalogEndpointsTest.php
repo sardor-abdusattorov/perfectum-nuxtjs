@@ -141,5 +141,5 @@ it('caps an oversized page size', function (): void {
 
     $this->getJson(route('api.v1.vacancies.index', ['per_page' => 500]))
         ->assertOk()
-        ->assertJsonPath('meta.per_page', 48);
+        ->assertJsonPath('meta.per_page', 100);
 });
