@@ -136,6 +136,11 @@ class SiteTranslationSeeder extends Seeder
 
             'cdma.news_title' => ['ru' => 'Новости', 'uz' => 'Yangiliklar'],
             'cdma.services_title' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'],
+            'cdma.tariffs_title' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'],
+            'cdma.more' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
+            'cdma.tariff_includes' => ['ru' => 'Что входит', 'uz' => 'Nimalar kiradi'],
+            'cdma.connect' => ['ru' => 'Подключиться', 'uz' => 'Ulanish'],
+            'cdma.all_tariffs' => ['ru' => 'Все тарифы', 'uz' => 'Barcha tariflar'],
             'cdma.support_title' => ['ru' => 'Поддержка', 'uz' => 'Qoʻllab-quvvatlash'],
             'cdma.promo_title' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
             'cdma.year' => ['ru' => 'Год', 'uz' => 'Yil'],

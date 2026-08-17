@@ -17,6 +17,23 @@ const { data: faqData } = await useFaqs({ page: 'cdma' })
 const { data: newsData } = await useNewsList({ network: 'cdma', perPage: 24 })
 const { data: actionsData } = await useActionsList({ network: 'cdma', perPage: 12 })
 const { data: serviceCatalog } = await useServiceCatalog('cdma')
+const { data: tariffCatalog } = await useTariffCatalog()
+
+const tariffType = ref<number | ''>('')
+
+const cdmaTariffs = computed(() => {
+  const category = tariffCatalog.value?.categories.find(item => item.network === 'cdma')
+
+  return (tariffCatalog.value?.tariffs ?? []).filter(tariff => tariff.category?.id === category?.id)
+})
+
+const tariffChips = computed(() => (
+  (tariffCatalog.value?.types ?? []).filter(type => cdmaTariffs.value.some(tariff => tariff.type?.id === type.id))
+))
+
+const railTariffs = computed(() => (
+  tariffType.value ? cdmaTariffs.value.filter(tariff => tariff.type?.id === tariffType.value) : cdmaTariffs.value
+))
 
 const serviceCategory = ref<number | ''>('')
 
@@ -89,7 +106,7 @@ const RAIL_OPTIONS = {
 const tariffRail = useTemplateRef('tariffRail')
 const serviceRail = useTemplateRef('serviceRail')
 
-useSlider(tariffRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-tariffs .cdma-rail__bar', draggable: true } }, () => locale.value)
+useSlider(tariffRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-tariffs .cdma-rail__bar', draggable: true } }, () => `${locale.value}:${tariffType.value}`)
 useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma-rail__bar', draggable: true } }, () => `${locale.value}:${serviceCategory.value}`)
 </script>
 
@@ -139,87 +156,35 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <!-- CDMA TARIFFS -->
   <section class="cdma-section" id="cdma-tariffs">
       <div class="container">
-          <h2 class="cdma-section__title">Тарифы</h2>
+          <h2 class="cdma-section__title">{{ t('cdma.tariffs_title') }}</h2>
           <ul class="cdma-chips">
               <li class="cdma-chips__item">
-                  <button type="button" class="cdma-chips__btn cdma-chips__btn_active">Все</button>
+                  <button type="button" class="cdma-chips__btn"
+                      :class="!tariffType && 'cdma-chips__btn_active'"
+                      @click="tariffType = ''">{{ t('tariffs.all') }}</button>
               </li>
-              <li class="cdma-chips__item">
-                  <button type="button" class="cdma-chips__btn">“Qulay” ежемесячные</button>
-              </li>
-              <li class="cdma-chips__item">
-                  <button type="button" class="cdma-chips__btn">“Qulay” полугодовые</button>
-              </li>
-              <li class="cdma-chips__item">
-                  <button type="button" class="cdma-chips__btn">Специальные тарифы</button>
-              </li>
-              <li class="cdma-chips__item">
-                  <button type="button" class="cdma-chips__btn">Полугодовые (6+K)</button>
+              <li v-for="chip in tariffChips" :key="chip.id" class="cdma-chips__item">
+                  <button type="button" class="cdma-chips__btn"
+                      :class="chip.id === tariffType && 'cdma-chips__btn_active'"
+                      @click="tariffType = chip.id">{{ chip.name }}</button>
               </li>
           </ul>
 
           <div ref="tariffRail" class="cdma-rail swiper">
               <ul class="cdma-rail__track swiper-wrapper">
-                  <li class="cdma-tariff-card swiper-slide">
-                      <span class="cdma-tariff-card__badge">Qulay ежемесячные</span>
-                      <h3 class="cdma-tariff-card__name">Qulay 30</h3>
-                      <p class="cdma-tariff-card__price">30 000<span class="cdma-tariff-card__period">сум /
-                              месяц</span></p>
+                  <li v-for="tariff in railTariffs" :key="tariff.slug"
+                      class="cdma-tariff-card swiper-slide">
+                      <span v-if="tariff.type" class="cdma-tariff-card__badge">{{ tariff.type.name }}</span>
+                      <h3 class="cdma-tariff-card__name">{{ tariff.name }}</h3>
+                      <p class="cdma-tariff-card__price">{{ tariff.price }}<span
+                              class="cdma-tariff-card__period">{{ tariff.price_currency }} /
+                              {{ tariff.price_period }}</span></p>
                       <ul class="cdma-tariff-card__list">
-                          <li class="cdma-tariff-card__feature">300 минут по Узбекистану</li>
-                          <li class="cdma-tariff-card__feature">300 SMS</li>
-                          <li class="cdma-tariff-card__feature">5 ГБ интернета</li>
+                          <li v-for="(feature, index) in tariff.features.slice(0, 3)" :key="index"
+                              class="cdma-tariff-card__feature">{{ feature.note ? `${feature.title} ${feature.note}` : feature.title }}</li>
                       </ul>
-                      <NuxtLink class="cdma-tariff-card__more cdma-tariff-card__more_active"
-                          :to="localePath('/cdma/tariffs/example')">Подробнее</NuxtLink>
-                  </li>
-                  <li class="cdma-tariff-card swiper-slide">
-                      <span class="cdma-tariff-card__badge">Qulay ежемесячные</span>
-                      <h3 class="cdma-tariff-card__name">Qulay 50</h3>
-                      <p class="cdma-tariff-card__price">50 000<span class="cdma-tariff-card__period">сум /
-                              месяц</span></p>
-                      <ul class="cdma-tariff-card__list">
-                          <li class="cdma-tariff-card__feature">500 минут по Узбекистану</li>
-                          <li class="cdma-tariff-card__feature">500 SMS</li>
-                          <li class="cdma-tariff-card__feature">10 ГБ интернета</li>
-                      </ul>
-                      <NuxtLink class="cdma-tariff-card__more" :to="localePath('/cdma/tariffs/example')">Подробнее</NuxtLink>
-                  </li>
-                  <li class="cdma-tariff-card swiper-slide">
-                      <span class="cdma-tariff-card__badge">Qulay ежемесячные</span>
-                      <h3 class="cdma-tariff-card__name">Qulay 80</h3>
-                      <p class="cdma-tariff-card__price">80 000<span class="cdma-tariff-card__period">сум /
-                              месяц</span></p>
-                      <ul class="cdma-tariff-card__list">
-                          <li class="cdma-tariff-card__feature">1000 минут по Узбекистану</li>
-                          <li class="cdma-tariff-card__feature">1000 SMS</li>
-                          <li class="cdma-tariff-card__feature">20 ГБ интернета</li>
-                      </ul>
-                      <NuxtLink class="cdma-tariff-card__more" :to="localePath('/cdma/tariffs/example')">Подробнее</NuxtLink>
-                  </li>
-                  <li class="cdma-tariff-card swiper-slide">
-                      <span class="cdma-tariff-card__badge">Qulay полугодовые</span>
-                      <h3 class="cdma-tariff-card__name">Qulay 6M Старт</h3>
-                      <p class="cdma-tariff-card__price">150 000<span class="cdma-tariff-card__period">сум / 6
-                              месяц</span></p>
-                      <ul class="cdma-tariff-card__list">
-                          <li class="cdma-tariff-card__feature">200 минут по Узбекистану</li>
-                          <li class="cdma-tariff-card__feature">200 SMS / мес</li>
-                          <li class="cdma-tariff-card__feature">3 ГБ мес интернета</li>
-                      </ul>
-                      <NuxtLink class="cdma-tariff-card__more" :to="localePath('/cdma/tariffs/example')">Подробнее</NuxtLink>
-                  </li>
-                  <li class="cdma-tariff-card swiper-slide">
-                      <span class="cdma-tariff-card__badge">Qulay полугодовые</span>
-                      <h3 class="cdma-tariff-card__name">Qulay 6M Плюс</h3>
-                      <p class="cdma-tariff-card__price">150 000<span class="cdma-tariff-card__period">сум / 6
-                              месяц</span></p>
-                      <ul class="cdma-tariff-card__list">
-                          <li class="cdma-tariff-card__feature">200 минут по Узбекистану</li>
-                          <li class="cdma-tariff-card__feature">200 SMS / мес</li>
-                          <li class="cdma-tariff-card__feature">3 ГБ мес интернета</li>
-                      </ul>
-                      <NuxtLink class="cdma-tariff-card__more" :to="localePath('/cdma/tariffs/example')">Подробнее</NuxtLink>
+                      <NuxtLink class="cdma-tariff-card__more"
+                          :to="localePath(`/cdma/tariffs/${tariff.slug}`)">{{ t('cdma.more') }}</NuxtLink>
                   </li>
               </ul>
               <div class="cdma-rail__bar swiper-scrollbar"></div>

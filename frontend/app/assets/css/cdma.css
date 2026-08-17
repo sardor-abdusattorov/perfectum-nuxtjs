@@ -1424,9 +1424,11 @@
   border-radius: 12px;
 }
 
+.cdma-features .cdma-feature__icon img,
 .cdma-features .cdma-feature__icon svg {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
 .cdma-features .cdma-feature__label {

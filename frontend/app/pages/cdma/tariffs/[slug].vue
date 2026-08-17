@@ -1,148 +1,109 @@
 <script setup lang="ts">
+import type { TariffFeature } from '~/composables/useTariffs'
+
 const localePath = useLocalePath()
-definePageMeta({ layout: 'cdma' })
-useSeo({ titleKey: 'seo.cdma_tariff' })
+const route = useRoute()
+const t = useT()
 const { open } = useTariffModal()
 
-function connect(name: string, price: string, period: string): void {
-  open({ name, price, price_currency: 'сум', price_period: period, modal_image: null, buttons: [] })
+definePageMeta({ layout: 'cdma' })
+
+const slug = computed(() => String(route.params.slug ?? ''))
+
+const { data: tariff } = await useTariff(slug)
+
+if (!tariff.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Not Found', fatal: true })
+}
+
+useSeo({ title: () => tariff.value?.name ?? '' })
+
+function connect(): void {
+  if (!tariff.value) {
+    return
+  }
+
+  open({
+    name: tariff.value.name,
+    price: tariff.value.price,
+    price_currency: tariff.value.price_currency,
+    price_period: tariff.value.price_period,
+    modal_image: tariff.value.modal_image,
+    buttons: tariff.value.buttons,
+  })
+}
+
+/**
+ * The feature note arrives wrapped in brackets — "(Исходящие по Узбекистану)" —
+ * and becomes the caption above the value on this page.
+ */
+function featureCaption(feature: TariffFeature): string {
+  return feature.note.replace(/^\(/, '').replace(/\)$/, '')
 }
 </script>
 
 <template>
-  <!-- CDMA HERO -->
-  <section class="cdma-hero cdma-hero_slim">
-      <div class="container">
-          <nav class="cdma-crumbs" aria-label="Хлебные крошки">
-              <NuxtLink class="cdma-crumbs__link" :to="localePath('/cdma')">CDMA</NuxtLink>
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"
-                      stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <NuxtLink class="cdma-crumbs__link" :to="localePath('/cdma') + '#cdma-tariffs'">Тарифы</NuxtLink>
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"
-                      stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <span class="cdma-crumbs__current">Qulay 50</span>
-          </nav>
-          <h1 class="cdma-hero__title">Qulay 50</h1>
-      </div>
-  </section>
-
-  <!-- CDMA TARIFF -->
-  <section class="cdma-detail">
-      <div class="container">
-          <span class="cdma-badge">Qulay ежемесячный</span>
-          <p class="cdma-detail__lead">Ежемесячный тариф для тех, кто звонит и пишет каждый день</p>
-
-          <div class="cdma-price">
-              <p class="cdma-price__value">50 000<span class="cdma-price__period">сум / 30 дней</span></p>
-              <button type="button" class="cdma-price__btn" @click="connect('Qulay 50', '50 000', '/ 30 дней')">Подключиться</button>
+  <template v-if="tariff">
+      <!-- CDMA HERO -->
+      <section class="cdma-hero cdma-hero_slim">
+          <div class="container">
+              <nav class="cdma-crumbs" :aria-label="t('common.breadcrumbs')">
+                  <NuxtLink class="cdma-crumbs__link" :to="localePath('/cdma')">{{ t('seo.cdma') }}</NuxtLink>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <NuxtLink class="cdma-crumbs__link" :to="localePath('/cdma') + '#cdma-tariffs'">{{ t('cdma.tariffs_title') }}</NuxtLink>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span class="cdma-crumbs__current">{{ tariff.name }}</span>
+              </nav>
+              <h1 class="cdma-hero__title">{{ tariff.name }}</h1>
           </div>
+      </section>
 
-          <h2 class="cdma-detail__subhead">Что входит</h2>
-          <ul class="cdma-features">
-              <li class="cdma-feature">
-                  <span class="cdma-feature__icon" aria-hidden="true">
+      <!-- CDMA TARIFF -->
+      <section class="cdma-detail">
+          <div class="container">
+              <span v-if="tariff.type" class="cdma-badge">{{ tariff.type.name }}</span>
 
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                          fill="none">
-                          <path
-                              d="M12.9609 1.0016C12.9609 0.736381 13.0663 0.482027 13.2538 0.29449C13.4414 0.106954 13.6957 0.00159697 13.9609 0.00159697C16.6122 0.00450857 19.154 1.05901 21.0288 2.93375C22.9035 4.80848 23.958 7.35033 23.9609 10.0016C23.9609 10.2668 23.8556 10.5212 23.668 10.7087C23.4805 10.8962 23.2261 11.0016 22.9609 11.0016C22.6957 11.0016 22.4414 10.8962 22.2538 10.7087C22.0663 10.5212 21.9609 10.2668 21.9609 10.0016C21.9585 7.8806 21.1149 5.84715 19.6151 4.34737C18.1154 2.8476 16.0819 2.00398 13.9609 2.0016C13.6957 2.0016 13.4414 1.89624 13.2538 1.7087C13.0663 1.52117 12.9609 1.26681 12.9609 1.0016ZM13.9609 6.0016C15.0218 6.0016 16.0392 6.42302 16.7893 7.17317C17.5395 7.92332 17.9609 8.94073 17.9609 10.0016C17.9609 10.2668 18.0663 10.5212 18.2538 10.7087C18.4414 10.8962 18.6957 11.0016 18.9609 11.0016C19.2261 11.0016 19.4805 10.8962 19.668 10.7087C19.8556 10.5212 19.9609 10.2668 19.9609 10.0016C19.9593 8.41079 19.3267 6.88559 18.2018 5.76071C17.0769 4.63584 15.5517 4.00319 13.9609 4.0016C13.6957 4.0016 13.4414 4.10695 13.2538 4.29449C13.0663 4.48203 12.9609 4.73638 12.9609 5.0016C12.9609 5.26681 13.0663 5.52117 13.2538 5.7087C13.4414 5.89624 13.6957 6.0016 13.9609 6.0016ZM23.0539 16.7406C23.6334 17.3217 23.9589 18.1089 23.9589 18.9296C23.9589 19.7503 23.6334 20.5375 23.0539 21.1186L22.1439 22.1676C13.9539 30.0086 -5.97608 10.0836 1.74392 1.8676L2.89392 0.867597C3.47569 0.304274 4.25585 -0.00735395 5.06563 0.00013181C5.8754 0.00761757 6.64967 0.333615 7.22092 0.907597C7.25192 0.938597 9.10492 3.3456 9.10492 3.3456C9.65475 3.92323 9.96083 4.69053 9.95952 5.488C9.95822 6.28547 9.64964 7.05177 9.09792 7.6276L7.93992 9.0836C8.58077 10.6407 9.52299 12.0558 10.7124 13.2477C11.9019 14.4395 13.3151 15.3846 14.8709 16.0286L16.3359 14.8636C16.9118 14.3123 17.678 14.0041 18.4752 14.003C19.2725 14.0019 20.0395 14.3079 20.6169 14.8576C20.6169 14.8576 23.0229 16.7096 23.0539 16.7406ZM21.6779 18.1946C21.6779 18.1946 19.2849 16.3536 19.2539 16.3226C19.0479 16.1183 18.7695 16.0037 18.4794 16.0037C18.1893 16.0037 17.9109 16.1183 17.7049 16.3226C17.6779 16.3506 15.6609 17.9576 15.6609 17.9576C15.525 18.0658 15.3632 18.1367 15.1916 18.1634C15.0199 18.19 14.8443 18.1715 14.6819 18.1096C12.6664 17.3592 10.8357 16.1843 9.31376 14.6647C7.79186 13.145 6.61432 11.316 5.86092 9.3016C5.79412 9.13705 5.77234 8.95769 5.79783 8.78194C5.82331 8.60619 5.89514 8.44039 6.00592 8.3016C6.00592 8.3016 7.61292 6.2836 7.63992 6.2576C7.84419 6.05158 7.9588 5.77321 7.9588 5.4831C7.9588 5.19298 7.84419 4.91461 7.63992 4.7086C7.60892 4.6786 5.76792 2.2836 5.76792 2.2836C5.55882 2.0961 5.28593 1.99569 5.00517 2.00294C4.72441 2.0102 4.45707 2.12456 4.25792 2.3226L3.10792 3.3226C-2.53408 10.1066 14.7369 26.4196 20.6819 20.8016L21.5929 19.7516C21.8064 19.5539 21.9346 19.2809 21.9505 18.9903C21.9664 18.6997 21.8686 18.4144 21.6779 18.1946Z"
-                              fill="currentColor" />
-                      </svg>
-                  </span>
-                  <span class="cdma-feature__label">Минуты</span>
-                  <span class="cdma-feature__value">500 минут по Узбекистану</span>
-              </li>
-              <li class="cdma-feature">
-                  <span class="cdma-feature__icon" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"
-                          fill="none">
-                          <g clip-path="url(#clip0_1611_5592)">
-                              <path fill-rule="evenodd" clip-rule="evenodd"
-                                  d="M15.8889 0C18.8393 0 21.3082 2.06359 21.8766 4.79625L22 7.19438V14.3888C22 17.6946 19.2586 20.3841 15.8889 20.3841H9.988H8.73698L7.68656 21.1946L4.081 23.5532C3.64222 23.8398 3.135 23.9849 2.62656 23.9849C2.20122 23.9849 1.77467 23.8841 1.386 23.6791C0.531667 23.2306 0 22.3601 0 21.4081V5.99532C0 2.6895 2.74144 0 6.11111 0H15.8889ZM2.72507 21.5583L2.72556 21.558L7.86378 18.1958C7.86518 18.1949 7.8671 18.1936 7.86954 18.1919C7.91835 18.1589 8.17371 17.9859 8.55433 17.9859H15.8877C17.9092 17.9859 19.5543 16.372 19.5543 14.3888V5.99532C19.5543 4.01207 17.9092 2.39813 15.8877 2.39813H6.10989C4.08833 2.39813 2.44322 4.01207 2.44322 5.99532V21.4093C2.44322 21.4357 2.44322 21.516 2.53978 21.5664C2.63324 21.6152 2.7014 21.5729 2.72507 21.5583Z"
-                                  fill="currentColor" />
-                          </g>
-                          <defs>
-                              <clipPath id="clip0_1611_5592">
-                                  <rect width="22" height="24" fill="white" />
-                              </clipPath>
-                          </defs>
-                      </svg>
-                  </span>
-                  <span class="cdma-feature__label">SMS</span>
-                  <span class="cdma-feature__value">500 SMS по Узбекистану</span>
-              </li>
-              <li class="cdma-feature">
-                  <span class="cdma-feature__icon" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                          fill="none">
-                          <g clip-path="url(#clip0_1611_5594)">
-                              <path
-                                  d="M12 0C9.62663 0 7.30655 0.703788 5.33316 2.02236C3.35977 3.34094 1.8217 5.21509 0.913451 7.4078C0.00519943 9.60051 -0.232441 12.0133 0.230582 14.3411C0.693605 16.6689 1.83649 18.8071 3.51472 20.4853C5.19295 22.1635 7.33115 23.3064 9.65892 23.7694C11.9867 24.2324 14.3995 23.9948 16.5922 23.0866C18.7849 22.1783 20.6591 20.6402 21.9776 18.6668C23.2962 16.6935 24 14.3734 24 12C23.9966 8.81846 22.7312 5.76821 20.4815 3.51852C18.2318 1.26883 15.1815 0.00344108 12 0ZM20.647 7H17.426C16.705 5.32899 15.7556 3.76609 14.605 2.356C17.1515 3.04893 19.3223 4.71747 20.647 7ZM16.5 12C16.4918 13.0181 16.3314 14.0293 16.024 15H7.97601C7.66866 14.0293 7.50821 13.0181 7.50001 12C7.50821 10.9819 7.66866 9.97068 7.97601 9H16.024C16.3314 9.97068 16.4918 10.9819 16.5 12ZM8.77801 17H15.222C14.3732 18.6757 13.2882 20.2208 12 21.588C10.7114 20.2212 9.62625 18.676 8.77801 17ZM8.77801 7C9.62677 5.32427 10.7119 3.77916 12 2.412C13.2886 3.77877 14.3738 5.32396 15.222 7H8.77801ZM9.40001 2.356C8.24767 3.76578 7.29659 5.3287 6.57401 7H3.35301C4.67886 4.71643 6.85166 3.04775 9.40001 2.356ZM2.46101 9H5.90001C5.64076 9.97915 5.50636 10.9871 5.50001 12C5.50636 13.0129 5.64076 14.0209 5.90001 15H2.46101C1.84635 13.0472 1.84635 10.9528 2.46101 9ZM3.35301 17H6.57401C7.29659 18.6713 8.24767 20.2342 9.40001 21.644C6.85166 20.9522 4.67886 19.2836 3.35301 17ZM14.605 21.644C15.7556 20.2339 16.705 18.671 17.426 17H20.647C19.3223 19.2825 17.1515 20.9511 14.605 21.644ZM21.539 15H18.1C18.3592 14.0209 18.4936 13.0129 18.5 12C18.4936 10.9871 18.3592 9.97915 18.1 9H21.537C22.1517 10.9528 22.1517 13.0472 21.537 15H21.539Z"
-                                  fill="currentColor" />
-                          </g>
-                          <defs>
-                              <clipPath id="clip0_1611_5594">
-                                  <rect width="24" height="24" fill="white" />
-                              </clipPath>
-                          </defs>
-                      </svg>
-                  </span>
-                  <span class="cdma-feature__label">Интернет</span>
-                  <span class="cdma-feature__value">10 ГБ</span>
-              </li>
-              <li class="cdma-feature">
-                  <span class="cdma-feature__icon" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                          fill="none">
-                          <g clip-path="url(#clip0_1611_5597)">
-                              <path
-                                  d="M19.949 2.64281L12 0.0078125L4.051 2.64281C3.45452 2.83884 2.93513 3.21813 2.56685 3.72665C2.19857 4.23516 2.0002 4.84695 2 5.47481V11.9988C2 19.5228 11.2 23.6778 11.594 23.8508L11.948 24.0078L12.316 23.8858C12.711 23.7538 22 20.5758 22 11.9988V5.47481C21.9996 4.84698 21.8012 4.23527 21.433 3.72679C21.0647 3.2183 20.5454 2.83897 19.949 2.64281ZM20 11.9988C20 18.2618 13.651 21.2148 12.047 21.8598C10.44 21.0568 4 17.4928 4 11.9988V5.47481C4.00009 5.26548 4.06626 5.06152 4.18909 4.89201C4.31191 4.7225 4.48511 4.5961 4.684 4.53081L12 2.10481L19.316 4.53081C19.5151 4.59583 19.6884 4.72217 19.8113 4.89174C19.9342 5.06131 20.0002 5.26541 20 5.47481V11.9988Z"
-                                  fill="currentColor" />
-                          </g>
-                          <defs>
-                              <clipPath id="clip0_1611_5597">
-                                  <rect width="24" height="24" fill="white" />
-                              </clipPath>
-                          </defs>
-                      </svg>
-                  </span>
-                  <span class="cdma-feature__label">Абонплата</span>
-                  <span class="cdma-feature__value">Без абонплаты за номер</span>
-              </li>
-          </ul>
+              <div class="cdma-price">
+                  <p class="cdma-price__value">{{ tariff.price }}<span class="cdma-price__period">{{ tariff.price_currency }} / {{ tariff.price_period }}</span></p>
+                  <button type="button" class="cdma-price__btn" @click="connect()">{{ t('cdma.connect') }}</button>
+              </div>
 
-          <h2 class="cdma-detail__subhead">Условия</h2>
-          <div class="cdma-terms">
-              <ul class="cdma-terms__list">
-                  <li class="cdma-terms__item">Период действия пакета — 30 календарных дней с момента
-                      активации.</li>
-                  <li class="cdma-terms__item">Неиспользованные минуты, SMS и ГБ не переносятся на следующий
-                      период.</li>
-                  <li class="cdma-terms__item">Стоимость звонков сверх пакета — 150 сум/мин.</li>
-                  <li class="cdma-terms__item">Стоимость интернета сверх пакета — 100 сум/МБ.</li>
-                  <li class="cdma-terms__item">Подключение тарифа бесплатное. Смена тарифа — с 1-го числа
-                      следующего периода.</li>
-                  <li class="cdma-terms__item">Тариф доступен для подключения во всех офисах и у дилеров CDMA.
-                  </li>
-              </ul>
+              <template v-if="tariff.features.length">
+                  <h2 class="cdma-detail__subhead">{{ t('cdma.tariff_includes') }}</h2>
+                  <ul class="cdma-features">
+                      <li v-for="(feature, index) in tariff.features" :key="index" class="cdma-feature">
+                          <span v-if="feature.icon" class="cdma-feature__icon" aria-hidden="true">
+                              <img :src="`/images/icon-${feature.icon}.svg`" alt="" loading="lazy" />
+                          </span>
+                          <span v-if="featureCaption(feature)" class="cdma-feature__label">{{ featureCaption(feature) }}</span>
+                          <span class="cdma-feature__value">{{ feature.title }}</span>
+                      </li>
+                  </ul>
+              </template>
+
+              <template v-for="(description, index) in tariff.descriptions" :key="index">
+                  <h2 class="cdma-detail__subhead">{{ description.name }}</h2>
+                  <div class="cdma-prose" v-html="description.content"></div>
+              </template>
+
+              <NuxtLink class="cdma-back" :to="localePath('/cdma') + '#cdma-tariffs'">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  {{ t('cdma.all_tariffs') }}
+              </NuxtLink>
           </div>
+      </section>
 
-          <NuxtLink class="cdma-back" :to="localePath('/cdma') + '#cdma-tariffs'">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8"
-                      stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              Все тарифы
-          </NuxtLink>
-      </div>
-  </section>
-
-  <!-- CDMA FOOTER SECTION -->
-  <section class="cdma-footer">
+      <!-- CDMA FOOTER SECTION -->
+      <section class="cdma-footer">
       <div class="container">
           <nav class="cdma-footer__nav" aria-label="Разделы CDMA">
               <NuxtLink class="cdma-footer__back" aria-label="На главную" :to="localePath('/')">
@@ -158,4 +119,5 @@ function connect(name: string, price: string, period: string): void {
           <span class="cdma-footer__copy">ООО «RWC» (Торговая марка Perfectum)</span>
       </div>
   </section>
+  </template>
 </template>
