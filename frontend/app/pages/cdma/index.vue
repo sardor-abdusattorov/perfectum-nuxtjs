@@ -54,6 +54,7 @@ const cdmaServices = computed(() => {
 
 const faqs = computed(() => faqData.value?.faqs ?? [])
 const { locale } = useI18n()
+const { long: dateLong, monthName } = useDates()
 
 const newsYear = ref('')
 const newsMonth = ref('')
@@ -77,11 +78,6 @@ const news = computed(() => allNews.value.filter(item => (
 watch(newsYear, () => {
   newsMonth.value = ''
 })
-
-function monthName(month: string): string {
-  return new Intl.DateTimeFormat(locale.value === 'uz' ? 'uz-UZ' : 'ru-RU', { month: 'long' })
-    .format(new Date(2026, Number(month) - 1, 1))
-}
 
 const promos = computed(() => actionsData.value?.items ?? [])
 const PROMO_COVERS = ['cdma-promo-card__cover_orange', 'cdma-promo-card__cover_red', 'cdma-promo-card__cover_sale']
@@ -268,7 +264,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
           </div>
           <ul class="cdma-news">
               <li v-for="item in news" :key="item.slug" class="cdma-news-card">
-                  <span class="cdma-news-card__date">{{ dateLong(item.published_at, locale) }}</span>
+                  <span class="cdma-news-card__date">{{ dateLong(item.published_at) }}</span>
                   <h3 class="cdma-news-card__title"><NuxtLink class="cdma-news-card__link"
                           :to="localePath(`/cdma/news/${item.slug}`)">{{ item.title }}</NuxtLink></h3>
                   <span v-if="item.category" class="cdma-news-card__cat">{{ item.category.name }}</span>
@@ -286,7 +282,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
                   <NuxtLink class="cdma-promo-card__cover" :class="PROMO_COVERS[index % PROMO_COVERS.length]"
                       :to="localePath(`/cdma/actions/${item.slug}`)">{{ item.badge ?? item.title }}</NuxtLink>
                   <div class="cdma-promo-card__body">
-                      <span class="cdma-promo-card__date">{{ dateLong(item.starts_at, locale) }}</span>
+                      <span class="cdma-promo-card__date">{{ dateLong(item.starts_at) }}</span>
                       <h3 class="cdma-promo-card__title">{{ item.title }}</h3>
                       <span class="cdma-promo-card__cat">{{ item.excerpt }}</span>
                   </div>

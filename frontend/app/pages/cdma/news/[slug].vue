@@ -2,7 +2,7 @@
 const route = useRoute()
 const localePath = useLocalePath()
 const t = useT()
-const { locale } = useI18n()
+const { long: dateLong } = useDates()
 
 definePageMeta({ layout: 'cdma' })
 
@@ -45,7 +45,7 @@ useSeo({ title: () => item.value?.title ?? '' })
                   <path d="M3.875 8.46875H19.625M5.91071 2V3.68771M17.375 2V3.6875M17.375 3.6875H6.125C4.26104 3.6875 2.75 5.19854 2.75 7.0625V18.3126C2.75 20.1766 4.26104 21.6876 6.125 21.6876H17.375C19.239 21.6876 20.75 20.1766 20.75 18.3126L20.75 7.0625C20.75 5.19854 19.239 3.6875 17.375 3.6875ZM6.6875 12.4063H16.8125M6.6875 16.9063H16.8125" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </span>
-              <span class="cdma-article__date">{{ dateLong(item.published_at, locale) }}</span>
+              <span class="cdma-article__date">{{ dateLong(item.published_at) }}</span>
             </div>
             <span v-if="item.category" class="cdma-badge">{{ item.category.name }}</span>
             <div class="cdma-article__body" v-html="item.content"></div>

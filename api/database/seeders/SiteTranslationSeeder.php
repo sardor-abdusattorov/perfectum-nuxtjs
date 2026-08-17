@@ -79,6 +79,16 @@ class SiteTranslationSeeder extends Seeder
             'tariffs.all' => ['ru' => 'Все', 'uz' => 'Barchasi'],
             'tariffs.connect' => ['ru' => 'Подключить', 'uz' => 'Ulanish'],
             'tariffs.archive' => ['ru' => 'Архивные тарифы', 'uz' => 'Arxiv tariflar'],
+            'date.months' => [
+                'ru' => 'Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь',
+                'uz' => 'Yanvar,Fevral,Mart,Aprel,May,Iyun,Iyul,Avgust,Sentabr,Oktabr,Noyabr,Dekabr',
+            ],
+            'date.months_of' => [
+                'ru' => 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря',
+                'uz' => 'yanvar,fevral,mart,aprel,may,iyun,iyul,avgust,sentabr,oktabr,noyabr,dekabr',
+            ],
+            'date.long' => ['ru' => '{day} {month} {year}', 'uz' => '{day}-{month}, {year}'],
+
             'common.prev' => ['ru' => 'Назад', 'uz' => 'Orqaga'],
             'common.next' => ['ru' => 'Вперёд', 'uz' => 'Oldinga'],
             'tariffs.empty' => ['ru' => 'Тарифы не найдены', 'uz' => 'Tariflar topilmadi'],
