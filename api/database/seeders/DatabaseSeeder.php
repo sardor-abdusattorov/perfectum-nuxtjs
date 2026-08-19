@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ApplicationThemeSeeder::class,
             ApplicationSeeder::class,
             ContentSeeder::class,
+            PageSeeder::class,
             MenuSeeder::class,
             HomepageSeeder::class,
             AboutCompanySeeder::class,

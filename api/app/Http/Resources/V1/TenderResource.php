@@ -29,6 +29,7 @@ class TenderResource extends JsonResource
             'content' => $this->body($request, $this->content),
             'state' => $this->state->value,
             'deadline_at' => $this->deadline_at?->toDateString(),
+            'published_at' => $this->published_at?->toDateString(),
             'files' => collect($this->files ?? [])
                 ->map(fn (string $path): ?string => stored_url($path))
                 ->filter()

@@ -13,37 +13,6 @@ use Illuminate\Database\Seeder;
 
 class DocumentSeeder extends Seeder
 {
-    /**
-     * The files themselves are uploaded from the admin, one per locale tab, so
-     * the rows carry the names the page listed and wait for their attachment.
-     *
-     * @var array<string, array<int, array<string, string>>>
-     */
-    private const DOCUMENTS = [
-        'dogovory-i-tarify' => [
-            ['ru' => 'Публичная оферта на оказание услуг', 'uz' => 'Xizmatlar koʻrsatish boʻyicha ommaviy oferta'],
-            ['ru' => 'Договор на услуги домашнего интернета', 'uz' => 'Uy interneti xizmatlari shartnomasi'],
-            ['ru' => 'Тарифы и расценки на связь', 'uz' => 'Aloqa tariflari va narxlari'],
-        ],
-        'politiki' => [
-            ['ru' => 'Политика обработки персональных данных', 'uz' => 'Shaxsiy maʼlumotlarni qayta ishlash siyosati'],
-            ['ru' => 'Политика конфиденциальности', 'uz' => 'Maxfiylik siyosati'],
-        ],
-        'korporativnye-dokumenty' => [
-            ['ru' => 'Устав компании (выписка)', 'uz' => 'Kompaniya ustavi (koʻchirma)'],
-            ['ru' => 'Реквизиты организации', 'uz' => 'Tashkilot rekvizitlari'],
-        ],
-    ];
-
-    /**
-     * @var array<string, array<string, string>>
-     */
-    private const CATEGORIES = [
-        'dogovory-i-tarify' => ['ru' => 'Договоры и тарифы', 'uz' => 'Shartnomalar va tariflar'],
-        'politiki' => ['ru' => 'Политики', 'uz' => 'Siyosatlar'],
-        'korporativnye-dokumenty' => ['ru' => 'Корпоративные документы', 'uz' => 'Korporativ hujjatlar'],
-    ];
-
     public function run(): void
     {
         ContentBlock::write(PageKey::Documents, ContentBlockKey::PageHero, [
@@ -58,25 +27,25 @@ class DocumentSeeder extends Seeder
             ],
         ]);
 
-        $sort = 0;
+        $data = json_decode((string) file_get_contents(database_path('data/documents.json')), true);
 
-        $categories = [];
-
-        foreach (self::CATEGORIES as $key => $name) {
-            $categories[$key] = DocumentCategory::updateOrCreate(
-                ['name->ru' => $name['ru']],
-                ['name' => $name, 'sort' => ++$sort],
+        foreach ($data['categories'] ?? [] as $sort => $category) {
+            $categoryId = DocumentCategory::updateOrCreate(
+                ['name->ru' => $category['name']['ru']],
+                ['name' => $category['name'], 'sort' => $sort + 1],
             )->getKey();
-        }
 
-        foreach (self::DOCUMENTS as $key => $documents) {
-            foreach ($documents as $index => $name) {
-                Document::updateOrCreate(['name->ru' => $name['ru']], [
-                    'category_id' => $categories[$key] ?? null,
-                    'name' => $name,
-                    'sort' => $index + 1,
-                    'status' => false,
-                ]);
+            foreach ($category['documents'] as $index => $document) {
+                Document::updateOrCreate(
+                    ['name->ru' => $document['name']['ru'] ?? array_values($document['name'])[0]],
+                    [
+                        'category_id' => $categoryId,
+                        'name' => $document['name'],
+                        'file' => $document['file'],
+                        'sort' => $index + 1,
+                        'status' => true,
+                    ],
+                );
             }
         }
     }

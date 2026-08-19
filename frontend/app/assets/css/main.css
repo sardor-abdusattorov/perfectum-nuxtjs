@@ -7237,6 +7237,12 @@ body.overflow__hidden {
   color: var(--color-black);
 }
 
+.tender-card__date {
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
 .tender-card__status {
   margin-top: auto;
   display: inline-flex;

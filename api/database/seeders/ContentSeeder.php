@@ -66,8 +66,10 @@ class ContentSeeder extends Seeder
             Tender::updateOrCreate(['slug' => $row['slug']], [
                 'title' => $row['title'],
                 'content' => $row['content'],
+                'files' => $row['files'] ?? [],
                 'state' => $row['state'],
                 'deadline_at' => $row['deadline_at'],
+                'published_at' => $row['published_at'] ?? null,
             ]);
         }
     }

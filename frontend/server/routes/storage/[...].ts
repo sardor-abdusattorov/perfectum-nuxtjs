@@ -4,7 +4,8 @@
  * through keeps every such link alive on the site's own domain.
  *
  * The names are content hashes, so a file never changes under its name and a
- * long browser cache is safe.
+ * long browser cache is safe — but only on a hit: a 404 cached for a week
+ * would outlive the file arriving.
  */
 export default defineEventHandler(async (event) => {
   const target = useRuntimeConfig(event).apiBase
@@ -13,7 +14,17 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, statusMessage: 'API base is not configured' })
   }
 
-  setResponseHeader(event, 'cache-control', 'public, max-age=604800, immutable')
+  const path = new URL(event.path, 'http://origin').pathname
 
-  return proxyRequest(event, `${target.replace(/\/api\/v1\/?$/, '')}${event.path}`)
+  if (!path.startsWith('/storage/') || event.path.includes('..')) {
+    throw createError({ statusCode: 404 })
+  }
+
+  return proxyRequest(event, `${target.replace(/\/api\/v1\/?$/, '')}${path}`, {
+    onResponse(proxied, response) {
+      if (response.ok) {
+        setResponseHeader(proxied, 'cache-control', 'public, max-age=604800, immutable')
+      }
+    },
+  })
 })

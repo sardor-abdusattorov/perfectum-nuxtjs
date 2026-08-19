@@ -19,6 +19,7 @@ class TenderController
     {
         $records = Tender::query()
             ->published()
+            ->orderByDesc('published_at')
             ->orderByDesc('deadline_at');
 
         return TenderResource::collection($this->paginate($records, $request, ['title']));

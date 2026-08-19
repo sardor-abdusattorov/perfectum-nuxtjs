@@ -26,6 +26,7 @@ class Tender extends Model
         'files',
         'state',
         'deadline_at',
+        'published_at',
         'status',
     ];
 
@@ -35,6 +36,7 @@ class Tender extends Model
         'files' => 'array',
         'state' => TenderState::class,
         'deadline_at' => 'date',
+        'published_at' => 'date',
         'status' => 'boolean',
     ];
 

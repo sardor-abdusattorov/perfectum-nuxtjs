@@ -111,6 +111,7 @@ class MenuSeeder extends Seeder
                         ['key' => 'offices', 'name' => ['ru' => 'Офисы', 'uz' => 'Ofislar'], 'url' => $this->url('/offices')],
                         ['key' => 'dealers', 'name' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar'], 'url' => $this->url('/cdma/dealers')],
                         ['key' => 'faq', 'name' => ['ru' => 'Полезно знать', 'uz' => 'Bilish foydali'], 'url' => $this->url('/faq')],
+                        ['key' => 'connect', 'name' => ['ru' => 'Как подключиться', 'uz' => 'Qanday ulanish mumkin'], 'url' => $this->url('/pages/kak-mozno-podklyucitsya')],
                     ],
                 ],
                 [

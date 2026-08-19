@@ -7,9 +7,13 @@ namespace App\Console\Commands;
 use App\Models\Action;
 use App\Models\Device;
 use App\Models\DeviceBrand;
+use App\Models\Document;
 use App\Models\News;
+use App\Models\Page;
 use App\Models\Service;
 use App\Models\Tariff;
+use App\Models\Tender;
+use App\Models\Vacancy;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
@@ -19,7 +23,8 @@ use Illuminate\Support\Facades\Storage;
 /**
  * The imported content references the pictures and documents by the paths the
  * old site stored them under. Drop that site's storage/app/public into
- * storage/app/old_files/public and this command carries every file over onto
+ * storage/app/old_files/public (and its webroot pictures folder beside them,
+ * as old_files/public/pictures) — this command carries every file over onto
  * the public disk, then says which referenced files are still missing.
  */
 final class OldFilesImport extends Command
@@ -40,9 +45,11 @@ final class OldFilesImport extends Command
             return self::FAILURE;
         }
 
-        [$copied, $skipped] = $this->copy($source, Storage::disk('public'));
+        [$copied, $skipped, $failed] = $this->copy($source, Storage::disk('public'));
 
         $this->info("Скопировано: {$copied}, уже на месте: {$skipped}.");
+
+        $this->stampDocumentSizes();
 
         $missing = $this->referenced()->reject(
             fn (string $path): bool => Storage::disk('public')->exists($path),
@@ -55,18 +62,25 @@ final class OldFilesImport extends Command
             $missing->take(20)->each(fn (string $path) => $this->line("  {$path}"));
         }
 
+        if ($failed !== []) {
+            $this->error('Не записались '.count($failed).' файлов, первые: '.implode(', ', array_slice($failed, 0, 5)));
+
+            return self::FAILURE;
+        }
+
         return self::SUCCESS;
     }
 
     /**
-     * @return array{int, int}
+     * @return array{int, int, array<int, string>}
      */
     private function copy(string $source, Filesystem $disk): array
     {
         $copied = $skipped = 0;
+        $failed = [];
 
         foreach (File::allFiles($source) as $file) {
-            $relative = str_replace('\\', '/', $file->getRelativePathname());
+            $relative = str_replace(DIRECTORY_SEPARATOR, '/', $file->getRelativePathname());
 
             if ($disk->exists($relative) && $disk->size($relative) === $file->getSize()) {
                 $skipped++;
@@ -75,59 +89,113 @@ final class OldFilesImport extends Command
             }
 
             $stream = fopen($file->getPathname(), 'r');
-            $disk->writeStream($relative, $stream);
+            $written = $stream !== false && $disk->writeStream($relative, $stream) !== false;
 
             if (is_resource($stream)) {
                 fclose($stream);
             }
 
-            $copied++;
+            $written ? $copied++ : $failed[] = $relative;
         }
 
-        return [$copied, $skipped];
+        return [$copied, $skipped, $failed];
     }
 
     /**
-     * Every path the seeded rows point at: the image columns, the icons the
-     * tariff buttons carry, and the /storage/... links inside the bodies.
+     * The documents were seeded before their files arrived, so the size the
+     * model normally stamps on upload is filled in here instead.
+     */
+    private function stampDocumentSizes(): void
+    {
+        Document::query()->each(function (Document $document): void {
+            $sizes = [];
+
+            foreach ($document->getTranslations('file') as $locale => $path) {
+                if (filled($path) && Storage::disk('public')->exists($path)) {
+                    $sizes[$locale] = Storage::disk('public')->size($path);
+                }
+            }
+
+            if ($sizes !== [] && $sizes !== $document->getTranslations('size')) {
+                $document->setTranslations('size', $sizes)->saveQuietly();
+            }
+        });
+    }
+
+    /**
+     * Every path the seeded rows point at: the image columns, the files the
+     * tenders and documents carry, the icons inside the tariff buttons, and
+     * the /storage/... links every translation of every body holds.
      *
      * @return Collection<int, string>
      */
     private function referenced(): Collection
     {
         $paths = collect()
-            ->merge(Device::query()->pluck('image'))
-            ->merge(DeviceBrand::query()->pluck('logo'))
-            ->merge(News::query()->pluck('preview_image'))
-            ->merge(News::query()->pluck('main_image'))
-            ->merge(Action::query()->pluck('preview_image'))
-            ->merge(Action::query()->pluck('main_image'))
-            ->merge(Service::query()->pluck('icon'))
-            ->merge(Service::query()->pluck('image'))
-            ->merge(Tariff::query()->pluck('image'))
-            ->merge(Tariff::query()->pluck('modal_image'));
+            ->merge(Device::query()->toBase()->pluck('image'))
+            ->merge(DeviceBrand::query()->toBase()->pluck('logo'))
+            ->merge(News::query()->toBase()->pluck('preview_image'))
+            ->merge(News::query()->toBase()->pluck('main_image'))
+            ->merge(Action::query()->toBase()->pluck('preview_image'))
+            ->merge(Action::query()->toBase()->pluck('main_image'))
+            ->merge(Service::query()->toBase()->pluck('icon'))
+            ->merge(Service::query()->toBase()->pluck('image'))
+            ->merge(Tariff::query()->toBase()->pluck('image'))
+            ->merge(Tariff::query()->toBase()->pluck('modal_image'))
+            ->merge(Page::query()->toBase()->pluck('image'));
 
-        foreach (Tariff::query()->pluck('buttons') as $buttons) {
-            foreach ((array) $buttons as $localised) {
-                $rows = is_string($localised) ? json_decode($localised, true) : $localised;
-
-                foreach ((array) $rows as $button) {
-                    $paths->push(is_array($button) ? ($button['icon'] ?? null) : null);
-                }
-            }
+        foreach (Tender::query()->get() as $tender) {
+            $paths = $paths->merge($tender->files ?? []);
         }
 
-        foreach ([News::class, Action::class, Service::class] as $model) {
-            foreach ($model::query()->pluck('content') as $content) {
-                $body = is_string($content) ? $content : json_encode($content);
-                preg_match_all('~/storage/((?:images|files)/[\w.\-]+)~', (string) $body, $matches);
+        foreach (Document::query()->get() as $document) {
+            $paths = $paths->merge(array_values($document->getTranslations('file')));
+        }
+
+        // whatever shape the buttons take, an icon is a value under that key
+        foreach (Tariff::query()->toBase()->pluck('buttons') as $raw) {
+            $paths = $paths->merge($this->values(json_decode((string) $raw, true), 'icon'));
+        }
+
+        foreach ([News::class, Action::class, Service::class, Tender::class, Vacancy::class, Page::class] as $model) {
+            foreach ($model::query()->toBase()->pluck('content') as $raw) {
+                $body = implode(' ', array_filter(
+                    (array) (json_decode((string) $raw, true) ?? $raw),
+                    'is_string',
+                ));
+                preg_match_all('~/storage/((?:images|files|pictures)/[^"\'\s<>\\\\]+)~', $body, $matches);
                 $paths = $paths->merge($matches[1]);
             }
         }
 
         return $paths
             ->filter(fn ($path): bool => is_string($path) && $path !== '' && ! str_starts_with($path, 'http'))
+            ->map(fn (string $path): string => rawurldecode($path))
             ->unique()
             ->values();
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function values(mixed $node, string $key): array
+    {
+        if (! is_array($node)) {
+            return [];
+        }
+
+        $found = [];
+
+        foreach ($node as $name => $value) {
+            if ($name === $key && is_string($value)) {
+                $found[] = $value;
+            } elseif (is_string($value) && str_starts_with($value, '[')) {
+                $found = [...$found, ...$this->values(json_decode($value, true), $key)];
+            } else {
+                $found = [...$found, ...$this->values($value, $key)];
+            }
+        }
+
+        return $found;
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->json('files')->nullable();
             $table->string('state', 20)->default('open');
             $table->date('deadline_at')->nullable();
+            $table->date('published_at')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
 

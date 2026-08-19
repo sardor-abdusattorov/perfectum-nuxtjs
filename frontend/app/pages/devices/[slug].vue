@@ -119,7 +119,7 @@ const pager = computed(() => {
                               <div v-for="(spec, index) in device.specs" :key="index" class="spec-list__row"
                                   :class="!spec.value && 'spec-list__row_group'">
                                   <dt class="spec-list__term">{{ spec.label }}</dt>
-                                  <dd v-if="spec.value" class="spec-list__value">{{ spec.value }}</dd>
+                                  <dd class="spec-list__value" :hidden="!spec.value">{{ spec.value }}</dd>
                               </div>
                           </dl>
                       </template>

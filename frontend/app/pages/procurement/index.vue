@@ -33,6 +33,7 @@ const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1,
       <ul v-if="items.length" class="tenders__grid">
         <li v-for="item in items" :key="item.slug" class="tender-card">
           <NuxtLink class="tender-card__link" :to="localePath(`/procurement/${item.slug}`)">
+            <span v-if="item.published_at" class="tender-card__date">{{ dateShort(item.published_at) }}</span>
             <h3 class="tender-card__title">{{ item.title }}</h3>
             <span
               class="tender-card__status"
