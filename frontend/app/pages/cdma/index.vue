@@ -25,7 +25,7 @@ const [
   { data: tariffCatalog },
 ] = await Promise.all([
   useFaqs({ page: 'cdma' }),
-  useNewsList({ network: 'cdma', perPage: 24 }),
+  useNewsList({ network: 'cdma', perPage: 6 }),
   useActionsList({ network: 'cdma', perPage: 12 }),
   useServiceCatalog('cdma'),
   useTariffCatalog(),
@@ -66,30 +66,19 @@ const cdmaServices = computed(() => {
 
 const faqs = computed(() => faqData.value?.faqs ?? [])
 const { locale } = useI18n()
-const { long: dateLong, monthName } = useDates()
+const { long: dateLong } = useDates()
 
-const newsYear = ref('')
-const newsMonth = ref('')
+const news = computed(() => newsData.value?.items ?? [])
 
-const allNews = computed(() => newsData.value?.items ?? [])
+/**
+ * A support card may point at a page of this site or straight at a phone or
+ * messenger; only the former goes through the locale prefix.
+ */
+const EXTERNAL = /^(https?:)?\/\/|^(mailto|tel|sms):/
 
-const newsYears = computed(() => [...new Set(allNews.value.map(item => item.published_at?.slice(0, 4)).filter(Boolean))] as string[])
-
-const newsMonths = computed(() => [...new Set(
-  allNews.value
-    .filter(item => !newsYear.value || item.published_at?.startsWith(newsYear.value))
-    .map(item => item.published_at?.slice(5, 7))
-    .filter(Boolean),
-)] as string[])
-
-const news = computed(() => allNews.value.filter(item => (
-  (!newsYear.value || item.published_at?.startsWith(newsYear.value))
-  && (!newsMonth.value || item.published_at?.slice(5, 7) === newsMonth.value)
-)))
-
-watch(newsYear, () => {
-  newsMonth.value = ''
-})
+function cardLink(url: string): string {
+  return EXTERNAL.test(url) ? url : localePath(url)
+}
 
 const promos = computed(() => actionsData.value?.items ?? [])
 const PROMO_COVERS = ['cdma-promo-card__cover_orange', 'cdma-promo-card__cover_red', 'cdma-promo-card__cover_sale']
@@ -251,28 +240,13 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       <div class="container">
           <div class="cdma-section__head">
               <h2 class="cdma-section__title">{{ t('cdma.news_title') }}</h2>
-              <div class="cdma-section__filters">
-                  <div class="select select_compact">
-                      <select v-model="newsYear" class="select__control" :aria-label="t('cdma.year')">
-                          <option value="">{{ t('cdma.all_years') }}</option>
-                          <option v-for="year in newsYears" :key="year" :value="year">{{ year }}</option>
-                      </select>
-                      <svg class="select__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
-                              stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                  </div>
-                  <div class="select select_compact">
-                      <select v-model="newsMonth" class="select__control" :aria-label="t('cdma.month')">
-                          <option value="">{{ t('cdma.all_months') }}</option>
-                          <option v-for="month in newsMonths" :key="month" :value="month">{{ monthName(month) }}</option>
-                      </select>
-                      <svg class="select__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5"
-                              stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                  </div>
-              </div>
+              <NuxtLink class="cdma-section__all" :to="localePath('/news')">
+                  {{ t('cdma.all_news') }}
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+              </NuxtLink>
           </div>
           <ul class="cdma-news">
               <li v-for="item in news" :key="item.slug" class="cdma-news-card">
@@ -322,7 +296,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
                       <h3 class="cdma-support-card__title">{{ card.title }}</h3>
                   </div>
                   <p class="cdma-support-card__value">
-                      <NuxtLink v-if="card.url" class="cdma-support-card__link" :to="localePath(card.url)">{{ card.value }}</NuxtLink>
+                      <a v-if="card.url" class="cdma-support-card__link" :href="cardLink(card.url)">{{ card.value }}</a>
                       <template v-else>{{ card.value }}</template>
                   </p>
                   <p v-if="card.note" class="cdma-support-card__note">{{ card.note }}</p>

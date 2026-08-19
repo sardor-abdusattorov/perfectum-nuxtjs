@@ -151,6 +151,7 @@ class SiteTranslationSeeder extends Seeder
             'cdma.tariff_includes' => ['ru' => 'Что входит', 'uz' => 'Nimalar kiradi'],
             'cdma.connect' => ['ru' => 'Подключиться', 'uz' => 'Ulanish'],
             'cdma.all_tariffs' => ['ru' => 'Все тарифы', 'uz' => 'Barcha tariflar'],
+            'cdma.all_news' => ['ru' => 'Все новости', 'uz' => 'Barcha yangiliklar'],
             'cdma.numbers_title' => ['ru' => 'Свободные номера', 'uz' => 'Boʻsh raqamlar'],
             'cdma.tab_numbers' => ['ru' => 'Номера', 'uz' => 'Raqamlar'],
             'cdma.tab_dealers' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar'],
@@ -159,10 +160,6 @@ class SiteTranslationSeeder extends Seeder
             'cdma.copyright' => ['ru' => 'ООО «RWC» (Торговая марка Perfectum)', 'uz' => '«RWC» MChJ (Perfectum savdo belgisi)'],
             'cdma.support_title' => ['ru' => 'Поддержка', 'uz' => 'Qoʻllab-quvvatlash'],
             'cdma.promo_title' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'],
-            'cdma.year' => ['ru' => 'Год', 'uz' => 'Yil'],
-            'cdma.month' => ['ru' => 'Месяц', 'uz' => 'Oy'],
-            'cdma.all_years' => ['ru' => 'Все годы', 'uz' => 'Barcha yillar'],
-            'cdma.all_months' => ['ru' => 'Все месяцы', 'uz' => 'Barcha oylar'],
             'cdma.promo_badge' => ['ru' => 'Акция', 'uz' => 'Aksiya'],
             'cdma.promo_active' => ['ru' => 'Действует', 'uz' => 'Amalda'],
 

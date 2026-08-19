@@ -655,6 +655,24 @@
   margin-bottom: 40px;
 }
 
+.cdma-section__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-red-ink);
+}
+
+.cdma-section__all svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cdma-section__all:hover {
+  text-decoration: underline;
+}
+
 .cdma-news .cdma-news-card {
   display: flex;
   flex-direction: column;

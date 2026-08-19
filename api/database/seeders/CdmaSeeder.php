@@ -28,6 +28,7 @@ class CdmaSeeder extends Seeder
                     'icon' => ContactCardIcon::Phone->value,
                     'title' => ['ru' => 'Круглосуточно', 'uz' => 'Kecha-kunduz'],
                     'value' => ['ru' => '077', 'uz' => '077'],
+                    'url' => 'tel:077',
                     'note' => [
                         'ru' => 'Бесплатно с любого номера Perfectum',
                         'uz' => 'Istalgan Perfectum raqamidan bepul',
@@ -38,6 +39,7 @@ class CdmaSeeder extends Seeder
                     'icon' => ContactCardIcon::Mobile->value,
                     'title' => ['ru' => 'С других номеров', 'uz' => 'Boshqa raqamlardan'],
                     'value' => ['ru' => '+998 98 127 0077', 'uz' => '+998 98 127 0077'],
+                    'url' => 'tel:+998981270077',
                     'note' => ['ru' => 'Стандартная тарификация', 'uz' => 'Standart tariflash'],
                     'status' => true,
                 ],
@@ -45,6 +47,7 @@ class CdmaSeeder extends Seeder
                     'icon' => ContactCardIcon::Chat->value,
                     'title' => ['ru' => 'Чат в Telegram', 'uz' => 'Telegram’da chat'],
                     'value' => ['ru' => '@Perfectum_Support', 'uz' => '@Perfectum_Support'],
+                    'url' => 'https://t.me/Perfectum_Support',
                     'note' => ['ru' => 'Ответ в течение 15 минут', 'uz' => '15 daqiqa ichida javob'],
                     'status' => true,
                 ],
