@@ -32,9 +32,10 @@ class DevicesTable
                     ->badge()
                     ->placeholder('—'),
 
-                TextColumn::make('brand')
+                TextColumn::make('brand.name')
                     ->label(__('app.label.brand'))
                     ->placeholder('—')
+                    ->searchable()
                     ->sortable(),
 
                 TextColumn::make('price')

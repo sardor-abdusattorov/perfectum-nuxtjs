@@ -1,6 +1,21 @@
 <script setup lang="ts">
 const block = useBlock('home', 'coverage')
 const cities = computed(() => published(block.value.cities))
+
+const { locale } = useI18n()
+const rail = useTemplateRef('rail')
+
+/**
+ * The row held four cities and cut off the fifth; the list grows with the
+ * network, so it drags instead. Four or fewer still fill the row and Swiper
+ * leaves them alone.
+ */
+useSlider(rail, {
+  slidesPerView: 'auto',
+  watchOverflow: true,
+  freeMode: true,
+  grabCursor: true,
+}, () => `${locale.value}:${cities.value.length}`)
 </script>
 
 <template>
@@ -13,15 +28,17 @@ const cities = computed(() => published(block.value.cities))
               </div>
           </div>
           <div class="coverage__cities">
-              <ul class="coverage__list">
-                  <li v-for="(city, index) in cities" :key="index">
-                      <div class="coverage__city">
-                          <span class="coverage__pin" :class="city.active && 'coverage__pin_active'"></span>
-                          <h3 class="coverage__name">{{ city.name }}</h3>
-                          <div v-if="city.status_text" class="coverage__status">{{ city.status_text }}</div>
-                      </div>
-                  </li>
-              </ul>
+              <div ref="rail" class="coverage__rail swiper">
+                  <ul class="coverage__list swiper-wrapper">
+                      <li v-for="(city, index) in cities" :key="index" class="coverage__item swiper-slide">
+                          <div class="coverage__city">
+                              <span class="coverage__pin" :class="city.active && 'coverage__pin_active'"></span>
+                              <h3 class="coverage__name">{{ city.name }}</h3>
+                              <div v-if="city.status_text" class="coverage__status">{{ city.status_text }}</div>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
           </div>
       </div>
   </section>

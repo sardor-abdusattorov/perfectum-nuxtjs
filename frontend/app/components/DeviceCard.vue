@@ -18,7 +18,11 @@ const price = computed(() => (
               loading="lazy" />
           <DeviceSilhouette v-else />
       </div>
-      <p class="device-card__label">{{ label ?? device.brand?.name ?? t('devices.model') }}</p>
+      <p class="device-card__label">
+          <NuxtLink v-if="!label && device.brand" class="device-card__brand"
+              :to="localePath(`/devices/brands/${device.brand.slug}`)">{{ device.brand.name }}</NuxtLink>
+          <template v-else>{{ label ?? t('devices.model') }}</template>
+      </p>
       <h3 class="device-card__name">{{ device.name }}</h3>
       <p v-if="price" class="device-card__price">{{ price }} {{ t('devices.currency') }}</p>
       <NuxtLink class="device-card__link" :to="localePath(`/devices/${device.slug}`)"

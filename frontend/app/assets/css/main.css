@@ -3423,18 +3423,22 @@ strong {
   margin-bottom: 44px;
 }
 
-.coverage .coverage__list {
-  display: flex;
-  align-items: center;
+.coverage .coverage__rail {
   width: 100%;
   padding: 24px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.44);
   border-top: 1px solid rgba(255, 255, 255, 0.44);
 }
 
-.coverage .coverage__list li {
+.coverage .coverage__list {
+  display: flex;
+  align-items: center;
+}
+
+.coverage .coverage__item {
   flex: 0 0 auto;
   width: 25%;
+  height: auto;
 }
 
 .coverage .coverage__city {
@@ -3442,7 +3446,7 @@ strong {
   position: relative;
 }
 
-.coverage__cities li:last-child .coverage__city::after {
+.coverage__cities .coverage__item:last-child .coverage__city::after {
   display: none;
 }
 
@@ -5438,6 +5442,16 @@ body.overflow__hidden {
   text-align: center;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+
+.device-card__brand {
+  position: relative;
+  z-index: 1;
+  transition: var(--transition);
+}
+
+.device-card__brand:hover {
+  color: var(--color-red-ink);
 }
 
 .device-card__name {
@@ -8555,8 +8569,10 @@ select {
     font-size: 16px;
     line-height: normal;
   }
-  .coverage .coverage__list {
+  .coverage .coverage__rail {
     padding: 20px 0;
+  }
+  .coverage .coverage__list {
     align-items: flex-start;
   }
   .coverage .coverage__city {
@@ -8915,21 +8931,11 @@ select {
     margin-top: 32px;
     flex-direction: column-reverse;
   }
-  .coverage .coverage__list {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  .coverage .coverage__rail {
     padding: 16px 0;
   }
-  .coverage .coverage__list::-webkit-scrollbar {
-    display: none;
-  }
-  .coverage .coverage__list li {
-    width: auto;
-    min-width: 33.333%;
-    scroll-snap-align: start;
+  .coverage .coverage__item {
+    width: 33.333%;
   }
   .coverage .coverage__title {
     margin-bottom: 20px;
@@ -9328,10 +9334,10 @@ select {
     max-width: 50%;
     margin-bottom: 16px;
   }
-  .coverage .coverage__list li {
-    min-width: 50%;
+  .coverage .coverage__item {
+    width: 50%;
   }
-  .coverage .coverage__list {
+  .coverage .coverage__rail {
     padding: 12px 0;
   }
   .coverage .coverage__name,

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Tariffs\Pages\CreateTariff;
+use App\Models\Device;
+use App\Models\DeviceBrand;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\Tariff;
@@ -132,4 +134,27 @@ it('lists both resources in the panel', function (): void {
 
     allowed('Service');
     $this->get('/admin/services')->assertOk();
+});
+
+it('shows the brand by name in the device list', function (): void {
+    $user = panelUser();
+
+    foreach (['ViewAny', 'View'] as $verb) {
+        $user->givePermissionTo(Permission::findOrCreate("{$verb}:Device", 'web'));
+    }
+
+    $brand = DeviceBrand::create(['name' => 'Tozed', 'slug' => 'tozed', 'sort' => 1, 'status' => true]);
+
+    Device::create([
+        'name' => ['ru' => 'Tozed ZLT X25'],
+        'slug' => 'tozed-zlt-x25',
+        'brand_id' => $brand->getKey(),
+        'status' => true,
+    ]);
+
+    $this->actingAs($user->refresh())
+        ->get('/admin/devices')
+        ->assertOk()
+        ->assertSee('Tozed')
+        ->assertDontSee('&quot;slug&quot;:&quot;tozed&quot;', false);
 });
