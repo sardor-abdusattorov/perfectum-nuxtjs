@@ -19,31 +19,52 @@ afterEach(function (): void {
     File::deleteDirectory(storage_path('app/testing-old-files'));
 });
 
-it('carries the old uploads onto the public disk', function (): void {
+it('lays a referenced file down at its new address', function (): void {
+    Device::query()->create([
+        'name' => ['ru' => 'Тест'],
+        'slug' => 'test',
+        'image' => 'uploads/devices/legacy/photo.jpg',
+    ]);
+
     $this->artisan('old-files:import', ['--source' => 'testing-old-files'])
         ->assertSuccessful();
 
-    Storage::disk('public')->assertExists('images/photo.jpg');
-    expect(Storage::disk('public')->get('images/photo.jpg'))->toBe('старые байты');
+    Storage::disk('public')->assertExists('uploads/devices/legacy/photo.jpg');
+    expect(Storage::disk('public')->get('uploads/devices/legacy/photo.jpg'))->toBe('старые байты');
 });
 
 it('leaves a file alone when it is already in place', function (): void {
-    Storage::disk('public')->put('images/photo.jpg', 'старые байты');
+    Device::query()->create([
+        'name' => ['ru' => 'Тест'],
+        'slug' => 'test',
+        'image' => 'uploads/devices/legacy/photo.jpg',
+    ]);
+    Storage::disk('public')->put('uploads/devices/legacy/photo.jpg', 'уже лежит');
 
     $this->artisan('old-files:import', ['--source' => 'testing-old-files'])
         ->expectsOutputToContain('уже на месте: 1')
         ->assertSuccessful();
+
+    expect(Storage::disk('public')->get('uploads/devices/legacy/photo.jpg'))->toBe('уже лежит');
+});
+
+it('carries nothing the content does not reference', function (): void {
+    $this->artisan('old-files:import', ['--source' => 'testing-old-files'])
+        ->expectsOutputToContain('не понадобилось: 1')
+        ->assertSuccessful();
+
+    expect(Storage::disk('public')->allFiles())->toBe([]);
 });
 
 it('names the referenced files the folder does not hold', function (): void {
     Device::query()->create([
         'name' => ['ru' => 'Тест'],
         'slug' => 'test',
-        'image' => 'images/lost.jpg',
+        'image' => 'uploads/devices/legacy/lost.jpg',
     ]);
 
     $this->artisan('old-files:import', ['--source' => 'testing-old-files'])
-        ->expectsOutputToContain('images/lost.jpg')
+        ->expectsOutputToContain('uploads/devices/legacy/lost.jpg')
         ->assertSuccessful();
 });
 

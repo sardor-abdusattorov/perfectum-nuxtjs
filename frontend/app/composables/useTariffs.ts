@@ -80,9 +80,12 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
   const category = ref<number | ''>('')
   const type = ref<number | ''>('')
 
+  // the menu opens the page straight onto a category: ?tab= counts them from one
+  const requested = Number(useRoute().query.tab)
+
   watchEffect(() => {
     if (!category.value && categories.value.length) {
-      category.value = categories.value[0]!.id
+      category.value = (categories.value[requested - 1] ?? categories.value[0]!).id
     }
   })
 

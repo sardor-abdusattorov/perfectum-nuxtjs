@@ -61,11 +61,11 @@
                 }
             }
         ],
-        "image": "images/IaTHB0YRXLXh0rsycSu6kV7FoEWCuAZ1hhbGAqiv.svg",
-        "modal_image": "images/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
+        "image": "uploads/tariffs/legacy/IaTHB0YRXLXh0rsycSu6kV7FoEWCuAZ1hhbGAqiv.svg",
+        "modal_image": "uploads/tariffs/legacy/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
         "buttons": [
             {
-                "icon": "images/dP7oXB9NOzMRgBfLlqv2z738cT9d9AqNoMQG1FI9.png",
+                "icon": "uploads/tariffs/legacy/dP7oXB9NOzMRgBfLlqv2z738cT9d9AqNoMQG1FI9.png",
                 "url": "tel:7*1*1",
                 "type": "tel",
                 "name": {
@@ -74,7 +74,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -147,11 +147,11 @@
                 }
             }
         ],
-        "image": "images/tgNPajDWWmnDbCQBKswC2giW1UyXLMBsJlRVfxJp.svg",
-        "modal_image": "images/YiUQHinDzrC7AG5EIqPzQosYzFDBpbCdgyArFeCJ.svg",
+        "image": "uploads/tariffs/legacy/tgNPajDWWmnDbCQBKswC2giW1UyXLMBsJlRVfxJp.svg",
+        "modal_image": "uploads/tariffs/legacy/YiUQHinDzrC7AG5EIqPzQosYzFDBpbCdgyArFeCJ.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*2",
                 "type": "tel",
                 "name": {
@@ -160,7 +160,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -233,11 +233,11 @@
                 }
             }
         ],
-        "image": "images/BSWD9ovGge2NbeQo8dH8IUC4AMiqDQW4gTs1Q8g2.svg",
-        "modal_image": "images/DcSW19GN3Rw6incQELVO8dWn7nLiV7Maj3k0yQDY.svg",
+        "image": "uploads/tariffs/legacy/BSWD9ovGge2NbeQo8dH8IUC4AMiqDQW4gTs1Q8g2.svg",
+        "modal_image": "uploads/tariffs/legacy/DcSW19GN3Rw6incQELVO8dWn7nLiV7Maj3k0yQDY.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*3",
                 "type": "tel",
                 "name": {
@@ -246,7 +246,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -319,11 +319,11 @@
                 }
             }
         ],
-        "image": "images/jmaMLw9hp8InNfWw2Ef0DKQCNHcMvyDawmgOJTPF.svg",
-        "modal_image": "images/v09yC3if09mBrjNL0JU8d2XGx0nxgraN7gMS6Yi2.svg",
+        "image": "uploads/tariffs/legacy/jmaMLw9hp8InNfWw2Ef0DKQCNHcMvyDawmgOJTPF.svg",
+        "modal_image": "uploads/tariffs/legacy/v09yC3if09mBrjNL0JU8d2XGx0nxgraN7gMS6Yi2.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*4",
                 "type": "tel",
                 "name": {
@@ -332,7 +332,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -405,11 +405,11 @@
                 }
             }
         ],
-        "image": "images/IxrXzhn2GLkXUdMyc3XCH4peQ5Aol0F8keOw0BGd.svg",
-        "modal_image": "images/rlVQrN0UyqtifVTUHp0SmHrvftdYDU5d4i3RzL2N.svg",
+        "image": "uploads/tariffs/legacy/IxrXzhn2GLkXUdMyc3XCH4peQ5Aol0F8keOw0BGd.svg",
+        "modal_image": "uploads/tariffs/legacy/rlVQrN0UyqtifVTUHp0SmHrvftdYDU5d4i3RzL2N.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*5",
                 "type": "tel",
                 "name": {
@@ -418,7 +418,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -491,11 +491,11 @@
                 }
             }
         ],
-        "image": "images/8Qt06qv70HU9Y7Aa07v5NcwiFtCKI9S9qU4dlWsn.svg",
-        "modal_image": "images/QI2Xs7D3RB51WvxCWNivJ0uGbsCtyS91e2MPSFN4.svg",
+        "image": "uploads/tariffs/legacy/8Qt06qv70HU9Y7Aa07v5NcwiFtCKI9S9qU4dlWsn.svg",
+        "modal_image": "uploads/tariffs/legacy/QI2Xs7D3RB51WvxCWNivJ0uGbsCtyS91e2MPSFN4.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*6",
                 "type": "tel",
                 "name": {
@@ -504,7 +504,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -577,8 +577,8 @@
                 }
             }
         ],
-        "image": "images/Pzyll2Xk1bpISnffQMQeHZ6CqL6DztznPc75DX1S.svg",
-        "modal_image": "images/W4uc0H6LFFmhersa8XgsDlGDDTeAqKZln87MS2Qo.svg",
+        "image": "uploads/tariffs/legacy/Pzyll2Xk1bpISnffQMQeHZ6CqL6DztznPc75DX1S.svg",
+        "modal_image": "uploads/tariffs/legacy/W4uc0H6LFFmhersa8XgsDlGDDTeAqKZln87MS2Qo.svg",
         "buttons": [],
         "status": true
     },
@@ -644,11 +644,11 @@
                 }
             }
         ],
-        "image": "images/srHNLllBNLO0EPFEsbcOWubgMqygtSsXUTR4l1nm.svg",
-        "modal_image": "images/5PxQIVeGE5teEaILH8ht3jhLrfrbaMIkLjfNeegD.svg",
+        "image": "uploads/tariffs/legacy/srHNLllBNLO0EPFEsbcOWubgMqygtSsXUTR4l1nm.svg",
+        "modal_image": "uploads/tariffs/legacy/5PxQIVeGE5teEaILH8ht3jhLrfrbaMIkLjfNeegD.svg",
         "buttons": [
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -721,11 +721,11 @@
                 }
             }
         ],
-        "image": "images/LcJsLnXMQSj6mjTmiyNeadp4s8NH98hsVMcYMno6.svg",
-        "modal_image": "images/yzFM982xbMEO2xPOr15ghVq9aFKxvZd9NFq6tvQs.svg",
+        "image": "uploads/tariffs/legacy/LcJsLnXMQSj6mjTmiyNeadp4s8NH98hsVMcYMno6.svg",
+        "modal_image": "uploads/tariffs/legacy/yzFM982xbMEO2xPOr15ghVq9aFKxvZd9NFq6tvQs.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*7",
                 "type": "tel",
                 "name": {
@@ -734,7 +734,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -807,11 +807,11 @@
                 }
             }
         ],
-        "image": "images/puPKTWbDent7bHHrTyAVcQqZNGY2TPSoLuEB6H3I.svg",
-        "modal_image": "images/gzWoijBJR8E6uGdlTulWPLsoY9YNIOM09zzdoA6t.svg",
+        "image": "uploads/tariffs/legacy/puPKTWbDent7bHHrTyAVcQqZNGY2TPSoLuEB6H3I.svg",
+        "modal_image": "uploads/tariffs/legacy/gzWoijBJR8E6uGdlTulWPLsoY9YNIOM09zzdoA6t.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*8",
                 "type": "tel",
                 "name": {
@@ -820,7 +820,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -893,11 +893,11 @@
                 }
             }
         ],
-        "image": "images/wPNcXOA0JBgTSJYCnoNNlyG0SI8EsTEKJTEGnNgE.svg",
-        "modal_image": "images/H4bE0N4GrhTX5KnpY9pIIVp0PzrRyH1ur5NOdFCC.svg",
+        "image": "uploads/tariffs/legacy/wPNcXOA0JBgTSJYCnoNNlyG0SI8EsTEKJTEGnNgE.svg",
+        "modal_image": "uploads/tariffs/legacy/H4bE0N4GrhTX5KnpY9pIIVp0PzrRyH1ur5NOdFCC.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*9",
                 "type": "tel",
                 "name": {
@@ -906,7 +906,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -979,11 +979,11 @@
                 }
             }
         ],
-        "image": "images/0TQy2qI5mX1U3pJFQNM2IAm6S9tQvKx5gyEQCjUR.svg",
-        "modal_image": "images/jrQ0dcR2lntX5WcnUXuRZSeyigCyMy6PrhEEq6Tg.svg",
+        "image": "uploads/tariffs/legacy/0TQy2qI5mX1U3pJFQNM2IAm6S9tQvKx5gyEQCjUR.svg",
+        "modal_image": "uploads/tariffs/legacy/jrQ0dcR2lntX5WcnUXuRZSeyigCyMy6PrhEEq6Tg.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*10",
                 "type": "tel",
                 "name": {
@@ -992,7 +992,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -1065,11 +1065,11 @@
                 }
             }
         ],
-        "image": "images/Dg3PIDYUGhIUAXe6bYSxQ3ESP0ecZDi0q59KZwKP.svg",
-        "modal_image": "images/a0XZ7EYt6qSrb7mwqGabEtdi6CXhnYzjB0KwLqdL.svg",
+        "image": "uploads/tariffs/legacy/Dg3PIDYUGhIUAXe6bYSxQ3ESP0ecZDi0q59KZwKP.svg",
+        "modal_image": "uploads/tariffs/legacy/a0XZ7EYt6qSrb7mwqGabEtdi6CXhnYzjB0KwLqdL.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*11",
                 "type": "tel",
                 "name": {
@@ -1078,7 +1078,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -1151,11 +1151,11 @@
                 }
             }
         ],
-        "image": "images/UMtd5DAT76VsjRVo22CB6NpqJZCHIEH1iu2RhCNn.svg",
-        "modal_image": "images/ss8tsAlg0OTvqpVC941HYsu2y8tp9EQtV2AkAOxk.svg",
+        "image": "uploads/tariffs/legacy/UMtd5DAT76VsjRVo22CB6NpqJZCHIEH1iu2RhCNn.svg",
+        "modal_image": "uploads/tariffs/legacy/ss8tsAlg0OTvqpVC941HYsu2y8tp9EQtV2AkAOxk.svg",
         "buttons": [
             {
-                "icon": "images/phone-solid.png",
+                "icon": "uploads/tariffs/legacy/phone-solid.png",
                 "url": "tel:7*1*12",
                 "type": "tel",
                 "name": {
@@ -1164,7 +1164,7 @@
                 }
             },
             {
-                "icon": "images/user-solid.png",
+                "icon": "uploads/tariffs/legacy/user-solid.png",
                 "url": "https://my.perfectum.uz/login.php",
                 "type": "link",
                 "name": {
@@ -1237,8 +1237,8 @@
                 }
             }
         ],
-        "image": "images/ASM7NkWBUA227GZiZT4WGRDNuUfReObweseALoIb.svg",
-        "modal_image": "images/ucNuPnR7bmJLh607dohtgYliHuPKL9kRIanr1YMm.svg",
+        "image": "uploads/tariffs/legacy/ASM7NkWBUA227GZiZT4WGRDNuUfReObweseALoIb.svg",
+        "modal_image": "uploads/tariffs/legacy/ucNuPnR7bmJLh607dohtgYliHuPKL9kRIanr1YMm.svg",
         "buttons": [],
         "status": true
     },
@@ -1304,8 +1304,8 @@
                 }
             }
         ],
-        "image": "images/T4EHSsqNd394SG6cQ9u9z49nAtZN62J2oJuTIxAn.svg",
-        "modal_image": "images/I6sjJy7HDUjFfKWxWrUryhmKgzpEWtHjRmspuY2e.svg",
+        "image": "uploads/tariffs/legacy/T4EHSsqNd394SG6cQ9u9z49nAtZN62J2oJuTIxAn.svg",
+        "modal_image": "uploads/tariffs/legacy/I6sjJy7HDUjFfKWxWrUryhmKgzpEWtHjRmspuY2e.svg",
         "buttons": [],
         "status": true
     },
@@ -1371,8 +1371,8 @@
                 }
             }
         ],
-        "image": "images/gNwHURSOz1BTEKEWWJy1uDABe2F2ryox3msgcxaz.svg",
-        "modal_image": "images/lV6rvh50k6EVRWA5bnZYv2haYtTNeLsyeq8C0qKN.svg",
+        "image": "uploads/tariffs/legacy/gNwHURSOz1BTEKEWWJy1uDABe2F2ryox3msgcxaz.svg",
+        "modal_image": "uploads/tariffs/legacy/lV6rvh50k6EVRWA5bnZYv2haYtTNeLsyeq8C0qKN.svg",
         "buttons": [],
         "status": true
     },
@@ -1438,8 +1438,8 @@
                 }
             }
         ],
-        "image": "images/PXBAe6X8qjui15z6Wmhzm1qYqWWfxH7DPbUUNvFh.svg",
-        "modal_image": "images/vBDkHLXtKi1mklpGOnazLtUweLPEDapdopYW84kB.svg",
+        "image": "uploads/tariffs/legacy/PXBAe6X8qjui15z6Wmhzm1qYqWWfxH7DPbUUNvFh.svg",
+        "modal_image": "uploads/tariffs/legacy/vBDkHLXtKi1mklpGOnazLtUweLPEDapdopYW84kB.svg",
         "buttons": [],
         "status": true
     },
@@ -1505,8 +1505,8 @@
                 }
             }
         ],
-        "image": "images/OqQiD1cYwwPTOha9yL39OzjmyikodLX35ES8GDNi.svg",
-        "modal_image": "images/Z136eIZvqRB3p6DTb9q81ScpkpcWKnA5UDEXnyY4.svg",
+        "image": "uploads/tariffs/legacy/OqQiD1cYwwPTOha9yL39OzjmyikodLX35ES8GDNi.svg",
+        "modal_image": "uploads/tariffs/legacy/Z136eIZvqRB3p6DTb9q81ScpkpcWKnA5UDEXnyY4.svg",
         "buttons": [],
         "status": true
     },
@@ -1564,8 +1564,8 @@
                 }
             }
         ],
-        "image": "images/IaTHB0YRXLXh0rsycSu6kV7FoEWCuAZ1hhbGAqiv.svg",
-        "modal_image": "images/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
+        "image": "uploads/tariffs/legacy/IaTHB0YRXLXh0rsycSu6kV7FoEWCuAZ1hhbGAqiv.svg",
+        "modal_image": "uploads/tariffs/legacy/TjSoHimEbHU49CLL9DpotRy0c5FUqnWodo0S1nS4.svg",
         "buttons": [],
         "status": true
     },
@@ -1620,11 +1620,11 @@
                 }
             }
         ],
-        "image": "images/T3SOD07QGODtk3BNhuXRpaISwjl5VMiNzxY7Glg6.png",
-        "modal_image": "images/0rG3GhsxHe5t2TUj3rGG3E2ayGQoxyuvIeyqMpyd.png",
+        "image": "uploads/tariffs/legacy/T3SOD07QGODtk3BNhuXRpaISwjl5VMiNzxY7Glg6.png",
+        "modal_image": "uploads/tariffs/legacy/0rG3GhsxHe5t2TUj3rGG3E2ayGQoxyuvIeyqMpyd.png",
         "buttons": [
             {
-                "icon": "images/bQdtPKkxYZJSp4qvyaG8jRJNj05mZQ8C1Oeovwu8.png",
+                "icon": "uploads/tariffs/legacy/bQdtPKkxYZJSp4qvyaG8jRJNj05mZQ8C1Oeovwu8.png",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -1633,7 +1633,7 @@
                 }
             },
             {
-                "icon": "images/l9y1yDuqiGyp7TyYp3FDGO3hWussNMeAW3dkYQwl.png",
+                "icon": "uploads/tariffs/legacy/l9y1yDuqiGyp7TyYp3FDGO3hWussNMeAW3dkYQwl.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -1695,11 +1695,11 @@
                 }
             }
         ],
-        "image": "images/n5TiXxhTr4K72cRmyRJOyg3VkpSbVISkKJcFg8Xe.png",
-        "modal_image": "images/bDo0EhNwsbW0CS6N1oHbVTMih3FpBxugpRGudu7b.png",
+        "image": "uploads/tariffs/legacy/n5TiXxhTr4K72cRmyRJOyg3VkpSbVISkKJcFg8Xe.png",
+        "modal_image": "uploads/tariffs/legacy/bDo0EhNwsbW0CS6N1oHbVTMih3FpBxugpRGudu7b.png",
         "buttons": [
             {
-                "icon": "images/o89oOLuHwuSK6dLBykfmcAU4lpe8t0H73Z3AQNve.jpg",
+                "icon": "uploads/tariffs/legacy/o89oOLuHwuSK6dLBykfmcAU4lpe8t0H73Z3AQNve.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -1708,7 +1708,7 @@
                 }
             },
             {
-                "icon": "images/DvtL3qFeh6zX3OvLZDwHYUIhDVHMhAAbYTbJGMqm.png",
+                "icon": "uploads/tariffs/legacy/DvtL3qFeh6zX3OvLZDwHYUIhDVHMhAAbYTbJGMqm.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -1770,11 +1770,11 @@
                 }
             }
         ],
-        "image": "images/IWTn51euFcCx8qqsfUi8nwFXKkCgTgAlmMojlVUM.png",
-        "modal_image": "images/nZ8bszT5QvssA1v3rMmjnD4KXwXcPnxLJSz68gcJ.png",
+        "image": "uploads/tariffs/legacy/IWTn51euFcCx8qqsfUi8nwFXKkCgTgAlmMojlVUM.png",
+        "modal_image": "uploads/tariffs/legacy/nZ8bszT5QvssA1v3rMmjnD4KXwXcPnxLJSz68gcJ.png",
         "buttons": [
             {
-                "icon": "images/EloLHV2DlLbmLRg0UXZJFmvWzbBUqqkzuLWsD6ph.jpg",
+                "icon": "uploads/tariffs/legacy/EloLHV2DlLbmLRg0UXZJFmvWzbBUqqkzuLWsD6ph.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -1783,7 +1783,7 @@
                 }
             },
             {
-                "icon": "images/FVgyOQZGCGXjzhyqArRw5t7bmj4JfNM1yYAvOEu2.png",
+                "icon": "uploads/tariffs/legacy/FVgyOQZGCGXjzhyqArRw5t7bmj4JfNM1yYAvOEu2.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -1845,11 +1845,11 @@
                 }
             }
         ],
-        "image": "images/cnuR5weqTB4KgI6PZLNqaih5wcbaQqbAqSKgGAbq.png",
-        "modal_image": "images/e7puEyLi1qju8QlD46HBIB51eGzF7VvxYEl9nUyl.png",
+        "image": "uploads/tariffs/legacy/cnuR5weqTB4KgI6PZLNqaih5wcbaQqbAqSKgGAbq.png",
+        "modal_image": "uploads/tariffs/legacy/e7puEyLi1qju8QlD46HBIB51eGzF7VvxYEl9nUyl.png",
         "buttons": [
             {
-                "icon": "images/PcNhC2INVXDv7E8YmqjaiDGGRf6OaIy2d9OzaKEq.jpg",
+                "icon": "uploads/tariffs/legacy/PcNhC2INVXDv7E8YmqjaiDGGRf6OaIy2d9OzaKEq.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -1858,7 +1858,7 @@
                 }
             },
             {
-                "icon": "images/5byMRCBvwbyhwkitjds6jTMvHYtiTj9KgKQu2EhH.png",
+                "icon": "uploads/tariffs/legacy/5byMRCBvwbyhwkitjds6jTMvHYtiTj9KgKQu2EhH.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -1920,11 +1920,11 @@
                 }
             }
         ],
-        "image": "images/S4bBE8tbgGplwDzAwe5h0fkX5bahbHd8YiVl8ln8.png",
-        "modal_image": "images/Wamazo63hZs4bHBkuwGEl9JEzYWsPxuAUDIITsJP.png",
+        "image": "uploads/tariffs/legacy/S4bBE8tbgGplwDzAwe5h0fkX5bahbHd8YiVl8ln8.png",
+        "modal_image": "uploads/tariffs/legacy/Wamazo63hZs4bHBkuwGEl9JEzYWsPxuAUDIITsJP.png",
         "buttons": [
             {
-                "icon": "images/Xqk2lHe1MMpQEVAjQc2Wy01NNhMaEIknbMliCyLy.jpg",
+                "icon": "uploads/tariffs/legacy/Xqk2lHe1MMpQEVAjQc2Wy01NNhMaEIknbMliCyLy.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -1933,7 +1933,7 @@
                 }
             },
             {
-                "icon": "images/0Oaw4QtUpty8q1jT9U6QnPq2xBYWVGAL7D8VM7KA.png",
+                "icon": "uploads/tariffs/legacy/0Oaw4QtUpty8q1jT9U6QnPq2xBYWVGAL7D8VM7KA.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -1995,11 +1995,11 @@
                 }
             }
         ],
-        "image": "images/iuAvgUZ0xt700NSlUmy68iV6xCjenzOOITpUQ9Ls.png",
-        "modal_image": "images/Jdp2xaLQMKtlPk1YKFqnY6YniI951VwF18ksACcZ.png",
+        "image": "uploads/tariffs/legacy/iuAvgUZ0xt700NSlUmy68iV6xCjenzOOITpUQ9Ls.png",
+        "modal_image": "uploads/tariffs/legacy/Jdp2xaLQMKtlPk1YKFqnY6YniI951VwF18ksACcZ.png",
         "buttons": [
             {
-                "icon": "images/Fx8rZ8utKpcsHljiN6cbj6v5Asj05WL4qiNaGBCF.jpg",
+                "icon": "uploads/tariffs/legacy/Fx8rZ8utKpcsHljiN6cbj6v5Asj05WL4qiNaGBCF.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -2008,7 +2008,7 @@
                 }
             },
             {
-                "icon": "images/pwsNE1y3sTiQvB9MSobH1nq07U53Io384Hf93qkp.png",
+                "icon": "uploads/tariffs/legacy/pwsNE1y3sTiQvB9MSobH1nq07U53Io384Hf93qkp.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -2092,11 +2092,11 @@
                 }
             }
         ],
-        "image": "images/s9EJkYbkZQveh3AU4CEC4R3VmuHJBugq793fpIYN.png",
-        "modal_image": "images/sfsv8XInuS0EtIpQV6UUI01mCXVagrnEYwKIgDBv.png",
+        "image": "uploads/tariffs/legacy/s9EJkYbkZQveh3AU4CEC4R3VmuHJBugq793fpIYN.png",
+        "modal_image": "uploads/tariffs/legacy/sfsv8XInuS0EtIpQV6UUI01mCXVagrnEYwKIgDBv.png",
         "buttons": [
             {
-                "icon": "images/yrS99AFYcAsIDbhg1PQo6mrHAkVOVzgwUL1elVo9.png",
+                "icon": "uploads/tariffs/legacy/yrS99AFYcAsIDbhg1PQo6mrHAkVOVzgwUL1elVo9.png",
                 "url": "https://lk.perfectum.uz/ru/login",
                 "type": "link",
                 "name": {
@@ -2105,7 +2105,7 @@
                 }
             },
             {
-                "icon": "images/cUUj5r0rotKx2jWOiysB9tjMijCgr2TKqpWNZI82.png",
+                "icon": "uploads/tariffs/legacy/cUUj5r0rotKx2jWOiysB9tjMijCgr2TKqpWNZI82.png",
                 "url": "https://perfectum.uz/app",
                 "type": "link",
                 "name": {
@@ -2189,11 +2189,11 @@
                 }
             }
         ],
-        "image": "images/6E8zwVB4rZOZb5LQ14PkInFfSCBcQ1lmUF2Esgp1.png",
-        "modal_image": "images/D2PdzAqvPHHJH9oUstW6cUXzQSkT86tvG0v0AkXF.png",
+        "image": "uploads/tariffs/legacy/6E8zwVB4rZOZb5LQ14PkInFfSCBcQ1lmUF2Esgp1.png",
+        "modal_image": "uploads/tariffs/legacy/D2PdzAqvPHHJH9oUstW6cUXzQSkT86tvG0v0AkXF.png",
         "buttons": [
             {
-                "icon": "images/MQYWEBH3zKeszkKe3PIpFHQGxGL7yYII9ij0MmXl.png",
+                "icon": "uploads/tariffs/legacy/MQYWEBH3zKeszkKe3PIpFHQGxGL7yYII9ij0MmXl.png",
                 "url": "https://lk.perfectum.uz/ru/login",
                 "type": "link",
                 "name": {
@@ -2202,7 +2202,7 @@
                 }
             },
             {
-                "icon": "images/XQl45BiVjHWoZNJwHBF5GZnUMzyBHgxTusFV6zEP.png",
+                "icon": "uploads/tariffs/legacy/XQl45BiVjHWoZNJwHBF5GZnUMzyBHgxTusFV6zEP.png",
                 "url": "https://perfectum.uz/app",
                 "type": "link",
                 "name": {
@@ -2264,11 +2264,11 @@
                 }
             }
         ],
-        "image": "images/tBeA5Yud1jrjYklzlP0Jyw2p3jMp603l46GwdrKt.png",
-        "modal_image": "images/QMiT2J230OOClaqPzZSOzH4Kc8Mw0j2RQQDuK2T0.png",
+        "image": "uploads/tariffs/legacy/tBeA5Yud1jrjYklzlP0Jyw2p3jMp603l46GwdrKt.png",
+        "modal_image": "uploads/tariffs/legacy/QMiT2J230OOClaqPzZSOzH4Kc8Mw0j2RQQDuK2T0.png",
         "buttons": [
             {
-                "icon": "images/PflUbOrTWexNHkpbaO3z5D5kNES1wwxcVeT467py.jpg",
+                "icon": "uploads/tariffs/legacy/PflUbOrTWexNHkpbaO3z5D5kNES1wwxcVeT467py.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -2277,7 +2277,7 @@
                 }
             },
             {
-                "icon": "images/wVHppsYlzwkopVdRVF73UXPmG4osJ2I71rV1jPTS.png",
+                "icon": "uploads/tariffs/legacy/wVHppsYlzwkopVdRVF73UXPmG4osJ2I71rV1jPTS.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -2339,11 +2339,11 @@
                 }
             }
         ],
-        "image": "images/g0eUXYri8LZv1gcmlhIkGDLMKcyFUQ5dCousBec8.png",
-        "modal_image": "images/i9hnSAk5oWJhGPSkFX9fyUzTpvoMRAiiGDQ92UcQ.png",
+        "image": "uploads/tariffs/legacy/g0eUXYri8LZv1gcmlhIkGDLMKcyFUQ5dCousBec8.png",
+        "modal_image": "uploads/tariffs/legacy/i9hnSAk5oWJhGPSkFX9fyUzTpvoMRAiiGDQ92UcQ.png",
         "buttons": [
             {
-                "icon": "images/kVrxe8TTfAXTTiND2EYljpfKbKMAUuQIatdD76vi.jpg",
+                "icon": "uploads/tariffs/legacy/kVrxe8TTfAXTTiND2EYljpfKbKMAUuQIatdD76vi.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -2352,7 +2352,7 @@
                 }
             },
             {
-                "icon": "images/TBwanUmzHjE5PrSKRhp9lRxZkAST82vHrqbKmfBm.png",
+                "icon": "uploads/tariffs/legacy/TBwanUmzHjE5PrSKRhp9lRxZkAST82vHrqbKmfBm.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {
@@ -2414,11 +2414,11 @@
                 }
             }
         ],
-        "image": "images/oTahPyEoeHUiEEQdYfN9bibvQAecN3GfMMH8vOHa.png",
-        "modal_image": "images/ongPP9AZdWKjPBwVRa6nk9MqkRrO7ewnegpfsqp5.png",
+        "image": "uploads/tariffs/legacy/oTahPyEoeHUiEEQdYfN9bibvQAecN3GfMMH8vOHa.png",
+        "modal_image": "uploads/tariffs/legacy/ongPP9AZdWKjPBwVRa6nk9MqkRrO7ewnegpfsqp5.png",
         "buttons": [
             {
-                "icon": "images/Rl9au6fRYCD7u3RcptkX3Djk2usH7oxqzrcch4Dv.jpg",
+                "icon": "uploads/tariffs/legacy/Rl9au6fRYCD7u3RcptkX3Djk2usH7oxqzrcch4Dv.jpg",
                 "url": "tel:+998 98 127 0077",
                 "type": "tel",
                 "name": {
@@ -2427,7 +2427,7 @@
                 }
             },
             {
-                "icon": "images/bR9WdXT9NpJuxlP9rh4YOZEpwOIpu0ozIYGXa2kH.png",
+                "icon": "uploads/tariffs/legacy/bR9WdXT9NpJuxlP9rh4YOZEpwOIpu0ozIYGXa2kH.png",
                 "url": "https://www.perfectum.uz/additionals/contact",
                 "type": "link",
                 "name": {

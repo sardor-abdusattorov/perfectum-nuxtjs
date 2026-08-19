@@ -15,17 +15,17 @@ use App\Models\Tariff;
 use App\Models\Tender;
 use App\Models\Vacancy;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * The imported content references the pictures and documents by the paths the
- * old site stored them under. Drop that site's storage/app/public into
- * storage/app/old_files/public (and its webroot pictures folder beside them,
- * as old_files/public/pictures) — this command carries every file over onto
- * the public disk, then says which referenced files are still missing.
+ * The content arrived with its files renamed into this site's own layout —
+ * uploads/{model}/legacy — while the files themselves still sit wherever the
+ * old site kept them. Drop that site's storage/app/public (plus its webroot
+ * pictures folder) into storage/app/old_files/public: every file the content
+ * references is found by its name in any subfolder and laid down at its new
+ * address. Nothing unreferenced is carried over.
  */
 final class OldFilesImport extends Command
 {
@@ -45,21 +45,46 @@ final class OldFilesImport extends Command
             return self::FAILURE;
         }
 
-        [$copied, $skipped, $failed] = $this->copy($source, Storage::disk('public'));
+        $disk = Storage::disk('public');
+        $index = $this->index($source);
+        $used = $copied = $skipped = 0;
+        $missing = $failed = [];
 
-        $this->info("Скопировано: {$copied}, уже на месте: {$skipped}.");
+        foreach ($this->referenced() as $path) {
+            if ($disk->exists($path)) {
+                $skipped++;
+
+                continue;
+            }
+
+            $file = $index[basename($path)] ?? null;
+
+            if ($file === null) {
+                $missing[] = $path;
+
+                continue;
+            }
+
+            $used++;
+            $stream = fopen($file, 'r');
+            $written = $stream !== false && $disk->writeStream($path, $stream) !== false;
+
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+
+            $written ? $copied++ : $failed[] = $path;
+        }
+
+        $this->info("Скопировано: {$copied}, уже на месте: {$skipped}, не понадобилось: ".(count($index) - $used).'.');
 
         $this->stampDocumentSizes();
 
-        $missing = $this->referenced()->reject(
-            fn (string $path): bool => Storage::disk('public')->exists($path),
-        );
-
-        if ($missing->isEmpty()) {
+        if ($missing === []) {
             $this->info('Все файлы, на которые ссылается контент, на месте.');
         } else {
-            $this->warn("Контент ссылается на {$missing->count()} файлов, которых нет:");
-            $missing->take(20)->each(fn (string $path) => $this->line("  {$path}"));
+            $this->warn('Контент ссылается на '.count($missing).' файлов, которых в папке нет:');
+            collect($missing)->take(20)->each(fn (string $path) => $this->line("  {$path}"));
         }
 
         if ($failed !== []) {
@@ -72,33 +97,20 @@ final class OldFilesImport extends Command
     }
 
     /**
-     * @return array{int, int, array<int, string>}
+     * The old hashed names are unique, so a file is found by its name no
+     * matter which folder the old site filed it under.
+     *
+     * @return array<string, string>
      */
-    private function copy(string $source, Filesystem $disk): array
+    private function index(string $source): array
     {
-        $copied = $skipped = 0;
-        $failed = [];
+        $index = [];
 
         foreach (File::allFiles($source) as $file) {
-            $relative = str_replace(DIRECTORY_SEPARATOR, '/', $file->getRelativePathname());
-
-            if ($disk->exists($relative) && $disk->size($relative) === $file->getSize()) {
-                $skipped++;
-
-                continue;
-            }
-
-            $stream = fopen($file->getPathname(), 'r');
-            $written = $stream !== false && $disk->writeStream($relative, $stream) !== false;
-
-            if (is_resource($stream)) {
-                fclose($stream);
-            }
-
-            $written ? $copied++ : $failed[] = $relative;
+            $index[$file->getFilename()] ??= $file->getPathname();
         }
 
-        return [$copied, $skipped, $failed];
+        return $index;
     }
 
     /**
@@ -163,7 +175,7 @@ final class OldFilesImport extends Command
                     (array) (json_decode((string) $raw, true) ?? $raw),
                     'is_string',
                 ));
-                preg_match_all('~/storage/((?:images|files|pictures)/[^"\'\s<>\\\\]+)~', $body, $matches);
+                preg_match_all('~/storage/(uploads/[^"\'\s<>\\\\]+)~', $body, $matches);
                 $paths = $paths->merge($matches[1]);
             }
         }
