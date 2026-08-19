@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\Network;
 use App\Models\Action;
 use App\Models\ActionCategory;
 use App\Models\News;
@@ -24,7 +25,7 @@ class ContentSeeder extends Seeder
         foreach ($data['news'] ?? [] as $row) {
             News::updateOrCreate(['slug' => $row['slug']], [
                 'category_id' => $newsCategories[$row['category']] ?? null,
-                'network' => $row['network'],
+                'network' => $this->newsNetwork($row['title']['ru'] ?? ''),
                 'title' => $row['title'],
                 'excerpt' => $row['excerpt'],
                 'content' => $row['content'],
@@ -72,6 +73,19 @@ class ContentSeeder extends Seeder
                 'published_at' => $row['published_at'] ?? null,
             ]);
         }
+    }
+
+    /**
+     * The operator announces its maintenance windows on the 5G network, and
+     * everything else the old site published — service numbers, prefixes and
+     * the content providers' notices — is the CDMA feed. Each news item keeps
+     * its own switch in the admin, so a wrong guess is one click to fix.
+     */
+    private function newsNetwork(string $title): Network
+    {
+        return preg_match('/техническ|профилактич/iu', $title) === 1
+            ? Network::FiveG
+            : Network::Cdma;
     }
 
     /**
