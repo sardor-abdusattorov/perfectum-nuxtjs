@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TariffCategories\Schemas;
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -29,6 +30,11 @@ class TariffCategoryForm
                         Fields::sort(),
 
                         Fields::status(),
+
+                        Toggle::make('in_catalog')
+                            ->label(__('app.label.in_catalog'))
+                            ->helperText(__('app.helper.in_catalog'))
+                            ->default(true),
                     ]),
             ]);
     }

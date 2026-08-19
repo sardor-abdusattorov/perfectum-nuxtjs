@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('network', 10)->default('both')->index();
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();
+            $table->boolean('in_catalog')->default(true);
             $table->timestamps();
         });
     }

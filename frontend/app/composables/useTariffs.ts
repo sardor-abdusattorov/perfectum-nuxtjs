@@ -4,6 +4,7 @@ export interface Taxonomy {
   id: number
   name: string
   network: string | null
+  in_catalog?: boolean | null
 }
 
 export interface TariffFeature {
@@ -74,7 +75,11 @@ export function useTariff(slug: MaybeRefOrGetter<string>) {
  * switching category resets them, the way the old site behaved.
  */
 export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
-  const categories = computed(() => catalog.value?.categories ?? [])
+  // a category switched out of the catalogue keeps serving its own section
+  // (the CDMA landing), it just loses its tab here and on the homepage
+  const categories = computed(() => (
+    (catalog.value?.categories ?? []).filter(item => item.in_catalog !== false)
+  ))
   const tariffs = computed(() => catalog.value?.tariffs ?? [])
 
   const category = ref<number | ''>('')

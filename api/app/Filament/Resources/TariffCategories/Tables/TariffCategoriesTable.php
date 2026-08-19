@@ -4,6 +4,7 @@ namespace App\Filament\Resources\TariffCategories\Tables;
 
 use App\Filament\Support\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class TariffCategoriesTable
@@ -25,6 +26,9 @@ class TariffCategoriesTable
                 TextColumn::make('sort')
                     ->label(__('app.label.sort'))
                     ->sortable(),
+
+                ToggleColumn::make('in_catalog')
+                    ->label(__('app.label.in_catalog')),
 
                 Tables::statusColumn(),
             ])

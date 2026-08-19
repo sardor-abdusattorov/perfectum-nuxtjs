@@ -16,12 +16,13 @@ class TariffCategory extends Model
 
     protected $table = 'tariff_categories';
 
-    protected $fillable = ['name', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'network', 'sort', 'status', 'in_catalog'];
 
     public $translatable = ['name'];
 
     protected $casts = [
         'network' => Network::class,
+        'in_catalog' => 'boolean',
         'status' => 'boolean',
     ];
 }

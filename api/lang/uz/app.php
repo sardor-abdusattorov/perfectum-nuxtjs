@@ -30,6 +30,7 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'in_catalog' => 'Tariflar katalogida koʻrsatish',
         'lead_text' => 'Lid matni',
         'change_status' => 'Statusni o\'zgartirish',
         'change_status_bulk' => 'Belgilanganlar statusini o\'zgartirish',
@@ -293,6 +294,7 @@ return [
     ],
 
     'helper' => [
+        'in_catalog' => 'Oʻchirsangiz, kategoriya bosh sahifadan va tariflar sahifasidan yoʻqoladi; uning sahifalari va CDMA boʻlimi ishlashda davom etadi.',
         'coverage_key' => 'Lotin harflarida, masalan 5g yoki voice — qatlam shu boʻyicha yoqiladi',
         'coverage_file' => 'Sheypfayl bilan ZIP (.shp va .prj). Konturlar yuklashda oʻqiladi',
         'document_file' => 'PDF yoki Word/Excel hujjati, 20 MB gacha',

@@ -84,6 +84,10 @@ class TaxonomySeeder extends Seeder
                 $values['network'] = (self::NETWORKS[$row['slug']] ?? Network::Both)->value;
             }
 
+            if ($model === TariffCategory::class) {
+                $values['in_catalog'] = $row['in_catalog'] ?? true;
+            }
+
             $ids[$row['slug']] = $model::updateOrCreate(['name->ru' => $row['name']['ru']], $values)->getKey();
         }
 

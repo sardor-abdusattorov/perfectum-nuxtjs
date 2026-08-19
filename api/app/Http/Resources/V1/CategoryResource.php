@@ -24,6 +24,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'network' => array_key_exists('network', $this->resource->getAttributes()) ? $this->network?->value : null,
+            'in_catalog' => array_key_exists('in_catalog', $this->resource->getAttributes()) ? (bool) $this->in_catalog : null,
         ];
     }
 }

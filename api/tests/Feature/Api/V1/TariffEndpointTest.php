@@ -95,3 +95,14 @@ it('leaves out an archive document whose file is gone', function (): void {
         ->assertOk()
         ->assertJsonCount(0, 'data');
 });
+
+it('tells the catalogue which categories to list', function (): void {
+    TariffCategory::create(['name' => ['ru' => 'Мобильная связь'], 'network' => 'both', 'sort' => 1]);
+    TariffCategory::create(['name' => ['ru' => 'CDMA'], 'network' => 'cdma', 'sort' => 2, 'in_catalog' => false]);
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'tariff-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.in_catalog', true)
+        ->assertJsonPath('data.1.name', 'CDMA')
+        ->assertJsonPath('data.1.in_catalog', false);
+});
