@@ -6,16 +6,11 @@
  * hop through here would only cost a round-trip.
  */
 export default defineEventHandler(async (event) => {
-  const target = useRuntimeConfig(event).apiBase
-
-  if (!target) {
-    throw createError({ statusCode: 500, statusMessage: 'API base is not configured' })
-  }
-
+  const target = apiTarget(event)
   const path = (event.context.params?._ ?? '').replace(/^\/+/, '')
   const { search } = getRequestURL(event)
 
-  return proxyRequest(event, `${target.replace(/\/+$/, '')}/${path}${search}`, {
+  return proxyRequest(event, `${target}/${path}${search}`, {
     headers: {
       'x-forwarded-for': getRequestIP(event, { xForwardedFor: true }) ?? '',
       'x-forwarded-proto': getRequestProtocol(event),

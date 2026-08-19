@@ -72,6 +72,16 @@ export default defineNuxtConfig({
     },
   },
 
+  /**
+   * In development the API is the Laravel server next door, so `npm run dev`
+   * works before any .env exists. A build still refuses to guess the address.
+   */
+  $development: {
+    runtimeConfig: {
+      apiBase: 'http://localhost:8000/api/v1',
+    },
+  },
+
   typescript: {
     nodeTsConfig: {
       compilerOptions: {

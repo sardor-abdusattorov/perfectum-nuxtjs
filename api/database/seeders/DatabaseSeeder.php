@@ -40,6 +40,11 @@ class DatabaseSeeder extends Seeder
         // the old site's uploads ride along whenever the folder is in place
         if (is_dir(storage_path('app/old_files/public'))) {
             Artisan::call('old-files:import', [], $this->command?->getOutput());
+
+            return;
         }
+
+        $this->command?->warn('Файлы старого сайта не скопированы: контент ссылается на картинки, которых на диске нет.');
+        $this->command?->line('Положите storage/app/public старого сайта в storage/app/old_files/public и запустите php artisan old-files:import.');
     }
 }

@@ -68,6 +68,33 @@ it('names the referenced files the folder does not hold', function (): void {
         ->assertSuccessful();
 });
 
+it('names the missing files without copying anything', function (): void {
+    Device::query()->create([
+        'name' => ['ru' => 'Тест'],
+        'slug' => 'test',
+        'image' => 'uploads/devices/legacy/photo.jpg',
+    ]);
+
+    $this->artisan('old-files:import', ['--check' => true])
+        ->expectsOutputToContain('uploads/devices/legacy/photo.jpg')
+        ->assertSuccessful();
+
+    expect(Storage::disk('public')->allFiles())->toBe([]);
+});
+
+it('reports a clean disk when every referenced file is in place', function (): void {
+    Device::query()->create([
+        'name' => ['ru' => 'Тест'],
+        'slug' => 'test',
+        'image' => 'uploads/devices/legacy/photo.jpg',
+    ]);
+    Storage::disk('public')->put('uploads/devices/legacy/photo.jpg', 'на месте');
+
+    $this->artisan('old-files:import', ['--check' => true])
+        ->expectsOutputToContain('Все файлы, на которые ссылается контент, на месте.')
+        ->assertSuccessful();
+});
+
 it('explains itself when the folder is missing', function (): void {
     $this->artisan('old-files:import', ['--source' => 'nowhere-at-all'])
         ->assertFailed();

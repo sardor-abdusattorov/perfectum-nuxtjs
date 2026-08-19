@@ -8,19 +8,14 @@
  * would outlive the file arriving.
  */
 export default defineEventHandler(async (event) => {
-  const target = useRuntimeConfig(event).apiBase
-
-  if (!target) {
-    throw createError({ statusCode: 500, statusMessage: 'API base is not configured' })
-  }
-
+  const target = apiTarget(event)
   const path = new URL(event.path, 'http://origin').pathname
 
   if (!path.startsWith('/storage/') || event.path.includes('..')) {
     throw createError({ statusCode: 404 })
   }
 
-  return proxyRequest(event, `${target.replace(/\/api\/v1\/?$/, '')}${path}`, {
+  return proxyRequest(event, `${target.replace(/\/api\/v1$/, '')}${path}`, {
     onResponse(proxied, response) {
       if (response.ok) {
         setResponseHeader(proxied, 'cache-control', 'public, max-age=604800, immutable')

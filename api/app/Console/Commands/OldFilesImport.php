@@ -30,12 +30,24 @@ use Illuminate\Support\Facades\Storage;
 final class OldFilesImport extends Command
 {
     protected $signature = 'old-files:import
-        {--source=old_files/public : folder inside storage/app holding the old site\'s public disk}';
+        {--source=old_files/public : folder inside storage/app holding the old site\'s public disk}
+        {--check : only name the referenced files the public disk does not hold}';
 
     protected $description = 'Copy the old site\'s uploads onto the public disk';
 
     public function handle(): int
     {
+        $disk = Storage::disk('public');
+
+        if ($this->option('check')) {
+            $this->report(
+                $this->referenced()->reject(fn (string $path): bool => $disk->exists($path))->all(),
+                'на диске',
+            );
+
+            return self::SUCCESS;
+        }
+
         $source = storage_path('app/'.trim((string) $this->option('source'), '/'));
 
         if (! is_dir($source)) {
@@ -45,7 +57,6 @@ final class OldFilesImport extends Command
             return self::FAILURE;
         }
 
-        $disk = Storage::disk('public');
         $index = $this->index($source);
         $used = $copied = $skipped = 0;
         $missing = $failed = [];
@@ -79,13 +90,7 @@ final class OldFilesImport extends Command
         $this->info("Скопировано: {$copied}, уже на месте: {$skipped}, не понадобилось: ".(count($index) - $used).'.');
 
         $this->stampDocumentSizes();
-
-        if ($missing === []) {
-            $this->info('Все файлы, на которые ссылается контент, на месте.');
-        } else {
-            $this->warn('Контент ссылается на '.count($missing).' файлов, которых в папке нет:');
-            collect($missing)->take(20)->each(fn (string $path) => $this->line("  {$path}"));
-        }
+        $this->report($missing, 'в папке');
 
         if ($failed !== []) {
             $this->error('Не записались '.count($failed).' файлов, первые: '.implode(', ', array_slice($failed, 0, 5)));
@@ -94,6 +99,21 @@ final class OldFilesImport extends Command
         }
 
         return self::SUCCESS;
+    }
+
+    /**
+     * @param  array<int, string>  $missing
+     */
+    private function report(array $missing, string $where): void
+    {
+        if ($missing === []) {
+            $this->info('Все файлы, на которые ссылается контент, на месте.');
+
+            return;
+        }
+
+        $this->warn('Контент ссылается на '.count($missing)." файлов, которых {$where} нет:");
+        collect($missing)->take(20)->each(fn (string $path) => $this->line("  {$path}"));
     }
 
     /**
