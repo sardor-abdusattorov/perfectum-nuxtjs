@@ -46,10 +46,29 @@ export function useDeviceCatalog() {
     async () => {
       const [categories, devices] = await Promise.all([
         $api<ApiResponse<Taxonomy[]>>('/categories/device-categories'),
-        $api<ApiResponse<Device[]>>('/devices', { params: { per_page: 48 } }),
+        (async () => {
+          // the catalogue is browsed whole — chips, brands and the pager all
+          // count every model, so the pages are gathered before rendering
+          const all: Device[] = []
+
+          for (let page = 1; page <= 10; page++) {
+            const response = await $api<ApiResponse<Device[]> & { meta?: { last_page: number } }>(
+              '/devices',
+              { params: { per_page: 100, page } },
+            )
+
+            all.push(...response.data)
+
+            if (page >= (response.meta?.last_page ?? 1)) {
+              break
+            }
+          }
+
+          return all
+        })(),
       ])
 
-      return { categories: categories.data, devices: devices.data }
+      return { categories: categories.data, devices }
     },
     { watch: [locale], default: () => ({ categories: [], devices: [] }) },
   )

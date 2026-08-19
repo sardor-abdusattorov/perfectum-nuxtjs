@@ -74,9 +74,8 @@ const pager = computed(() => {
                       </svg>
                       <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">{{ device.name }}</span>
                   </nav>
-                  <p class="page-hero__eyebrow page-hero__eyebrow_silver">{{ t('devices.hero_eyebrow') }}</p>
-                  <h1 class="page-hero__title section__title" v-html="t('devices.hero_title')"></h1>
-                  <p class="page-hero__subtitle">{{ t('devices.hero_subtitle') }}</p>
+                  <p class="page-hero__eyebrow page-hero__eyebrow_silver">{{ t('seo.devices') }}</p>
+                  <h1 class="page-hero__title section__title">{{ device.name }}</h1>
               </div>
           </div>
       </section>

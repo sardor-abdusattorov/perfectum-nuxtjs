@@ -36,7 +36,11 @@ class DeviceResource extends JsonResource
             ]),
             'excerpt' => $this->excerpt,
             'content' => $this->body($request, $this->content),
-            'specs' => $this->rows($this->specs, ['label', 'value']),
+            'specs' => $this->when(
+                $request->routeIs('*.show'),
+                fn (): array => $this->rows($this->specs, ['label', 'value']),
+                [],
+            ),
             'image' => $this->imageUrl(),
             'price' => $this->price,
             'in_stock' => $this->in_stock,
