@@ -28,6 +28,8 @@ class ContentSeeder extends Seeder
                 'title' => $row['title'],
                 'excerpt' => $row['excerpt'],
                 'content' => $row['content'],
+                'preview_image' => $row['image'] ?? null,
+                'main_image' => $row['image'] ?? null,
                 'is_featured' => $row['is_featured'],
                 'published_at' => $row['published_at'],
             ]);
@@ -41,6 +43,8 @@ class ContentSeeder extends Seeder
                 'badge' => $row['badge'],
                 'excerpt' => $row['excerpt'],
                 'content' => $row['content'],
+                'preview_image' => $row['image'] ?? null,
+                'main_image' => $row['image'] ?? null,
                 'starts_at' => $row['starts_at'],
                 'ends_at' => $row['ends_at'],
             ]);

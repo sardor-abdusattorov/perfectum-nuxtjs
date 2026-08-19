@@ -116,9 +116,10 @@ const pager = computed(() => {
                       <template v-if="device.specs.length">
                           <h3 class="device-view__specs-title">{{ t('devices.specs_title') }}</h3>
                           <dl class="spec-list">
-                              <div v-for="(spec, index) in device.specs" :key="index" class="spec-list__row">
+                              <div v-for="(spec, index) in device.specs" :key="index" class="spec-list__row"
+                                  :class="!spec.value && 'spec-list__row_group'">
                                   <dt class="spec-list__term">{{ spec.label }}</dt>
-                                  <dd class="spec-list__value">{{ spec.value }}</dd>
+                                  <dd v-if="spec.value" class="spec-list__value">{{ spec.value }}</dd>
                               </div>
                           </dl>
                       </template>

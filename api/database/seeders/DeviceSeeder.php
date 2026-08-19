@@ -65,7 +65,12 @@ class DeviceSeeder extends Seeder
             ->mapWithKeys(fn (array $brand): array => [
                 $brand['slug'] => DeviceBrand::updateOrCreate(
                     ['slug' => $brand['slug']],
-                    ['name' => $brand['name'], 'sort' => $brand['sort'], 'status' => true],
+                    [
+                        'name' => $brand['name'],
+                        'logo' => $brand['logo'] ?? null,
+                        'sort' => $brand['sort'],
+                        'status' => true,
+                    ],
                 )->getKey(),
             ])
             ->all();

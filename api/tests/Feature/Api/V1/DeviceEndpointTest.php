@@ -6,10 +6,12 @@ use App\Models\Device;
 use App\Models\DeviceBrand;
 use Database\Seeders\DeviceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    Storage::fake('public');
     $this->seed(DeviceSeeder::class);
 });
 

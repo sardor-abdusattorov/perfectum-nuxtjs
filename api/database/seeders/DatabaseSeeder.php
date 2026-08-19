@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,5 +35,10 @@ class DatabaseSeeder extends Seeder
             CoverageSeeder::class,
             DeviceSeeder::class,
         ]);
+
+        // the old site's uploads ride along whenever the folder is in place
+        if (is_dir(storage_path('app/old_files/public'))) {
+            Artisan::call('old-files:import', [], $this->command?->getOutput());
+        }
     }
 }

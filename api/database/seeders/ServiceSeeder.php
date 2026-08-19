@@ -37,6 +37,8 @@ class ServiceSeeder extends Seeder
                 'lead' => $row['lead'] ?: null,
                 'content' => $row['content'] ?: null,
                 'price' => $row['price'] ?: null,
+                'icon' => $row['icon'] ?? null,
+                'image' => $row['image'] ?? null,
                 'sort' => $row['sort'],
                 'status' => true,
             ]);

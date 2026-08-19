@@ -5614,6 +5614,19 @@ body.overflow__hidden {
   color: var(--color-muted);
 }
 
+/* a row with no value is a section header carried over from the old catalogue */
+.spec-list .spec-list__row_group {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  margin-top: 24px;
+  padding: 8px 0;
+}
+
+.spec-list .spec-list__row_group .spec-list__term {
+  font-weight: 600;
+  color: var(--color-black);
+}
+
 .spec-list .spec-list__value {
   padding-left: 10px;
   font-size: 16px;
