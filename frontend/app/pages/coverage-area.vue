@@ -30,6 +30,7 @@ const field = useTemplateRef('field')
 const address = ref('')
 const open = ref(false)
 const missing = ref(false)
+const broken = ref(false)
 
 /**
  * Collapsed, the round button is the handle that opens the field; once there is
@@ -113,11 +114,13 @@ function clear(): void {
             </svg>
           </div>
 
-          <div v-if="available.length" class="coverage-search__layers">
+          <div v-if="available.length" class="coverage-search__layers" role="radiogroup" :aria-label="t('coverage.network', 'Тип сети')">
             <button
               v-for="layer in available"
               :key="layer.key"
               type="button"
+              role="radio"
+              :aria-checked="layer.key === active"
               class="coverage-search__layer"
               :class="layer.key === active && 'coverage-search__layer_active'"
               :style="{ '--layer-color': layer.color }"
@@ -129,9 +132,10 @@ function clear(): void {
 
       <p v-if="missing" class="coverage-search__missing">{{ t('coverage.address_not_found') }}</p>
 
-      <CoverageMap ref="map" :layers="available" :active="active" :center="center" />
+      <CoverageMap ref="map" :layers="available" :active="active" :center="center" @failed="broken = $event" />
 
       <p v-if="!available.length" class="coverage__empty">{{ t('coverage.empty') }}</p>
+      <p v-else-if="broken" class="coverage__empty">{{ t('coverage.map_unavailable') }}</p>
     </div>
   </section>
 </template>

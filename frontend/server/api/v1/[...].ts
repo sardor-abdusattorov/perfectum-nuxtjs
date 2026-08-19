@@ -9,10 +9,15 @@ export default defineEventHandler(async (event) => {
   const target = apiTarget(event)
   const path = (event.context.params?._ ?? '').replace(/^\/+/, '')
   const { search } = getRequestURL(event)
+  const visitor = getRequestIP(event, { xForwardedFor: true })
 
   return proxyRequest(event, `${target}/${path}${search}`, {
     headers: {
-      'x-forwarded-for': getRequestIP(event, { xForwardedFor: true }) ?? '',
+      /**
+       * An empty forwarded-for is worse than none: the API trusts the header
+       * and would take the blank for the visitor's address.
+       */
+      ...(visitor ? { 'x-forwarded-for': visitor } : {}),
       'x-forwarded-proto': getRequestProtocol(event),
     },
   })

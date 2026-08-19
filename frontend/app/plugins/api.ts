@@ -25,7 +25,9 @@ export default defineNuxtPlugin(nuxtApp => {
       console.warn(`[api] ${import.meta.server ? 'SSR' : 'браузер'} не достучался до ${request}: ${error.message}`)
     },
     onResponseError({ request, response }) {
-      console.warn(`[api] ${request} ответил ${response.status}`)
+      const reason = (response._data as { message?: string } | null)?.message
+
+      console.warn(`[api] ${request} ответил ${response.status}${reason ? `: ${reason}` : ''}`)
     },
   })
 
