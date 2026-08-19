@@ -72,6 +72,15 @@ const pager = computed(() => {
                           <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
                               stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
+                      <template v-if="device.brand">
+                          <NuxtLink class="page-hero__crumb"
+                              :to="localePath(`/devices/brands/${device.brand.slug}`)">{{ device.brand.name }}</NuxtLink>
+                          <svg class="page-hero__crumb-sep" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                              fill="none" aria-hidden="true">
+                              <path d="M4 12h14M12 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"
+                                  stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                      </template>
                       <span class="page-hero__crumb page-hero__crumb_current" aria-current="page">{{ device.name }}</span>
                   </nav>
                   <p class="page-hero__eyebrow page-hero__eyebrow_silver">{{ t('seo.devices') }}</p>

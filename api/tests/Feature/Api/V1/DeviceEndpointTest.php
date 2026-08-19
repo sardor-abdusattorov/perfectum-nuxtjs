@@ -77,3 +77,12 @@ it('hands the brand over as a record the admin owns', function (): void {
         ->assertJsonPath('data.brand.color', '#b56a3a')
         ->assertJsonPath('data.brand.logo', null);
 });
+
+it('keeps an unpublished brand off the catalogue', function (): void {
+    DeviceBrand::query()->where('slug', 'amgoo')->update(['status' => false]);
+
+    $this->getJson(route('api.v1.devices.index'))
+        ->assertOk()
+        ->assertJsonPath('data.0.slug', 'amgoo-cx8r')
+        ->assertJsonPath('data.0.brand', null);
+});
