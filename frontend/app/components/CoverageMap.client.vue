@@ -19,10 +19,13 @@ const root = useTemplateRef('root')
 const canvas = useTemplateRef('canvas')
 const failed = ref(false)
 const expanded = ref(false)
+const hint = ref('')
 
 let map: any = null
 let drawing = 0
 let pin: any = null
+let me: any = null
+let saying: ReturnType<typeof setTimeout> | null = null
 const drawn: any[] = []
 
 const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
@@ -203,6 +206,55 @@ async function toggleFullscreen(): Promise<void> {
     : target.requestFullscreen()).catch(() => {})
 }
 
+/**
+ * The browser answers the geolocation prompt in its own time and may never
+ * answer at all, so the button says what it is doing and clears up after
+ * itself either way.
+ */
+function say(text: string): void {
+  hint.value = text
+
+  if (saying) {
+    clearTimeout(saying)
+  }
+
+  saying = text ? setTimeout(() => (hint.value = ''), 6000) : null
+}
+
+function locate(): void {
+  const ymaps = (window as any).ymaps
+
+  if (!map || !ymaps || !navigator.geolocation) {
+    say(t('coverage.locate_failed', 'Не удалось определить местоположение. Разрешите доступ к геолокации.'))
+
+    return
+  }
+
+  say(t('coverage.locating', 'Определяем ваше местоположение…'))
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const coords = [position.coords.latitude, position.coords.longitude]
+
+      if (me) {
+        map.geoObjects.remove(me)
+      }
+
+      me = new ymaps.Placemark(
+        coords,
+        { hintContent: t('coverage.you_here', 'Вы здесь') },
+        { preset: 'islands#geolocationIcon' },
+      )
+
+      map.geoObjects.add(me)
+      map.setCenter(coords, 13, { duration: 800 })
+      say('')
+    },
+    () => say(t('coverage.locate_failed', 'Не удалось определить местоположение. Разрешите доступ к геолокации.')),
+    { enableHighAccuracy: true, timeout: 8000 },
+  )
+}
+
 onMounted(() => {
   window.addEventListener('keydown', onModifier)
   window.addEventListener('keyup', onModifier)
@@ -215,6 +267,11 @@ onBeforeUnmount(() => {
   window.removeEventListener('keyup', onModifier)
   window.removeEventListener('blur', releaseScrollZoom)
   document.removeEventListener('fullscreenchange', onFullscreenChange)
+
+  if (saying) {
+    clearTimeout(saying)
+  }
+
   map?.destroy()
   map = null
 })
@@ -275,7 +332,17 @@ defineExpose({ find })
       <div class="map__zoom">
         <button class="map__zoom-btn" type="button" :aria-label="t('coverage.zoom_in')" @click="zoom(1)">+</button>
         <button class="map__zoom-btn" type="button" :aria-label="t('coverage.zoom_out')" @click="zoom(-1)">−</button>
+        <button class="map__zoom-btn" type="button"
+            :aria-label="t('coverage.locate', 'Моё местоположение')" @click="locate()">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8" />
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" />
+          </svg>
+        </button>
       </div>
+
+      <p v-if="hint" class="map__hint" role="status">{{ hint }}</p>
 
       <button
         class="map__full"

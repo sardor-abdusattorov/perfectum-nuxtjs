@@ -33,10 +33,13 @@ const isCdma = computed(() => (
 ))
 
 /**
- * Every tab opens with the brands it holds, the way the old site's CDMA
- * compatibility list did. The CDMA lists run to hundreds of models and stay
- * behind their brand; the short 5G lists show their cards underneath.
+ * A category is browsed brand by brand, the way the old site's compatibility
+ * list did: the tab lists the brands and the models wait on the brand's own
+ * page. What is in stock today is a shelf rather than a category, so that tab
+ * lays the devices out at once.
  */
+const stock = computed(() => active.value === 'stock')
+
 const brands = computed(() => {
   const found = new Map<string, DeviceBrand>()
 
@@ -80,7 +83,7 @@ const brands = computed(() => {
               <p v-html="t(isCdma ? 'devices.callout_cdma' : 'devices.callout_5g')"></p>
           </div>
 
-          <ul v-if="brands.length" class="brand-grid">
+          <ul v-if="!stock && brands.length" class="brand-grid">
               <li v-for="brand in brands" :key="brand.slug" class="brand-card">
                   <img v-if="brand.logo" class="brand-card__logo" :src="brand.logo" :alt="brand.name"
                       loading="lazy" />
@@ -90,7 +93,7 @@ const brands = computed(() => {
               </li>
           </ul>
 
-          <ul v-if="!isCdma && visible.length" class="device-grid">
+          <ul v-if="stock && visible.length" class="device-grid">
               <DeviceCard v-for="device in visible" :key="device.slug" :device="device" />
           </ul>
 

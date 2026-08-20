@@ -2010,8 +2010,8 @@ strong {
   transition: var(--transition);
 }
 
-.map__zoom-btn:first-child {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+.map__zoom-btn + .map__zoom-btn {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .map__zoom-btn:hover {
@@ -2042,6 +2042,28 @@ strong {
 .map__full svg {
   width: 20px;
   height: 20px;
+}
+
+.map__zoom-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* the geolocation prompt is the browser's, so the map says out loud what it
+   is waiting for and what came of it */
+.map__hint {
+  position: absolute;
+  z-index: 1;
+  top: 32px;
+  left: 88px;
+  max-width: 280px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--color-black);
+  background: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .map__popup {
