@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Perfectum API v1",
-    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: заголовок `X-Locale: ru|uz` либо `?locale=ru` (так же, как на старом сайте).\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nТри ручки, которыми пользовались снаружи на старом сайте, живут здесь:\n- FAQ: было `/api/faqs-list` → стало `GET /faqs`\n- Новости: было `/api/public/news` (с ключом X-API-Key) → стало `GET /news`, ключ не нужен\n- Зоны покрытия: было `/api/coverage_area_list?type=5g` → стало `GET /coverage` (список слоёв) и `GET /coverage/{layer}` (сам GeoJSON, ZIP разбирается на нашей стороне при загрузке)",
+    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: заголовок `X-Locale: ru|uz` либо `?locale=ru` (так же, как на старом сайте).\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nТри ручки, которыми пользовались снаружи на старом сайте, живут здесь:\n- FAQ: было `/api/faqs-list` → стало `GET /faqs`\n- Новости: было `/api/public/news` (с ключом X-API-Key) → стало `GET /news`, ключ не нужен\n- Документы: было `/api/public/legal-documents` → стало `GET /documents`, файлы сгруппированы по категориям и языкам\n- Зоны покрытия: было `/api/coverage_area_list?type=5g` → стало `GET /coverage` (список слоёв) и `GET /coverage/{layer}` (сам GeoJSON, ZIP разбирается на нашей стороне при загрузке)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -203,6 +203,42 @@
               ]
             },
             "description": "GeoJSON одного слоя. ZIP с шейпфайлом разбирается при загрузке в админке, наружу идёт готовая геометрия."
+          },
+          "response": []
+        },
+        {
+          "name": "Документы — группы и файлы по языкам",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "documents"
+              ],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "uz",
+                  "description": "Язык, на который смотрит url документа",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Документы по группам: каждая группа — категория из админки (`id`, `name`), внутри `documents` с полями `id`, `name`, `url`, `size` и `files` — по одному файлу на язык (`language`, `url`, `size`). `url` документа указывает на файл текущего языка (`X-Locale` или `?locale=ru`), с откатом на русский и дальше на первый заполненный. Документ, файлы которого не лежат на диске, в ответ не попадает. Некатегоризованные документы идут последней группой с `id: null`. Замена старому `/api/public/legal-documents`."
           },
           "response": []
         }
@@ -858,9 +894,17 @@
               ],
               "path": [
                 "documents"
+              ],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "uz",
+                  "description": "Язык, на который смотрит url документа",
+                  "disabled": true
+                }
               ]
             },
-            "description": "Публичные документы по категориям."
+            "description": "Документы по группам: каждая группа — категория из админки (`id`, `name`), внутри `documents` с полями `id`, `name`, `url`, `size` и `files` — по одному файлу на язык (`language`, `url`, `size`). `url` документа указывает на файл текущего языка (`X-Locale` или `?locale=ru`), с откатом на русский и дальше на первый заполненный. Документ, файлы которого не лежат на диске, в ответ не попадает. Некатегоризованные документы идут последней группой с `id: null`. Замена старому `/api/public/legal-documents`."
           },
           "response": []
         },

@@ -45,7 +45,9 @@ class DocumentController
 
     /**
      * The file of the current locale is offered first and the rest travel
-     * along, so a page can hand over a translation the visitor asks for.
+     * along, so a page can hand over a translation the visitor asks for. A
+     * document whose files are all missing from the disk is left out rather
+     * than handed over as a row that downloads nothing.
      *
      * @param  iterable<Document>|null  $documents
      * @return array<int, array<string, mixed>>
@@ -53,20 +55,26 @@ class DocumentController
     private static function documents(mixed $documents): array
     {
         return collect($documents)
-            ->filter(fn (Document $document): bool => filled($document->getTranslations('file')))
-            ->map(fn (Document $document): array => [
-                'name' => $document->name,
-                'url' => $document->url(),
-                'size' => $document->readableSize(),
-                'files' => collect($document->getTranslations('file'))
+            ->map(function (Document $document): array {
+                $files = collect($document->getTranslations('file'))
                     ->map(fn (string $path, string $locale): array => [
                         'language' => $locale,
                         'url' => $document->url($locale),
                         'size' => $document->readableSize($locale),
                     ])
+                    ->filter(fn (array $file): bool => $file['url'] !== null)
                     ->values()
-                    ->all(),
-            ])
+                    ->all();
+
+                return [
+                    'id' => $document->id,
+                    'name' => $document->name,
+                    'url' => $document->url() ?? ($files[0]['url'] ?? null),
+                    'size' => $document->readableSize() ?? ($files[0]['size'] ?? null),
+                    'files' => $files,
+                ];
+            })
+            ->filter(fn (array $document): bool => $document['files'] !== [])
             ->values()
             ->all();
     }

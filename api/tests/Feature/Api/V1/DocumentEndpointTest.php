@@ -121,3 +121,26 @@ it('falls back to the default language when the locale has no file of its own', 
         ->assertOk()
         ->assertJsonPath('data.0.documents.0.url', fn (string $url): bool => str_ends_with($url, 'offer-ru.pdf'));
 });
+
+it('drops a document whose file went missing from the disk', function (): void {
+    $category = documentCategory('dogovory');
+
+    document(['category_id' => $category->id, 'name' => ['ru' => 'Виден']]);
+    document(['category_id' => $category->id, 'name' => ['ru' => 'Потерян']], ['ru' => 'uploads/documents/lost.pdf']);
+
+    Storage::disk('public')->delete('uploads/documents/lost.pdf');
+
+    $this->getJson(route('api.v1.documents'))
+        ->assertOk()
+        ->assertJsonCount(1, 'data.0.documents')
+        ->assertJsonPath('data.0.documents.0.name', 'Виден');
+});
+
+it('carries the record id so a client can point at one document', function (): void {
+    $category = documentCategory('dogovory');
+    $offer = document(['category_id' => $category->id]);
+
+    $this->getJson(route('api.v1.documents'))
+        ->assertOk()
+        ->assertJsonPath('data.0.documents.0.id', $offer->id);
+});
