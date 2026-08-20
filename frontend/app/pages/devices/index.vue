@@ -33,8 +33,9 @@ const isCdma = computed(() => (
 ))
 
 /**
- * The CDMA compatibility list is browsed brand by brand, the way the old site
- * did; the small 5G lists go straight to the device cards.
+ * Every tab opens with the brands it holds, the way the old site's CDMA
+ * compatibility list did. The CDMA lists run to hundreds of models and stay
+ * behind their brand; the short 5G lists show their cards underneath.
  */
 const brands = computed(() => {
   const found = new Map<string, DeviceBrand>()
@@ -79,7 +80,7 @@ const brands = computed(() => {
               <p v-html="t(isCdma ? 'devices.callout_cdma' : 'devices.callout_5g')"></p>
           </div>
 
-          <ul v-if="isCdma && brands.length" class="brand-grid">
+          <ul v-if="brands.length" class="brand-grid">
               <li v-for="brand in brands" :key="brand.slug" class="brand-card">
                   <img v-if="brand.logo" class="brand-card__logo" :src="brand.logo" :alt="brand.name"
                       loading="lazy" />
@@ -89,13 +90,12 @@ const brands = computed(() => {
               </li>
           </ul>
 
-          <ul v-else-if="visible.length" class="device-grid">
+          <ul v-if="!isCdma && visible.length" class="device-grid">
               <DeviceCard v-for="device in visible" :key="device.slug" :device="device" />
           </ul>
 
-          <p v-else class="devices__note">{{ t('devices.empty') }}</p>
-
-          <p v-if="visible.length" class="devices__note">{{ t('devices.note') }}</p>
+          <p v-if="!visible.length" class="devices__note">{{ t('devices.empty') }}</p>
+          <p v-else class="devices__note">{{ t('devices.note') }}</p>
       </div>
   </section>
 </template>
