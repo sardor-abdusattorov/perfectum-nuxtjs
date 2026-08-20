@@ -2018,6 +2018,32 @@ strong {
   background: #f5f5f5;
 }
 
+.map__full {
+  position: absolute;
+  z-index: 1;
+  top: 32px;
+  right: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 39px;
+  height: 41px;
+  border-radius: 12px;
+  color: var(--color-black);
+  background: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: var(--transition);
+}
+
+.map__full:hover {
+  background: #f5f5f5;
+}
+
+.map__full svg {
+  width: 20px;
+  height: 20px;
+}
+
 .map__popup {
   position: absolute;
   top: 132px;
@@ -3539,6 +3565,40 @@ strong {
   margin-top: -84px;
   margin-bottom: 80px;
   background: transparent;
+}
+
+/* full screen takes the whole block, so the city, the address and the network
+   switch stay with the map instead of being left behind on the page — and the
+   selector has to outweigh the transparent background above */
+.coverage.coverage_map:fullscreen {
+  display: flex;
+  width: 100vw;
+  margin: 0;
+  padding: 24px 0;
+  background: var(--color-white);
+}
+
+/* the page keeps its scrollbar behind the expanded block, and the browser
+   paints that strip with the backdrop — black by default */
+.coverage.coverage_map:fullscreen::backdrop {
+  background: var(--color-white);
+}
+
+.coverage.coverage_map:fullscreen > .container {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.coverage.coverage_map:fullscreen .coverage-search {
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+}
+
+.coverage.coverage_map:fullscreen .map_coverage {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
 }
 
 /* ==========================================================
@@ -6526,18 +6586,9 @@ body.overflow__hidden {
   --field-gap: 12px;
 }
 
-/* hover only opens it on the wide bar — the compact pill below 768 has no room
-   for the field beside the select, so there it waits for a deliberate tap */
-@media (hover: hover) and (pointer: fine) and (min-width: 768.02px) {
-  .coverage-search__find:hover {
-    --field-width: 333px;
-    --field-padding: 0 4px 0 14px;
-    --field-border: 0.5px;
-    --field-opacity: 1;
-    --field-visibility: visible;
-    --field-gap: 12px;
-  }
-}
+/* the field opens on a click and keeps itself open while it holds focus:
+   opening it on hover reflowed the bar under the pointer, the pointer fell
+   outside and it slammed shut again — the whole row shivered */
 
 .coverage-search__field {
   display: flex;
@@ -9486,45 +9537,61 @@ select {
   .section-head__title.section-head__title_upper {
     font-size: 30px;
   }
-  /* Frame 1360:1371: bar 354x57 on a 77px radius, label 84 wide at 16 */
+  /* the frame drew one 354x57 pill, but the network switch has to live in the
+     bar too: below 768 the card keeps the pill's face and lets its controls
+     wrap onto a second line instead of stacking them on top of each other */
   .coverage-search {
-    flex-wrap: nowrap;
-    gap: 8px;
-    padding: 10px;
-    border-radius: 77px;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 28px;
   }
   .coverage-search__label {
-    flex: 0 0 auto;
-    width: 84px;
-    margin-left: 6px;
-    font-size: 8px;
+    flex: 1 1 auto;
+    margin-left: 4px;
+    font-size: 13px;
     font-weight: 500;
-    line-height: normal;
+    line-height: 1.2;
     color: rgba(0, 0, 0, 0.66);
   }
   .coverage-search__controls {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 0;
+  }
+  .coverage-search__find {
     flex: 0 0 auto;
-    gap: 8px;
-    margin-left: auto;
   }
   .coverage-search__select {
-    flex: 0 0 auto;
-    width: 170px;
+    flex: 1 1 150px;
+    width: auto;
+    min-width: 0;
   }
   .coverage-search__select .select__control {
-    height: 37px;
-    padding: 0 30px 0 16px;
-    font-size: 12px;
+    height: 40px;
+    padding: 0 30px 0 14px;
+    font-size: 14px;
   }
   .coverage-search__select .select__chevron {
-    right: 10.5px;
+    right: 12px;
+  }
+  .coverage-search__layers {
+    flex: 1 1 auto;
+  }
+  .coverage-search__layer {
+    padding: 10px 14px;
+    font-size: 13px;
   }
   .coverage-search__btn {
-    width: 37px;
-    height: 37px;
+    width: 40px;
+    height: 40px;
   }
-  /* the compact bar is a single 57-tall pill with no room for both, so the
-     address field takes the city select's place while the search is open */
+  .coverage-search__btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  /* while the address is open it takes the whole row and the rest steps aside */
   .coverage-search_searching .coverage-search__select,
   .coverage-search_searching .coverage-search__layers {
     display: none;
@@ -9533,15 +9600,16 @@ select {
     --field-width: 100%;
     flex: 1 1 auto;
     gap: 8px;
+    min-width: 0;
   }
   .coverage-search_searching .coverage-search__field {
-    --field-padding: 0 2px 0 10px;
+    --field-padding: 0 2px 0 12px;
   }
   .coverage-search__field {
-    height: 37px;
+    height: 40px;
   }
   .coverage-search__input {
-    font-size: 12px;
+    font-size: 14px;
   }
   .map .map__zoom {
     top: 24px;
@@ -11220,17 +11288,6 @@ select {
 @media all and (max-width: 400px) {
   .tariffs .tariffs__tabs {
     width: 100%;
-  }
-
-  .coverage-search__controls {
-    flex: 1 1 auto;
-    justify-content: flex-end;
-    min-width: 0;
-  }
-  .coverage-search__select {
-    flex: 0 1 170px;
-    width: auto;
-    min-width: 0;
   }
 }
 

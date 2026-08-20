@@ -272,6 +272,8 @@ class SiteTranslationSeeder extends Seeder
             'coverage.network' => ['ru' => 'Тип сети', 'uz' => 'Tarmoq turi'],
             'coverage.map_label' => ['ru' => 'Карта покрытия сети Perfectum', 'uz' => 'Perfectum tarmogʻi qamrov xaritasi'],
             'coverage.map_unavailable' => ['ru' => 'Карта временно недоступна. Проверить покрытие можно у оператора поддержки.', 'uz' => 'Xarita vaqtincha ishlamayapti. Qamrovni qoʻllab-quvvatlash operatoridan bilib olishingiz mumkin.'],
+            'coverage.fullscreen' => ['ru' => 'Во весь экран', 'uz' => 'Butun ekranga'],
+            'coverage.exit_fullscreen' => ['ru' => 'Выйти из полноэкранного режима', 'uz' => 'Butun ekran rejimidan chiqish'],
             'coverage.zoom_in' => ['ru' => 'Приблизить', 'uz' => 'Yaqinlashtirish'],
             'coverage.zoom_out' => ['ru' => 'Отдалить', 'uz' => 'Uzoqlashtirish'],
             'coverage.empty' => ['ru' => 'Зоны покрытия пока не загружены', 'uz' => 'Qamrov hududlari hali yuklanmagan'],

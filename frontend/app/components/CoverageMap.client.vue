@@ -1,34 +1,68 @@
 <script setup lang="ts">
 import type { CoverageLayer } from '~/composables/useCoverage'
-import L from 'leaflet'
 
-const props = defineProps<{ layers: CoverageLayer[], active: string, center: [number, number] | null }>()
+const props = defineProps<{
+  layers: CoverageLayer[]
+  active: string
+  center: [number, number] | null
+  stage?: HTMLElement | null
+}>()
+
 const emit = defineEmits<{ failed: [boolean] }>()
 
 const t = useT()
 const shapesOf = useCoverageShapes()
+const { locale } = useI18n()
+const config = useRuntimeConfig()
 
+const root = useTemplateRef('root')
 const canvas = useTemplateRef('canvas')
+const failed = ref(false)
+const expanded = ref(false)
 
-/**
- * The old site drew the coverage with Leaflet over free CARTO tiles, and the
- * outlines are the whole point of the page: a map that needs a paid key is a
- * map that shows nothing the day the key lapses.
- */
-const TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'
-const UZBEKISTAN: L.LatLngTuple = [41.6, 64.5]
-
-let map: L.Map | null = null
-let shapes: L.GeoJSON | null = null
-let pin: L.CircleMarker | null = null
+let map: any = null
 let drawing = 0
+let pin: any = null
+const drawn: any[] = []
+
+const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
+
+function load(): Promise<void> {
+  if ((window as any).ymaps) {
+    return Promise.resolve()
+  }
+
+  const key = config.public.yandexMapsKey
+  const src = `https://api-maps.yandex.ru/2.1/?${key ? `apikey=${key}&` : ''}lang=${LANGS[locale.value] ?? 'ru_RU'}`
+
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>('script[data-ymaps]')
+
+    if (existing) {
+      existing.addEventListener('load', () => resolve())
+      existing.addEventListener('error', () => reject(new Error('ymaps')))
+
+      return
+    }
+
+    const script = document.createElement('script')
+
+    script.src = src
+    script.async = true
+    script.dataset.ymaps = ''
+    script.addEventListener('load', () => resolve())
+    script.addEventListener('error', () => reject(new Error('ymaps')))
+    document.head.appendChild(script)
+  })
+}
 
 /**
- * The export is one MultiPolygon of tens of thousands of disjoint patches.
- * Canvas draws them as one surface, where a path per patch would bury the
- * browser, and nothing on the layer is clickable anyway.
+ * GeoJSON orders a pair as longitude first; the map wants latitude first.
  */
+function flip(ring: number[][]): number[][] {
+  return ring.map(([lng, lat]) => [lat, lng])
+}
+
 async function draw(): Promise<void> {
   const token = ++drawing
 
@@ -36,8 +70,9 @@ async function draw(): Promise<void> {
     return
   }
 
-  shapes?.remove()
-  shapes = null
+  for (const shape of drawn.splice(0)) {
+    map.geoObjects.remove(shape)
+  }
 
   const layer = props.layers.find(item => item.key === props.active)
 
@@ -45,52 +80,89 @@ async function draw(): Promise<void> {
     return
   }
 
-  const collection = await shapesOf(layer.key).catch(() => null)
+  const shapes = await shapesOf(layer.key).catch(() => null)
 
-  emit('failed', collection === null)
+  emit('failed', shapes === null)
 
-  if (!collection || !map || token !== drawing) {
+  if (!shapes || !map || token !== drawing) {
     return
   }
 
-  shapes = L.geoJSON(collection as unknown as GeoJSON.GeoJsonObject, {
-    renderer: L.canvas({ padding: 0.5 }),
-    interactive: false,
-    style: {
-      color: 'transparent',
-      weight: 1,
-      fillColor: layer.color,
-      fillOpacity: 0.3,
-    },
-  }).addTo(map)
+  const ymaps = (window as any).ymaps
+  const style = {
+    strokeColor: layer.color,
+    strokeWidth: 1,
+    fillColor: layer.color,
+    fillOpacity: 0.28,
+    fillRule: 'evenOdd',
+  }
 
-  const bounds = shapes.getBounds()
+  /**
+   * The planning export is one MultiPolygon of tens of thousands of disjoint
+   * patches. They are drawn even-odd in batches: one geo-object per batch
+   * keeps the map responsive where one object per patch would bury it.
+   */
+  const BATCH = 2000
 
-  if (bounds.isValid()) {
-    map.fitBounds(bounds)
+  for (const feature of shapes.features) {
+    const geometry = feature.geometry
+
+    if (geometry.type === 'LineString') {
+      const line = new ymaps.Polyline(flip(geometry.coordinates as number[][]), { hintContent: layer.name }, style)
+
+      map.geoObjects.add(line)
+      drawn.push(line)
+
+      continue
+    }
+
+    const contours = geometry.type === 'MultiPolygon'
+      ? (geometry.coordinates as number[][][][]).flat()
+      : (geometry.coordinates as number[][][])
+
+    for (let index = 0; index < contours.length; index += BATCH) {
+      const shape = new ymaps.Polygon(
+        contours.slice(index, index + BATCH).map(flip),
+        { hintContent: layer.name },
+        style,
+      )
+
+      map.geoObjects.add(shape)
+      drawn.push(shape)
+    }
   }
 }
 
-/**
- * A client-only component renders its markup a tick after it mounts, so the
- * map is built when the canvas actually appears rather than on mount.
- */
-watch(canvas, (node) => {
-  if (!node || map) {
+onMounted(async () => {
+  try {
+    await load()
+  }
+  catch {
+    failed.value = true
+
     return
   }
 
-  map = L.map(node, {
-    center: props.center ?? UZBEKISTAN,
-    zoom: props.center ? 10 : 6,
-    zoomControl: false,
-    scrollWheelZoom: false,
+  const ymaps = (window as any).ymaps
+
+  ymaps.ready(() => {
+    if (!canvas.value) {
+      return
+    }
+
+    map = new ymaps.Map(canvas.value, {
+      center: props.center ?? [41.6, 64.5],
+      zoom: props.center ? 10 : 6,
+      controls: [],
+    }, {
+      suppressMapOpenBlock: true,
+    })
+
+    map.behaviors.disable('scrollZoom')
+
+    draw()
   })
-
-  L.tileLayer(TILES, { attribution: ATTRIBUTION, maxZoom: 19 }).addTo(map)
-
-  draw()
-}, { immediate: true })
+})
 
 /**
  * The wheel scrolls the page until Ctrl joins in — then it zooms the map,
@@ -101,50 +173,62 @@ function onModifier(event: KeyboardEvent): void {
     return
   }
 
-  map.scrollWheelZoom[event.type === 'keydown' ? 'enable' : 'disable']()
+  map.behaviors[event.type === 'keydown' ? 'enable' : 'disable']('scrollZoom')
 }
 
 function releaseScrollZoom(): void {
-  map?.scrollWheelZoom.disable()
+  map?.behaviors.disable('scrollZoom')
+}
+
+/**
+ * Full screen takes the whole block — the city, the address and the network
+ * switch included — because a map without its controls is a picture. The
+ * map is told to re-measure once the browser has resized the block.
+ */
+function onFullscreenChange(): void {
+  expanded.value = document.fullscreenElement !== null
+
+  requestAnimationFrame(() => map?.container.fitToViewport())
+}
+
+async function toggleFullscreen(): Promise<void> {
+  const target = props.stage ?? root.value
+
+  if (!target) {
+    return
+  }
+
+  await (document.fullscreenElement
+    ? document.exitFullscreen()
+    : target.requestFullscreen()).catch(() => {})
 }
 
 onMounted(() => {
   window.addEventListener('keydown', onModifier)
   window.addEventListener('keyup', onModifier)
   window.addEventListener('blur', releaseScrollZoom)
+  document.addEventListener('fullscreenchange', onFullscreenChange)
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onModifier)
   window.removeEventListener('keyup', onModifier)
   window.removeEventListener('blur', releaseScrollZoom)
-  map?.remove()
+  document.removeEventListener('fullscreenchange', onFullscreenChange)
+  map?.destroy()
   map = null
-  shapes = null
-  pin = null
 })
 
 watch(() => [props.layers, props.active], () => draw())
 
 watch(() => props.center, (coords) => {
   if (map && coords) {
-    map.flyTo(coords, 10, { duration: 0.8 })
+    map.setCenter(coords, 10, { duration: 800 })
   }
 })
 
 function zoom(step: number): void {
-  if (step > 0) {
-    map?.zoomIn()
-  }
-  else {
-    map?.zoomOut()
-  }
-}
-
-interface Place {
-  lat: string
-  lon: string
-  display_name: string
+  map?.setZoom(map.getZoom() + step, { duration: 200 })
 }
 
 /**
@@ -152,35 +236,29 @@ interface Place {
  * to know whether the address resolved at all.
  */
 async function find(query: string): Promise<boolean> {
-  if (!map) {
+  const ymaps = (window as any).ymaps
+
+  if (!map || !ymaps) {
     return false
   }
 
-  const found = await $fetch<Place[]>('https://nominatim.openstreetmap.org/search', {
-    query: { format: 'jsonv2', limit: 1, countrycodes: 'uz', q: query },
-  }).catch(() => null)
+  const found = await ymaps.geocode(`Uzbekistan, ${query}`, { results: 1 })
+    .then((result: any) => result.geoObjects.get(0))
+    .catch(() => null)
 
-  const place = found?.[0]
-
-  if (!place) {
+  if (!found) {
     return false
   }
 
-  const coords: L.LatLngTuple = [Number(place.lat), Number(place.lon)]
+  const coords = found.geometry.getCoordinates()
 
-  pin?.remove()
-  pin = L.circleMarker(coords, {
-    radius: 8,
-    color: '#ffffff',
-    weight: 2,
-    fillColor: '#e60000',
-    fillOpacity: 1,
-  })
-    .bindPopup(place.display_name)
-    .addTo(map)
+  if (pin) {
+    map.geoObjects.remove(pin)
+  }
 
-  map.flyTo(coords, 15, { duration: 0.8 })
-  pin.openPopup()
+  pin = new ymaps.Placemark(coords, { hintContent: found.getAddressLine() }, { preset: 'islands#redDotIcon' })
+  map.geoObjects.add(pin)
+  map.setCenter(coords, 14, { duration: 800 })
 
   return true
 }
@@ -189,29 +267,32 @@ defineExpose({ find })
 </script>
 
 <template>
-  <div class="map map_coverage">
-    <div ref="canvas" class="map__canvas" role="application" :aria-label="t('coverage.map_label')"></div>
+  <div ref="root" class="map map_coverage">
+    <p v-if="failed" class="map__fallback">{{ t('coverage.map_unavailable') }}</p>
+    <div v-else ref="canvas" class="map__canvas" role="application" :aria-label="t('coverage.map_label')"></div>
 
-    <div class="map__zoom">
-      <button class="map__zoom-btn" type="button" :aria-label="t('coverage.zoom_in')" @click="zoom(1)">+</button>
-      <button class="map__zoom-btn" type="button" :aria-label="t('coverage.zoom_out')" @click="zoom(-1)">−</button>
-    </div>
+    <template v-if="!failed">
+      <div class="map__zoom">
+        <button class="map__zoom-btn" type="button" :aria-label="t('coverage.zoom_in')" @click="zoom(1)">+</button>
+        <button class="map__zoom-btn" type="button" :aria-label="t('coverage.zoom_out')" @click="zoom(-1)">−</button>
+      </div>
+
+      <button
+        class="map__full"
+        type="button"
+        :aria-pressed="expanded"
+        :aria-label="t(expanded ? 'coverage.exit_fullscreen' : 'coverage.fullscreen', expanded ? 'Выйти из полноэкранного режима' : 'Во весь экран')"
+        @click="toggleFullscreen()"
+      >
+        <svg v-if="expanded" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <svg v-else viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </template>
   </div>
 </template>
-
-<style>
-@import 'leaflet/dist/leaflet.css';
-
-/* Leaflet numbers its panes in the hundreds; a stacking context around the
-   canvas keeps the whole map under the zoom column the page draws itself. */
-.map_coverage .leaflet-container {
-  z-index: 0;
-  font: inherit;
-}
-
-/* The reset caps a canvas at the width of its container, and Leaflet's panes
-   have none — the coverage layer collapsed to nothing. */
-.map_coverage .leaflet-pane canvas {
-  max-width: none;
-}
-</style>

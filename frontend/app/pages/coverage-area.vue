@@ -27,6 +27,7 @@ const center = computed(() => cities.value.find(item => item.id === city.value)?
 
 const map = useTemplateRef('map')
 const field = useTemplateRef('field')
+const stage = useTemplateRef('stage')
 const address = ref('')
 const open = ref(false)
 const missing = ref(false)
@@ -70,7 +71,7 @@ function clear(): void {
     :subtitle="hero.subtitle"
   />
 
-  <section class="coverage coverage_map">
+  <section ref="stage" class="coverage coverage_map">
     <div class="container">
       <form class="coverage-search" :class="open && 'coverage-search_searching'" @submit.prevent="find()">
         <p class="coverage-search__label">{{ t('coverage.search_label') }}</p>
@@ -132,7 +133,8 @@ function clear(): void {
 
       <p v-if="missing" class="coverage-search__missing">{{ t('coverage.address_not_found') }}</p>
 
-      <CoverageMap ref="map" :layers="available" :active="active" :center="center" @failed="broken = $event" />
+      <CoverageMap ref="map" :layers="available" :active="active" :center="center" :stage="stage"
+          @failed="broken = $event" />
 
       <p v-if="!available.length" class="coverage__empty">{{ t('coverage.empty') }}</p>
       <p v-else-if="broken" class="coverage__empty">{{ t('coverage.map_unavailable') }}</p>
