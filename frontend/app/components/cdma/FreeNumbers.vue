@@ -4,6 +4,7 @@ const {
   prefix,
   price,
   number,
+  masked,
   numberInvalid,
   initialLoading,
   busy,
@@ -62,8 +63,9 @@ const t = useT()
             type="text"
             inputmode="numeric"
             placeholder="xx-xx"
-            maxlength="4"
-            :value="number"
+            maxlength="5"
+            :value="masked"
+            :aria-invalid="numberInvalid ? 'true' : 'false'"
             @input="onNumber"
           />
           <button class="cdma-numbers__btn" type="submit" :aria-label="t('help.numbers_search')">
@@ -73,6 +75,7 @@ const t = useT()
             </svg>
           </button>
         </div>
+        <p v-if="numberInvalid" class="cdma-numbers__error">{{ t('help.numbers_invalid', 'Введите от 1 до 4 цифр номера') }}</p>
       </div>
     </form>
 

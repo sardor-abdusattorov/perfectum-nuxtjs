@@ -13,6 +13,17 @@ export interface DeviceBrand {
   color: string | null
 }
 
+export interface InstallmentOption {
+  term: number
+  monthly: number
+  total: number
+}
+
+export interface DeviceInstallment {
+  partner: { name: string, slug: string, logo: string | null, url: string | null }
+  options: InstallmentOption[]
+}
+
 export interface Device {
   slug: string
   name: string
@@ -20,6 +31,7 @@ export interface Device {
   excerpt: string | null
   content: string | null
   specs: DeviceSpec[]
+  installments: DeviceInstallment[]
   image: string | null
   price: number | null
   in_stock: boolean

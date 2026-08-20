@@ -7,6 +7,7 @@ namespace App\Http\Resources\V1;
 use App\Http\Resources\V1\Concerns\OmitsBodyFromLists;
 use App\Http\Resources\V1\Concerns\TranslatesRepeaterRows;
 use App\Models\Device;
+use App\Models\DeviceInstallment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -44,6 +45,23 @@ class DeviceResource extends JsonResource
             'image' => $this->imageUrl(),
             'price' => $this->price,
             'in_stock' => $this->in_stock,
+            'installments' => $this->whenLoaded(
+                'installments',
+                fn (): array => $this->installments
+                    ->filter(fn (DeviceInstallment $offer): bool => $offer->partner !== null && $offer->terms() !== [])
+                    ->map(fn (DeviceInstallment $offer): array => [
+                        'partner' => [
+                            'name' => $offer->partner->name,
+                            'slug' => $offer->partner->slug,
+                            'logo' => $offer->partner->logoUrl(),
+                            'url' => $offer->partner->url,
+                        ],
+                        'options' => $offer->terms(),
+                    ])
+                    ->values()
+                    ->all(),
+                [],
+            ),
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
                 'id' => $this->category->id,
                 'name' => $this->category->name,

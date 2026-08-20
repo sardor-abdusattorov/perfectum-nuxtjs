@@ -95,12 +95,21 @@ export function useCdmaNumbers() {
     }
   }
 
-  /** the gateway takes four digits at most, and only digits */
+  /**
+   * The gateway searches by up to four digits, and the field shows them the
+   * way a number is read — 56-54 — while the search keeps the bare digits.
+   */
+  const masked = computed(() => (
+    number.value.length > 2
+      ? `${number.value.slice(0, 2)}-${number.value.slice(2)}`
+      : number.value
+  ))
+
   function onNumber(event: Event): void {
     const input = event.target as HTMLInputElement
 
     number.value = input.value.replace(/\D/g, '').slice(0, 4)
-    input.value = number.value
+    input.value = masked.value
 
     if (number.value) {
       numberInvalid.value = false
@@ -116,6 +125,7 @@ export function useCdmaNumbers() {
     prefix,
     price,
     number,
+    masked,
     numberInvalid,
     initialLoading,
     busy,

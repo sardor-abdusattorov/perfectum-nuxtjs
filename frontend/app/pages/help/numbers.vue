@@ -4,6 +4,7 @@ const {
   prefix,
   price,
   number,
+  masked,
   numberInvalid,
   initialLoading,
   busy,
@@ -87,10 +88,12 @@ useSeo({ titleKey: 'seo.numbers' })
                     class="field__input"
                     :class="numberInvalid && 'field__input_invalid'"
                     placeholder="xx-xx"
-                    maxlength="4"
-                    :value="number"
+                    maxlength="5"
+                    :value="masked"
+                    :aria-invalid="numberInvalid ? 'true' : 'false'"
                     @input="onNumber"
                   />
+                  <p v-if="numberInvalid" class="field__error">{{ t('help.numbers_invalid', 'Введите от 1 до 4 цифр номера') }}</p>
                 </div>
 
                 <button type="submit" class="help-numbers__submit" :aria-label="t('help.numbers_search')">

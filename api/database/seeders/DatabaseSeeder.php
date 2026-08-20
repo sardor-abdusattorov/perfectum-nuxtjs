@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             DocumentSeeder::class,
             CoverageSeeder::class,
             DeviceSeeder::class,
+            InstallmentSeeder::class,
         ]);
 
         // the old site's uploads ride along whenever the folder is in place

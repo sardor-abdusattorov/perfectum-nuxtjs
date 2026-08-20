@@ -30,7 +30,11 @@ class DeviceController
     public function show(Device $device): JsonResponse
     {
         return response()->json(['data' => DeviceResource::make(
-            $device->loadMissing(['category', 'brand' => fn ($brand) => $brand->published()]),
+            $device->loadMissing([
+                'category',
+                'brand' => fn ($brand) => $brand->published(),
+                'installments' => fn ($installments) => $installments->ordered()->with('partner'),
+            ]),
         )->resolve()]);
     }
 }

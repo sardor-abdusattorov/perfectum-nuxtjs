@@ -522,6 +522,12 @@
   border-color: var(--color-red);
 }
 
+.cdma-numbers .cdma-numbers__error {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--color-red);
+}
+
 .cdma-section .cdma-numbers__note {
   margin-top: 24px;
   padding: 14px 20px;

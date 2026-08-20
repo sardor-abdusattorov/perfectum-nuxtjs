@@ -23,6 +23,9 @@ const price = computed(() => (
   device.value?.price == null ? '' : device.value.price.toLocaleString('ru-RU')
 ))
 
+const installments = computed(() => device.value?.installments ?? [])
+const paying = ref(false)
+
 /**
  * The pager walks the device's own category in catalogue order and wraps at
  * both ends, so the arrows always lead somewhere.
@@ -109,7 +112,9 @@ const pager = computed(() => {
                       <p v-if="device.excerpt" class="device-view__lead">{{ device.excerpt }}</p>
                       <p v-if="price" class="device-view__price"><b>{{ price }}</b> {{ t('devices.currency') }}</p>
                       <div v-if="device.in_stock" class="device-view__actions">
-                          <NuxtLink class="device-view__buy" :to="localePath('/help/contact')">{{ t('devices.installment') }}</NuxtLink>
+                          <button v-if="installments.length" class="device-view__buy" type="button"
+                              @click="paying = true">{{ t('devices.installment') }}</button>
+                          <NuxtLink v-else class="device-view__buy" :to="localePath('/help/contact')">{{ t('devices.installment') }}</NuxtLink>
                           <NuxtLink class="device-view__link" :to="localePath('/offices')">{{ t('devices.buy') }}
                               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                   aria-hidden="true">
@@ -159,5 +164,8 @@ const pager = computed(() => {
               </div>
           </div>
       </section>
+
+      <InstallmentModal :open="paying" :name="device.name" :price="price" :offers="installments"
+          @close="paying = false" />
   </template>
 </template>

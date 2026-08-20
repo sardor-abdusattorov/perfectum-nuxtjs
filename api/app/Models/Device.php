@@ -8,6 +8,7 @@ use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Device extends Model
@@ -46,6 +47,11 @@ class Device extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(DeviceBrand::class);
+    }
+
+    public function installments(): HasMany
+    {
+        return $this->hasMany(DeviceInstallment::class);
     }
 
     public static function categoryModel(): string
