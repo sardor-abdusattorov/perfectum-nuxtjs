@@ -129,9 +129,9 @@ function clear(): void {
             >{{ layer.name }}</button>
           </div>
         </div>
-      </form>
 
-      <p v-if="missing" class="coverage-search__missing">{{ t('coverage.address_not_found') }}</p>
+        <p v-if="missing" class="coverage-search__missing">{{ t('coverage.address_not_found') }}</p>
+      </form>
 
       <CoverageMap ref="map" :layers="available" :active="active" :center="center" :stage="stage"
           @failed="broken = $event" />

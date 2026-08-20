@@ -1,0 +1,1225 @@
+{
+  "info": {
+    "name": "Perfectum API v1",
+    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: заголовок `X-Locale: ru|uz` либо `?locale=ru` (так же, как на старом сайте).\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nТри ручки, которыми пользовались снаружи на старом сайте, живут здесь:\n- FAQ: было `/api/faqs-list` → стало `GET /faqs`\n- Новости: было `/api/public/news` (с ключом X-API-Key) → стало `GET /news`, ключ не нужен\n- Зоны покрытия: было `/api/coverage_area_list?type=5g` → стало `GET /coverage` (список слоёв) и `GET /coverage/{layer}` (сам GeoJSON, ZIP разбирается на нашей стороне при загрузке)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "locale",
+      "value": "ru",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Публичные ручки старого сайта",
+      "description": "То, что внешние потребители дёргали на старом сайте, и чем это стало здесь.",
+      "item": [
+        {
+          "name": "FAQ — список",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/faqs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "faqs"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "",
+                  "description": "5g | cdma — вопросы одной сети",
+                  "disabled": true
+                },
+                {
+                  "key": "page_key",
+                  "value": "",
+                  "description": "Ключ страницы, если вопросы привязаны к разделу",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Замена старому `/api/faqs-list`. Отдаёт вопросы с категориями, только опубликованные."
+          },
+          "response": []
+        },
+        {
+          "name": "Новости — список",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news?network=5g&page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "news"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "5g",
+                  "description": "5g | cdma"
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "ID категории",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Замена старому `/api/public/news`. Ключ X-API-Key больше не нужен, пагинация в `meta`."
+          },
+          "response": []
+        },
+        {
+          "name": "Новость — одна",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news/kiberbezopasnost-kak-ne-stat-zertvoi-mosennikov",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "news",
+                "kiberbezopasnost-kak-ne-stat-zertvoi-mosennikov"
+              ]
+            },
+            "description": "Замена старому `/api/public/news/{news}`. В пути — slug новости."
+          },
+          "response": []
+        },
+        {
+          "name": "Зоны покрытия — список слоёв",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/coverage",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coverage"
+              ]
+            },
+            "description": "Замена старому `/api/coverage_area_list`. Отдаёт слои (5g, 4g, voice), их цвет, число контуров, ссылку на GeoJSON и города с координатами."
+          },
+          "response": []
+        },
+        {
+          "name": "Зоны покрытия — GeoJSON слоя",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/coverage/5g",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coverage",
+                "5g"
+              ]
+            },
+            "description": "GeoJSON одного слоя. ZIP с шейпфайлом разбирается при загрузке в админке, наружу идёт готовая геометрия."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Сайт",
+      "item": [
+        {
+          "name": "Общие данные сайта",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/site",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "site"
+              ]
+            },
+            "description": "Меню, настройки, соцсети, переводы — всё, что фронт берёт один раз."
+          },
+          "response": []
+        },
+        {
+          "name": "Метрики",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/metrics",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "metrics"
+              ]
+            },
+            "description": "Счётчики для главной."
+          },
+          "response": []
+        },
+        {
+          "name": "Редиректы",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/redirects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "redirects"
+              ]
+            },
+            "description": "Старые адреса и их новые места."
+          },
+          "response": []
+        },
+        {
+          "name": "Блоки страницы",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/blocks/home",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "blocks",
+                "home"
+              ]
+            },
+            "description": "Контент-блоки страницы: home, cdma, coverage_area и т. д."
+          },
+          "response": []
+        },
+        {
+          "name": "Статическая страница",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pages/ekstrennye-operativnye-i-servisnye-uslugi",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pages",
+                "ekstrennye-operativnye-i-servisnye-uslugi"
+              ]
+            },
+            "description": "Страница из админки по slug."
+          },
+          "response": []
+        },
+        {
+          "name": "Категории таксономии",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/news-categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "news-categories"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "",
+                  "description": "5g | cdma",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Таксономии: news-categories, action-categories, faq-categories, device-categories, tariff-categories, tariff-types, service-categories, regions, document-categories."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Новости и акции",
+      "item": [
+        {
+          "name": "Новости",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news?network=5g&page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "news"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "5g",
+                  "description": "5g | cdma"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Новость",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news/{slug}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "news",
+                "{slug}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Акции",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/actions?network=5g&page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actions"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "5g",
+                  "description": "5g | cdma"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Акция",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/actions/{slug}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actions",
+                "{slug}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Тарифы и услуги",
+      "item": [
+        {
+          "name": "Тарифы",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tariffs?network=5g",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tariffs"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "5g",
+                  "description": "5g | cdma"
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "ID категории",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Тариф",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tariffs/{slug}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tariffs",
+                "{slug}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Файлы тарифов",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tariffs/files",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tariffs",
+                "files"
+              ]
+            },
+            "description": "PDF с описанием тарифов."
+          },
+          "response": []
+        },
+        {
+          "name": "Услуги",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/services?network=5g&page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "5g",
+                  "description": "5g | cdma"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Услуга",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/services/{slug}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services",
+                "{slug}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Устройства",
+      "item": [
+        {
+          "name": "Каталог",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/devices?page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "devices"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "",
+                  "description": "5g | cdma",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "ID категории",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Устройство",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/devices/tozed-zlt-x25-max2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "devices",
+                "tozed-zlt-x25-max2"
+              ]
+            },
+            "description": "Карточка модели: характеристики, бренд и рассрочка партнёров."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Помощь и компания",
+      "item": [
+        {
+          "name": "Документы",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "documents"
+              ]
+            },
+            "description": "Публичные документы по категориям."
+          },
+          "response": []
+        },
+        {
+          "name": "Офисы и дилеры",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/offices",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "offices"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "",
+                  "description": "5g | cdma",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "description": "office | dealer",
+                  "disabled": true
+                },
+                {
+                  "key": "region",
+                  "value": "",
+                  "description": "ID региона",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Вакансии",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/vacancies?page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vacancies"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Вакансия",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/vacancies/{slug}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "vacancies",
+                "{slug}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Тендеры",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tenders?page=1&per_page=9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Страница, с 1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "9",
+                  "description": "Записей на странице, максимум 100"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Поиск по заголовку",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Тендер",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tenders/{slug}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenders",
+                "{slug}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Номера и заявки",
+      "item": [
+        {
+          "name": "Номера 5G — подбор",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/numbers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "numbers"
+              ]
+            },
+            "description": "Идёт в биллинг, поэтому лимит запросов. mask — цифры номера. Запрос уходит во внешний шлюз оператора: вне их сети ответ будет 502.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": null,\n  \"mask\": \"\",\n  \"page\": 1,\n  \"size\": 12\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CDMA — фильтры",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cdma-numbers/filters",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cdma-numbers",
+                "filters"
+              ]
+            },
+            "description": "Префиксы и цены для поиска свободных номеров."
+          },
+          "response": []
+        },
+        {
+          "name": "CDMA — поиск номера",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cdma-numbers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cdma-numbers"
+              ]
+            },
+            "description": "number — от одной до четырёх цифр, без дефиса. price = -1 — любая цена. Запрос уходит во внешний шлюз оператора: вне их сети ответ будет 502.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"number\": \"5654\",\n  \"prefix\": \"\",\n  \"price\": -1,\n  \"page\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Заявка с сайта",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/applications",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "applications"
+              ]
+            },
+            "description": "Форма обратной связи. phone — 998XXXXXXXXX без плюса и пробелов, theme — id темы из /categories/application-themes, message — до 500 символов. Не больше 10 заявок в минуту с адреса.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"998901234567\",\n  \"theme\": 1,\n  \"message\": \"Здравствуйте! Прошу связаться со мной.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
