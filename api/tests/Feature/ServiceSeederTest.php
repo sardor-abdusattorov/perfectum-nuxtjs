@@ -17,10 +17,10 @@ beforeEach(function (): void {
 });
 
 it('carries every service of the old site into its category', function (): void {
-    expect(Service::count())->toBe(65)
+    expect(Service::count())->toBe(55)
         ->and(Service::query()->whereNull('category_id')->count())->toBe(0)
-        ->and(Service::query()->published()->count())->toBe(65)
-        ->and(Service::query()->forNetwork(Network::Cdma)->count())->toBe(56)
+        ->and(Service::query()->published()->count())->toBe(55)
+        ->and(Service::query()->forNetwork(Network::Cdma)->count())->toBe(46)
         ->and(Service::query()->forNetwork(Network::FiveG)->count())->toBe(9);
 });
 
@@ -51,5 +51,5 @@ it('hands the editor content with the old markup junk stripped', function (): vo
 it('survives a rerun without doubling the rows', function (): void {
     $this->seed(ServiceSeeder::class);
 
-    expect(Service::count())->toBe(65);
+    expect(Service::count())->toBe(55);
 });

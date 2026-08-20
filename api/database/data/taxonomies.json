@@ -215,16 +215,6 @@
             "status": true
         },
         {
-            "id": 10,
-            "name": {
-                "ru": "Оплата госуслуг",
-                "uz": "Davlat xizmatlari uchun to'lov"
-            },
-            "slug": "oplata-gosuslug",
-            "sort": 1,
-            "status": false
-        },
-        {
             "id": 13,
             "name": {
                 "ru": "Услуги для домашнего интернета",

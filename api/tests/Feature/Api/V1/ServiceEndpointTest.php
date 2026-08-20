@@ -18,7 +18,7 @@ beforeEach(function (): void {
 it('lists every service in one page for the catalogue', function (): void {
     $this->getJson(route('api.v1.services.index', ['per_page' => 100]))
         ->assertOk()
-        ->assertJsonCount(65, 'data');
+        ->assertJsonCount(55, 'data');
 });
 
 it('splits the list by network', function (): void {
@@ -28,7 +28,7 @@ it('splits the list by network', function (): void {
 
     $this->getJson(route('api.v1.services.index', ['network' => 'cdma', 'per_page' => 100]))
         ->assertOk()
-        ->assertJsonCount(56, 'data');
+        ->assertJsonCount(46, 'data');
 });
 
 it('searches services by name', function (): void {
@@ -82,9 +82,9 @@ it('hides an unpublished service from the list and the page', function (): void 
 
     $this->getJson(route('api.v1.services.index', ['per_page' => 100]))
         ->assertOk()
-        ->assertJsonCount(64, 'data');
+        ->assertJsonCount(54, 'data');
 
-    expect(Service::query()->forNetwork(Network::Cdma)->published()->count())->toBe(55);
+    expect(Service::query()->forNetwork(Network::Cdma)->published()->count())->toBe(45);
 });
 
 it('leaves the editor body out of a listing and keeps it on the record', function (): void {
