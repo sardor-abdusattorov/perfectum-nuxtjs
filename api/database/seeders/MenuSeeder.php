@@ -11,6 +11,10 @@ use Illuminate\Database\Seeder;
 /**
  * The tree mirrors the menus table of the old site, item for item; only the
  * addresses are translated to where each section lives now.
+ *
+ * A section that only gathers other pages carries no address of its own — the
+ * header opens its list instead of going anywhere, and «Тарифы» inside it is
+ * the very page the heading used to lead to.
  */
 class MenuSeeder extends Seeder
 {
@@ -58,7 +62,6 @@ class MenuSeeder extends Seeder
                 [
                     'key' => 'mobile',
                     'name' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa'],
-                    'url' => $this->url('/tariffs'),
                     'children' => [
                         ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'], 'url' => $this->url('/tariffs')],
                         ['key' => 'services', 'name' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'], 'url' => $this->url('/services')],
@@ -70,7 +73,6 @@ class MenuSeeder extends Seeder
                 [
                     'key' => 'home',
                     'name' => ['ru' => 'Домашний интернет', 'uz' => 'Uy interneti'],
-                    'url' => $this->url('/tariffs?tab=2'),
                     'children' => [
                         ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'], 'url' => $this->url('/tariffs?tab=2')],
                         ['key' => 'services', 'name' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'], 'url' => $this->url('/services')],

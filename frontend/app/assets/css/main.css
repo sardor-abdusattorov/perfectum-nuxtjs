@@ -867,7 +867,8 @@ strong {
   z-index: 70;
 }
 
-.header .header__menu-item_has-submenu:has(:focus-visible) .header__submenu {
+.header .header__menu-item_has-submenu:has(:focus-visible) .header__submenu,
+.header .header__menu-item_has-submenu:focus-within .header__submenu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -7484,6 +7485,7 @@ body.overflow__hidden {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
+  margin-bottom: 48px;
 }
 
 .tender-card {
@@ -7499,7 +7501,7 @@ body.overflow__hidden {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 48px;
+  gap: 20px;
   height: 100%;
   padding: 36px 40px 31px;
   color: inherit;
@@ -7515,6 +7517,11 @@ body.overflow__hidden {
   font-weight: 500;
   line-height: 33px;
   color: var(--color-black);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
 }
 
 .tender-card__date {
@@ -7528,12 +7535,12 @@ body.overflow__hidden {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
-  padding: 0 10px;
+  height: 32px;
+  padding: 0 14px;
   border-radius: 8px;
   background: var(--color-black);
   color: var(--color-white);
-  font-size: 24px;
+  font-size: 15px;
   font-weight: 500;
   line-height: normal;
 }
