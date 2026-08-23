@@ -1150,7 +1150,10 @@ sup {
   );
   padding: 16px;
   transform: translateX(100%);
-  transition: var(--transition);
+  /* only the slide is animated, and the panel keeps its own layer: `all` made
+     Safari repaint the gradient on every frame of the opening */
+  transition: transform 0.3s ease;
+  will-change: transform;
   overflow-y: auto;
 }
 
@@ -1399,13 +1402,12 @@ sup {
   position: absolute;
   top: 40%;
   right: -5%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(2.17, 5.79);
   width: 894px;
   height: 219px;
   border-radius: 50%;
-  background: var(--color-red);
-  opacity: 0.28;
-  filter: blur(175px);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
+  opacity: 0.56;
   pointer-events: none;
   z-index: 0;
 }
@@ -1506,6 +1508,9 @@ sup {
   margin-bottom: 17px;
 }
 
+/* Every red halo on the site is a scaled gradient, never a blurred solid: a
+   `filter: blur()` layer this large is re-rasterised by Safari on each
+   composite, and on iPhones that is what made opening the menu crawl. */
 .page-hero::before {
   content: "";
   position: absolute;
@@ -1513,11 +1518,10 @@ sup {
   right: -6.87vw;
   width: 46.56vw;
   height: 81.7%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(2.22, 3.65);
   border-radius: 50%;
-  background: var(--color-red);
-  opacity: 0.56;
-  filter: blur(7.92vw);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
+  opacity: 0.75;
   pointer-events: none;
   z-index: 0;
 }
@@ -2476,8 +2480,8 @@ sup {
   left: 0;
   border-radius: 100%;
   opacity: 0.36;
-  background: var(--color-red);
-  filter: blur(175px);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
+  transform: scale(2.76);
   width: 598px;
   height: 598px;
   pointer-events: none;
@@ -2490,8 +2494,8 @@ sup {
   right: 130px;
   border-radius: 100%;
   opacity: 0.36;
-  background: var(--color-red);
-  filter: blur(175px);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
+  transform: scale(2.44);
   width: 728px;
   height: 728px;
   pointer-events: none;
@@ -2788,21 +2792,10 @@ sup {
 
 .marquee .marquee__star {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.4);
-  clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  );
+  width: 9px;
+  height: 9px;
+  background: var(--color-white);
+  border-radius: 50%;
 }
 
 /* ==========================================================
@@ -3303,8 +3296,8 @@ sup {
   height: 430px;
   border-radius: 50%;
   opacity: 0.67;
-  background: var(--color-red);
-  filter: blur(175px);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
+  transform: scale(2.35, 3.44);
   position: absolute;
   left: 0;
   bottom: 0;
@@ -9033,12 +9026,11 @@ select {
     width: 450px;
     height: 450px;
     opacity: 0.56;
-    filter: blur(175px);
+    transform: scale(3.33);
     right: -20px;
   }
   .hero .hero__row::before {
     opacity: 0.8;
-    filter: blur(175px);
   }
   .hero .hero__actions {
     gap: 16px;
@@ -9159,10 +9151,10 @@ select {
   }
   .features__card.features__card_lag::before {
     opacity: 1;
-    filter: blur(111px);
+    transform: scale(3.71);
   }
   .features__card.features__card_lag:hover::before {
-    filter: blur(220px);
+    transform: scale(5.1);
   }
   .features .features__card,
   .features .features__card.features__card_lag,
@@ -9575,7 +9567,7 @@ select {
     right: 25px;
     left: inherit;
     fill: #e60000;
-    filter: blur(111px);
+    transform: scale(3.71);
   }
   .features__card.features__card_lag:hover::before {
     width: 320px;
@@ -9584,7 +9576,7 @@ select {
     right: 5px;
     left: inherit;
     bottom: auto;
-    filter: blur(220px);
+    transform: scale(5.1);
   }
 
   .features__card .features__card-title {
@@ -10276,8 +10268,8 @@ select {
     right: -63px;
     width: 283px;
     height: 71.1%;
-    opacity: 0.65;
-    filter: blur(53px);
+    opacity: 0.8;
+    transform: translateY(-50%) scale(2.3, 3.2);
   }
   .page-hero.page-hero_tariffs::after,
   .page-hero.page-hero_single_tariff::after {

@@ -9,14 +9,12 @@ use App\Support\Slug;
 use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\RichEditor\RichEditorTool;
 use Filament\Forms\Components\RichEditor\TextColor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Support\Icons\Heroicon;
 
 class Fields
 {
@@ -124,23 +122,12 @@ class Fields
 
     /**
      * A long article does not fit the box the form gives it, so the last
-     * toolbar button lifts the editor over the page until it is pressed again
-     * or Escape is hit. The expanded editor stays below the modal layer, so
-     * attaching a file or editing a link still works from there.
+     * toolbar button opens the editor full screen; the button itself comes
+     * from mdobes/rich-editor-fullscreen, which registers with every editor.
      */
     private static function richEditor(string $field, string $size): RichEditor
     {
         return RichEditor::make($field)
-            ->tools([
-                RichEditorTool::make('fullscreen')
-                    ->label(__('app.label.editor_fullscreen'))
-                    ->icon(Heroicon::ArrowsPointingOut)
-                    ->activeStyling(false)
-                    ->jsHandler("\$el.closest('.fi-fo-rich-editor')?.classList.toggle('fi-fo-rich-editor-fullscreen')"),
-            ])
-            ->extraAttributes([
-                'x-on:keydown.escape' => "\$el.classList.remove('fi-fo-rich-editor-fullscreen')",
-            ])
             ->extraInputAttributes(['class' => "editor-box {$size}"]);
     }
 

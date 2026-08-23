@@ -947,11 +947,10 @@
   bottom: -60px;
   width: 894px;
   height: 277px;
-  transform: translateX(-50%);
-  background: var(--color-red);
+  transform: translateX(-50%) scale(2.2, 4.02);
+  background: radial-gradient(ellipse closest-side, rgba(230, 0, 0, 0.62) 0%, rgba(230, 0, 0, 0.43) 20%, rgba(230, 0, 0, 0) 72%);
   border-radius: 50%;
   opacity: 0.5;
-  filter: blur(150px);
   pointer-events: none;
 }
 
