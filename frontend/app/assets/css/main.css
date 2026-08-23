@@ -376,6 +376,86 @@ sup {
   color: rgba(0, 0, 0, 0.7);
 }
 
+.article__body li > p,
+
+.article__content li > p,
+
+.about-intro li > p,
+
+.vacancy__section li > p,
+
+.cdma-article__body li > p,
+
+.cdma-connect__article li > p,
+
+.tariff-detail__more-content li > p,
+
+.faq-item__answer li > p,
+
+.contacts-note li > p {
+  margin: 0;
+}
+
+.article__body li > p + p,
+
+.article__content li > p + p,
+
+.about-intro li > p + p,
+
+.vacancy__section li > p + p,
+
+.cdma-article__body li > p + p,
+
+.cdma-connect__article li > p + p,
+
+.tariff-detail__more-content li > p + p,
+
+.faq-item__answer li > p + p,
+
+.contacts-note li > p + p {
+  margin-top: 12px;
+}
+
+.article__body :is(td, th) > :first-child,
+
+.article__content :is(td, th) > :first-child,
+
+.about-intro :is(td, th) > :first-child,
+
+.vacancy__section :is(td, th) > :first-child,
+
+.cdma-article__body :is(td, th) > :first-child,
+
+.cdma-connect__article :is(td, th) > :first-child,
+
+.tariff-detail__more-content :is(td, th) > :first-child,
+
+.faq-item__answer :is(td, th) > :first-child,
+
+.contacts-note :is(td, th) > :first-child {
+  margin-top: 0;
+}
+
+.article__body :is(td, th) > :last-child,
+
+.article__content :is(td, th) > :last-child,
+
+.about-intro :is(td, th) > :last-child,
+
+.vacancy__section :is(td, th) > :last-child,
+
+.cdma-article__body :is(td, th) > :last-child,
+
+.cdma-connect__article :is(td, th) > :last-child,
+
+.tariff-detail__more-content :is(td, th) > :last-child,
+
+.faq-item__answer :is(td, th) > :last-child,
+
+.contacts-note :is(td, th) > :last-child {
+  margin-bottom: 0;
+}
+
 .article__body ul > li::before,
 
 .article__content ul > li::before,

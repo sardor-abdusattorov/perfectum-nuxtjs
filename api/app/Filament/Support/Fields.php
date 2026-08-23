@@ -128,6 +128,7 @@ class Fields
     private static function richEditor(string $field, string $size): RichEditor
     {
         return RichEditor::make($field)
+            ->stateCast(new RichContentStateCast)
             ->extraInputAttributes(['class' => "editor-box {$size}"]);
     }
 
