@@ -46,6 +46,17 @@ class MenuSeeder extends Seeder
                 ]
             );
 
+            /**
+             * The address is translated, and assigning null to a translated
+             * column clears only the language the seeder happens to run in:
+             * a heading that lost its address in Russian kept the Uzbek one,
+             * fell back to it and went on linking. The column is emptied
+             * through the query builder, which writes past the cast.
+             */
+            if (! isset($item['url'])) {
+                Menu::query()->whereKey($menu->getKey())->update(['url' => null]);
+            }
+
             if (isset($item['children'])) {
                 $this->createItems($location, $item['children'], $menu->getKey());
             }
