@@ -236,6 +236,7 @@ return [
         'longitude' => 'Uzunlik',
         'logo' => 'Logotip',
         'name' => 'Nomi',
+        'editor_fullscreen' => 'Muharrirni butun ekranga yoyish',
         'show_on_site' => 'Saytda koʻrsatish',
         'created_at' => 'Yaratilgan',
         'updated_at' => 'Yangilangan',

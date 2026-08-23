@@ -175,6 +175,29 @@ it('seeds every block of the home page', function (): void {
     }
 });
 
+/**
+ * The rich editor keeps its live state as a TipTap document, so editing one
+ * word of a slide title travels as a property path eleven levels deep — one
+ * past the depth Livewire ships with, which refused the whole save.
+ */
+it('accepts an edit buried inside a translated rich editor of a repeater row', function (): void {
+    ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
+        'slides' => [['title' => ['ru' => '<p>Скорость</p>'], 'status' => true]],
+    ]);
+
+    $this->actingAs(homepageAdmin());
+
+    $page = Livewire::test(ManageHomepage::class);
+    $slide = array_key_first($page->get('data')['hero']['slides']);
+    $path = "data.hero.slides.{$slide}.title.ru.content.0.content.0.text";
+
+    expect(substr_count($path, '.') + 1)->toBeGreaterThan(10);
+
+    $page->set($path, 'Скорость 5G');
+
+    expect($page->get($path))->toBe('Скорость 5G');
+});
+
 it('requires the title in ru and uz but not in en', function (): void {
     $this->actingAs(homepageAdmin());
 

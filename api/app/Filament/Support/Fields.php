@@ -9,12 +9,14 @@ use App\Support\Slug;
 use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\RichEditor\RichEditorTool;
 use Filament\Forms\Components\RichEditor\TextColor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Support\Icons\Heroicon;
 
 class Fields
 {
@@ -87,24 +89,22 @@ class Fields
 
     public static function multiline(string $field): RichEditor
     {
-        return RichEditor::make($field)
+        return self::richEditor($field, 'editor-box_short')
             ->toolbarButtons([
                 ['bold', 'italic', 'underline', 'strike', 'link'],
                 ['textColor', 'clearFormatting'],
                 ['undo', 'redo'],
+                ['fullscreen'],
             ])
             ->textColors([
                 'accent' => TextColor::make(__('app.color.accent'), '#e60000', '#ff4d4d'),
                 'outline' => TextColor::make(__('app.color.outline'), '#0b0d17', '#ffffff'),
-            ])
-            ->extraInputAttributes([
-                'style' => 'min-height: 7rem; max-height: 30vh; overflow-y: auto;',
             ]);
     }
 
     public static function editor(string $field): RichEditor
     {
-        return RichEditor::make($field)
+        return self::richEditor($field, 'editor-box_tall')
             ->fileAttachmentsDisk('public')
             ->fileAttachmentsDirectory(fn (): string => 'uploads/attachments/'.now()->format('Y/m'))
             ->fileAttachmentsVisibility('public')
@@ -118,10 +118,30 @@ class Fields
                 ['table', 'attachFiles'],
                 ['grid'],
                 ['undo', 'redo'],
-            ])
-            ->extraInputAttributes([
-                'style' => 'min-height: 15rem; max-height: 30vh; overflow-y: auto;',
+                ['fullscreen'],
             ]);
+    }
+
+    /**
+     * A long article does not fit the box the form gives it, so the last
+     * toolbar button lifts the editor over the page until it is pressed again
+     * or Escape is hit. The expanded editor stays below the modal layer, so
+     * attaching a file or editing a link still works from there.
+     */
+    private static function richEditor(string $field, string $size): RichEditor
+    {
+        return RichEditor::make($field)
+            ->tools([
+                RichEditorTool::make('fullscreen')
+                    ->label(__('app.label.editor_fullscreen'))
+                    ->icon(Heroicon::ArrowsPointingOut)
+                    ->activeStyling(false)
+                    ->jsHandler("\$el.closest('.fi-fo-rich-editor')?.classList.toggle('fi-fo-rich-editor-fullscreen')"),
+            ])
+            ->extraAttributes([
+                'x-on:keydown.escape' => "\$el.classList.remove('fi-fo-rich-editor-fullscreen')",
+            ])
+            ->extraInputAttributes(['class' => "editor-box {$size}"]);
     }
 
     public static function image(string $model, string $field = 'image'): FileUpload

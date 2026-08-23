@@ -44,3 +44,56 @@
 .fi-logo {
     padding: 10px 0;
 }
+
+/* Rich editor: a fixed writing box, and a way out of it */
+
+.editor-box {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.editor-box_short {
+    min-height: 7rem;
+}
+
+.editor-box_tall {
+    min-height: 15rem;
+}
+
+/* Below the modal layer (40) so attaching a file or editing a link still
+   opens over the expanded editor, above the sticky topbar (30). */
+.fi-fo-rich-editor-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    padding: 1rem;
+    background-color: var(--gray-50);
+}
+
+.dark .fi-fo-rich-editor-fullscreen {
+    background-color: var(--gray-900);
+}
+
+/* The writing area is three wrappers deep, so the whole chain has to stretch
+   for it to reach the bottom of the screen. */
+.fi-fo-rich-editor-fullscreen,
+.fi-fo-rich-editor-fullscreen > .fi-input-wrp-content-ctn,
+.fi-fo-rich-editor-fullscreen > .fi-input-wrp-content-ctn > div {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.fi-fo-rich-editor-fullscreen > .fi-input-wrp-content-ctn,
+.fi-fo-rich-editor-fullscreen > .fi-input-wrp-content-ctn > div,
+.fi-fo-rich-editor-fullscreen .fi-fo-rich-editor-main {
+    flex: 1 1 auto;
+}
+
+.fi-fo-rich-editor-fullscreen .fi-fo-rich-editor-main {
+    max-height: none;
+}
+
+.fi-fo-rich-editor-fullscreen .fi-fo-rich-editor-content {
+    min-height: 100%;
+}

@@ -78,11 +78,11 @@ function connect(): void {
           </div>
         </article>
 
+        <!-- the block is a heading the visitor opens, so it starts folded -->
         <details
           v-for="(description, index) in tariff.descriptions"
           :key="index"
           class="tariff-detail__more"
-          :open="index === 0"
         >
           <summary class="tariff-detail__more-summary">
             {{ description.name }}
