@@ -123,7 +123,7 @@ it('creates a service with its facts and steps', function (): void {
 
     $service = Service::query()->sole();
 
-    expect($service->slug)->toBe('avtoplatez')
+    expect($service->slug)->toBe('avtoplatyozh')
         ->and($service->ussd)->toBe('*100*5#')
         ->and($service->facts)->toHaveCount(1)
         ->and($service->facts[0]['value']['ru'])->toBe('Бесплатно')

@@ -2,7 +2,7 @@
     "services": [
         {
             "id": 84,
-            "category": "uslugi-mobilnoi-svyazi-5g-sa",
+            "category": "uslugi-mobilnoy-svyazi-5g-sa",
             "slug": "boost-250",
             "name": {
                 "ru": "BOOST 250",
@@ -21,7 +21,7 @@
         },
         {
             "id": 85,
-            "category": "uslugi-mobilnoi-svyazi-5g-sa",
+            "category": "uslugi-mobilnoy-svyazi-5g-sa",
             "slug": "boost-100",
             "name": {
                 "ru": "BOOST 100",
@@ -40,7 +40,7 @@
         },
         {
             "id": 86,
-            "category": "uslugi-mobilnoi-svyazi-5g-sa",
+            "category": "uslugi-mobilnoy-svyazi-5g-sa",
             "slug": "boost-50",
             "name": {
                 "ru": "BOOST 50",
@@ -59,7 +59,7 @@
         },
         {
             "id": 92,
-            "category": "uslugi-mobilnoi-svyazi-5g-sa",
+            "category": "uslugi-mobilnoy-svyazi-5g-sa",
             "slug": "zamena-sim-karty-esim",
             "name": {
                 "ru": "Замена SIM-карты / eSIM",
@@ -78,7 +78,7 @@
         },
         {
             "id": 93,
-            "category": "uslugi-mobilnoi-svyazi-5g-sa",
+            "category": "uslugi-mobilnoy-svyazi-5g-sa",
             "slug": "zamena-abonentskogo-nomera",
             "name": {
                 "ru": "Замена абонентского номера",
@@ -97,7 +97,7 @@
         },
         {
             "id": 81,
-            "category": "uslugi-dlya-domasnego-interneta",
+            "category": "uslugi-dlya-domashnego-interneta",
             "slug": "usluga-staticeskii-ip-adres",
             "name": {
                 "ru": "Услуга «Статический IP-адрес»",
@@ -116,7 +116,7 @@
         },
         {
             "id": 89,
-            "category": "uslugi-dlya-domasnego-interneta",
+            "category": "uslugi-dlya-domashnego-interneta",
             "slug": "boost-250-1",
             "name": {
                 "ru": "BOOST 250",
@@ -135,7 +135,7 @@
         },
         {
             "id": 90,
-            "category": "uslugi-dlya-domasnego-interneta",
+            "category": "uslugi-dlya-domashnego-interneta",
             "slug": "boost-100-1",
             "name": {
                 "ru": "BOOST 100",
@@ -154,7 +154,7 @@
         },
         {
             "id": 91,
-            "category": "uslugi-dlya-domasnego-interneta",
+            "category": "uslugi-dlya-domashnego-interneta",
             "slug": "boost-50-1",
             "name": {
                 "ru": "BOOST 50",
@@ -906,7 +906,7 @@
         },
         {
             "id": 48,
-            "category": "mobilnyi-kabinet",
+            "category": "mobilnyy-kabinet",
             "slug": "mobilnyi-kabinet",
             "name": {
                 "ru": "Мобильный кабинет",
@@ -928,7 +928,7 @@
         },
         {
             "id": 79,
-            "category": "mobilnyi-kabinet",
+            "category": "mobilnyy-kabinet",
             "slug": "personalnyi-kabinet-dlya-cdma",
             "name": {
                 "ru": "Персональный кабинет ㅤㅤㅤ для CDMA",
@@ -1013,7 +1013,7 @@
         },
         {
             "id": 52,
-            "category": "mezdunarodnaya-svyaz",
+            "category": "mezhdunarodnaya-svyaz",
             "slug": "mezdunarodnaya-svyaz",
             "name": {
                 "ru": "Международная связь",
@@ -1032,7 +1032,7 @@
         },
         {
             "id": 54,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "golosovye-uslugi",
             "name": {
                 "ru": "Голосовые услуги",
@@ -1051,7 +1051,7 @@
         },
         {
             "id": 55,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "sms-informirovanie",
             "name": {
                 "ru": "SMS - Информирование",
@@ -1067,7 +1067,7 @@
         },
         {
             "id": 56,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "sms-uslugi",
             "name": {
                 "ru": "СМС - УСЛУГИ",
@@ -1083,7 +1083,7 @@
         },
         {
             "id": 57,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "sms-golosovanie-i-pozelaniya-na-tv",
             "name": {
                 "ru": "СМС – ГОЛОСОВАНИЕ и ПОЖЕЛАНИЯ на ТВ",
@@ -1099,7 +1099,7 @@
         },
         {
             "id": 62,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "tematiceskie-uslugi-uzru",
             "name": {
                 "ru": "ТЕМАТИЧЕСКИЕ УСЛУГИ (UZ/RU)",
@@ -1115,7 +1115,7 @@
         },
         {
             "id": 63,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "akcii",
             "name": {
                 "ru": "Акции",
@@ -1131,7 +1131,7 @@
         },
         {
             "id": 76,
-            "category": "uslugi-ot-kontent-provaiderov",
+            "category": "uslugi-ot-kontent-provayderov",
             "slug": "uslugi-predostavlyaemye-kontent-provaiderami",
             "name": {
                 "ru": "Услуги, предоставляемые Контент-провайдерами",

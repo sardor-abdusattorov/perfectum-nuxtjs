@@ -14,19 +14,19 @@ class TaxonomySeeder extends Seeder
 {
     private const NETWORKS = [
         'cdma' => Network::Cdma,
-        'mobilnaya-svya' => Network::FiveG,
-        'domasnii-internet' => Network::FiveG,
+        'mobilnaya-svyaz' => Network::FiveG,
+        'domashniy-internet' => Network::FiveG,
     ];
 
     private const TYPE_CATEGORIES = [
-        'qulay-ezemesyacnye' => 'cdma',
+        'qulay-ezhemesyachnye' => 'cdma',
         'qulay-polugodovye' => 'cdma',
-        'specialnye-tarify' => 'cdma',
+        'spetsialnye-tarify' => 'cdma',
         'polugodovye-6k' => 'cdma',
-        'dlya-fiziceskix-lic' => 'domasnii-internet',
-        'dlya-yuridiceskix-lic' => 'domasnii-internet',
-        'bez-pokupki-routera' => 'domasnii-internet',
-        '5g-standalone' => 'mobilnaya-svya',
+        'dlya-fizicheskih-lits' => 'domashniy-internet',
+        'dlya-yuridicheskih-lits' => 'domashniy-internet',
+        'bez-pokupki-routera' => 'domashniy-internet',
+        '5g-standalone' => 'mobilnaya-svyaz',
     ];
 
     public function run(): void

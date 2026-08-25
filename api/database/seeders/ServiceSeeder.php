@@ -16,8 +16,8 @@ class ServiceSeeder extends Seeder
      * the site; everything else the old site offered is the CDMA legacy.
      */
     private const FIVE_G_CATEGORIES = [
-        'uslugi-dlya-domasnego-interneta',
-        'uslugi-mobilnoi-svyazi-5g-sa',
+        'uslugi-dlya-domashnego-interneta',
+        'uslugi-mobilnoy-svyazi-5g-sa',
     ];
 
     public function run(): void

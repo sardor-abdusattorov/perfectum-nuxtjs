@@ -46,7 +46,7 @@ it('builds a slug from the title when the admin leaves it empty', function (): v
         ->call('create')
         ->assertHasNoFormErrors();
 
-    expect(News::query()->sole()->slug)->toBe('pervaia-5g-set');
+    expect(News::query()->sole()->slug)->toBe('pervaya-5g-set');
 });
 
 it('transliterates the russian title when english is empty', function (): void {
@@ -81,7 +81,7 @@ it('never repeats a slug that is already taken', function (): void {
     News::create([
         'title' => ['ru' => 'Старая'],
         'content' => ['ru' => '<p>x</p>'],
-        'slug' => 'pervaia',
+        'slug' => 'pervaya',
         'status' => true,
     ]);
 
@@ -90,7 +90,7 @@ it('never repeats a slug that is already taken', function (): void {
         ->call('create')
         ->assertHasNoFormErrors();
 
-    expect(News::query()->orderByDesc('id')->first()->slug)->toBe('pervaia-2');
+    expect(News::query()->orderByDesc('id')->first()->slug)->toBe('pervaya-2');
 });
 
 it('regenerates the slug when it is cleared while editing', function (): void {
@@ -111,5 +111,5 @@ it('regenerates the slug when it is cleared while editing', function (): void {
         ->call('save')
         ->assertHasNoFormErrors();
 
-    expect($news->refresh()->slug)->toBe('pereimenovana-pozze');
+    expect($news->refresh()->slug)->toBe('pereimenovana-pozzhe');
 });

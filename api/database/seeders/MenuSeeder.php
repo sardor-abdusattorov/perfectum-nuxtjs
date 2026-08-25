@@ -85,7 +85,7 @@ class MenuSeeder extends Seeder
                     'key' => 'home',
                     'name' => ['ru' => 'Домашний интернет', 'uz' => 'Uy interneti'],
                     'children' => [
-                        ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'], 'url' => $this->url('/tariffs?category=domasnii-internet')],
+                        ['key' => 'tariffs', 'name' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'], 'url' => $this->url('/tariffs?category=domashniy-internet')],
                         ['key' => 'services', 'name' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'], 'url' => $this->url('/services')],
                         ['key' => 'devices', 'name' => ['ru' => 'Каталог устройств', 'uz' => 'Uskunalar katalogi'], 'url' => $this->url('/devices')],
                         ['key' => 'actions', 'name' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'], 'url' => $this->url('/actions')],
