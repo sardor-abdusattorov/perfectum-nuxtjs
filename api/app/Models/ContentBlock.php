@@ -32,28 +32,40 @@ class ContentBlock extends Model
     {
         return Attribute::make(
             get: fn (?string $value): array => $value
-                ? static::renderIcons(static::resolveLocale(json_decode($value, true) ?? [], app()->getLocale()))
+                ? static::render(static::resolveLocale(json_decode($value, true) ?? [], app()->getLocale()))
                 : [],
             set: fn (mixed $value): string => json_encode($value, JSON_UNESCAPED_UNICODE),
         );
     }
 
     /**
+     * The site only ever prints what it is handed, so both of the panel's
+     * shorthands are spelled out here.
+     *
      * A node whose `icon` names one from the panel's set gets an `icon_svg`
      * sibling with the rendered mark, the way the socials payload carries
-     * theirs — the site only ever prints markup, never resolves names.
+     * theirs.
+     *
+     * An upload is stored as the bare path it occupies on the disk, and every
+     * other payload runs it through `stored_url()` before it leaves. A block
+     * used to go out as raw JSON, so `uploads/...` reached the page and the
+     * browser resolved it against whatever address the visitor was on.
      *
      * @param  array<array-key, mixed>  $value
      * @return array<array-key, mixed>
      */
-    protected static function renderIcons(array $value): array
+    protected static function render(array $value): array
     {
         if (is_string($value['icon'] ?? null) && Social::hasIcon($value['icon'])) {
             $value['icon_svg'] = Social::iconSvg($value['icon']);
         }
 
         return array_map(
-            fn ($item) => is_array($item) ? static::renderIcons($item) : $item,
+            fn ($item) => match (true) {
+                is_array($item) => static::render($item),
+                is_string($item) && str_starts_with($item, 'uploads/') => stored_url($item),
+                default => $item,
+            },
             $value,
         );
     }
