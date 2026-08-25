@@ -30,6 +30,7 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'actions' => 'Amallar',
         'preview' => 'Saytda koʻrish',
         'in_catalog' => 'Tariflar katalogida koʻrsatish',
         'lead_text' => 'Lid matni',

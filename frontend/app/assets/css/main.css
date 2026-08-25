@@ -912,35 +912,19 @@ sup {
 .preview-bar__row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
   min-height: var(--preview-bar-height);
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .preview-bar__text {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.preview-bar__close {
-  flex: 0 0 auto;
-  padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  transition: var(--transition);
-}
-
-.preview-bar__close:hover {
-  color: var(--color-black);
-  background: var(--color-white);
-  border-color: var(--color-white);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 /* the header sticks under the strip instead of behind it */
@@ -948,27 +932,9 @@ sup {
   top: var(--preview-bar-height);
 }
 
-/*
- * On a phone the notice takes two lines, so its height stops being a number
- * the header can offset by. It scrolls away instead and the header keeps the
- * top to itself.
- */
 @media all and (max-width: 768px) {
-  .preview-bar {
-    position: static;
-  }
-
-  .preview-bar__row {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
   .preview-bar__text {
-    font-size: 12px;
-  }
-
-  .preview-bar ~ .wrapper .header {
-    top: 0;
+    font-size: 13px;
   }
 }
 

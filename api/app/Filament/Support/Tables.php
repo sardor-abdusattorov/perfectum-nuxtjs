@@ -9,6 +9,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 
@@ -60,7 +62,12 @@ class Tables
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
-            ]),
+            ])
+                ->label(__('app.label.actions'))
+                ->button()
+                ->color('gray')
+                ->icon(Heroicon::ChevronDown)
+                ->iconPosition(IconPosition::After),
         ];
     }
 
