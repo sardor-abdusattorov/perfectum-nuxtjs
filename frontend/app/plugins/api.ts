@@ -15,6 +15,18 @@ export default defineNuxtPlugin(nuxtApp => {
       if (value) {
         options.headers.set('X-Locale', value)
       }
+
+      /**
+       * A draft is a 404 for the site, and the token in the address is what
+       * lifts that for the one record it names. Every page reaches the API
+       * through here, so the token travels from here too — the page itself
+       * never has to know it exists.
+       */
+      const preview = nuxtApp.$router?.currentRoute.value.query.preview
+
+      if (typeof preview === 'string' && preview) {
+        options.query = { ...options.query, preview }
+      }
     },
     /**
      * Every caller handles its own failure and says so on the page, so these

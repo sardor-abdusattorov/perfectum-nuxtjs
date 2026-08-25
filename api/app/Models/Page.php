@@ -80,9 +80,4 @@ class Page extends Model
     {
         return 'pages.redirects';
     }
-
-    public function resolveRouteBinding($value, $field = null): ?Model
-    {
-        return static::query()->published()->where('slug', $value)->first();
-    }
 }

@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Actions\Pages;
 
 use App\Filament\Resources\Actions\ActionResource;
 use App\Filament\Resources\Concerns\GeneratesSlug;
+use App\Filament\Support\PreviewAction;
+use App\Models\Action as ActionRecord;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
@@ -17,6 +19,7 @@ class EditAction extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            PreviewAction::make(fn (ActionRecord $record): string => "/actions/{$record->slug}"),
             ViewAction::make(),
             DeleteAction::make(),
         ];

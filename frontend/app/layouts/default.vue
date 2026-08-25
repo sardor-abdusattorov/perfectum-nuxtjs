@@ -10,6 +10,8 @@ useHead(() => ({
 </script>
 
 <template>
+  <LayoutPreviewBanner />
+
   <div class="wrapper">
     <LayoutHeader />
 

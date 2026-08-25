@@ -30,6 +30,7 @@ return [
         'resources' => 'Resurslar',
     ],
     'label' => [
+        'preview' => 'Saytda koʻrish',
         'in_catalog' => 'Tariflar katalogida koʻrsatish',
         'lead_text' => 'Lid matni',
         'change_status' => 'Statusni o\'zgartirish',
@@ -300,6 +301,7 @@ return [
     ],
 
     'helper' => [
+        'preview' => 'Sahifani tashrifchi koʻradigan holida ochadi — hali chop etilmagan boʻlsa ham. Havola bir kun yashaydi, uni kelishish uchun ulashish mumkin.',
         'in_catalog' => 'Oʻchirsangiz, kategoriya bosh sahifadan va tariflar sahifasidan yoʻqoladi; uning sahifalari va CDMA boʻlimi ishlashda davom etadi.',
         'coverage_key' => 'Lotin harflarida, masalan 5g yoki voice — qatlam shu boʻyicha yoqiladi',
         'installment_partner_logo' => 'Muddatli toʻlov oynasi uchun hamkor logotipi, PNG yoki SVG',

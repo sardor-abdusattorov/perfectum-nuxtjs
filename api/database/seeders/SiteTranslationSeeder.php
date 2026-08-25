@@ -89,6 +89,7 @@ class SiteTranslationSeeder extends Seeder
             ],
             'date.long' => ['ru' => '{day} {month} {year}', 'uz' => '{day}-{month}, {year}'],
 
+            'preview.notice' => ['ru' => 'Черновик — эту страницу видно только по этой ссылке', 'uz' => 'Qoralama — bu sahifa faqat shu havola orqali koʻrinadi'],
             'common.prev' => ['ru' => 'Назад', 'uz' => 'Orqaga'],
             'common.next' => ['ru' => 'Вперёд', 'uz' => 'Oldinga'],
             'tariffs.empty' => ['ru' => 'Тарифы не найдены', 'uz' => 'Tariflar topilmadi'],
