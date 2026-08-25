@@ -3,6 +3,7 @@
 namespace App\Filament\Support;
 
 use App\Enums\PublishedStatus;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -42,21 +43,24 @@ class Tables
     }
 
     /**
+     * One dropdown per row instead of a strip of labels: four actions side by
+     * side pushed the row past its edge, and an unlabeled icon among labeled
+     * buttons read as noise. In the dropdown every action keeps its full name.
+     *
      * The preview action hides itself for a record that has no address on the
      * site, so every listing may offer it and only the ones with pages show it.
-     * In a row it is an icon alone: a fourth label pushed the delete button off
-     * the edge, and "Посмотреть на сайте" beside "Просмотр" read as the same
-     * thing twice.
      *
      * @return array<int, mixed>
      */
     public static function actions(): array
     {
         return [
-            PreviewAction::make()->iconButton(),
-            ViewAction::make(),
-            EditAction::make(),
-            DeleteAction::make(),
+            ActionGroup::make([
+                PreviewAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+            ]),
         ];
     }
 

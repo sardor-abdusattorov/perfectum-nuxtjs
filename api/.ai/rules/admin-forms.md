@@ -95,9 +95,10 @@ Add a record type to the site by adding a line there, not by pasting a URL
 into a resource.
 
 It is already in `Tables::actions()`, so every listing carries it; a record
-page adds `PreviewAction::make()` to `getHeaderActions()`. In a row it is
-`->iconButton()` — four labels do not fit, and "Посмотреть на сайте" beside
-the view action's "Просмотр" read as the same thing.
+page adds `PreviewAction::make()` to `getHeaderActions()`. Row actions live
+in one `ActionGroup` dropdown — four labeled buttons side by side pushed the
+row past its edge, and an icon without a label among labeled ones read as
+noise.
 
 The link carries `PreviewToken::for($record)`: one record, one day. What
 honours it is `Publishable::resolveRouteBinding()`, which falls back to the
