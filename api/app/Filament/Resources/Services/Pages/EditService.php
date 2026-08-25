@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Services\Pages;
 
+use App\Enums\Network;
 use App\Filament\Resources\Concerns\GeneratesSlug;
 use App\Filament\Resources\Services\ServiceResource;
 use App\Filament\Support\PreviewAction;
@@ -19,7 +20,9 @@ class EditService extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            PreviewAction::make(fn (Service $record): string => "/services/{$record->slug}"),
+            PreviewAction::make(fn (Service $record): string => $record->network === Network::Cdma
+                ? "/cdma/services/{$record->slug}"
+                : "/services/{$record->slug}"),
             ViewAction::make(),
             DeleteAction::make(),
         ];

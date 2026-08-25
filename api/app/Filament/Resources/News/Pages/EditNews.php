@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\News\Pages;
 
+use App\Enums\Network;
 use App\Filament\Resources\Concerns\GeneratesSlug;
 use App\Filament\Resources\News\NewsResource;
 use App\Filament\Support\PreviewAction;
@@ -19,7 +20,9 @@ class EditNews extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            PreviewAction::make(fn (News $record): string => "/news/{$record->slug}"),
+            PreviewAction::make(fn (News $record): string => $record->network === Network::Cdma
+                ? "/cdma/news/{$record->slug}"
+                : "/news/{$record->slug}"),
             ViewAction::make(),
             DeleteAction::make(),
         ];
