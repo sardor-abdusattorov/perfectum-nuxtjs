@@ -75,7 +75,7 @@ export function useTariff(slug: MaybeRefOrGetter<string>) {
  * The chips list only the subcategories present in the open category, and
  * switching category resets them, the way the old site behaved.
  */
-export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
+export function useTariffFilter(catalog: Ref<TariffCatalog | null>, { address = false } = {}) {
   // a category switched out of the catalogue keeps serving its own section
   // (the CDMA landing), it just loses its tab here and on the homepage
   const categories = computed(() => (
@@ -99,29 +99,37 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
   ))
 
   /**
-   * Both switches live in the address as slugs, so the state of the page is a
-   * link anyone can send. The old positional ?tab= is still read — advertising
-   * may carry it — but what gets written is always the slug.
+   * On the tariffs page the two switches are the state of the page, so they
+   * live in the address as slugs and the view becomes a link anyone can send;
+   * the old positional ?tab= is still read, advertising may carry it. Inside a
+   * section of another page they are just a control — a rail on the home page
+   * has no business rewriting that page's address — so this is asked for.
    */
   const route = useRoute()
   const router = useRouter()
 
   watchEffect(() => {
-    if (!category.value && categories.value.length) {
-      const named = categories.value.find(item => item.slug === route.query.category)
-      const counted = categories.value[Number(route.query.tab) - 1]
-
-      category.value = (named ?? counted ?? categories.value[0]!).id
+    if (category.value || !categories.value.length) {
+      return
     }
+
+    const named = address ? categories.value.find(item => item.slug === route.query.category) : undefined
+    const counted = address ? categories.value[Number(route.query.tab) - 1] : undefined
+
+    category.value = (named ?? counted ?? categories.value[0]!).id
   })
 
   watchEffect(() => {
-    if (!type.value && route.query.type) {
+    if (address && !type.value && route.query.type) {
       type.value = types.value.find(item => item.slug === route.query.type)?.id ?? ''
     }
   })
 
   watch([category, type], () => {
+    if (!address) {
+      return
+    }
+
     const open = categories.value.find(item => item.id === category.value)?.slug
     const chip = types.value.find(item => item.id === type.value)?.slug
 

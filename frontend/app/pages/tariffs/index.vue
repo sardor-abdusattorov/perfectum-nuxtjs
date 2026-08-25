@@ -8,7 +8,7 @@ const { open } = useTariffModal()
 useSeo({ page: 'tariffs' })
 
 const { data } = await useTariffCatalog()
-const { categories, types, category, type, visible } = useTariffFilter(data)
+const { categories, types, category, type, visible } = useTariffFilter(data, { address: true })
 
 const slider = useTemplateRef('slider')
 

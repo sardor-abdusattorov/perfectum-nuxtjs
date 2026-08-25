@@ -57,29 +57,6 @@ const [
   useTariffCatalog(),
 ])
 
-/**
- * Both chip rows live in the address as slugs, so a link opens the landing
- * with the very section and filter it advertises.
- */
-const route = useRoute()
-const router = useRouter()
-
-function follow(chips: ComputedRef<Taxonomy[]>, chosen: Ref<number | ''>, param: string): void {
-  watchEffect(() => {
-    if (!chosen.value && route.query[param]) {
-      chosen.value = chips.value.find(item => item.slug === route.query[param])?.id ?? ''
-    }
-  })
-
-  watch(chosen, () => {
-    const slug = chips.value.find(item => item.id === chosen.value)?.slug
-
-    if ((slug ?? undefined) !== route.query[param]) {
-      router.replace({ query: { ...route.query, [param]: slug } })
-    }
-  })
-}
-
 const tariffType = ref<number | ''>('')
 
 const cdmaTariffs = computed(() => {
@@ -98,8 +75,6 @@ const railTariffs = computed(() => (
 
 const serviceCategory = ref<number | ''>('')
 
-follow(tariffChips, tariffType, 'tariffs')
-
 const serviceChips = computed(() => {
   const services = serviceCatalog.value?.services ?? []
 
@@ -114,8 +89,6 @@ const cdmaServices = computed(() => {
     ? services.filter(service => service.category?.id === serviceCategory.value)
     : services
 })
-
-follow(serviceChips, serviceCategory, 'services')
 
 const faqs = computed(() => faqData.value?.faqs ?? [])
 const { locale } = useI18n()
