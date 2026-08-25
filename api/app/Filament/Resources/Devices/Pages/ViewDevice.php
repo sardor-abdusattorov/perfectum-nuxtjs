@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Devices\Pages;
 
 use App\Filament\Resources\Devices\DeviceResource;
+use App\Filament\Support\PreviewAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -13,6 +14,7 @@ class ViewDevice extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            PreviewAction::make(),
             EditAction::make(),
         ];
     }

@@ -89,7 +89,8 @@ class SiteTranslationSeeder extends Seeder
             ],
             'date.long' => ['ru' => '{day} {month} {year}', 'uz' => '{day}-{month}, {year}'],
 
-            'preview.notice' => ['ru' => 'Черновик — эту страницу видно только по этой ссылке', 'uz' => 'Qoralama — bu sahifa faqat shu havola orqali koʻrinadi'],
+            'preview.notice' => ['ru' => 'Режим предпросмотра — черновики видны только вам', 'uz' => 'Koʻrib chiqish rejimi — qoralamalar faqat sizga koʻrinadi'],
+            'preview.exit' => ['ru' => 'Выйти', 'uz' => 'Chiqish'],
             'common.prev' => ['ru' => 'Назад', 'uz' => 'Orqaga'],
             'common.next' => ['ru' => 'Вперёд', 'uz' => 'Oldinga'],
             'tariffs.empty' => ['ru' => 'Тарифы не найдены', 'uz' => 'Tariflar topilmadi'],

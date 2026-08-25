@@ -925,6 +925,22 @@ sup {
   border-radius: 50%;
 }
 
+.preview-bar__close {
+  flex: 0 0 auto;
+  margin-left: 6px;
+  padding: 3px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  transition: var(--transition);
+}
+
+.preview-bar__close:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
 /* ==========================================================
    HEADER
    Site header (Frame 408)

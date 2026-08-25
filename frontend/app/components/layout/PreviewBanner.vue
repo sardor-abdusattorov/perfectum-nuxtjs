@@ -1,18 +1,27 @@
 <script setup lang="ts">
-const route = useRoute()
+const preview = useCookie('preview')
 const t = useT()
 
 /**
  * A draft looks exactly like a published page, which is the point — and the
  * reason to say plainly that nobody else can see it, so an editor never takes
  * the preview for the live site and leaves it unpublished.
+ *
+ * Leaving drops the cookie and reloads: the page is then answered the way any
+ * visitor gets it — for a draft, that is a 404.
  */
-const previewing = computed(() => typeof route.query.preview === 'string' && route.query.preview !== '')
+function leave(): void {
+  preview.value = null
+  window.location.reload()
+}
 </script>
 
 <template>
-  <div v-if="previewing" class="preview-bar" role="status">
+  <div v-if="preview" class="preview-bar" role="status">
     <span class="preview-bar__dot" aria-hidden="true"></span>
-    {{ t('preview.notice', 'Черновик — эту страницу видно только по этой ссылке') }}
+    {{ t('preview.notice', 'Режим предпросмотра — черновики видны только вам') }}
+    <button type="button" class="preview-bar__close" @click="leave()">
+      {{ t('preview.exit', 'Выйти') }}
+    </button>
   </div>
 </template>

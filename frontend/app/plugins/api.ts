@@ -1,5 +1,6 @@
 export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
+  const preview = useCookie('preview')
 
   const baseURL = (import.meta.server && config.apiBase) || config.public.apiBase
 
@@ -17,15 +18,14 @@ export default defineNuxtPlugin(nuxtApp => {
       }
 
       /**
-       * A draft is a 404 for the site, and the token in the address is what
-       * lifts that for the one record it names. Every page reaches the API
-       * through here, so the token travels from here too — the page itself
-       * never has to know it exists.
+       * A draft is a 404 for the site, and the preview token is what lifts
+       * that for the one record it names. The middleware moved it out of the
+       * address into a cookie; every page reaches the API through here, so
+       * the token travels from here too — the page never has to know it
+       * exists, and it never shows up in the location bar.
        */
-      const preview = nuxtApp.$router?.currentRoute.value.query.preview
-
-      if (typeof preview === 'string' && preview) {
-        options.query = { ...options.query, preview }
+      if (preview.value) {
+        options.query = { ...options.query, preview: preview.value }
       }
     },
     /**
