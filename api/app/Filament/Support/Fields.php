@@ -7,8 +7,10 @@ use App\Enums\SocialIcon;
 use App\Models\Social;
 use App\Support\Slug;
 use Closure;
+use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\RichEditor\Actions\AttachFilesAction;
 use Filament\Forms\Components\RichEditor\TextColor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -106,6 +108,7 @@ class Fields
             ->fileAttachmentsDisk('public')
             ->fileAttachmentsDirectory(fn (): string => 'uploads/attachments/'.now()->format('Y/m'))
             ->fileAttachmentsVisibility('public')
+            ->registerActions([self::attachFilesWithImageEditor()])
             ->toolbarButtons([
                 ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
                 ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'paragraph'],
@@ -117,6 +120,36 @@ class Fields
                 ['grid'],
                 ['undo', 'redo'],
                 ['fullscreen'],
+            ]);
+    }
+
+    /**
+     * The stock attach-files modal builds its upload field without the crop
+     * button and offers no switch to turn it on, so the editor registers its
+     * own action under the same name — a registered action replaces the
+     * default one — same modal, same saving, plus the image editor. The alt
+     * field must come along: replacing the schema replaces all of it.
+     */
+    private static function attachFilesWithImageEditor(): Action
+    {
+        return AttachFilesAction::make()
+            ->schema(fn (array $arguments, RichEditor $component): array => [
+                FileUpload::make('file')
+                    ->label(filled($arguments['src'] ?? null)
+                        ? __('filament-forms::components.rich_editor.actions.attach_files.modal.form.file.label.existing')
+                        : __('filament-forms::components.rich_editor.actions.attach_files.modal.form.file.label.new'))
+                    ->acceptedFileTypes($component->getFileAttachmentsAcceptedFileTypes())
+                    ->maxSize($component->getFileAttachmentsMaxSize())
+                    ->storeFiles(false)
+                    ->imageEditor()
+                    ->required(blank($arguments['src'] ?? null))
+                    ->hiddenLabel(blank($arguments['src'] ?? null)),
+
+                TextInput::make('alt')
+                    ->label(filled($arguments['src'] ?? null)
+                        ? __('filament-forms::components.rich_editor.actions.attach_files.modal.form.alt.label.existing')
+                        : __('filament-forms::components.rich_editor.actions.attach_files.modal.form.alt.label.new'))
+                    ->maxLength(1000),
             ]);
     }
 

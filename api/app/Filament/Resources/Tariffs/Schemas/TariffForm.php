@@ -105,8 +105,7 @@ class TariffForm
                             ->schema([
                                 Fields::image('tariffs', 'modal_image')
                                     ->label(__('app.label.modal_image'))
-                                    ->helperText(__('app.helper.modal_image'))
-                                    ->imageEditor(false),
+                                    ->helperText(__('app.helper.modal_image')),
 
                                 Repeater::make('buttons')
                                     ->label(__('app.label.connect_buttons'))
@@ -114,8 +113,7 @@ class TariffForm
                                     ->addActionLabel(__('app.action.add'))
                                     ->schema([
                                         Fields::image('tariffs', 'icon')
-                                            ->label(__('app.label.icon'))
-                                            ->imageEditor(false),
+                                            ->label(__('app.label.icon')),
 
                                         TranslatableTabs::make('button_translations')
                                             ->schema([

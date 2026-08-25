@@ -111,8 +111,7 @@ class ServiceForm
                     ->schema([
                         Fields::image('services', 'icon')
                             ->label(__('app.label.icon'))
-                            ->helperText(__('app.helper.service_icon'))
-                            ->imageEditor(false),
+                            ->helperText(__('app.helper.service_icon')),
 
                         Fields::image('services'),
 
