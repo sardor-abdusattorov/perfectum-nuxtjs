@@ -89,7 +89,7 @@ class SiteTranslationSeeder extends Seeder
             ],
             'date.long' => ['ru' => '{day} {month} {year}', 'uz' => '{day}-{month}, {year}'],
 
-            'preview.notice' => ['ru' => 'Режим предпросмотра', 'uz' => 'Oldindan koʻrish rejimi'],
+            'preview.notice' => ['ru' => 'Режим просмотра', 'uz' => 'Koʻrish rejimi'],
             'common.prev' => ['ru' => 'Назад', 'uz' => 'Orqaga'],
             'common.next' => ['ru' => 'Вперёд', 'uz' => 'Oldinga'],
             'tariffs.empty' => ['ru' => 'Тарифы не найдены', 'uz' => 'Tariflar topilmadi'],

@@ -14,7 +14,7 @@ export interface SeoInput {
 
 export function useSeo(input: SeoInput = {}) {
   const settings = useSiteSettings()
-  const preview = useCookie('preview')
+  const preview = usePreview()
   const t = useT()
 
   const page = computed(() => (input.page ? settings.value?.pages?.[input.page] ?? null : null))
@@ -62,10 +62,10 @@ export function useSeo(input: SeoInput = {}) {
     keywords,
     /**
      * A preview link is meant for the person it was sent to. Pasted into a
-     * public chat it can be followed by a crawler too, so while the token is
-     * in play the page asks not to be indexed whatever it says otherwise.
+     * public chat it can be followed by a crawler too, so the previewed page
+     * asks not to be indexed whatever it says otherwise.
      */
-    robots: () => (preview.value ? 'noindex, nofollow' : null)
+    robots: () => (preview.active.value ? 'noindex, nofollow' : null)
       || toValue(input.robots)
       || (page.value && page.value.indexed === false ? 'noindex, nofollow' : null)
       || settings.value?.seo.robots
