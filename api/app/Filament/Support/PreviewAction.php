@@ -34,7 +34,7 @@ class PreviewAction
         return Action::make('preview')
             ->label(__('app.label.preview'))
             ->tooltip(__('app.helper.preview'))
-            ->icon(Heroicon::Eye)
+            ->icon(Heroicon::ArrowTopRightOnSquare)
             ->color('gray')
             ->visible(fn (Model $record): bool => self::path($record) !== null)
             ->url(fn (Model $record): string => self::url($record), shouldOpenInNewTab: true);

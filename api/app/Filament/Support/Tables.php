@@ -42,11 +42,18 @@ class Tables
     }
 
     /**
+     * The preview action hides itself for a record that has no address on the
+     * site, so every listing may offer it and only the ones with pages show it.
+     * In a row it is an icon alone: a fourth label pushed the delete button off
+     * the edge, and "Посмотреть на сайте" beside "Просмотр" read as the same
+     * thing twice.
+     *
      * @return array<int, mixed>
      */
     public static function actions(): array
     {
         return [
+            PreviewAction::make()->iconButton(),
             ViewAction::make(),
             EditAction::make(),
             DeleteAction::make(),

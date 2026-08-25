@@ -73,7 +73,8 @@ inside an `<h2>` or a `<p>` without nesting a block element in one.
 | `Tables::statusColumn()` | the publish `ToggleColumn` |
 | `Tables::statusFilter()` | the published/unpublished `SelectFilter` |
 | `Tables::categoryFilter($model)` | the matching filter over the same rows |
-| `Tables::actions()` / `::bulkActions()` | view/edit/delete and bulk-delete |
+| `Tables::actions()` / `::bulkActions()` | preview/view/edit/delete and bulk-delete |
+| `PreviewAction::make()` | the "посмотреть на сайте" button on a record page |
 | `Fields::itemLabel($field)` | a repeater item label from a translated field |
 | `SaveAction::make(self::class)` | the save button of a homepage tab |
 
@@ -83,6 +84,26 @@ lists the same rows the form offers. A raw
 slugs and skips the cached options. Both return a plain Filament component, so
 override the label when the taxonomy is not a category:
 `Fields::category(Region::class, 'region_id')->label(__('app.label.region_single'))`.
+
+## The preview button knows every address on the site
+
+`PreviewAction` holds the one map from a model to its URL on the frontend —
+including the `/cdma` prefix, which a tariff takes from its category and the
+rest from their own `network`. A model missing from that `match` gets no
+button anywhere, because the action is `->visible()` on the path resolving.
+Add a record type to the site by adding a line there, not by pasting a URL
+into a resource.
+
+It is already in `Tables::actions()`, so every listing carries it; a record
+page adds `PreviewAction::make()` to `getHeaderActions()`. In a row it is
+`->iconButton()` — four labels do not fit, and "Посмотреть на сайте" beside
+the view action's "Просмотр" read as the same thing.
+
+The link carries `PreviewToken::for($record)`: one record, one day. What
+honours it is `Publishable::resolveRouteBinding()`, which falls back to the
+unpublished row only when the token names it, and `PageController`, which
+skips the cache while a token is in play. A listing endpoint never does —
+a draft in the feed would be published in every way that matters.
 
 ## Only the open tab of a block manager is rendered
 
