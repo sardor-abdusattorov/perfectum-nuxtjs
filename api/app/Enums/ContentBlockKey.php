@@ -14,6 +14,7 @@ enum ContentBlockKey: string
     case Coverage = 'coverage';
     case AppPromo = 'app_promo';
     case PageHero = 'page_hero';
+    case Sections = 'sections';
     case Stats = 'stats';
     case Intro = 'intro';
     case Timeline = 'timeline';

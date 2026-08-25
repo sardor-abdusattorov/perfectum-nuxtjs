@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\CdmaSection;
 use App\Enums\ContactCardIcon;
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
@@ -19,6 +20,19 @@ class CdmaSeeder extends Seeder
             'subtitle' => [
                 'ru' => 'Всё для действующих и новых абонентов — в одном месте.',
                 'uz' => 'Amaldagi va yangi abonentlar uchun hamma narsa — bir joyda.',
+            ],
+        ]);
+
+        ContentBlock::write(PageKey::Cdma, ContentBlockKey::Sections, [
+            'items' => [
+                ['section' => CdmaSection::Tariffs->value, 'title' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'], 'status' => true],
+                ['section' => CdmaSection::Services->value, 'title' => ['ru' => 'Услуги', 'uz' => 'Xizmatlar'], 'status' => true],
+                ['section' => CdmaSection::Numbers->value, 'title' => ['ru' => 'Номера', 'uz' => 'Raqamlar'], 'status' => true],
+                ['section' => CdmaSection::Faq->value, 'title' => ['ru' => 'FAQ', 'uz' => 'FAQ'], 'status' => true],
+                ['section' => CdmaSection::Support->value, 'title' => ['ru' => 'Поддержка', 'uz' => 'Qoʻllab-quvvatlash'], 'status' => true],
+                ['section' => CdmaSection::News->value, 'title' => ['ru' => 'Новости', 'uz' => 'Yangiliklar'], 'status' => true],
+                ['section' => CdmaSection::Promo->value, 'title' => ['ru' => 'Акции', 'uz' => 'Aksiyalar'], 'status' => true],
+                ['section' => CdmaSection::Dealers->value, 'title' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar'], 'status' => true],
             ],
         ]);
 

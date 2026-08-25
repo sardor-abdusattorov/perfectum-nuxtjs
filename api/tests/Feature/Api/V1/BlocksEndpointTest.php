@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\CdmaSection;
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
 use App\Models\ContentBlock;
@@ -87,4 +88,36 @@ it('returns an empty block list for a page without content', function (): void {
 
 it('rejects a page key that does not exist', function (): void {
     $this->getJson('/api/v1/blocks/not-a-page')->assertNotFound();
+});
+
+/**
+ * The order of the CDMA landing's own navigation is the admin's to change, so
+ * the site is handed the links in the order they were stored and nothing else
+ * decides it.
+ */
+it('hands the cdma sections out in the stored order', function (): void {
+    ContentBlock::write(PageKey::Cdma, ContentBlockKey::Sections, [
+        'items' => [
+            ['section' => CdmaSection::News->value, 'title' => ['ru' => 'Новости', 'uz' => 'Yangiliklar'], 'status' => true],
+            ['section' => CdmaSection::Tariffs->value, 'title' => ['ru' => 'Тарифы', 'uz' => 'Tariflar'], 'status' => true],
+            ['section' => CdmaSection::Dealers->value, 'title' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar'], 'status' => false],
+        ],
+    ]);
+
+    $items = $this->getJson(route('api.v1.blocks.show', ['page' => 'cdma']))
+        ->assertOk()
+        ->json('data.blocks.sections.items');
+
+    expect(array_column($items, 'section'))->toBe(['news', 'tariffs', 'dealers'])
+        ->and($items[0]['title'])->toBe('Новости')
+        ->and($items[2]['status'])->toBeFalse();
+});
+
+it('names a target on the site for every section the panel offers', function (): void {
+    foreach (CdmaSection::cases() as $case) {
+        expect($case->target())->not->toBe('');
+    }
+
+    expect(CdmaSection::Dealers->target())->toBe('/cdma/dealers')
+        ->and(CdmaSection::Tariffs->target())->toBe('#cdma-tariffs');
 });

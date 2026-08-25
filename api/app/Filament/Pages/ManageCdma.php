@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Filament\Pages\Blocks\ManageBlocks;
 use App\Filament\Pages\Cdma\CtaTab;
 use App\Filament\Pages\Cdma\HeroTab;
+use App\Filament\Pages\Cdma\SectionsTab;
 use App\Filament\Pages\Cdma\SupportTab;
 use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
@@ -19,7 +20,7 @@ class ManageCdma extends ManageBlocks
 
     public static function tabs(): array
     {
-        return [HeroTab::class, SupportTab::class, CtaTab::class];
+        return [HeroTab::class, SectionsTab::class, SupportTab::class, CtaTab::class];
     }
 
     public static function getNavigationLabel(): string

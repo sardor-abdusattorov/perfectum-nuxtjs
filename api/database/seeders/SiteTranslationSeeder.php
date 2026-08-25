@@ -11,6 +11,17 @@ class SiteTranslationSeeder extends Seeder
 {
     private const CATEGORY = 'app';
 
+    /**
+     * Keys the site has stopped asking for. The panel lets an admin add lines
+     * of their own, so the seeder cannot simply keep whatever it does not
+     * mention — it names the ones it retired and removes those.
+     *
+     * @var list<string>
+     */
+    private const RETIRED = [
+        'cdma.tab_numbers',
+    ];
+
     public function run(): void
     {
         foreach ($this->lines() as $key => $value) {
@@ -19,6 +30,11 @@ class SiteTranslationSeeder extends Seeder
                 ['value' => $value, 'is_published' => true]
             );
         }
+
+        SiteTranslation::query()
+            ->where('category', self::CATEGORY)
+            ->whereIn('key', self::RETIRED)
+            ->delete();
     }
 
     /**
@@ -154,7 +170,6 @@ class SiteTranslationSeeder extends Seeder
             'cdma.all_tariffs' => ['ru' => 'Все тарифы', 'uz' => 'Barcha tariflar'],
             'cdma.all_news' => ['ru' => 'Все новости', 'uz' => 'Barcha yangiliklar'],
             'cdma.numbers_title' => ['ru' => 'Свободные номера', 'uz' => 'Boʻsh raqamlar'],
-            'cdma.tab_numbers' => ['ru' => 'Номера', 'uz' => 'Raqamlar'],
             'cdma.tab_dealers' => ['ru' => 'Дилеры', 'uz' => 'Dilerlar'],
             'cdma.sections_label' => ['ru' => 'Разделы CDMA', 'uz' => 'CDMA boʻlimlari'],
             'cdma.to_home' => ['ru' => 'На главную', 'uz' => 'Bosh sahifaga'],

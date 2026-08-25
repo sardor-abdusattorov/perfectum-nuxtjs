@@ -14,6 +14,32 @@ const cta = useBlock('cdma', 'cta')
 const supportCards = computed(() => published(support.value.cards))
 
 /**
+ * The order and the wording of the landing's own navigation are the admin's;
+ * where each link leads belongs to this page and stays here. A link to another
+ * page needs the locale in front of it, an anchor within this one does not.
+ */
+const SECTION_TARGETS: Record<string, string> = {
+  tariffs: '#cdma-tariffs',
+  services: '#cdma-services',
+  numbers: '#cdma-numbers',
+  faq: '#cdma-faq',
+  support: '#cdma-support',
+  news: '#cdma-news',
+  promo: '#cdma-promo',
+  dealers: '/cdma/dealers',
+}
+
+const sections = useBlock('cdma', 'sections')
+
+const sectionLinks = computed(() => published(sections.value.items)
+  .map(item => ({
+    key: String(item.section ?? ''),
+    title: String(item.title ?? ''),
+    target: SECTION_TARGETS[String(item.section ?? '')] ?? '',
+  }))
+  .filter(item => item.target && item.title))
+
+/**
  * The page draws six independent sections, so they are fetched together: one
  * round-trip of depth instead of six waiting on each other.
  */
@@ -121,29 +147,13 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <nav class="cdma-tabs" :aria-label="t('cdma.sections_label')">
       <div class="container">
           <ul class="cdma-tabs__list">
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link cdma-tabs__link_active" href="#cdma-tariffs">{{ t('cdma.tariffs_title') }}</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-services">{{ t('cdma.services_title') }}</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-numbers">{{ t('cdma.tab_numbers') }}</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-faq">FAQ</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-support">{{ t('cdma.support_title') }}</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-news">{{ t('cdma.news_title') }}</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <a class="cdma-tabs__link" href="#cdma-promo">{{ t('cdma.promo_title') }}</a>
-              </li>
-              <li class="cdma-tabs__item">
-                  <NuxtLink class="cdma-tabs__link" :to="localePath('/cdma/dealers')">{{ t('cdma.tab_dealers') }}</NuxtLink>
+              <li v-for="(link, index) in sectionLinks" :key="link.key" class="cdma-tabs__item">
+                  <NuxtLink v-if="!link.target.startsWith('#')" class="cdma-tabs__link" :to="localePath(link.target)">
+                      {{ link.title }}
+                  </NuxtLink>
+                  <a v-else class="cdma-tabs__link" :class="index === 0 && 'cdma-tabs__link_active'" :href="link.target">
+                      {{ link.title }}
+                  </a>
               </li>
           </ul>
           <NuxtLink class="cdma-tabs__connect" :to="localePath('/cdma/connect')">{{ t('cdma.connect') }}</NuxtLink>

@@ -31,6 +31,8 @@ return [
     ],
     'label' => [
         'actions' => 'Amallar',
+        'sections' => 'Navigatsiya havolalari',
+        'cdma_section' => 'Qayerga olib boradi',
         'preview' => 'Saytda koʻrish',
         'in_catalog' => 'Tariflar katalogida koʻrsatish',
         'lead_text' => 'Lid matni',
@@ -302,6 +304,7 @@ return [
     ],
 
     'helper' => [
+        'cdma_sections' => 'CDMA sahifasi shapkasidagi havolalar tartibi. Oʻrnini almashtirish uchun torting.',
         'preview' => 'Sahifani tashrifchi koʻradigan holida ochadi — hali chop etilmagan boʻlsa ham. Havola bir kun yashaydi, uni kelishish uchun ulashish mumkin.',
         'in_catalog' => 'Oʻchirsangiz, kategoriya bosh sahifadan va tariflar sahifasidan yoʻqoladi; uning sahifalari va CDMA boʻlimi ishlashda davom etadi.',
         'coverage_key' => 'Lotin harflarida, masalan 5g yoki voice — qatlam shu boʻyicha yoqiladi',
@@ -473,6 +476,18 @@ return [
         'features' => '5G imkoniyatlari',
         'coverage' => 'Qamrov',
         'app_promo' => 'Ilova',
+        'sections' => 'Boʻlimlar',
+    ],
+
+    'cdma_section' => [
+        'tariffs' => 'Tariflar',
+        'services' => 'Xizmatlar',
+        'numbers' => 'Raqamlar',
+        'faq' => 'FAQ',
+        'support' => 'Qoʻllab-quvvatlash',
+        'news' => 'Yangiliklar',
+        'promo' => 'Aksiyalar',
+        'dealers' => 'Dilerlar',
     ],
 
     'color' => [
