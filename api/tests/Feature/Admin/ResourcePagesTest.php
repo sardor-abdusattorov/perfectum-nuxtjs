@@ -76,11 +76,11 @@ it('opens the edit page of a page settings row', function (): void {
 });
 
 it('forgets the cached category options when a category changes', function (): void {
-    TariffCategory::create(['name' => ['ru' => 'Первая'], 'sort' => 1, 'status' => true]);
+    TariffCategory::create(['name' => ['ru' => 'Первая'], 'slug' => 'pervaya', 'sort' => 1, 'status' => true]);
 
     expect(TariffCategory::options())->toHaveCount(1);
 
-    TariffCategory::create(['name' => ['ru' => 'Вторая'], 'sort' => 2, 'status' => true]);
+    TariffCategory::create(['name' => ['ru' => 'Вторая'], 'slug' => 'vtoraya', 'sort' => 2, 'status' => true]);
 
     expect(TariffCategory::options())->toHaveCount(2);
 });

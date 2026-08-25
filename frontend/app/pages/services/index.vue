@@ -7,7 +7,26 @@ useSeo({ page: 'services', titleKey: 'seo.services' })
 const { data: catalog } = await useServiceCatalog('5g')
 
 const query = ref('')
-const category = ref<number | ''>('')
+
+/**
+ * The open category lives in the address as its slug, so the state of the
+ * switch is a link anyone can send; «все» is the bare page. The address only
+ * seeds the ref — from then on the switch owns it and writes itself back.
+ */
+const route = useRoute()
+const router = useRouter()
+
+const category = ref<number | ''>(
+  (catalog.value?.categories ?? []).find(item => item.slug === route.query.category)?.id ?? '',
+)
+
+watch(category, () => {
+  const slug = (catalog.value?.categories ?? []).find(item => item.id === category.value)?.slug
+
+  if ((slug ?? undefined) !== route.query.category) {
+    router.replace({ query: { ...route.query, category: slug } })
+  }
+})
 
 const found = computed(() => {
   const needle = query.value.trim().toLowerCase()

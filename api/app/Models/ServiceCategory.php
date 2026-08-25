@@ -16,7 +16,7 @@ class ServiceCategory extends Model
 
     protected $table = 'service_categories';
 
-    protected $fillable = ['name', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'slug', 'network', 'sort', 'status'];
 
     public $translatable = ['name'];
 

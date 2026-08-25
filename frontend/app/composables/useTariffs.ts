@@ -3,6 +3,7 @@ import type { ApiResponse, TariffButton } from '~/types/api'
 export interface Taxonomy {
   id: number
   name: string
+  slug?: string | null
   network: string | null
   in_catalog?: boolean | null
 }
@@ -85,12 +86,30 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
   const category = ref<number | ''>('')
   const type = ref<number | ''>('')
 
-  // the menu opens the page straight onto a category: ?tab= counts them from one
-  const requested = Number(useRoute().query.tab)
+  /**
+   * The open category lives in the address as its slug, so the state of the
+   * switch is a link anyone can send. The old positional ?tab= is still read —
+   * advertising may carry it — but what gets written is always the slug.
+   */
+  const route = useRoute()
+  const router = useRouter()
 
   watchEffect(() => {
-    if (!category.value && categories.value.length) {
-      category.value = (categories.value[requested - 1] ?? categories.value[0]!).id
+    if (category.value || !categories.value.length) {
+      return
+    }
+
+    const bySlug = categories.value.find(item => item.slug === route.query.category)
+    const byIndex = categories.value[Number(route.query.tab) - 1]
+
+    category.value = (bySlug ?? byIndex ?? categories.value[0]!).id
+  })
+
+  watch(category, () => {
+    const slug = categories.value.find(item => item.id === category.value)?.slug
+
+    if (slug && slug !== route.query.category) {
+      router.replace({ query: { ...route.query, tab: undefined, category: slug } })
     }
   })
 

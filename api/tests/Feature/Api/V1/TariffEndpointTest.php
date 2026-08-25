@@ -55,7 +55,7 @@ it('serves the uz locale of every repeater row', function (): void {
 });
 
 it('filters the list by category and type', function (): void {
-    $category = TariffCategory::create(['name' => ['ru' => 'CDMA'], 'status' => true]);
+    $category = TariffCategory::create(['name' => ['ru' => 'CDMA'], 'slug' => 'cdma', 'status' => true]);
     $type = TariffType::create(['name' => ['ru' => 'Месячные'], 'status' => true]);
 
     tariff(['category_id' => $category->id, 'type_id' => $type->id]);
@@ -97,8 +97,8 @@ it('leaves out an archive document whose file is gone', function (): void {
 });
 
 it('tells the catalogue which categories to list', function (): void {
-    TariffCategory::create(['name' => ['ru' => 'Мобильная связь'], 'network' => 'both', 'sort' => 1]);
-    TariffCategory::create(['name' => ['ru' => 'CDMA'], 'network' => 'cdma', 'sort' => 2, 'in_catalog' => false]);
+    TariffCategory::create(['name' => ['ru' => 'Мобильная связь'], 'slug' => 'mobilnaya-svyaz', 'network' => 'both', 'sort' => 1]);
+    TariffCategory::create(['name' => ['ru' => 'CDMA'], 'slug' => 'cdma', 'network' => 'cdma', 'sort' => 2, 'in_catalog' => false]);
 
     $this->getJson(route('api.v1.categories', ['taxonomy' => 'tariff-categories']))
         ->assertOk()

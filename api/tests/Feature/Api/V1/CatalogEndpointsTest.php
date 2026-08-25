@@ -7,6 +7,8 @@ use App\Models\Faq;
 use App\Models\FaqCategory;
 use App\Models\News;
 use App\Models\NewsCategory;
+use App\Models\ServiceCategory;
+use App\Models\TariffCategory;
 use App\Models\Vacancy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -156,4 +158,41 @@ it('serves a taxonomy from cache and drops it when a category changes', function
     $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
         ->assertOk()
         ->assertJsonPath('data.0.name', 'novoe-imya');
+});
+
+/**
+ * The open category of a listing lives in the address as its slug, so the
+ * categories that have one must hand it out — and the ones that never got a
+ * slug column must not pretend to.
+ */
+it('hands out the category slug where the table keeps one', function (): void {
+    TariffCategory::create([
+        'name' => ['ru' => 'Домашний интернет', 'uz' => 'Uy internet'],
+        'slug' => 'domasnii-internet',
+        'network' => Network::FiveG,
+        'sort' => 1,
+        'status' => true,
+    ]);
+
+    ServiceCategory::create([
+        'name' => ['ru' => 'Сетевые услуги', 'uz' => 'Tarmoq xizmatlari'],
+        'slug' => 'setevye-uslugi',
+        'network' => Network::FiveG,
+        'sort' => 1,
+        'status' => true,
+    ]);
+
+    category(NewsCategory::class, Network::Both, 'kompaniya');
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'tariff-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.slug', 'domasnii-internet');
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'service-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.slug', 'setevye-uslugi');
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.slug', null);
 });

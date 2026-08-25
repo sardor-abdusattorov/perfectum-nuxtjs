@@ -20,11 +20,14 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $attributes = $this->resource->getAttributes();
+
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'network' => array_key_exists('network', $this->resource->getAttributes()) ? $this->network?->value : null,
-            'in_catalog' => array_key_exists('in_catalog', $this->resource->getAttributes()) ? (bool) $this->in_catalog : null,
+            'slug' => array_key_exists('slug', $attributes) ? $this->slug : null,
+            'network' => array_key_exists('network', $attributes) ? $this->network?->value : null,
+            'in_catalog' => array_key_exists('in_catalog', $attributes) ? (bool) $this->in_catalog : null,
         ];
     }
 }

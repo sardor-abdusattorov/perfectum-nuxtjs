@@ -37,6 +37,7 @@ it('creates a tariff with its features and connect buttons', function (): void {
     allowed('Tariff');
 
     $section = TariffCategory::create([
+        'slug' => 'mobilnaya-svyaz',
         'name' => ['ru' => 'Мобильная связь', 'uz' => 'Mobil aloqa'],
         'status' => true,
     ]);
@@ -98,6 +99,7 @@ it('creates a service with its facts and steps', function (): void {
     allowed('Service');
 
     $category = ServiceCategory::create([
+        'slug' => 'setevye-uslugi',
         'name' => ['ru' => 'Сетевые услуги', 'uz' => 'Tarmoq xizmatlari'],
         'status' => true,
     ]);
