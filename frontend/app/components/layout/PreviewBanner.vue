@@ -18,10 +18,14 @@ function leave(): void {
 
 <template>
   <div v-if="preview" class="preview-bar" role="status">
-    <span class="preview-bar__dot" aria-hidden="true"></span>
-    {{ t('preview.notice', 'Режим предпросмотра — черновики видны только вам') }}
-    <button type="button" class="preview-bar__close" @click="leave()">
-      {{ t('preview.exit', 'Выйти') }}
-    </button>
+    <div class="container preview-bar__row">
+      <span class="preview-bar__text">
+        {{ t('preview.notice', 'Режим предпросмотра — черновики видны только вам') }}
+      </span>
+
+      <button type="button" class="preview-bar__close" @click="leave()">
+        {{ t('preview.exit', 'Выйти') }}
+      </button>
+    </div>
   </div>
 </template>

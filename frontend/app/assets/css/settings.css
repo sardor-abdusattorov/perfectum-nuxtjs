@@ -49,6 +49,7 @@
   --main-font-family: "Golos Text", system-ui, sans-serif;
   --secondary-font-family: "Inter", system-ui, sans-serif;
   --transition: all 0.3s ease;
+  --preview-bar-height: 44px;
 }
 
 /* ============================================================

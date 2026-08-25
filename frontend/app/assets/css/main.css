@@ -903,42 +903,73 @@ sup {
 .preview-bar {
   position: sticky;
   top: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.3;
-  text-align: center;
+  /* above the header it pushes down, below the menu and the overlay */
+  z-index: 100;
   color: var(--color-white);
-  background: #0b0d17;
+  background: var(--color-black);
 }
 
-.preview-bar__dot {
-  flex: 0 0 auto;
-  width: 8px;
-  height: 8px;
-  background: var(--color-red);
-  border-radius: 50%;
+.preview-bar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--preview-bar-height);
+}
+
+.preview-bar__text {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .preview-bar__close {
   flex: 0 0 auto;
-  margin-left: 6px;
-  padding: 3px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-white);
-  background: rgba(255, 255, 255, 0.14);
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
   transition: var(--transition);
 }
 
 .preview-bar__close:hover {
-  background: rgba(255, 255, 255, 0.28);
+  color: var(--color-black);
+  background: var(--color-white);
+  border-color: var(--color-white);
+}
+
+/* the header sticks under the strip instead of behind it */
+.preview-bar ~ .wrapper .header {
+  top: var(--preview-bar-height);
+}
+
+/*
+ * On a phone the notice takes two lines, so its height stops being a number
+ * the header can offset by. It scrolls away instead and the header keeps the
+ * top to itself.
+ */
+@media all and (max-width: 768px) {
+  .preview-bar {
+    position: static;
+  }
+
+  .preview-bar__row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .preview-bar__text {
+    font-size: 12px;
+  }
+
+  .preview-bar ~ .wrapper .header {
+    top: 0;
+  }
 }
 
 /* ==========================================================
