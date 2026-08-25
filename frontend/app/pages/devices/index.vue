@@ -10,11 +10,23 @@ useSeo({ page: 'devices', titleKey: 'seo.devices' })
 const { data: catalog } = await useDeviceCatalog()
 const tabs = useDeviceTabs(catalog)
 
-const active = ref(typeof route.query.tab === 'string' ? route.query.tab : '')
+/**
+ * The open tab lives in the address by its slug, so a link opens the catalogue
+ * on the very section it advertises.
+ */
+const router = useRouter()
+
+const active = ref(typeof route.query.category === 'string' ? route.query.category : '')
 
 watchEffect(() => {
   if (tabs.value.length && !tabs.value.some(tab => tab.key === active.value)) {
     active.value = tabs.value[0]!.key
+  }
+})
+
+watch(active, () => {
+  if (active.value && active.value !== route.query.category) {
+    router.replace({ query: { ...route.query, category: active.value } })
   }
 })
 
@@ -25,11 +37,11 @@ const visible = computed(() => {
     return devices.filter(device => device.in_stock)
   }
 
-  return devices.filter(device => String(device.category?.id) === active.value)
+  return devices.filter(device => device.category?.slug === active.value)
 })
 
 const isCdma = computed(() => (
-  catalog.value?.categories.find(category => String(category.id) === active.value)?.network === 'cdma'
+  catalog.value?.categories.find(category => category.slug === active.value)?.network === 'cdma'
 ))
 
 /**

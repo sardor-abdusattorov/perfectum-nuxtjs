@@ -56,7 +56,7 @@ it('serves the uz locale of every repeater row', function (): void {
 
 it('filters the list by category and type', function (): void {
     $category = TariffCategory::create(['name' => ['ru' => 'CDMA'], 'slug' => 'cdma', 'status' => true]);
-    $type = TariffType::create(['name' => ['ru' => 'Месячные'], 'status' => true]);
+    $type = TariffType::create(['name' => ['ru' => 'Месячные'], 'slug' => 'mesyachnye', 'status' => true]);
 
     tariff(['category_id' => $category->id, 'type_id' => $type->id]);
     tariff(['slug' => 'other']);

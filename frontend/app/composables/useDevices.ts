@@ -109,7 +109,7 @@ export function useDeviceTabs(catalog: Ref<DeviceCatalog | null>) {
 
     const tabs = (catalog.value?.categories ?? [])
       .map(category => ({
-        key: String(category.id),
+        key: category.slug ?? String(category.id),
         label: category.name,
         count: devices.filter(device => device.category?.id === category.id).length,
       }))

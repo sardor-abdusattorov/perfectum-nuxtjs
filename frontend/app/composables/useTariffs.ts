@@ -86,33 +86,6 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
   const category = ref<number | ''>('')
   const type = ref<number | ''>('')
 
-  /**
-   * The open category lives in the address as its slug, so the state of the
-   * switch is a link anyone can send. The old positional ?tab= is still read —
-   * advertising may carry it — but what gets written is always the slug.
-   */
-  const route = useRoute()
-  const router = useRouter()
-
-  watchEffect(() => {
-    if (category.value || !categories.value.length) {
-      return
-    }
-
-    const bySlug = categories.value.find(item => item.slug === route.query.category)
-    const byIndex = categories.value[Number(route.query.tab) - 1]
-
-    category.value = (bySlug ?? byIndex ?? categories.value[0]!).id
-  })
-
-  watch(category, () => {
-    const slug = categories.value.find(item => item.id === category.value)?.slug
-
-    if (slug && slug !== route.query.category) {
-      router.replace({ query: { ...route.query, tab: undefined, category: slug } })
-    }
-  })
-
   const inCategory = computed(() => tariffs.value.filter(item => item.category?.id === category.value))
 
   const types = computed(() => {
@@ -125,8 +98,45 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>) {
     type.value ? inCategory.value.filter(item => item.type?.id === type.value) : inCategory.value
   ))
 
-  watch(category, () => {
-    type.value = ''
+  /**
+   * Both switches live in the address as slugs, so the state of the page is a
+   * link anyone can send. The old positional ?tab= is still read — advertising
+   * may carry it — but what gets written is always the slug.
+   */
+  const route = useRoute()
+  const router = useRouter()
+
+  watchEffect(() => {
+    if (!category.value && categories.value.length) {
+      const named = categories.value.find(item => item.slug === route.query.category)
+      const counted = categories.value[Number(route.query.tab) - 1]
+
+      category.value = (named ?? counted ?? categories.value[0]!).id
+    }
+  })
+
+  watchEffect(() => {
+    if (!type.value && route.query.type) {
+      type.value = types.value.find(item => item.slug === route.query.type)?.id ?? ''
+    }
+  })
+
+  watch([category, type], () => {
+    const open = categories.value.find(item => item.id === category.value)?.slug
+    const chip = types.value.find(item => item.id === type.value)?.slug
+
+    if (open === route.query.category && (chip ?? undefined) === route.query.type) {
+      return
+    }
+
+    router.replace({ query: { ...route.query, tab: undefined, category: open, type: chip } })
+  })
+
+  // the chips belong to the open category, so changing it drops the chosen one
+  watch(category, (next, previous) => {
+    if (previous !== '') {
+      type.value = ''
+    }
   })
 
   return { categories, types, category, type, visible }

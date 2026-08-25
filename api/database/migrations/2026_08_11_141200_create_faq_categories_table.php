@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('faq_categories', function (Blueprint $table) {
             $table->id();
             $table->json('name');
+            $table->string('slug', 96)->unique();
             $table->string('network', 10)->default('both')->index();
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();

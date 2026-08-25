@@ -18,7 +18,7 @@ class FaqSeeder extends Seeder
 
         foreach ($data['categories'] ?? [] as $sort => $category) {
             $categories[$category['slug']] = FaqCategory::updateOrCreate(
-                ['name->ru' => $category['name']['ru']],
+                ['slug' => $category['slug']],
                 ['name' => $category['name'], 'sort' => $sort + 1],
             )->getKey();
         }

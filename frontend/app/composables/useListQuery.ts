@@ -9,6 +9,9 @@ interface ListQueryOptions {
  * the browser's back button and can be handed to someone else. The refs are
  * seeded from the address, so the server renders the very list the link asks
  * for instead of the first page of everything.
+ *
+ * The category travels as its slug — that is what stays readable in an advert
+ * and what survives a reseed, which a row id does not.
  */
 export function useListQuery(options: ListQueryOptions = {}) {
   const route = useRoute()
@@ -16,7 +19,7 @@ export function useListQuery(options: ListQueryOptions = {}) {
 
   const read = () => ({
     search: String(route.query.search ?? ''),
-    category: (Number(route.query.category) || '') as number | '',
+    category: String(route.query.category ?? ''),
     page: Math.max(1, Number(route.query.page) || 1),
   })
 
@@ -51,7 +54,7 @@ export function useListQuery(options: ListQueryOptions = {}) {
     }
 
     if (options.category !== false && category.value) {
-      query.category = String(category.value)
+      query.category = category.value
     }
 
     if (page.value > 1) {

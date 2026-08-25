@@ -16,7 +16,7 @@ class NewsCategory extends Model
 
     protected $table = 'news_categories';
 
-    protected $fillable = ['name', 'network', 'sort', 'status'];
+    protected $fillable = ['name', 'slug', 'network', 'sort', 'status'];
 
     public $translatable = ['name'];
 

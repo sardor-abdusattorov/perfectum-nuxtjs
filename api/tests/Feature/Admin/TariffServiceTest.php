@@ -43,6 +43,7 @@ it('creates a tariff with its features and connect buttons', function (): void {
     ]);
 
     $chip = TariffType::create([
+        'slug' => 'tarif-5g',
         'name' => ['ru' => 'Тариф 5G', 'uz' => '5G tarifi'],
         'status' => true,
     ]);

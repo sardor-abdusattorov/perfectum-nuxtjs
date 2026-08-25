@@ -39,11 +39,9 @@ class ServiceResource extends JsonResource
             'steps' => $this->rows($this->steps, ['text']),
             'is_featured' => $this->is_featured,
             'network' => $this->network?->value,
-            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'id' => $this->category->id,
-                'name' => $this->category->name,
-                'network' => $this->category->network?->value,
-            ]),
+            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null
+                ? null
+                : CategoryResource::make($this->category)->resolve()),
         ];
     }
 }

@@ -33,10 +33,9 @@ class ActionResource extends JsonResource
             'main_image' => $this->mediaUrl('main_image'),
             'starts_at' => $this->starts_at?->toDateString(),
             'ends_at' => $this->ends_at?->toDateString(),
-            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'id' => $this->category->id,
-                'name' => $this->category->name,
-            ]),
+            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null
+                ? null
+                : CategoryResource::make($this->category)->resolve()),
         ];
     }
 }

@@ -23,10 +23,9 @@ class FaqResource extends JsonResource
         return [
             'question' => $this->question,
             'answer' => $this->answer,
-            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'id' => $this->category->id,
-                'name' => $this->category->name,
-            ]),
+            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null
+                ? null
+                : CategoryResource::make($this->category)->resolve()),
         ];
     }
 }

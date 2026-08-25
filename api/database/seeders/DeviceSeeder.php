@@ -45,8 +45,8 @@ class DeviceSeeder extends Seeder
     private function seedCategories(): array
     {
         return collect(self::CATEGORIES)
-            ->map(fn (array $category): int => DeviceCategory::updateOrCreate(
-                ['name->ru' => $category['name']['ru']],
+            ->map(fn (array $category, string $slug): int => DeviceCategory::updateOrCreate(
+                ['slug' => $slug],
                 [...$category, 'status' => true],
             )->getKey())
             ->all();

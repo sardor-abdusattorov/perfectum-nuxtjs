@@ -99,7 +99,7 @@ class ContentSeeder extends Seeder
 
         foreach ($rows as $sort => $row) {
             $ids[$row['slug']] = $model::updateOrCreate(
-                ['name->ru' => $row['name']['ru']],
+                ['slug' => $row['slug']],
                 ['name' => $row['name'], 'sort' => $sort + 1],
             )->getKey();
         }

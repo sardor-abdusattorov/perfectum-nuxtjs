@@ -37,12 +37,21 @@ trait HasCategory
         );
     }
 
+    /**
+     * A listing is filtered by the slug in the address — that is what a link
+     * carries and what survives a reseed. An id still works: it is what the
+     * panel and older links pass.
+     */
     public function scopeInCategory(Builder $query, mixed $category, string $relation = 'category'): Builder
     {
         if (blank($category)) {
             return $query;
         }
 
-        return $query->where($this->{$relation}()->getForeignKeyName(), $category);
+        if (is_numeric($category)) {
+            return $query->where($this->{$relation}()->getForeignKeyName(), $category);
+        }
+
+        return $query->whereHas($relation, fn (Builder $builder) => $builder->where('slug', $category));
     }
 }

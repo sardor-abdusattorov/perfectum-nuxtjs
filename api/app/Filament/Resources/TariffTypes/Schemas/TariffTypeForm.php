@@ -26,8 +26,12 @@ class TariffTypeForm
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('app.label.name'))
-                                    ->required(),
+                                    ->required()
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(Fields::slugPreview()),
                             ]),
+
+                        Fields::slug(),
 
                         Fields::sort(),
 

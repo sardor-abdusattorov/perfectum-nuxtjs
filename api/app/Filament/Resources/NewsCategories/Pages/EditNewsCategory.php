@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources\NewsCategories\Pages;
 
+use App\Filament\Resources\Concerns\GeneratesSlug;
 use App\Filament\Resources\NewsCategories\NewsCategoryResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditNewsCategory extends EditRecord
 {
+    use GeneratesSlug;
+
     protected static string $resource = NewsCategoryResource::class;
 
     protected function getHeaderActions(): array

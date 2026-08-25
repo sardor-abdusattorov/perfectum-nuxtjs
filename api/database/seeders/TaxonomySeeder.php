@@ -62,9 +62,9 @@ class TaxonomySeeder extends Seeder
     }
 
     /**
-     * The dump identifies a row by its slug. The categories keep it — it is
-     * their address in the listing URLs — so it is also the natural match key
-     * on a reseed; a type has no slug column and is still found by name.
+     * The dump identifies a row by its slug, and so does the site: it is the
+     * address a filtered listing carries. That makes it the match key here too
+     * — renaming a category in the panel no longer forks a second row.
      *
      * @param  class-string  $model
      * @param  array<int, array<string, mixed>>  $rows
@@ -89,9 +89,7 @@ class TaxonomySeeder extends Seeder
                 $values['in_catalog'] = $row['in_catalog'] ?? true;
             }
 
-            $ids[$row['slug']] = $model === TariffType::class
-                ? $model::updateOrCreate(['name->ru' => $row['name']['ru']], $values)->getKey()
-                : $model::updateOrCreate(['slug' => $row['slug']], $values)->getKey();
+            $ids[$row['slug']] = $model::updateOrCreate(['slug' => $row['slug']], $values)->getKey();
         }
 
         return $ids;

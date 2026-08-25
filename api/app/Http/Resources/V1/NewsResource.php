@@ -32,10 +32,9 @@ class NewsResource extends JsonResource
             'main_image' => $this->mediaUrl('main_image'),
             'is_featured' => $this->is_featured,
             'published_at' => $this->published_at?->toDateString(),
-            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null ? null : [
-                'id' => $this->category->id,
-                'name' => $this->category->name,
-            ]),
+            'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null
+                ? null
+                : CategoryResource::make($this->category)->resolve()),
         ];
     }
 }

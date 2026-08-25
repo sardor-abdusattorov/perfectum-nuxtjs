@@ -52,10 +52,10 @@ const categories = computed(() => data.value?.categories ?? [])
             :key="item.id"
             type="button"
             class="filter-search__chip"
-            :class="item.id === category && 'filter-search__chip_active'"
+            :class="item.slug === category && 'filter-search__chip_active'"
             role="tab"
-            :aria-selected="item.id === category"
-            @click="category = item.id"
+            :aria-selected="item.slug === category"
+            @click="category = item.slug ?? ''"
           >{{ item.name }}</button>
         </div>
       </div>

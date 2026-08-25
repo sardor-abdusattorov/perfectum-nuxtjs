@@ -18,6 +18,7 @@ function category(string $model, Network $network, string $name): mixed
 {
     return $model::create([
         'name' => ['ru' => $name, 'uz' => $name],
+        'slug' => $name,
         'network' => $network,
         'sort' => 1,
         'status' => true,
@@ -161,11 +162,10 @@ it('serves a taxonomy from cache and drops it when a category changes', function
 });
 
 /**
- * The open category of a listing lives in the address as its slug, so the
- * categories that have one must hand it out — and the ones that never got a
- * slug column must not pretend to.
+ * The open category of a listing lives in the address as its slug, so every
+ * taxonomy the site filters by hands one out.
  */
-it('hands out the category slug where the table keeps one', function (): void {
+it('hands out a slug for every category the site filters by', function (): void {
     TariffCategory::create([
         'name' => ['ru' => 'Домашний интернет', 'uz' => 'Uy internet'],
         'slug' => 'domasnii-internet',
@@ -184,15 +184,35 @@ it('hands out the category slug where the table keeps one', function (): void {
 
     category(NewsCategory::class, Network::Both, 'kompaniya');
 
-    $this->getJson(route('api.v1.categories', ['taxonomy' => 'tariff-categories']))
-        ->assertOk()
-        ->assertJsonPath('data.0.slug', 'domasnii-internet');
+    $slugs = [
+        'tariff-categories' => 'domasnii-internet',
+        'service-categories' => 'setevye-uslugi',
+        'news-categories' => 'kompaniya',
+    ];
 
-    $this->getJson(route('api.v1.categories', ['taxonomy' => 'service-categories']))
-        ->assertOk()
-        ->assertJsonPath('data.0.slug', 'setevye-uslugi');
+    foreach ($slugs as $taxonomy => $slug) {
+        $this->getJson(route('api.v1.categories', ['taxonomy' => $taxonomy]))
+            ->assertOk()
+            ->assertJsonPath('data.0.slug', $slug);
+    }
+});
 
-    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
-        ->assertOk()
-        ->assertJsonPath('data.0.slug', null);
+/**
+ * A link carries the slug, the panel and older links carry the id: the listing
+ * answers to both and to nothing else.
+ */
+it('filters a listing by the category slug as well as by its id', function (): void {
+    $network = category(NewsCategory::class, Network::Both, 'razvitie-seti');
+    news(['category_id' => $network->id, 'slug' => 'v-seti']);
+    news(['slug' => 'bez-kategorii']);
+
+    foreach ([$network->slug, (string) $network->id] as $value) {
+        $slugs = $this->getJson(route('api.v1.news.index').'?category='.$value)
+            ->assertOk()
+            ->json('data.*.slug');
+
+        expect($slugs)->toBe(['v-seti']);
+    }
+
+    expect($this->getJson(route('api.v1.news.index').'?category=net-takoy')->assertOk()->json('data'))->toBe([]);
 });
