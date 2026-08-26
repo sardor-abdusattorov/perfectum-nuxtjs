@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\InstallmentPartner;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class InstallmentPartnerPolicy
 {
     use HandlesAuthorization;
-    
+
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:InstallmentPartner');
@@ -71,5 +71,4 @@ class InstallmentPartnerPolicy
     {
         return $authUser->can('Reorder:InstallmentPartner');
     }
-
 }
