@@ -4107,14 +4107,6 @@ sup {
   color: var(--color-black);
 }
 
-.tariff-detail .tariff-detail__more-content ul {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-left: 20px;
-  list-style: disc;
-}
-
 .tariff-detail .tariff-detail__more-content li {
   font-size: 16px;
   line-height: 23px;
@@ -4135,15 +4127,7 @@ sup {
 
 .tariff-detail .tariff-detail__more-content ul,
 .tariff-detail .tariff-detail__more-content ol {
-  display: flex;
-  flex-direction: column;
   gap: 8px;
-  padding-left: 20px;
-  list-style: disc;
-}
-
-.tariff-detail .tariff-detail__more-content ol {
-  list-style: decimal;
 }
 
 .tariff-detail .tariff-detail__more-content table {
