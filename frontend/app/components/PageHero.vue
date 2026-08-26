@@ -36,7 +36,7 @@ const titleClass = computed(() => (props.plainTitle ? 'page-hero__title' : 'page
 
         <h1 :class="titleClass" v-html="title"></h1>
 
-        <p v-if="subtitle" class="page-hero__subtitle">{{ subtitle }}</p>
+        <div v-if="subtitle" class="page-hero__subtitle" v-html="subtitle"></div>
 
         <slot />
       </div>

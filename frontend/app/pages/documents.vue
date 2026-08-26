@@ -53,7 +53,7 @@ function translations(doc: DocumentItem): DocumentDownload[] {
     :eyebrow="hero.eyebrow"
     eyebrow-silver
     :title="rich(hero.title, { accent: 'page-hero__title-red' })"
-    :subtitle="hero.subtitle"
+    :subtitle="rich(hero.subtitle)"
   />
 
   <section class="company">

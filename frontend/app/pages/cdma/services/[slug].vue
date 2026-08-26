@@ -62,7 +62,7 @@ const facts = computed<ServiceFact[]>(() => {
       <section class="cdma-detail">
           <div class="container">
               <span v-if="service.category" class="cdma-badge">{{ service.category.name }}</span>
-              <p v-if="service.lead || service.excerpt" class="cdma-detail__lead">{{ service.lead ?? service.excerpt }}</p>
+              <p v-if="service.lead || service.excerpt" class="cdma-detail__lead" v-html="rich(service.lead ?? service.excerpt)"></p>
 
               <ul v-if="facts.length" class="cdma-facts">
                   <li v-for="(fact, index) in facts" :key="index" class="cdma-fact">

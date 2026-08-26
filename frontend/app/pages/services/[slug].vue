@@ -33,7 +33,7 @@ useSeo({ page: 'services', title: () => service.value?.name ?? '' })
           <img v-if="service.image" class="article__image" :src="service.image" :alt="service.name">
 
           <div class="article__content">
-            <p v-if="service.lead"><b>{{ service.lead }}</b></p>
+            <p v-if="service.lead"><b v-html="rich(service.lead)"></b></p>
             <p v-if="service.price"><b>{{ t('services.price_label') }}:</b> {{ service.price }}</p>
             <p v-if="service.ussd"><b>{{ t('services.ussd_label') }}:</b> {{ service.ussd }}</p>
             <div v-if="service.content" class="rich" v-html="service.content" />

@@ -19,9 +19,9 @@ useSeo({ page: 'cdma_connect', titleKey: 'seo.cdma_connect' })
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span class="cdma-crumbs__current">{{ hero.title }}</span>
+        <span class="cdma-crumbs__current" v-html="rich(hero.title)"></span>
       </nav>
-      <h1 class="cdma-hero__title">{{ hero.title }}</h1>
+      <h1 class="cdma-hero__title" v-html="rich(hero.title)"></h1>
     </div>
   </section>
 

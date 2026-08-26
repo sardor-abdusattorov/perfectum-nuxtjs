@@ -138,8 +138,8 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
   <!-- CDMA HERO -->
   <section class="cdma-hero">
       <div class="container">
-          <h1 class="cdma-hero__title">{{ hero.title }}</h1>
-          <p v-if="hero.subtitle" class="cdma-hero__subtitle">{{ hero.subtitle }}</p>
+          <h1 class="cdma-hero__title" v-html="rich(hero.title)"></h1>
+          <div v-if="hero.subtitle" class="cdma-hero__subtitle" v-html="rich(hero.subtitle)"></div>
       </div>
   </section>
 
