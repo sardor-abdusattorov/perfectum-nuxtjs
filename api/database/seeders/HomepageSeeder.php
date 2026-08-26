@@ -27,63 +27,82 @@ class HomepageSeeder extends Seeder
             'hero' => [
                 'slides' => [
                     [
-                        'description' => ['ru' => 'Первая 5G SA сеть в центральной Азии', 'uz' => 'Markaziy Osiyodagi birinchi 5G SA tarmogʻi'],
-                        'title' => [
-                            'ru' => 'Скорость которая <span class="color" data-color="accent">меняет</span> <span class="color" data-color="outline">правила</span> игры',
-                            'uz' => 'Oʻyin <span class="color" data-color="outline">qoidalarini</span> <span class="color" data-color="accent">oʻzgartiradigan</span> tezlik',
-                        ],
                         'lead' => [
-                            'ru' => 'Запуск самостоятельной сети <span>5G Standalone</span> в Узбекистане Скорости до <span>1 Гбит/с</span>, минимальные задержки, новые сценарии для дома и бизнеса',
-                            'uz' => 'Oʻzbekistonda mustaqil <span>5G Standalone</span> tarmogʻining ishga tushirilishi. Tezlik <span>1 Gbit/s</span> gacha, minimal kechikishlar, uy va biznes uchun yangi stsenariylar',
+                            'ru' => '<p>Запуск самостоятельной сети 5G Standalone в Узбекистане. Скорость до 1 Гбит/с.</p>',
+                            'uz' => '<p>O&#039;zbekistonda 5G Standalone mustaqil tarmoq ishga tushirildi. 1 Gbit/s gacha tezlik.</p>',
                         ],
                         'image' => null,
+                        'title' => [
+                            'ru' => '<p>Скорость <span data-color="accent" class="color" style="--color: accent; --dark-color: accent">меняющая</span> <span data-color="outline" class="color" style="--color: outline; --dark-color: outline">правила</span> игры</p>',
+                            'uz' => '<p>Oʻyin <span data-color="outline" class="color" style="--color: outline; --dark-color: outline">qoidalarini</span> <span data-color="accent" class="color" style="--color: accent; --dark-color: accent">oʻzgartiradigan</span> tezlik</p>',
+                        ],
+                        'status' => true,
                         'buttons' => [
                             [
-                                'label' => ['ru' => 'Подключиться', 'uz' => 'Ulanish'],
-                                'url' => '/tariffs',
+                                'url' => '/pages/kak-mozno-podklyucitsya',
+                                'label' => [
+                                    'ru' => 'Подключиться',
+                                    'uz' => 'Ulanish',
+                                ],
                                 'style' => 'primary',
                                 'status' => true,
                             ],
                             [
-                                'label' => ['ru' => 'Проверить покрытие', 'uz' => 'Qamrovni tekshirish'],
-                                'url' => '/coverage-area',
+                                'url' => '/pages/kak-mozno-podklyucitsya',
+                                'label' => [
+                                    'ru' => 'Проверьте своё устройство',
+                                    'uz' => 'Qurilmangizni tekshiring',
+                                ],
                                 'style' => 'secondary',
                                 'status' => true,
                             ],
                         ],
                         'show_aside' => true,
                         'show_gauge' => true,
+                        'description' => [
+                            'ru' => 'Первая 5G SA сеть в центральной Азии',
+                            'uz' => 'Markaziy Osiyodagi birinchi 5G SA tarmogʻi',
+                        ],
                         'gauge_value' => 1000,
-                        'status' => true,
                     ],
                 ],
             ],
-
             'marquee' => [
                 'items' => [
                     [
-                        'text' => ['ru' => 'STANDALONE', 'uz' => 'STANDALONE'],
+                        'text' => [
+                            'ru' => 'STANDALONE',
+                            'uz' => 'STANDALONE',
+                        ],
                         'image' => null,
                         'status' => true,
                     ],
                     [
-                        'text' => ['ru' => 'VONR', 'uz' => 'VONR'],
+                        'text' => [
+                            'ru' => 'VONR',
+                            'uz' => 'VONR',
+                        ],
                         'image' => null,
                         'status' => true,
                     ],
                     [
-                        'text' => ['ru' => 'PERFECTUM', 'uz' => 'PERFECTUM'],
-                        'image' => null,
+                        'text' => [
+                            'ru' => null,
+                            'uz' => null,
+                        ],
+                        'image' => 'uploads/content-blocks/2026/08/01M0VJH1VT2X7QQC2XDJE549PJ.png',
                         'status' => true,
                     ],
                     [
-                        'text' => ['ru' => 'БЕСПРОВОДНОЙ ИНТЕРНЕТ', 'uz' => 'SIMSIZ INTERNET'],
+                        'text' => [
+                            'ru' => 'БЕСПРОВОДНОЙ ИНТЕРНЕТ',
+                            'uz' => 'SIMSIZ INTERNET',
+                        ],
                         'image' => null,
                         'status' => true,
                     ],
                 ],
             ],
-
             'choose' => [
                 'title' => ['ru' => 'Выбери своё', 'uz' => 'Oʻzingnikini tanla'],
                 'link' => [
@@ -143,95 +162,128 @@ class HomepageSeeder extends Seeder
             ],
 
             'features' => [
-                'title' => [
-                    'ru' => '<p>Что меняет <span class="color" data-color="accent">5G SA</span></p>',
-                    'uz' => '<p>Nimani oʻzgartiradi <span class="color" data-color="accent">5G SA</span></p>',
-                ],
                 'link' => [
-                    'label' => ['ru' => 'Все возможности', 'uz' => 'Barcha imkoniyatlar'],
                     'url' => '/services',
+                    'label' => [
+                        'ru' => 'Все возможности →',
+                        'uz' => 'Barcha imkoniyatlar →',
+                    ],
                 ],
                 'cards' => [
                     [
-                        'tag' => ['ru' => 'Гейминг Стриминг', 'uz' => 'Geyming va striming'],
-                        'title' => [
-                            'ru' => '<p>Лаг как<br>понятие<br>исчезает</p>',
-                            'uz' => '<p>Lag degan<br>tushuncha<br>yoʻqoladi</p>',
+                        'tag' => [
+                            'ru' => null,
+                            'uz' => null,
                         ],
+                        'url' => '/pages/preimushhestva-5g-standalone',
                         'text' => [
-                            'ru' => '<p>Задержка 5 мс делает облачный гейминг<br>неотличимым от локального. Стримы в 4K<br>без буфера — даже в час пик.</p>',
-                            'uz' => '<p>5 ms kechikish bulutli geymingni lokal<br>oʻyindan farqlanmas qiladi. 4K oqimlar<br>bufersiz — hatto eng gavjum soatlarda ham.</p>',
+                            'ru' => '<p>Первая 5G SA сеть<br>в Центральной Азии</p>',
+                            'uz' => '<p>Markaziy Osiyodagi<br>birinchi 5G SA tarmog&#039;i</p>',
                         ],
-                        'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
-                        'url' => '/services',
                         'style' => 'lag',
-                        'status' => true,
-                    ],
-                    [
-                        'tag' => ['ru' => 'умный дом', 'uz' => 'aqlli uy'],
-                        'title' => ['ru' => 'Сотни устройств', 'uz' => 'Yuzlab qurilmalar'],
-                        'text' => [
-                            'ru' => 'Один роутер тянет всё: камеры, лампы, датчики, ТВ.',
-                            'uz' => 'Bitta router hammasiga yetadi: kameralar, chiroqlar, datchiklar, TV.',
-                        ],
-                        'link_label' => ['ru' => 'Подробнее', 'uz' => 'Batafsil'],
-                        'url' => '/devices',
-                        'style' => 'smart',
-                        'status' => true,
-                    ],
-                    [
-                        'tag' => ['ru' => 'гейминг', 'uz' => 'geyming'],
-                        'title' => [
-                            'ru' => '<p>Интернет<br>без проводов</p>',
-                            'uz' => '<p>Simsiz<br>internet</p>',
-                        ],
-                        'text' => [
-                            'ru' => '<p>Скорости оптоволокна — без копания<br>траншей и ожидания монтажа.</p>',
-                            'uz' => '<p>Optik tolali tezliklar — xandaq qazishsiz<br>va oʻrnatishni kutishsiz.</p>',
-                        ],
-                        'link_label' => ['ru' => 'Заказать', 'uz' => 'Buyurtma berish'],
-                        'url' => '/tariffs',
-                        'style' => 'wire',
-                        'status' => true,
-                    ],
-                    [
                         'title' => [
                             'ru' => '<p>Преимущества<br>5G Standalone</p>',
                             'uz' => '<p>5G Standalone<br>afzalliklari</p>',
                         ],
-                        'text' => [
-                            'ru' => '<p>Скорости оптоволокна — без копания<br>траншей и ожидания монтажа.</p>',
-                            'uz' => '<p>Optik tolali tezliklar — xandaq qazishsiz<br>va oʻrnatishni kutishsiz.</p>',
-                        ],
-                        'link_label' => ['ru' => 'Корпоративный отдел', 'uz' => 'Korporativ boʻlim'],
-                        'url' => '/contacts',
-                        'style' => 'pro',
                         'status' => true,
+                        'link_label' => [
+                            'ru' => 'Подробнее →',
+                            'uz' => 'Batafsil →',
+                        ],
                     ],
+                    [
+                        'tag' => [
+                            'ru' => null,
+                            'uz' => null,
+                        ],
+                        'url' => '/pages/sotni-ustroistv',
+                        'text' => [
+                            'ru' => '<p>Один роутер тянет всё: камеры, лампы, датчики, ТВ.</p>',
+                            'uz' => '<p>Bitta router hammasini tortadi: kameralar, lampalar, datchiklar, TV.</p>',
+                        ],
+                        'style' => 'smart',
+                        'title' => [
+                            'ru' => '<p>Сотни устройств</p>',
+                            'uz' => '<p>Yuzlab qurilmalar</p>',
+                        ],
+                        'status' => true,
+                        'link_label' => [
+                            'ru' => 'Подробнее →',
+                            'uz' => 'Batafsil →',
+                        ],
+                    ],
+                    [
+                        'tag' => [
+                            'ru' => null,
+                            'uz' => null,
+                        ],
+                        'url' => '/pages/golosovaia-sviaz-vonr',
+                        'text' => [
+                            'ru' => '<p>Голос, как будто собеседник<br>находится рядом</p>',
+                            'uz' => '<p>Suhbatdosh yoningizda turgandek<br>tiniq ovoz</p>',
+                        ],
+                        'style' => 'wire',
+                        'title' => [
+                            'ru' => '<p>Голосовая связь<br>VoNR</p>',
+                            'uz' => '<p>VoNR ovozli<br>aloqa</p>',
+                        ],
+                        'status' => true,
+                        'link_label' => [
+                            'ru' => 'Подробнее →',
+                            'uz' => 'Batafsil →',
+                        ],
+                    ],
+                    [
+                        'tag' => [
+                            'ru' => null,
+                            'uz' => null,
+                        ],
+                        'url' => '/pages/internet-bez-provodov',
+                        'text' => [
+                            'ru' => '<p>Скорости проводного интернета — без сверления стен<br>и ожидания монтажа.</p>',
+                            'uz' => '<p>Simli internet tezligi — devorlarni teshmasdan<br>va montajni kutmasdan.</p>',
+                        ],
+                        'style' => 'pro',
+                        'title' => [
+                            'ru' => '<p>Интернет без проводов</p>',
+                            'uz' => '<p>Simsiz internet</p>',
+                        ],
+                        'status' => true,
+                        'link_label' => [
+                            'ru' => 'Подробнее →',
+                            'uz' => 'Batafsil →',
+                        ],
+                    ],
+                ],
+                'dials' => [
+                    [
+                        'to' => 1000,
+                        'max' => 1000,
+                        'from' => 980,
+                        'color' => 'red',
+                        'label' => '5G',
+                    ],
+                    [
+                        'to' => 100,
+                        'max' => 1000,
+                        'from' => 90,
+                        'color' => 'orange',
+                        'label' => 'LTE',
+                    ],
+                ],
+                'title' => [
+                    'ru' => '<p>Что меняет <span data-color="accent" class="color" style="--color: accent; --dark-color: accent">5G SA</span></p>',
+                    'uz' => '<p>Nimani oʻzgartiradi <span data-color="accent" class="color" style="--color: accent; --dark-color: accent">5G SA</span></p>',
                 ],
                 'speed_text' => [
                     'ru' => '<p>Скорость<br>нового уровня</p>',
                     'uz' => '<p>Yangi darajadagi<br>tezlik</p>',
                 ],
-                'speed_unit' => ['ru' => 'Мбит/с', 'uz' => 'Mbit/s'],
-                'dials' => [
-                    [
-                        'label' => '5G',
-                        'color' => 'red',
-                        'max' => 1000,
-                        'from' => 980,
-                        'to' => 1000,
-                    ],
-                    [
-                        'label' => 'LTE',
-                        'color' => 'orange',
-                        'max' => 1000,
-                        'from' => 90,
-                        'to' => 100,
-                    ],
+                'speed_unit' => [
+                    'ru' => 'Мбит/с',
+                    'uz' => 'Mbit/s',
                 ],
             ],
-
             'coverage' => [
                 'title' => ['ru' => 'Где работает', 'uz' => 'Qayerda ishlaydi'],
                 'subtitle' => [
