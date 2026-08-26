@@ -37,4 +37,8 @@ perfectum-new.xml
 *.dump
 *.sql
 *.sql.gz
+
+# Windows writes this sidecar next to a downloaded file; it is not the file,
+# and it carries the address the download came from
+*:Zone.Identifier
 pcapp_srv_db*
