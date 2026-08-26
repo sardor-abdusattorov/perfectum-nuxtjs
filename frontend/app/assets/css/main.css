@@ -205,6 +205,9 @@ sup {
   border-radius: var(--radius);
 }
 
+/* The table itself is the scroll container for when it is too wide, so the
+   row box inside — the editor writes rows straight into tbody, never a thead —
+   plays the table and stretches to the full column. */
 .rich table {
   display: block;
   width: 100%;
@@ -213,6 +216,12 @@ sup {
   border-collapse: collapse;
   font-size: 15px;
   line-height: 22px;
+}
+
+.rich table > :is(tbody, thead) {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .rich th,
