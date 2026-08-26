@@ -36,11 +36,20 @@ class MenuSeeder extends Seeder
             $this->createItems(MenuLocation::from($location), $items);
         }
 
+        /**
+         * The parent ids are resolved before the delete: MySQL refuses to
+         * delete from a table it is selecting from in the same statement.
+         */
         foreach (self::RETIRED as $parent => $keys) {
-            Menu::query()
-                ->whereIn('key', $keys)
-                ->whereIn('parent_id', Menu::query()->where('location', MenuLocation::Footer)->where('key', $parent)->select('id'))
-                ->delete();
+            $parents = Menu::query()
+                ->where('location', MenuLocation::Footer)
+                ->where('key', $parent)
+                ->pluck('id')
+                ->all();
+
+            if ($parents !== []) {
+                Menu::query()->whereIn('key', $keys)->whereIn('parent_id', $parents)->delete();
+            }
         }
     }
 
