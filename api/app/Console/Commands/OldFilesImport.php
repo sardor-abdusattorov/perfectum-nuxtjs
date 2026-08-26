@@ -68,7 +68,7 @@ final class OldFilesImport extends Command
                 continue;
             }
 
-            $file = $index[basename($path)] ?? null;
+            $file = $index[$this->key(basename($path))] ?? null;
 
             if ($file === null) {
                 $missing[] = $path;
@@ -118,7 +118,9 @@ final class OldFilesImport extends Command
 
     /**
      * The old hashed names are unique, so a file is found by its name no
-     * matter which folder the old site filed it under.
+     * matter which folder the old site filed it under. The lookup forgives
+     * what a copy between systems mangles: letter case and percent-encoded
+     * spaces in human-named files.
      *
      * @return array<string, string>
      */
@@ -127,10 +129,15 @@ final class OldFilesImport extends Command
         $index = [];
 
         foreach (File::allFiles($source) as $file) {
-            $index[$file->getFilename()] ??= $file->getPathname();
+            $index[$this->key($file->getFilename())] ??= $file->getPathname();
         }
 
         return $index;
+    }
+
+    private function key(string $name): string
+    {
+        return mb_strtolower(rawurldecode($name));
     }
 
     /**
