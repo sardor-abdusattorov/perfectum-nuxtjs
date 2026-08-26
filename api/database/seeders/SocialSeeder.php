@@ -13,9 +13,9 @@ class SocialSeeder extends Seeder
     {
         foreach ($this->networks() as $sort => $network) {
             Social::updateOrCreate(
-                ['url' => $network['url']],
+                ['name' => $network['name']],
                 [
-                    'name' => $network['name'],
+                    'url' => $network['url'],
                     'icon' => $network['icon'],
                     'sort' => $sort + 1,
                     'status' => true,
@@ -38,7 +38,7 @@ class SocialSeeder extends Seeder
             [
                 'name' => 'Instagram',
                 'icon' => 'si-instagram',
-                'url' => 'https://www.instagram.com/perfectum_5g_uz',
+                'url' => 'https://www.instagram.com/perfectum.uzbekistan/',
             ],
             [
                 'name' => 'Telegram',
