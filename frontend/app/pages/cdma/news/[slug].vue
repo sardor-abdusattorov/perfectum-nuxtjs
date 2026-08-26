@@ -48,7 +48,7 @@ useSeo({ title: () => item.value?.title ?? '' })
               <span class="cdma-article__date">{{ dateLong(item.published_at) }}</span>
             </div>
             <span v-if="item.category" class="cdma-badge">{{ item.category.name }}</span>
-            <div class="cdma-article__body" v-html="item.content"></div>
+            <div class="cdma-article__body rich" v-html="item.content"></div>
           </article>
         </div>
       </div>

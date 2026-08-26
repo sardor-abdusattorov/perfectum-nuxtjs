@@ -89,7 +89,7 @@ function featureCaption(feature: TariffFeature): string {
 
               <template v-for="(description, index) in tariff.descriptions" :key="index">
                   <h2 class="cdma-detail__subhead">{{ description.name }}</h2>
-                  <div class="cdma-prose" v-html="description.content"></div>
+                  <div class="cdma-prose rich" v-html="description.content"></div>
               </template>
 
               <NuxtLink class="cdma-back" :to="localePath('/cdma') + '#cdma-tariffs'">

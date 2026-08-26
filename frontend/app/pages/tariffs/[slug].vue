@@ -90,7 +90,7 @@ function connect(): void {
               <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </summary>
-          <div class="tariff-detail__more-content" v-html="description.content"></div>
+          <div class="tariff-detail__more-content rich" v-html="description.content"></div>
         </details>
 
         <nav class="tariff-detail__switch" :aria-label="t('tariffs.nav_label')">

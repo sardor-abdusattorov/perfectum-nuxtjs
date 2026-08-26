@@ -55,7 +55,7 @@ const period = computed(() => {
             <span v-if="period" class="article__meta-date">{{ period }}</span>
             <span v-if="item.badge" class="article__meta-status">{{ item.badge }}</span>
           </div>
-          <div class="article__body" v-html="item.content"></div>
+          <div class="article__body rich" v-html="item.content"></div>
         </div>
       </div>
     </div>

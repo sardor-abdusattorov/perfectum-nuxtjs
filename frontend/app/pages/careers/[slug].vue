@@ -28,7 +28,7 @@ useSeo({ title: () => item.value?.title ?? '' })
         </div>
 
         <article class="vacancy__card">
-          <div class="vacancy__section" v-html="item.content"></div>
+          <div class="vacancy__section rich" v-html="item.content"></div>
 
           <div class="vacancy__cta">
             <p class="vacancy__cta-line">{{ t('careers.cta_line') }}</p>

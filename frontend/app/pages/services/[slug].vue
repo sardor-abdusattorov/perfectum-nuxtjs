@@ -36,7 +36,7 @@ useSeo({ page: 'services', title: () => service.value?.name ?? '' })
             <p v-if="service.lead"><b>{{ service.lead }}</b></p>
             <p v-if="service.price"><b>{{ t('services.price_label') }}:</b> {{ service.price }}</p>
             <p v-if="service.ussd"><b>{{ t('services.ussd_label') }}:</b> {{ service.ussd }}</p>
-            <div v-if="service.content" v-html="service.content" />
+            <div v-if="service.content" class="rich" v-html="service.content" />
           </div>
         </div>
       </div>

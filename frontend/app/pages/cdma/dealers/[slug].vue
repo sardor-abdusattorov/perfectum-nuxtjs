@@ -42,7 +42,7 @@ useSeo({ title: () => entry.value?.region?.name ?? '' })
 
       <h2 class="cdma-dealers__region">{{ entry.region?.name }}</h2>
 
-      <div v-if="entry.content" class="cdma-dealers__content" v-html="entry.content"></div>
+      <div v-if="entry.content" class="cdma-dealers__content rich" v-html="entry.content"></div>
       <p v-else class="cdma-regions__empty">{{ t('offices.dealers_empty') }}</p>
     </div>
   </section>

@@ -78,7 +78,7 @@ function emails(): Array<{ label: string, href: string }> {
         </li>
       </ul>
 
-      <div v-if="cards.note" class="contacts-note" v-html="cards.note"></div>
+      <div v-if="cards.note" class="contacts-note rich" v-html="cards.note"></div>
     </div>
   </section>
 </template>

@@ -39,7 +39,7 @@ function toggle(index: number) {
       </button>
       <div :id="`${uid}-${index}`" class="faq-item__body" :inert="index !== open">
         <div class="faq-item__body-inner">
-          <div class="faq-item__answer" v-html="item.answer"></div>
+          <div class="faq-item__answer rich" v-html="item.answer"></div>
         </div>
       </div>
     </div>

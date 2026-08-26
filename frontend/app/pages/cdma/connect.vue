@@ -30,7 +30,7 @@ useSeo({ page: 'cdma_connect', titleKey: 'seo.cdma_connect' })
       <p v-if="article.date" class="cdma-connect__date">{{ article.date }}</p>
       <h2 v-if="article.title" class="cdma-connect__title">{{ article.title }}</h2>
 
-      <div v-if="article.content" class="cdma-connect__article" v-html="article.content"></div>
+      <div v-if="article.content" class="cdma-connect__article rich" v-html="article.content"></div>
     </div>
   </section>
 </template>

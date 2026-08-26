@@ -35,7 +35,7 @@ const timelineItems = computed(() => published(timeline.value.items))
         </li>
       </ul>
 
-      <div v-if="intro.content" class="about-intro" v-html="intro.content"></div>
+      <div v-if="intro.content" class="about-intro rich" v-html="intro.content"></div>
 
       <ul v-if="timelineItems.length" class="timeline">
         <li v-for="(item, index) in timelineItems" :key="index" class="timeline__item">

@@ -46,7 +46,7 @@ useSeo({
         <div class="article__card">
           <img v-if="page.image" class="article__image" :src="page.image" :alt="page.title">
 
-          <div class="article__content" v-html="page.content" />
+          <div class="article__content rich" v-html="page.content" />
         </div>
       </div>
     </div>

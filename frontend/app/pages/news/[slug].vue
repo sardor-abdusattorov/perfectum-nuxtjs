@@ -44,7 +44,7 @@ useSeo({ page: 'news_item', title: () => item.value?.title ?? '' })
         ></div>
         <div v-else class="article__cover" aria-hidden="true"></div>
 
-        <div class="article__body" v-html="item.content"></div>
+        <div class="article__body rich" v-html="item.content"></div>
       </div>
     </div>
   </section>

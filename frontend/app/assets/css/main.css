@@ -85,201 +85,37 @@ sup {
 /* ==========================================================
    EDITOR CONTENT
    The admin's editor writes bare tags — it has no way to put a class on a
-   list, a heading or a table — so everything it can emit is styled through
-   the wrapper it lands in. The values come from the designed classes these
-   replaced; page-specific rules further down still override them.
+   list, a heading or a table — so every block that prints what an editor
+   wrote wears .rich, and everything the editor can emit is styled here once.
+   A page that forgot the class showed a bare borderless table — that is how
+   this was found. Page-specific rules further down still override these.
    ========================================================== */
 
-.article__body,
-
-.article__content,
-
-.about-intro,
-
-.vacancy__section,
-
-.cdma-article__body,
-
-.cdma-connect__article,
-
-.tariff-detail__more-content,
-
-.faq-item__answer,
-
-.contacts-note {
+.rich {
   font-size: 17px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.75);
   overflow-wrap: anywhere;
 }
 
-.article__body > :first-child,
-
-.article__content > :first-child,
-
-.about-intro > :first-child,
-
-.vacancy__section > :first-child,
-
-.cdma-article__body > :first-child,
-
-.cdma-connect__article > :first-child,
-
-.tariff-detail__more-content > :first-child,
-
-.faq-item__answer > :first-child,
-
-.contacts-note > :first-child {
+.rich > :first-child {
   margin-top: 0;
 }
 
-.article__body > :last-child,
-
-.article__content > :last-child,
-
-.about-intro > :last-child,
-
-.vacancy__section > :last-child,
-
-.cdma-article__body > :last-child,
-
-.cdma-connect__article > :last-child,
-
-.tariff-detail__more-content > :last-child,
-
-.faq-item__answer > :last-child,
-
-.contacts-note > :last-child {
+.rich > :last-child {
   margin-bottom: 0;
 }
 
-.article__body p,
-
-.article__content p,
-
-.about-intro p,
-
-.vacancy__section p,
-
-.cdma-article__body p,
-
-.cdma-connect__article p,
-
-.tariff-detail__more-content p,
-
-.faq-item__answer p,
-
-.contacts-note p {
+.rich p {
   margin: 0 0 16px;
 }
 
-.article__body h1,
-
-.article__body h2,
-
-.article__body h3,
-
-.article__body h4,
-
-.article__body h5,
-
-.article__body h6,
-
-.article__content h1,
-
-.article__content h2,
-
-.article__content h3,
-
-.article__content h4,
-
-.article__content h5,
-
-.article__content h6,
-
-.about-intro h1,
-
-.about-intro h2,
-
-.about-intro h3,
-
-.about-intro h4,
-
-.about-intro h5,
-
-.about-intro h6,
-
-.vacancy__section h1,
-
-.vacancy__section h2,
-
-.vacancy__section h3,
-
-.vacancy__section h4,
-
-.vacancy__section h5,
-
-.vacancy__section h6,
-
-.cdma-article__body h1,
-
-.cdma-article__body h2,
-
-.cdma-article__body h3,
-
-.cdma-article__body h4,
-
-.cdma-article__body h5,
-
-.cdma-article__body h6,
-
-.cdma-connect__article h1,
-
-.cdma-connect__article h2,
-
-.cdma-connect__article h3,
-
-.cdma-connect__article h4,
-
-.cdma-connect__article h5,
-
-.cdma-connect__article h6,
-
-.tariff-detail__more-content h1,
-
-.tariff-detail__more-content h2,
-
-.tariff-detail__more-content h3,
-
-.tariff-detail__more-content h4,
-
-.tariff-detail__more-content h5,
-
-.tariff-detail__more-content h6,
-
-.faq-item__answer h1,
-
-.faq-item__answer h2,
-
-.faq-item__answer h3,
-
-.faq-item__answer h4,
-
-.faq-item__answer h5,
-
-.faq-item__answer h6,
-
-.contacts-note h1,
-
-.contacts-note h2,
-
-.contacts-note h3,
-
-.contacts-note h4,
-
-.contacts-note h5,
-
-.contacts-note h6 {
+.rich h1,
+.rich h2,
+.rich h3,
+.rich h4,
+.rich h5,
+.rich h6 {
   margin: 28px 0 16px;
   font-size: 18px;
   font-weight: 700;
@@ -287,63 +123,12 @@ sup {
   color: var(--color-black);
 }
 
-.article__body h1,
-
-.article__content h1,
-
-.about-intro h1,
-
-.vacancy__section h1,
-
-.cdma-article__body h1,
-
-.cdma-connect__article h1,
-
-.tariff-detail__more-content h1,
-
-.faq-item__answer h1,
-
-.contacts-note h1 {
+.rich h1 {
   font-size: 22px;
 }
 
-/* the editor's lists get the dot the design drew by hand, so a bullet looks
-   the same whether it was written in the markup or typed by an editor */
-.article__body ul,
-
-.article__body ol,
-
-.article__content ul,
-
-.article__content ol,
-
-.about-intro ul,
-
-.about-intro ol,
-
-.vacancy__section ul,
-
-.vacancy__section ol,
-
-.cdma-article__body ul,
-
-.cdma-article__body ol,
-
-.cdma-connect__article ul,
-
-.cdma-connect__article ol,
-
-.tariff-detail__more-content ul,
-
-.tariff-detail__more-content ol,
-
-.faq-item__answer ul,
-
-.faq-item__answer ol,
-
-.contacts-note ul,
-
-.contacts-note ol {
+.rich ul,
+.rich ol {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -352,23 +137,7 @@ sup {
   list-style: none;
 }
 
-.article__body li,
-
-.article__content li,
-
-.about-intro li,
-
-.vacancy__section li,
-
-.cdma-article__body li,
-
-.cdma-connect__article li,
-
-.tariff-detail__more-content li,
-
-.faq-item__answer li,
-
-.contacts-note li {
+.rich li {
   position: relative;
   padding-left: 22px;
   font-size: 16px;
@@ -376,103 +145,23 @@ sup {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.article__body li > p,
-
-.article__content li > p,
-
-.about-intro li > p,
-
-.vacancy__section li > p,
-
-.cdma-article__body li > p,
-
-.cdma-connect__article li > p,
-
-.tariff-detail__more-content li > p,
-
-.faq-item__answer li > p,
-
-.contacts-note li > p {
+.rich li > p {
   margin: 0;
 }
 
-.article__body li > p + p,
-
-.article__content li > p + p,
-
-.about-intro li > p + p,
-
-.vacancy__section li > p + p,
-
-.cdma-article__body li > p + p,
-
-.cdma-connect__article li > p + p,
-
-.tariff-detail__more-content li > p + p,
-
-.faq-item__answer li > p + p,
-
-.contacts-note li > p + p {
+.rich li > p + p {
   margin-top: 12px;
 }
 
-.article__body :is(td, th) > :first-child,
-
-.article__content :is(td, th) > :first-child,
-
-.about-intro :is(td, th) > :first-child,
-
-.vacancy__section :is(td, th) > :first-child,
-
-.cdma-article__body :is(td, th) > :first-child,
-
-.cdma-connect__article :is(td, th) > :first-child,
-
-.tariff-detail__more-content :is(td, th) > :first-child,
-
-.faq-item__answer :is(td, th) > :first-child,
-
-.contacts-note :is(td, th) > :first-child {
+.rich :is(td, th) > :first-child {
   margin-top: 0;
 }
 
-.article__body :is(td, th) > :last-child,
-
-.article__content :is(td, th) > :last-child,
-
-.about-intro :is(td, th) > :last-child,
-
-.vacancy__section :is(td, th) > :last-child,
-
-.cdma-article__body :is(td, th) > :last-child,
-
-.cdma-connect__article :is(td, th) > :last-child,
-
-.tariff-detail__more-content :is(td, th) > :last-child,
-
-.faq-item__answer :is(td, th) > :last-child,
-
-.contacts-note :is(td, th) > :last-child {
+.rich :is(td, th) > :last-child {
   margin-bottom: 0;
 }
 
-.article__body ul > li::before,
-
-.article__content ul > li::before,
-
-.about-intro ul > li::before,
-
-.vacancy__section ul > li::before,
-
-.cdma-article__body ul > li::before,
-
-.cdma-connect__article ul > li::before,
-
-.tariff-detail__more-content ul > li::before,
-
-.faq-item__answer ul > li::before,
-
-.contacts-note ul > li::before {
+.rich ul > li::before {
   content: "";
   position: absolute;
   top: 9px;
@@ -483,63 +172,15 @@ sup {
   background: var(--color-black);
 }
 
-.article__body ol,
-
-.article__content ol,
-
-.about-intro ol,
-
-.vacancy__section ol,
-
-.cdma-article__body ol,
-
-.cdma-connect__article ol,
-
-.tariff-detail__more-content ol,
-
-.faq-item__answer ol,
-
-.contacts-note ol {
+.rich ol {
   counter-reset: editor-item;
 }
 
-.article__body ol > li,
-
-.article__content ol > li,
-
-.about-intro ol > li,
-
-.vacancy__section ol > li,
-
-.cdma-article__body ol > li,
-
-.cdma-connect__article ol > li,
-
-.tariff-detail__more-content ol > li,
-
-.faq-item__answer ol > li,
-
-.contacts-note ol > li {
+.rich ol > li {
   counter-increment: editor-item;
 }
 
-.article__body ol > li::before,
-
-.article__content ol > li::before,
-
-.about-intro ol > li::before,
-
-.vacancy__section ol > li::before,
-
-.cdma-article__body ol > li::before,
-
-.cdma-connect__article ol > li::before,
-
-.tariff-detail__more-content ol > li::before,
-
-.faq-item__answer ol > li::before,
-
-.contacts-note ol > li::before {
+.rich ol > li::before {
   content: counter(editor-item) ".";
   position: absolute;
   left: 0;
@@ -547,90 +188,24 @@ sup {
   color: var(--color-black);
 }
 
-.article__body a,
-
-.article__content a,
-
-.about-intro a,
-
-.vacancy__section a,
-
-.cdma-article__body a,
-
-.cdma-connect__article a,
-
-.tariff-detail__more-content a,
-
-.faq-item__answer a,
-
-.contacts-note a {
+.rich a {
   color: var(--color-red);
   text-decoration: underline;
   transition: var(--transition);
 }
 
-.article__body a:hover,
-
-.article__content a:hover,
-
-.about-intro a:hover,
-
-.vacancy__section a:hover,
-
-.cdma-article__body a:hover,
-
-.cdma-connect__article a:hover,
-
-.tariff-detail__more-content a:hover,
-
-.faq-item__answer a:hover,
-
-.contacts-note a:hover {
+.rich a:hover {
   color: var(--color-black);
 }
 
-.article__body img,
-
-.article__content img,
-
-.about-intro img,
-
-.vacancy__section img,
-
-.cdma-article__body img,
-
-.cdma-connect__article img,
-
-.tariff-detail__more-content img,
-
-.faq-item__answer img,
-
-.contacts-note img {
+.rich img {
   max-width: 100%;
   height: auto;
   margin: 8px 0 16px;
   border-radius: var(--radius);
 }
 
-/* a pasted table can be wider than the column, so it scrolls inside itself
-   rather than pushing the page sideways */
-.article__body table,
-
-.article__content table,
-
-.about-intro table,
-
-.vacancy__section table,
-
-.cdma-article__body table,
-
-.cdma-connect__article table,
-
-.tariff-detail__more-content table,
-
-.faq-item__answer table,
-
-.contacts-note table {
+.rich table {
   display: block;
   width: 100%;
   margin: 0 0 20px;
@@ -640,97 +215,24 @@ sup {
   line-height: 22px;
 }
 
-.article__body th,
-
-.article__body td,
-
-.article__content th,
-
-.article__content td,
-
-.about-intro th,
-
-.about-intro td,
-
-.vacancy__section th,
-
-.vacancy__section td,
-
-.cdma-article__body th,
-
-.cdma-article__body td,
-
-.cdma-connect__article th,
-
-.cdma-connect__article td,
-
-.tariff-detail__more-content th,
-
-.tariff-detail__more-content td,
-
-.faq-item__answer th,
-
-.faq-item__answer td,
-
-.contacts-note th,
-
-.contacts-note td {
+.rich th,
+.rich td {
   padding: 10px 14px;
   border: 1px solid var(--color-line);
   text-align: left;
   vertical-align: top;
 }
 
-.article__body th,
-
-.article__content th,
-
-.about-intro th,
-
-.vacancy__section th,
-
-.cdma-article__body th,
-
-.cdma-connect__article th,
-
-.tariff-detail__more-content th,
-
-.faq-item__answer th,
-
-.contacts-note th {
+.rich th {
   font-weight: 700;
   color: var(--color-black);
 }
 
-.article__body thead th,
-.article__content thead th,
-.about-intro thead th,
-.vacancy__section thead th,
-.cdma-article__body thead th,
-.cdma-connect__article thead th,
-.tariff-detail__more-content thead th,
-.faq-item__answer thead th,
-.contacts-note thead th {
+.rich thead th {
   background: rgba(0, 0, 0, 0.03);
 }
 
-.article__body blockquote,
-
-.article__content blockquote,
-
-.about-intro blockquote,
-
-.vacancy__section blockquote,
-
-.cdma-article__body blockquote,
-
-.cdma-connect__article blockquote,
-
-.tariff-detail__more-content blockquote,
-
-.faq-item__answer blockquote,
-
-.contacts-note blockquote {
+.rich blockquote {
   margin: 16px 0;
   padding: 16px 20px;
   background: rgba(236, 236, 236, 0.44);
@@ -738,23 +240,7 @@ sup {
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 
-.article__body pre,
-
-.article__content pre,
-
-.about-intro pre,
-
-.vacancy__section pre,
-
-.cdma-article__body pre,
-
-.cdma-connect__article pre,
-
-.tariff-detail__more-content pre,
-
-.faq-item__answer pre,
-
-.contacts-note pre {
+.rich pre {
   margin: 0 0 16px;
   padding: 16px 20px;
   overflow-x: auto;
@@ -762,23 +248,7 @@ sup {
   border-radius: var(--radius);
 }
 
-.article__body code,
-
-.article__content code,
-
-.about-intro code,
-
-.vacancy__section code,
-
-.cdma-article__body code,
-
-.cdma-connect__article code,
-
-.tariff-detail__more-content code,
-
-.faq-item__answer code,
-
-.contacts-note code {
+.rich code {
   padding: 2px 6px;
   font-family: monospace;
   font-size: 0.92em;
@@ -786,115 +256,34 @@ sup {
   border-radius: 4px;
 }
 
-.article__body hr,
-
-.article__content hr,
-
-.about-intro hr,
-
-.vacancy__section hr,
-
-.cdma-article__body hr,
-
-.cdma-connect__article hr,
-
-.tariff-detail__more-content hr,
-
-.faq-item__answer hr,
-
-.contacts-note hr {
+.rich hr {
   margin: 28px 0;
   border: 0;
   border-top: 1px solid var(--color-line);
 }
 
-.article__body mark,
-
-.article__content mark,
-
-.about-intro mark,
-
-.vacancy__section mark,
-
-.cdma-article__body mark,
-
-.cdma-connect__article mark,
-
-.tariff-detail__more-content mark,
-
-.faq-item__answer mark,
-
-.contacts-note mark {
+.rich mark {
   padding: 0 3px;
   background: rgba(230, 0, 0, 0.14);
 }
 
-.article__body small,
-
-.article__content small,
-
-.about-intro small,
-
-.vacancy__section small,
-
-.cdma-article__body small,
-
-.cdma-connect__article small,
-
-.tariff-detail__more-content small,
-
-.faq-item__answer small,
-
-.contacts-note small {
+.rich small {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.55);
 }
 
-.article__body details,
-
-.article__content details,
-
-.about-intro details,
-
-.vacancy__section details,
-
-.cdma-article__body details,
-
-.cdma-connect__article details,
-
-.tariff-detail__more-content details,
-
-.faq-item__answer details,
-
-.contacts-note details {
+.rich details {
   margin: 0 0 16px;
   padding: 14px 18px;
   background: rgba(0, 0, 0, 0.03);
   border-radius: var(--radius);
 }
 
-.article__body summary,
-
-.article__content summary,
-
-.about-intro summary,
-
-.vacancy__section summary,
-
-.cdma-article__body summary,
-
-.cdma-connect__article summary,
-
-.tariff-detail__more-content summary,
-
-.faq-item__answer summary,
-
-.contacts-note summary {
+.rich summary {
   font-weight: 600;
   color: var(--color-black);
   cursor: pointer;
 }
-
 /* ==========================================================
    PREVIEW BAR
    A draft looks exactly like a published page; the strip says it is not one.

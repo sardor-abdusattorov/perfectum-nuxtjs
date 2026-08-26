@@ -86,7 +86,7 @@ const facts = computed<ServiceFact[]>(() => {
 
               <template v-if="service.content">
                   <h2 class="cdma-detail__subhead">{{ t('services.description_title') }}</h2>
-                  <div class="cdma-prose" v-html="service.content"></div>
+                  <div class="cdma-prose rich" v-html="service.content"></div>
               </template>
 
               <NuxtLink class="cdma-back" :to="localePath('/cdma') + '#cdma-services'">

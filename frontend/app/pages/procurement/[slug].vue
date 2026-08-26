@@ -35,7 +35,7 @@ useSeo({ title: () => item.value?.title ?? '' })
           {{ t('procurement.deadline') }} {{ dateShort(item.deadline_at) }}
         </p>
 
-        <div class="article__body" v-html="item.content"></div>
+        <div class="article__body rich" v-html="item.content"></div>
 
         <div v-if="item.files.length" class="article__body">
           <h2>{{ t('procurement.files') }}</h2>

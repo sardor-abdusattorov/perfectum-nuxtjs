@@ -53,7 +53,7 @@ useSeo({ title: () => item.value?.title ?? '' })
               <span class="cdma-badge">{{ t('cdma.promo_badge') }}</span>
               <span v-if="!item.ends_at" class="cdma-article__status">{{ t('cdma.promo_active') }}</span>
             </div>
-            <div class="cdma-article__body" v-html="item.content"></div>
+            <div class="cdma-article__body rich" v-html="item.content"></div>
           </article>
         </div>
       </div>
