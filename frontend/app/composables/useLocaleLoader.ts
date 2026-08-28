@@ -1,39 +1,50 @@
-const MIN_VISIBLE = 600
-const SETTLE = 200
+const DELAY = 250
+const HOLD = 250
 const FAILSAFE = 6000
 
 export function useLocaleLoader() {
   const active = useState('locale-loader', () => false)
+  const run = useState('locale-loader-run', () => 0)
   const shownAt = useState('locale-loader-shown-at', () => 0)
 
   /**
-   * The stamp is taken on the click, not in a watcher, so the minimum
-   * hold still counts when the page settles before Vue flushes; it also
-   * identifies the run, so a timer from an earlier switch cannot close
-   * the overlay a later one has just opened.
+   * A switch that lands within DELAY shows nothing at all — the veil is
+   * there for a slow answer, not as a ceremony. The counter identifies the
+   * run, so a timer left over from an earlier switch cannot touch the veil
+   * a later one owns.
    */
   function show(): void {
-    shownAt.value = Date.now()
-    active.value = true
+    const stamp = ++run.value
 
-    close(FAILSAFE, shownAt.value)
+    after(DELAY, stamp, () => {
+      shownAt.value = Date.now()
+      active.value = true
+    })
+
+    after(FAILSAFE, stamp, () => (active.value = false))
   }
 
   /**
-   * Called when the new page has finished loading. The fade starts no
-   * sooner than SETTLE after that, so the content swap and the scroll
-   * jump repaint fully behind the veil.
+   * Called when the new page has loaded. A veil already up stays for HOLD,
+   * so a switch that only just missed the delay does not strobe.
    */
   function hide(): void {
-    if (active.value) {
-      close(Math.max(SETTLE, MIN_VISIBLE - (Date.now() - shownAt.value)), shownAt.value)
+    const wait = active.value ? HOLD - (Date.now() - shownAt.value) : 0
+    const stamp = ++run.value
+
+    if (wait <= 0) {
+      active.value = false
+
+      return
     }
+
+    after(wait, stamp, () => (active.value = false))
   }
 
-  function close(wait: number, stamp: number): void {
+  function after(wait: number, stamp: number, done: () => void): void {
     setTimeout(() => {
-      if (shownAt.value === stamp) {
-        active.value = false
+      if (run.value === stamp) {
+        done()
       }
     }, wait)
   }

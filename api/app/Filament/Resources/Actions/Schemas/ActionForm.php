@@ -28,7 +28,8 @@ class ActionForm
                             ->live(),
 
                         Fields::category(ActionCategory::class)
-                            ->visible(fn (Get $get): bool => $get('network') !== Network::Cdma->value),
+                            ->visible(fn (Get $get): bool => $get('network') !== Network::Cdma->value)
+                            ->required(fn (Get $get): bool => $get('network') !== Network::Cdma->value),
 
                         TranslatableTabs::make('translations')
                             ->schema([

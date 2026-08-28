@@ -6819,6 +6819,8 @@ body.overflow__hidden {
   font-weight: 700;
   line-height: 64px;
   color: var(--color-white);
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 .vacancy .vacancy__badge {
   align-self: flex-start;
@@ -7449,8 +7451,8 @@ body.overflow__hidden {
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity 0.25s ease,
-    visibility 0.25s ease;
+    opacity 0.12s ease,
+    visibility 0.12s ease;
 }
 
 .locale-loader_active {
@@ -8068,6 +8070,14 @@ select {
 }
 
 @media all and (max-width: 1200px) {
+  .vacancy .vacancy__title {
+    font-size: 44px;
+    line-height: 52px;
+  }
+  .vacancy .vacancy__hero {
+    min-height: 280px;
+    padding: 36px;
+  }
   /* the card drops to 216 here, and AUDIOVOX needs 183 at 34px */
   .brand-card__name {
     font-size: 28px;
@@ -8469,6 +8479,20 @@ select {
 }
 
 @media all and (max-width: 992px) {
+  .vacancy {
+    padding: 40px 0 72px;
+  }
+  .vacancy .vacancy__title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .vacancy .vacancy__hero {
+    min-height: 240px;
+    margin-top: 22px;
+  }
+  .vacancy .vacancy__card {
+    padding: 32px;
+  }
   .container {
     max-width: 744px;
   }
@@ -9464,11 +9488,38 @@ select {
     width: 36px;
     height: 36px;
   }
+  .vacancy {
+    padding: 32px 0 60px;
+  }
+  .vacancy .vacancy__back {
+    font-size: 15px;
+  }
+  .vacancy .vacancy__back svg {
+    width: 20px;
+    height: 20px;
+  }
+  .vacancy .vacancy__title {
+    font-size: 28px;
+    line-height: 34px;
+  }
   .vacancy .vacancy__hero {
+    min-height: 0;
+    margin-top: 18px;
+    margin-bottom: 22px;
     padding: 28px 24px;
+  }
+  .vacancy .vacancy__badge {
+    margin-bottom: 14px;
   }
   .vacancy .vacancy__card {
     padding: 28px 24px;
+  }
+  .vacancy .vacancy__section:not(:first-child) {
+    margin-top: 28px;
+  }
+  .vacancy .vacancy__cta {
+    margin-top: 28px;
+    padding-top: 28px;
   }
   .contacts-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -9747,6 +9798,19 @@ select {
 }
 
 @media all and (max-width: 576px) {
+  .vacancy {
+    padding: 24px 0 48px;
+  }
+  .vacancy .vacancy__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .vacancy .vacancy__hero {
+    padding: 22px 18px;
+  }
+  .vacancy .vacancy__card {
+    padding: 22px 18px;
+  }
   .tariff-modal .tariff-modal__dialog {
     padding: 56px 20px 28px;
     border-radius: 20px;

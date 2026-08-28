@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Enums\Network;
+use App\Models\Action;
+use App\Models\ActionCategory;
 use App\Models\Faq;
 use App\Models\FaqCategory;
 use App\Models\News;
@@ -215,4 +217,32 @@ it('filters a listing by the category slug as well as by its id', function (): v
     }
 
     expect($this->getJson(route('api.v1.news.index').'?category=net-takoy')->assertOk()->json('data'))->toBe([]);
+});
+
+/**
+ * The promos the old site published run on CDMA codes, so the 5G listing must
+ * not carry them: they used to arrive uncategorised and then vanish the moment
+ * a visitor picked a category.
+ */
+it('keeps a cdma promo out of the 5g listing', function (): void {
+    $promo = fn (array $attributes): Action => Action::create(array_merge([
+        'title' => ['ru' => 'Акция', 'uz' => 'Aksiya'],
+        'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>'],
+        'status' => true,
+    ], $attributes));
+
+    $promo(['slug' => 'internet-bonus', 'network' => Network::Cdma]);
+    $promo([
+        'slug' => 'letnyaya',
+        'network' => Network::FiveG,
+        'category_id' => category(ActionCategory::class, Network::Both, 'mobilnaya-svyaz')->id,
+    ]);
+
+    $listing = fn (array $query): array => $this->getJson(route('api.v1.actions.index', $query))
+        ->assertOk()
+        ->json('data.*.slug');
+
+    expect($listing(['network' => '5g']))->toBe(['letnyaya'])
+        ->and($listing(['network' => '5g', 'category' => 'mobilnaya-svyaz']))->toBe(['letnyaya'])
+        ->and($listing(['network' => 'cdma']))->toBe(['internet-bonus']);
 });

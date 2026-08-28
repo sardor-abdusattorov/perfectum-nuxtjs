@@ -12002,7 +12002,7 @@
     ],
     "actions": [
         {
-            "network": "both",
+            "network": "cdma",
             "category": null,
             "title": {
                 "ru": "1+1",
@@ -12023,7 +12023,7 @@
             "slug": "1-1"
         },
         {
-            "network": "both",
+            "network": "cdma",
             "category": null,
             "title": {
                 "ru": "Internet bonus",
@@ -12047,7 +12047,7 @@
             "slug": "internet-bonus"
         },
         {
-            "network": "both",
+            "network": "cdma",
             "category": null,
             "title": {
                 "ru": "Акция «Скидки на номера - до 90%!»",

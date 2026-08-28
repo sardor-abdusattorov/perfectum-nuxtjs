@@ -15,11 +15,11 @@ onScopeDispose(() => {
 })
 
 nuxtApp.hook('page:finish', hide)
-nuxtApp.hook('vue:error', () => (active.value = false))
+nuxtApp.hook('vue:error', hide)
 
 router.afterEach((_to, _from, failure) => {
   if (failure) {
-    active.value = false
+    hide()
   }
 })
 </script>

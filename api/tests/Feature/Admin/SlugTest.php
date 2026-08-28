@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Filament\Resources\News\Pages\CreateNews;
 use App\Filament\Resources\News\Pages\EditNews;
 use App\Models\News;
+use App\Models\NewsCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -27,12 +28,18 @@ function admin(string $subject): User
     return tap($user->refresh(), fn (User $user) => test()->actingAs($user));
 }
 
+function newsCategory(): NewsCategory
+{
+    return NewsCategory::create(['name' => ['ru' => 'Компания'], 'slug' => 'kompaniya', 'network' => 'both']);
+}
+
 /**
- * @return array<string, array<string, string>>
+ * @return array<string, mixed>
  */
 function newsPayload(string $ru): array
 {
     return [
+        'category_id' => newsCategory()->getKey(),
         'title' => ['ru' => $ru, 'uz' => $ru],
         'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>'],
     ];
@@ -54,6 +61,7 @@ it('transliterates the russian title when english is empty', function (): void {
 
     Livewire::test(CreateNews::class)
         ->fillForm([
+            'category_id' => newsCategory()->getKey(),
             'title' => ['ru' => 'Новости компании', 'uz' => 'Kompaniya yangiliklari'],
             'content' => ['ru' => '<p>Текст</p>', 'uz' => '<p>Matn</p>'],
             'slug' => '',
@@ -97,6 +105,7 @@ it('regenerates the slug when it is cleared while editing', function (): void {
     admin('News');
 
     $news = News::create([
+        'category_id' => newsCategory()->getKey(),
         'title' => ['ru' => 'Переименована позже', 'uz' => 'Edi'],
         'content' => ['ru' => '<p>x</p>'],
         'slug' => 'old-address',
