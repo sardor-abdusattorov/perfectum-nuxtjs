@@ -9,6 +9,7 @@ const {
   initialLoading,
   busy,
   searched,
+  failed,
   numbers,
   totalPages,
   page,
@@ -132,7 +133,9 @@ useSeo({ titleKey: 'seo.numbers' })
                 </table>
               </div>
 
-              <p v-else-if="searched && !busy" class="help-numbers__empty">{{ t('help.numbers_empty') }}</p>
+              <p v-else-if="searched && !busy" class="help-numbers__empty">
+                {{ failed ? t('help.numbers_unavailable') : t('help.numbers_empty') }}
+              </p>
 
               <AppPagination :page="page" :pages="totalPages" @change="search($event)" />
             </div>

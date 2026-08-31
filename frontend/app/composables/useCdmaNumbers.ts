@@ -49,6 +49,7 @@ export function useCdmaNumbers() {
   const initialLoading = ref(true)
   const busy = ref(false)
   const searched = ref(false)
+  const failed = ref(false)
 
   const numbers = computed(() => data.value?.numbers ?? [])
   const totalPages = computed(() => data.value?.totalPages ?? 1)
@@ -85,9 +86,12 @@ export function useCdmaNumbers() {
           page: target,
         },
       })).data
+
+      failed.value = false
     }
     catch {
       data.value = null
+      failed.value = true
     }
     finally {
       busy.value = false
@@ -130,6 +134,7 @@ export function useCdmaNumbers() {
     initialLoading,
     busy,
     searched,
+    failed,
     numbers,
     totalPages,
     page,

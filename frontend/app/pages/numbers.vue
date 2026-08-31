@@ -32,6 +32,7 @@ const inputs = useTemplateRef('inputs')
 const data = ref<NumbersPayload | null>(null)
 const initialLoading = ref(true)
 const busy = ref(false)
+const failed = ref(false)
 
 function pageSize(): number {
   return window.matchMedia('(max-width: 768px)').matches ? 12 : 28
@@ -45,8 +46,9 @@ function mask(): string | undefined {
 
 /**
  * The page renders at once and the billing request runs behind the
- * preloader, so a slow BSS never blocks navigation; a failure simply
- * shows the empty message.
+ * preloader, so a slow BSS never blocks navigation. A failure says the
+ * search is unavailable rather than that no number matched — the visitor
+ * would otherwise read a dead gateway as a sold-out catalogue.
  */
 async function load(): Promise<void> {
   if (busy.value) {
@@ -63,9 +65,11 @@ async function load(): Promise<void> {
 
     data.value = response.data
     page.value = response.data.page
+    failed.value = false
   }
   catch {
     data.value = null
+    failed.value = true
   }
   finally {
     busy.value = false
@@ -207,7 +211,9 @@ function onCellKeydown(index: number, event: KeyboardEvent): void {
               </span>
             </div>
           </template>
-          <p v-else-if="!busy" class="numbers__empty">{{ t('numbers.empty') }}</p>
+          <p v-else-if="!busy" class="numbers__empty">
+            {{ failed ? t('numbers.unavailable') : t('numbers.empty') }}
+          </p>
         </div>
 
         <div class="numbers__loader" :class="busy && !initialLoading && 'is-active'"><span class="numbers__spinner"></span></div>
