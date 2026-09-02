@@ -16,7 +16,7 @@ it('renders the activity log page', function (): void {
     }
 
     $this->actingAs($user->refresh())
-        ->get('/admin/activity-logs')
+        ->get(panel('/activity-logs'))
         ->assertOk()
         ->assertSee('ActivityOverviewWidget')
         ->assertSee('ActivityTrendChartWidget');

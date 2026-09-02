@@ -29,7 +29,7 @@ it('lists the networks with their icons', function (): void {
     Social::create(['name' => 'LinkedIn', 'icon' => 'brand-linkedin', 'url' => 'https://linkedin.com/x', 'sort' => 2]);
 
     $this->actingAs(socialsAdmin())
-        ->get('/admin/socials')
+        ->get(panel('/socials'))
         ->assertOk()
         ->assertSee('Facebook')
         ->assertSee('LinkedIn');
@@ -39,14 +39,14 @@ it('survives an icon no installed set provides', function (): void {
     Social::create(['name' => 'Broken', 'icon' => 'simple-icons:facebook', 'url' => 'https://example.com', 'sort' => 1]);
 
     $this->actingAs(socialsAdmin())
-        ->get('/admin/socials')
+        ->get(panel('/socials'))
         ->assertOk()
         ->assertSee('Broken');
 });
 
 it('offers a fixed list of networks instead of every icon set', function (): void {
     $this->actingAs(socialsAdmin())
-        ->get('/admin/socials/create')
+        ->get(panel('/socials/create'))
         ->assertOk()
         ->assertSee('si-instagram')
         ->assertSee('brand-linkedin')
@@ -65,7 +65,7 @@ it('shows an old iconify value as the matching option', function (): void {
         ->update(['icon' => 'simple-icons:instagram']));
 
     $this->actingAs(socialsAdmin())
-        ->get('/admin/socials/'.$social->getKey().'/edit')
+        ->get(panel('/socials/'.$social->getKey().'/edit'))
         ->assertOk()
         ->assertSee('si-instagram');
 });

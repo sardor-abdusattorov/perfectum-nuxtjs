@@ -37,7 +37,7 @@ it('answers the api on the main domain as before', function (): void {
 });
 
 it('leaves the panel itself alone on the admin subdomain', function (): void {
-    $this->get('http://admin.perfectum.uz/admin/login')->assertSuccessful();
+    $this->get('http://admin.perfectum.uz'.panel('/login'))->assertSuccessful();
 });
 
 it('does not touch a host that merely contains the word', function (): void {

@@ -66,3 +66,12 @@ function panelUser(array $permissions = []): User
 
     return $user->refresh();
 }
+
+/**
+ * The panel has moved once already, so a test asks it where it lives instead
+ * of writing the path out.
+ */
+function panel(string $path = ''): string
+{
+    return '/'.Filament\Facades\Filament::getPanel('admin')->getPath().$path;
+}

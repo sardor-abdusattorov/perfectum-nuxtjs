@@ -133,10 +133,10 @@ it('creates a service with its facts and steps', function (): void {
 
 it('lists both resources in the panel', function (): void {
     allowed('Tariff');
-    $this->get('/admin/tariffs')->assertOk();
+    $this->get(panel('/tariffs'))->assertOk();
 
     allowed('Service');
-    $this->get('/admin/services')->assertOk();
+    $this->get(panel('/services'))->assertOk();
 });
 
 it('shows the brand by name in the device list', function (): void {
@@ -156,7 +156,7 @@ it('shows the brand by name in the device list', function (): void {
     ]);
 
     $this->actingAs($user->refresh())
-        ->get('/admin/devices')
+        ->get(panel('/devices'))
         ->assertOk()
         ->assertSee('Tozed')
         ->assertDontSee('&quot;slug&quot;:&quot;tozed&quot;', false);

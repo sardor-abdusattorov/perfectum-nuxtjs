@@ -27,7 +27,7 @@ it('lists the applications', function (): void {
     $applications = Application::factory()->count(3)->create();
 
     $this->actingAs($this->admin)
-        ->get('/admin/applications')
+        ->get(panel('/applications'))
         ->assertOk();
 
     Livewire::test(ListApplications::class)
@@ -36,7 +36,7 @@ it('lists the applications', function (): void {
 
 it('has no create page', function (): void {
     $this->actingAs($this->admin)
-        ->get('/admin/applications/create')
+        ->get(panel('/applications/create'))
         ->assertNotFound();
 });
 
@@ -45,7 +45,7 @@ it('leaves every status untouched when one application is opened', function (): 
     $opened = $applications->get(2);
 
     $this->actingAs($this->admin)
-        ->get("/admin/applications/{$opened->id}")
+        ->get(panel("/applications/{$opened->id}"))
         ->assertOk();
 
     foreach ($applications as $application) {

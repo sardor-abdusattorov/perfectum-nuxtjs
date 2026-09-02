@@ -22,11 +22,11 @@ it('renders the list and create page of every resource', function (string $resou
     }
 
     $this->actingAs($user->refresh())
-        ->get("/admin/{$resource}")
+        ->get(panel("/{$resource}"))
         ->assertOk();
 
     $this->actingAs($user)
-        ->get("/admin/{$resource}/create")
+        ->get(panel("/{$resource}/create"))
         ->assertOk();
 })->with([
     ['actions', 'Action'],
@@ -71,7 +71,7 @@ it('opens the edit page of a page settings row', function (): void {
     $record = PageSettings::create(['key' => PageKey::Tariffs, 'is_indexed' => true]);
 
     $this->actingAs($user->refresh())
-        ->get("/admin/page-settings/{$record->id}/edit")
+        ->get(panel("/page-settings/{$record->id}/edit"))
         ->assertOk();
 });
 

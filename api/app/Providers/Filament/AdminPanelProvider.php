@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('dashboard')
             ->authGuard('web')
             ->passwordReset()
             ->userMenuItems([
@@ -50,7 +50,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->spa(false)
+            ->spa()
             ->navigationItems([
                 NavigationItem::make()
                     ->label(fn () => __('app.label.go_to_site'))

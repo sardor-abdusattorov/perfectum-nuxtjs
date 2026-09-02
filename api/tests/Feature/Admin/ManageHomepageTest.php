@@ -57,7 +57,7 @@ it('offers buttons and both switches inside the hero slide', function (): void {
     ]);
 
     $this->actingAs(homepageAdmin())
-        ->get('/admin/homepage')
+        ->get(panel('/homepage'))
         ->assertOk()
         ->assertSee('show_aside')
         ->assertSee('show_gauge')
@@ -122,7 +122,7 @@ it('shows the gauge value next to its switch', function (): void {
     ]);
 
     $this->actingAs(homepageAdmin())
-        ->get('/admin/homepage')
+        ->get(panel('/homepage'))
         ->assertOk()
         ->assertSee('gauge_value')
         ->assertSee(__('app.suffix.mbps'));

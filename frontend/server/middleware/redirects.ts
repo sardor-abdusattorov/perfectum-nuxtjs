@@ -8,7 +8,7 @@
  * refreshed at most once a minute and forgiven when the API is down.
  */
 const OWN_ROUTES = new Set([
-  'about-company', 'actions', 'careers', 'cdma', 'contacts', 'coverage-area',
+  'about-company', 'actions', 'app', 'careers', 'cdma', 'contacts', 'coverage-area',
   'devices', 'documents', 'faq', 'help', 'news', 'numbers', 'offices',
   'pages', 'procurement', 'services', 'tariffs',
 ])
