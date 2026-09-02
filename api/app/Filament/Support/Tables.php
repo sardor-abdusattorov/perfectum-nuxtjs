@@ -2,6 +2,7 @@
 
 namespace App\Filament\Support;
 
+use App\Enums\Network;
 use App\Enums\PublishedStatus;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -32,6 +33,17 @@ class Tables
         return SelectFilter::make($field)
             ->label(__('app.label.status'))
             ->options(PublishedStatus::getStatusOptions());
+    }
+
+    /**
+     * The site is two sections sharing one panel, and a listing that holds
+     * both — news, promos, services — is read one section at a time.
+     */
+    public static function networkFilter(string $field = 'network'): SelectFilter
+    {
+        return SelectFilter::make($field)
+            ->label(__('app.label.network'))
+            ->options(Network::getOptions());
     }
 
     /**

@@ -43,6 +43,8 @@ class NewsTable
                 Tables::statusColumn(),
             ])
             ->filters([
+                Tables::networkFilter(),
+
                 Tables::categoryFilter(NewsCategory::class),
 
                 Tables::statusFilter(),

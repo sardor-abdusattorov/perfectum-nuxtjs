@@ -678,6 +678,12 @@
   gap: 24px;
 }
 
+/* the grid carries no space of its own, so the pager below it would sit
+   flush against the last row of cards */
+.cdma-section .pagination {
+  margin-top: 48px;
+}
+
 .cdma-section__head {
   margin-bottom: 40px;
 }
