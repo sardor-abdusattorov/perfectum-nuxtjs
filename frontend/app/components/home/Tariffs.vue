@@ -69,14 +69,14 @@ useSlider(slider, {
           </div>
         </div>
 
-        <div class="slider-nav" aria-hidden="true">
+        <div class="slider-nav">
           <button type="button" class="slider-arrow slider-arrow_prev" :aria-label="t('common.prev')">
-            <svg viewBox="0 0 24 24" fill="none">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
           <button type="button" class="slider-arrow slider-arrow_next" :aria-label="t('common.next')">
-            <svg viewBox="0 0 24 24" fill="none">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>

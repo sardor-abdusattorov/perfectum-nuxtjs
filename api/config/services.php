@@ -50,6 +50,7 @@ return [
     'cdma' => [
         'url' => env('CDMA_API_URL', 'http://pk.cdma.uz'),
         'timeout' => env('CDMA_API_TIMEOUT', 20),
+        'connect_timeout' => env('CDMA_API_CONNECT_TIMEOUT', 5),
 
         'endpoints' => [
             'numbers' => '/PC_PERF/load_function.php',
