@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Perfectum API v1",
-    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: заголовок `X-Locale: ru|uz` либо `?locale=ru` (так же, как на старом сайте).\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nТри ручки, которыми пользовались снаружи на старом сайте, живут здесь:\n- FAQ: было `/api/faqs-list` → стало `GET /faqs`\n- Новости: было `/api/public/news` (с ключом X-API-Key) → стало `GET /news`, ключ не нужен\n- Документы: было `/api/public/legal-documents` → стало `GET /documents`, файлы сгруппированы по категориям и языкам\n- Зоны покрытия: было `/api/coverage_area_list?type=5g` → стало `GET /coverage` (список слоёв) и `GET /coverage/{layer}` (сам GeoJSON, ZIP разбирается на нашей стороне при загрузке)",
+    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: любой из четырёх способов, приоритет сверху вниз — `?locale=uz`, `?lang=uz`, заголовок `X-Locale: uz`, заголовок `Accept-Language: uz-UZ,uz;q=0.9`. Без них — русский; неизвестный язык молча отдаёт русский.\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nПапка «Публичные ручки» — то, что читает мобильное приложение: новости, FAQ, зона покрытия и их категории. Ключ не нужен, лимит 60 запросов в минуту.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -18,51 +18,9 @@
   ],
   "item": [
     {
-      "name": "Публичные ручки старого сайта",
-      "description": "То, что внешние потребители дёргали на старом сайте, и чем это стало здесь.",
+      "name": "Публичные ручки: новости, FAQ, зона покрытия",
+      "description": "То, что внешние потребители (мобильное приложение) читают с сайта. Без ключа, без авторизации, только GET. Лимит 60 запросов в минуту с одного адреса.\n\nЯзык: любой из четырёх способов, приоритет сверху вниз — `?locale=uz`, `?lang=uz`, заголовок `X-Locale: uz`, заголовок `Accept-Language: uz-UZ,uz;q=0.9`. Без них — русский; неизвестный язык молча отдаёт русский.",
       "item": [
-        {
-          "name": "FAQ — список",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/faqs",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "faqs"
-              ],
-              "query": [
-                {
-                  "key": "network",
-                  "value": "",
-                  "description": "5g | cdma — вопросы одной сети",
-                  "disabled": true
-                },
-                {
-                  "key": "page_key",
-                  "value": "",
-                  "description": "Ключ страницы, если вопросы привязаны к разделу",
-                  "disabled": true
-                }
-              ]
-            },
-            "description": "Замена старому `/api/faqs-list`. Отдаёт вопросы с категориями, только опубликованные."
-          },
-          "response": []
-        },
         {
           "name": "Новости — список",
           "request": {
@@ -75,7 +33,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -90,12 +48,12 @@
                 {
                   "key": "network",
                   "value": "5g",
-                  "description": "5g | cdma"
+                  "description": "5g | cdma — новости одной сети (общие попадают в обе)"
                 },
                 {
                   "key": "category",
                   "value": "",
-                  "description": "ID категории",
+                  "description": "Категория: slug или id из /categories/news-categories",
                   "disabled": true
                 },
                 {
@@ -113,12 +71,85 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
-            "description": "Замена старому `/api/public/news`. Ключ X-API-Key больше не нужен, пагинация в `meta`."
+            "description": "Опубликованные новости, закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`."
           },
-          "response": []
+          "response": [
+            {
+              "name": "Первая страница, по две записи",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/news?network=5g&page=1&per_page=9",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "news"
+                  ],
+                  "query": [
+                    {
+                      "key": "network",
+                      "value": "5g",
+                      "description": "5g | cdma — новости одной сети (общие попадают в обе)"
+                    },
+                    {
+                      "key": "category",
+                      "value": "",
+                      "description": "Категория: slug или id из /categories/news-categories",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Страница, с 1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "9",
+                      "description": "Записей на странице, максимум 100"
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Поиск по заголовку",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Опубликованные новости, закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"slug\": \"texniceskie-raboty-16\",\n      \"title\": \"Технические работы\",\n      \"excerpt\": \"Уважаемые абоненты! С 20:00 03.08.2026 до 09:00 04.08.2026 будут недоступны сервисы самообслуживания и приём платежей. Приносим извинения за возможные неудобств…\",\n      \"preview_image\": null,\n      \"main_image\": null,\n      \"is_featured\": false,\n      \"published_at\": \"2026-08-02\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Сеть и покрытие\",\n        \"slug\": \"razvitie-seti\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    },\n    {\n      \"slug\": \"texniceskie-raboty-15\",\n      \"title\": \"Технические работы\",\n      \"excerpt\": \"Уважаемые абоненты! С 22:00 30.07.2026 до 04:00 31.07.2026 будут недоступны сервисы самообслуживания и приём платежей. Приносим извинения за возможные неудобств…\",\n      \"preview_image\": null,\n      \"main_image\": null,\n      \"is_featured\": false,\n      \"published_at\": \"2026-07-29\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Сеть и покрытие\",\n        \"slug\": \"razvitie-seti\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/v1/news?network=5g&per_page=2&page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/v1/news?network=5g&per_page=2&page=9\",\n    \"prev\": null,\n    \"next\": \"http://127.0.0.1:8000/api/v1/news?network=5g&per_page=2&page=2\"\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 9,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/v1/news?network=5g&per_page=2&page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      {\n        \"url\": \"http://127.0.0.1:8000/api/v1/news?network=5g&per_page=2&page=2\",\n        \"label\": \"2\",\n        \"page\": 2,\n        \"active\": false\n      }\n    ],\n    \"path\": \"http://127.0.0.1:8000/api/v1/news\",\n    \"per_page\": 2,\n    \"to\": 2,\n    \"total\": 17\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Новость — одна",
@@ -132,25 +163,110 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/news/kiberbezopasnost-kak-ne-stat-zertvoi-mosennikov",
+              "raw": "{{base_url}}/news/texniceskie-raboty-16",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "news",
-                "kiberbezopasnost-kak-ne-stat-zertvoi-mosennikov"
+                "texniceskie-raboty-16"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
-            "description": "Замена старому `/api/public/news/{news}`. В пути — slug новости."
+            "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404."
           },
-          "response": []
+          "response": [
+            {
+              "name": "Новость",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/news/texniceskie-raboty-16",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "news",
+                    "texniceskie-raboty-16"
+                  ]
+                },
+                "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"slug\": \"texniceskie-raboty-16\",\n    \"title\": \"Технические работы\",\n    \"excerpt\": \"Уважаемые абоненты! С 20:00 03.08.2026 до 09:00 04.08.2026 будут недоступны сервисы самообслуживания и приём платежей. Приносим извинения за возможные неудобства и благодарим за понимание.\",\n    \"content\": \"<p><span>Уважаемые абоненты!</span><br><span>С 20:00 03.08.2026 до 09:00 04.08.2026 будут недоступны сервисы самообслуживания и приём платежей.</span><br><span>Приносим извинения за возможные неудобства и благодарим за п…\",\n    \"preview_image\": null,\n    \"main_image\": null,\n    \"is_featured\": false,\n    \"published_at\": \"2026-08-02\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Сеть и покрытие\",\n      \"slug\": \"razvitie-seti\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    }\n  }\n}"
+            },
+            {
+              "name": "Нет такой новости",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/news/texniceskie-raboty-16",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "news",
+                    "texniceskie-raboty-16"
+                  ]
+                },
+                "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}"
+            }
+          ]
         },
         {
-          "name": "Зоны покрытия — список слоёв",
+          "name": "Категории новостей",
           "request": {
             "method": "GET",
             "header": [
@@ -161,7 +277,271 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/news-categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "news-categories"
+              ],
+              "query": [
+                {
+                  "key": "network",
+                  "value": "",
+                  "description": "5g | cdma — категории одной сети",
+                  "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Для фильтра `category` у списка новостей. `network` у категории — какой сети она принадлежит."
+          },
+          "response": [
+            {
+              "name": "Категории",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/categories/news-categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "news-categories"
+                  ],
+                  "query": [
+                    {
+                      "key": "network",
+                      "value": "",
+                      "description": "5g | cdma — категории одной сети",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Для фильтра `category` у списка новостей. `network` у категории — какой сети она принадлежит."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Сеть и покрытие\",\n      \"slug\": \"razvitie-seti\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Услуги и сервисные номера\",\n      \"slug\": \"produkty-i-uslugi\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Компания и акции\",\n      \"slug\": \"kompaniya\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "FAQ — список",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/faqs?page=faq",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "faqs"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "faq",
+                  "description": "faq | help | cdma — раздел сайта, к которому привязан вопрос"
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "Категория: slug или id из /categories/faq-categories",
+                  "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Опубликованные вопросы в порядке сортировки из админки. `answer` — HTML. Один вопрос может стоять на нескольких страницах сайта; `page=faq` — общий раздел «Вопросы и ответы», `help` — страница поддержки, `cdma` — лендинг CDMA. Без `page` — все."
+          },
+          "response": [
+            {
+              "name": "Раздел «Вопросы и ответы» (урезано до двух)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/faqs?page=faq",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "faqs"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "faq",
+                      "description": "faq | help | cdma — раздел сайта, к которому привязан вопрос"
+                    },
+                    {
+                      "key": "category",
+                      "value": "",
+                      "description": "Категория: slug или id из /categories/faq-categories",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Опубликованные вопросы в порядке сортировки из админки. `answer` — HTML. Один вопрос может стоять на нескольких страницах сайта; `page=faq` — общий раздел «Вопросы и ответы», `help` — страница поддержки, `cdma` — лендинг CDMA. Без `page` — все."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"question\": \"Нужен ли специальный смартфон для мобильной связи 5G SA?\",\n      \"answer\": \"<p>Да. Для работы в сети необходим смартфон с поддержкой стандарта 5G SA и совместимых диапазонов частот с актуальной прошивкой. Список проверенных устройств регулярно обновляется на нашем сайте — рекомендуем проверить совместимость вашего устройства перед подключением.</p><p><a href=\\\"/ru/devices\\\">Совместимость устройств</a></p>\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Подключение\",\n        \"slug\": \"podklyuchenie\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    },\n    {\n      \"question\": \"Можно ли использовать eSIM?\",\n      \"answer\": \"<p>Да, сеть Perfectum 5G SA поддерживает eSIM. Для активации необходимо, чтобы ваш смартфон поддерживал eSIM. Оформить eSIM можно в офисах продаж Perfectum, через приложение или личный кабинет на сайте.</p>\",\n      \"category\": {\n        \"id\": 5,\n        \"name\": \"SIM и eSIM\",\n        \"slug\": \"sim-i-esim\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Категории FAQ",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/faq-categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "faq-categories"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Для фильтра `category` у списка FAQ."
+          },
+          "response": [
+            {
+              "name": "Категории",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/categories/faq-categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "faq-categories"
+                  ]
+                },
+                "description": "Для фильтра `category` у списка FAQ."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Подключение\",\n      \"slug\": \"podklyuchenie\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Мобильная связь\",\n      \"slug\": \"mobilnaya-svyaz\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Домашний интернет\",\n      \"slug\": \"domashniy-internet\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Тарифы и оплата\",\n      \"slug\": \"tarify-i-oplata\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 5,\n      \"name\": \"SIM и eSIM\",\n      \"slug\": \"sim-i-esim\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Техническая поддержка\",\n      \"slug\": \"tekhnicheskaya-podderzhka\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Зона покрытия — слои",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -171,14 +551,60 @@
               ],
               "path": [
                 "coverage"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
-            "description": "Замена старому `/api/coverage_area_list`. Отдаёт слои (5g, 4g, voice), их цвет, число контуров, ссылку на GeoJSON и города с координатами."
+            "description": "Слои карты: `key` (5g, 4g, voice), название, цвет, число контуров и `url` на GeoJSON слоя. `cities` — областные центры с координатами `[lat, lng]` для позиционирования карты."
           },
-          "response": []
+          "response": [
+            {
+              "name": "Слои и города",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/coverage",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "coverage"
+                  ]
+                },
+                "description": "Слои карты: `key` (5g, 4g, voice), название, цвет, число контуров и `url` на GeoJSON слоя. `cities` — областные центры с координатами `[lat, lng]` для позиционирования карты."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key\": \"5g\",\n      \"name\": \"5G Standalone\",\n      \"color\": \"#e60000\",\n      \"features\": 1,\n      \"url\": \"http://127.0.0.1:8000/api/v1/coverage/5g\"\n    }\n  ],\n  \"cities\": [\n    {\n      \"id\": 1,\n      \"name\": \"г. Ташкент\",\n      \"center\": [\n        41.2995,\n        69.2401\n      ]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Ташкентская область\",\n      \"center\": [\n        41.0167,\n        69.35\n      ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Андижанская область\",\n      \"center\": [\n        40.7821,\n        72.3442\n      ]\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Бухарская область\",\n      \"center\": [\n        39.7681,\n        64.4556\n      ]\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Джизакская область\",\n      \"center\": [\n        40.1158,\n        67.8422\n      ]\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Кашкадарьинская область\",\n      \"center\": [\n        38.8606,\n        65.7847\n      ]\n    },\n    {\n      \"id\": 7,\n      \"name\": \"Навоийская область\",\n      \"center\": [\n        40.0844,\n        65.3792\n      ]\n    },\n    {\n      \"id\": 8,\n      \"name\": \"Наманганская область\",\n      \"center\": [\n        40.9983,\n        71.6726\n      ]\n    },\n    {\n      \"id\": 9,\n      \"name\": \"Самаркандская область\",\n      \"center\": [\n        39.6542,\n        66.9597\n      ]\n    },\n    {\n      \"id\": 10,\n      \"name\": \"Сурхандарьинская область\",\n      \"center\": [\n        37.2242,\n        67.2783\n      ]\n    },\n    {\n      \"id\": 11,\n      \"name\": \"Сырдарьинская область\",\n      \"center\": [\n        40.4897,\n        68.7842\n      ]\n    },\n    {\n      \"id\": 12,\n      \"name\": \"Ферганская область\",\n      \"center\": [\n        40.3864,\n        71.7864\n      ]\n    },\n    {\n      \"id\": 13,\n      \"name\": \"Хорезмская область\",\n      \"center\": [\n        41.55,\n        60.6314\n      ]\n    },\n    {\n      \"id\": 14,\n      \"name\": \"Республика Каракалпакстан\",\n      \"center\": [\n        42.4531,\n        59.6103\n      ]\n    }\n  ]\n}"
+            }
+          ]
         },
         {
-          "name": "Зоны покрытия — GeoJSON слоя",
+          "name": "Зона покрытия — GeoJSON слоя",
           "request": {
             "method": "GET",
             "header": [
@@ -189,7 +615,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -200,47 +626,96 @@
               "path": [
                 "coverage",
                 "5g"
-              ]
-            },
-            "description": "GeoJSON одного слоя. ZIP с шейпфайлом разбирается при загрузке в админке, наружу идёт готовая геометрия."
-          },
-          "response": []
-        },
-        {
-          "name": "Документы — группы и файлы по языкам",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/documents",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "documents"
               ],
               "query": [
                 {
-                  "key": "locale",
-                  "value": "uz",
-                  "description": "Язык, на который смотрит url документа",
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
                   "disabled": true
                 }
               ]
             },
-            "description": "Документы по группам: каждая группа — категория из админки (`id`, `name`), внутри `documents` с полями `id`, `name`, `url`, `size` и `files` — по одному файлу на язык (`language`, `url`, `size`). `url` документа указывает на файл текущего языка (`X-Locale` или `?locale=ru`), с откатом на русский и дальше на первый заполненный. Документ, файлы которого не лежат на диске, в ответ не попадает. Некатегоризованные документы идут последней группой с `id: null`. Замена старому `/api/public/legal-documents`."
+            "description": "Готовый GeoJSON FeatureCollection в WGS84 (координаты `[lng, lat]`). Слой без загруженного файла или с неизвестным ключом — 404. Ответ большой (мегабайты), кэшируйте на стороне приложения."
           },
-          "response": []
+          "response": [
+            {
+              "name": "Слой 5G (урезано до одного контура)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/coverage/5g",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "coverage",
+                    "5g"
+                  ]
+                },
+                "description": "Готовый GeoJSON FeatureCollection в WGS84 (координаты `[lng, lat]`). Слой без загруженного файла или с неизвестным ключом — 404. Ответ большой (мегабайты), кэшируйте на стороне приложения."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {},\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                69.657706,\n                40.797342\n              ],\n              [\n                69.657942,\n                40.797329\n              ],\n              [\n                69.65796,\n                40.797508\n              ],\n              [\n                69.657724,\n                40.797521\n              ]\n            ]\n          ]\n        ]\n      }\n    }\n  ]\n}"
+            },
+            {
+              "name": "Нет такого слоя",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-Locale",
+                    "value": "{{locale}}",
+                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/coverage/5g",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "coverage",
+                    "5g"
+                  ]
+                },
+                "description": "Готовый GeoJSON FeatureCollection в WGS84 (координаты `[lng, lat]`). Слой без загруженного файла или с неизвестным ключом — 404. Ответ большой (мегабайты), кэшируйте на стороне приложения."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No query results for model [App\\\\Models\\\\CoverageLayer].\"\n}"
+            }
+          ]
         }
       ]
     },
@@ -259,7 +734,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -269,6 +744,14 @@
               ],
               "path": [
                 "site"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Меню, настройки, соцсети, переводы — всё, что фронт берёт один раз."
@@ -287,7 +770,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -297,6 +780,14 @@
               ],
               "path": [
                 "metrics"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Счётчики для главной."
@@ -315,7 +806,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -325,6 +816,14 @@
               ],
               "path": [
                 "redirects"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Старые адреса и их новые места."
@@ -343,7 +842,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -354,6 +853,14 @@
               "path": [
                 "blocks",
                 "home"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Контент-блоки страницы: home, cdma, coverage_area и т. д."
@@ -372,7 +879,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -383,6 +890,14 @@
               "path": [
                 "pages",
                 "ekstrennye-operativnye-i-servisnye-uslugi"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Страница из админки по slug."
@@ -401,7 +916,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -418,6 +933,12 @@
                   "key": "network",
                   "value": "",
                   "description": "5g | cdma",
+                  "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
                   "disabled": true
                 }
               ]
@@ -443,7 +964,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -475,6 +996,12 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -494,7 +1021,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -505,6 +1032,14 @@
               "path": [
                 "news",
                 "{slug}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": ""
@@ -523,7 +1058,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -555,6 +1090,12 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -574,7 +1115,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -585,6 +1126,14 @@
               "path": [
                 "actions",
                 "{slug}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": ""
@@ -608,7 +1157,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -630,6 +1179,12 @@
                   "value": "",
                   "description": "ID категории",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -649,7 +1204,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -660,6 +1215,14 @@
               "path": [
                 "tariffs",
                 "{slug}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": ""
@@ -678,7 +1241,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -689,6 +1252,14 @@
               "path": [
                 "tariffs",
                 "files"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "PDF с описанием тарифов."
@@ -707,7 +1278,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -739,6 +1310,12 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -758,7 +1335,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -769,6 +1346,14 @@
               "path": [
                 "services",
                 "{slug}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": ""
@@ -792,7 +1377,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -831,6 +1416,12 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -850,7 +1441,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -861,6 +1452,14 @@
               "path": [
                 "devices",
                 "tozed-zlt-x25-max2"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Карточка модели: характеристики, бренд и рассрочка партнёров."
@@ -884,7 +1483,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -920,7 +1519,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -949,6 +1548,12 @@
                   "value": "",
                   "description": "ID региона",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -968,7 +1573,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -995,6 +1600,12 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -1014,7 +1625,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -1025,6 +1636,14 @@
               "path": [
                 "vacancies",
                 "{slug}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": ""
@@ -1043,7 +1662,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -1070,6 +1689,12 @@
                   "value": "",
                   "description": "Поиск по заголовку",
                   "disabled": true
+                },
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
                 }
               ]
             },
@@ -1089,7 +1714,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -1100,6 +1725,14 @@
               "path": [
                 "tenders",
                 "{slug}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": ""
@@ -1123,7 +1756,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               },
               {
                 "key": "Content-Type",
@@ -1164,7 +1797,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               }
             ],
             "url": {
@@ -1175,6 +1808,14 @@
               "path": [
                 "cdma-numbers",
                 "filters"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{locale}}",
+                  "description": "ru | uz — вместо заголовка X-Locale",
+                  "disabled": true
+                }
               ]
             },
             "description": "Префиксы и цены для поиска свободных номеров."
@@ -1193,7 +1834,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               },
               {
                 "key": "Content-Type",
@@ -1234,7 +1875,7 @@
               {
                 "key": "X-Locale",
                 "value": "{{locale}}",
-                "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
               },
               {
                 "key": "Content-Type",

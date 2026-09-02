@@ -67,6 +67,29 @@ class CoverageLayer extends Model
     }
 
     /**
+     * The array cast flattens the empty `properties` object of every feature
+     * into `[]`, which strict GeoJSON readers refuse — the mobile map SDKs
+     * among them. It is restored on the way out, so the site and the app
+     * read the same valid collection.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function featureCollection(): ?array
+    {
+        if ($this->geojson === null) {
+            return null;
+        }
+
+        return [
+            ...$this->geojson,
+            'features' => array_map(
+                fn (array $feature): array => [...$feature, 'properties' => (object) ($feature['properties'] ?? [])],
+                $this->geojson['features'] ?? [],
+            ),
+        ];
+    }
+
+    /**
      * @return array<string, mixed>|null
      */
     private static function read(self $layer): ?array

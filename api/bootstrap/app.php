@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\HandleApiCors;
+use App\Http\Middleware\RedirectAdminSubdomain;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->api(append: [
+        $middleware->api(prepend: [
+            RedirectAdminSubdomain::class,
+        ], append: [
             SetLocale::class,
         ]);
 

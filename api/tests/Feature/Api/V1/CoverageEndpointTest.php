@@ -84,6 +84,24 @@ it('serves the collection of one layer', function (): void {
         ->assertJsonCount(1, 'features');
 });
 
+/**
+ * A feature's `properties` must be a JSON object; the array cast turns an
+ * empty one into `[]`, which the map SDKs on the phones reject outright.
+ */
+it('serves every feature with an object for its properties', function (): void {
+    coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [
+        ['type' => 'Feature', 'properties' => [], 'geometry' => ['type' => 'Point', 'coordinates' => [69.24, 41.3]]],
+        ['type' => 'Feature', 'geometry' => ['type' => 'Point', 'coordinates' => [69.25, 41.31]]],
+        ['type' => 'Feature', 'properties' => ['name' => 'Ташкент'], 'geometry' => null],
+    ]]]);
+
+    $response = $this->getJson(route('api.v1.coverage.show', '5g'))->assertOk();
+
+    expect(substr_count($response->getContent(), '"properties":{}'))->toBe(2)
+        ->and($response->json('features.2.properties.name'))->toBe('Ташкент')
+        ->and($response->json('features.0.geometry.coordinates'))->toBe([69.24, 41.3]);
+});
+
 it('has nothing to draw for an unknown or unread layer', function (): void {
     coverageLayer(['key' => 'empty']);
 

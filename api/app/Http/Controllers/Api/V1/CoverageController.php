@@ -47,7 +47,7 @@ class CoverageController
     {
         $found = self::available()->where('key', $layer)->firstOrFail();
 
-        return response()->json($found->geojson);
+        return response()->json($found->featureCollection());
     }
 
     private static function available(): Builder
