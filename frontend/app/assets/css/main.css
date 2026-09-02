@@ -95,7 +95,10 @@ sup {
   font-size: 17px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.75);
-  overflow-wrap: anywhere;
+  /* break-word rather than anywhere: both break a long word that would
+     overflow, but anywhere also reports one character as the minimum width,
+     which collapses table cells and captions. */
+  overflow-wrap: break-word;
 }
 
 .rich > :first-child {
@@ -222,6 +225,14 @@ sup {
   display: table;
   width: 100%;
   border-collapse: collapse;
+}
+
+/* the scroll container above turns the table into a block, and a caption
+   left as a table-caption inside one wraps itself in an anonymous table and
+   shrinks to a single column of letters. */
+.rich table > caption {
+  display: block;
+  width: 100%;
 }
 
 .rich th,

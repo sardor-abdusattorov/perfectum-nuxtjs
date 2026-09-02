@@ -11,7 +11,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class NewsForm
@@ -25,12 +24,16 @@ class NewsForm
                     ->schema([
                         Fields::network()
                             ->options(collect(Network::getOptions())->except(Network::Both->value)->all())
-                            ->default(Network::FiveG->value)
-                            ->live(),
+                            ->default(Network::FiveG->value),
 
+                        /**
+                         * Both feeds filter by category chips — /news for 5G and
+                         * /cdma/news for CDMA — so a news item of either network
+                         * needs one. Without it the record shows under «Все» and
+                         * disappears the moment a visitor picks a chip.
+                         */
                         Fields::category(NewsCategory::class)
-                            ->visible(fn (Get $get): bool => $get('network') !== Network::Cdma->value)
-                            ->required(fn (Get $get): bool => $get('network') !== Network::Cdma->value),
+                            ->required(),
 
                         TranslatableTabs::make('translations')
                             ->schema([

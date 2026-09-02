@@ -250,7 +250,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       <div class="container">
           <div class="cdma-section__head">
               <h2 class="cdma-section__title">{{ t('cdma.news_title') }}</h2>
-              <NuxtLink class="cdma-section__all" :to="localePath('/news')">
+              <NuxtLink class="cdma-section__all" :to="localePath('/cdma/news')">
                   {{ t('cdma.all_news') }}
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"

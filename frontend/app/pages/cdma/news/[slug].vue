@@ -25,7 +25,7 @@ useSeo({ title: () => item.value?.title ?? '' })
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <NuxtLink class="cdma-crumbs__link" :to="localePath('/cdma') + '#cdma-news'">{{ t('cdma.news_title') }}</NuxtLink>
+          <NuxtLink class="cdma-crumbs__link" :to="localePath('/cdma/news')">{{ t('cdma.news_title') }}</NuxtLink>
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>

@@ -13,7 +13,7 @@ const PAGES = [
   '', '/tariffs', '/tariffs/archive', '/services', '/devices', '/news', '/actions',
   '/faq', '/contacts', '/about-company', '/documents', '/offices', '/coverage-area',
   '/careers', '/procurement', '/numbers', '/help', '/help/contact', '/help/numbers',
-  '/cdma', '/cdma/connect', '/cdma/dealers',
+  '/cdma', '/cdma/connect', '/cdma/dealers', '/cdma/news',
 ]
 
 const COLLECTIONS = [
