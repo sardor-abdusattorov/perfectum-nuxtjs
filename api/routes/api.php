@@ -29,7 +29,15 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('faqs', FaqController::class)->name('faqs');
     Route::get('documents', DocumentController::class)->name('documents');
     Route::get('coverage', [CoverageController::class, 'index'])->name('coverage');
-    Route::get('coverage/{layer}', [CoverageController::class, 'show'])->name('coverage.show');
+    /**
+     * A layer is megabytes of geometry that changes when the network team
+     * uploads a new export — a few times a year. It carries no translated
+     * field, so one cached copy serves every reader; the validator lets a
+     * phone or a proxy re-ask with its etag and get 304 instead of the file.
+     */
+    Route::get('coverage/{layer}', [CoverageController::class, 'show'])
+        ->middleware('cache.headers:public;max_age=3600;etag')
+        ->name('coverage.show');
     Route::get('offices', OfficeController::class)->name('offices');
     Route::post('numbers', NumberController::class)->middleware('throttle:upstream')->name('numbers');
     Route::get('cdma-numbers/filters', [CdmaNumberController::class, 'filters'])->name('cdma-numbers.filters');

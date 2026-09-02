@@ -102,6 +102,26 @@ it('serves every feature with an object for its properties', function (): void {
         ->and($response->json('features.0.geometry.coordinates'))->toBe([69.24, 41.3]);
 });
 
+/**
+ * The layer is the heaviest thing the API serves and the only one that never
+ * varies by language, so a reader that already holds it re-asks with its etag
+ * rather than downloading the geometry again.
+ */
+it('lets a reader revalidate a layer instead of downloading it twice', function (): void {
+    coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
+
+    $first = $this->getJson(route('api.v1.coverage.show', '5g'))->assertOk();
+
+    expect($first->headers->get('Cache-Control'))->toContain('public')
+        ->and($first->headers->get('Cache-Control'))->toContain('max-age=3600')
+        ->and($etag = $first->headers->get('ETag'))->not->toBeEmpty();
+
+    $this->withHeader('If-None-Match', $etag)
+        ->getJson(route('api.v1.coverage.show', '5g'))
+        ->assertStatus(304)
+        ->assertNoContent(304);
+});
+
 it('has nothing to draw for an unknown or unread layer', function (): void {
     coverageLayer(['key' => 'empty']);
 
