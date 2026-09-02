@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Perfectum API v1",
-    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: любой из четырёх способов, приоритет сверху вниз — `?locale=uz`, `?lang=uz`, заголовок `X-Locale: uz`, заголовок `Accept-Language: uz-UZ,uz;q=0.9`. Без них — русский; неизвестный язык молча отдаёт русский.\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nПапка «Публичные ручки» — то, что читает мобильное приложение: новости, FAQ, зона покрытия и их категории. Ключ не нужен, лимит 600 запросов в минуту.",
+    "description": "Публичный API сайта Perfectum. Все ответы — JSON, только чтение, кроме заявок и поиска номеров.\n\nЯзык: любой из четырёх способов, приоритет сверху вниз — `?locale=uz`, `?lang=uz`, заголовок `X-Locale: uz`, заголовок `Accept-Language: uz-UZ,uz;q=0.9`. Без них — русский; неизвестный язык молча отдаёт русский.\nПеременные коллекции: `base_url` — адрес API, `locale` — язык ответа.\n\nПапка «Публичные ручки» — то, что читает мобильное приложение: новости, FAQ и категории через POST с JSON-телом, зона покрытия через GET с ETag. Ключ не нужен, лимит 600 запросов в минуту.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -19,124 +19,76 @@
   "item": [
     {
       "name": "Публичные ручки: новости, FAQ, зона покрытия",
-      "description": "То, что внешние потребители (мобильное приложение) читают с сайта. Без ключа, без авторизации, только GET. Лимит 600 запросов в минуту с одного адреса.\n\nЯзык: любой из четырёх способов, приоритет сверху вниз — `?locale=uz`, `?lang=uz`, заголовок `X-Locale: uz`, заголовок `Accept-Language: uz-UZ,uz;q=0.9`. Без них — русский; неизвестный язык молча отдаёт русский.",
+      "description": "То, что читает мобильное приложение. Новости, FAQ и категории — POST с JSON-телом (те же адреса отвечают и на GET со строкой запроса, так ходит сайт). Зона покрытия — только GET: слой весит мегабайты и кэшируется по ETag, у POST этого кэша нет. Без ключа, без авторизации. Лимит 600 запросов в минуту с одного адреса.\n\nЯзык: в теле `\"lang\": \"uz\"` (или `locale`), либо заголовок `X-Locale: uz`, либо `Accept-Language`; приоритет в этом порядке. Без них — русский; неизвестный язык молча отдаёт русский.",
       "item": [
         {
           "name": "Новости — список",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               },
               {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/news?network=5g&page=1&per_page=9",
+              "raw": "{{base_url}}/news",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "news"
-              ],
-              "query": [
-                {
-                  "key": "network",
-                  "value": "5g",
-                  "description": "5g | cdma — новости одной сети (общие попадают в обе)"
-                },
-                {
-                  "key": "category",
-                  "value": "",
-                  "description": "Категория: slug или id из /categories/news-categories",
-                  "disabled": true
-                },
-                {
-                  "key": "page",
-                  "value": "1",
-                  "description": "Страница, с 1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "9",
-                  "description": "Записей на странице, максимум 100"
-                },
-                {
-                  "key": "search",
-                  "value": "",
-                  "description": "Поиск по заголовку",
-                  "disabled": true
-                },
-                {
-                  "key": "lang",
-                  "value": "{{locale}}",
-                  "description": "ru | uz — вместо заголовка X-Locale",
-                  "disabled": true
-                }
               ]
             },
-            "description": "Опубликованные новости, закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`."
+            "description": "Опубликованные новости, закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`.\n\nПараметры — в JSON-теле:\n- `network` — 5g | cdma — новости одной сети (общие попадают в обе)\n- `category` — Категория: slug или id из /categories/news-categories\n- `page` — Страница, с 1\n- `per_page` — Записей на странице, максимум 100\n- `search` — Поиск по заголовку\n- `lang` — ru | uz — вместо заголовка X-Locale\n\nТот же адрес отвечает и на GET с теми же параметрами в строке запроса — так ходит сайт; приложению — POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lang\": \"{{locale}}\",\n  \"network\": \"5g\",\n  \"page\": 1,\n  \"per_page\": 9\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
               "name": "Первая страница, по две записи",
               "originalRequest": {
-                "method": "GET",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   },
                   {
-                    "key": "X-Locale",
-                    "value": "{{locale}}",
-                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/news?network=5g&page=1&per_page=9",
+                  "raw": "{{base_url}}/news",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "news"
-                  ],
-                  "query": [
-                    {
-                      "key": "network",
-                      "value": "5g",
-                      "description": "5g | cdma — новости одной сети (общие попадают в обе)"
-                    },
-                    {
-                      "key": "category",
-                      "value": "",
-                      "description": "Категория: slug или id из /categories/news-categories",
-                      "disabled": true
-                    },
-                    {
-                      "key": "page",
-                      "value": "1",
-                      "description": "Страница, с 1"
-                    },
-                    {
-                      "key": "per_page",
-                      "value": "9",
-                      "description": "Записей на странице, максимум 100"
-                    },
-                    {
-                      "key": "search",
-                      "value": "",
-                      "description": "Поиск по заголовку",
-                      "disabled": true
-                    }
                   ]
                 },
-                "description": "Опубликованные новости, закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`."
+                "description": "Опубликованные новости, закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lang\": \"{{locale}}\",\n  \"network\": \"5g\",\n  \"page\": 1,\n  \"per_page\": 9\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "status": "OK",
               "code": 200,
@@ -154,16 +106,15 @@
         {
           "name": "Новость — одна",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               },
               {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -174,32 +125,32 @@
               "path": [
                 "news",
                 "texniceskie-raboty-16"
-              ],
-              "query": [
-                {
-                  "key": "lang",
-                  "value": "{{locale}}",
-                  "description": "ru | uz — вместо заголовка X-Locale",
-                  "disabled": true
-                }
               ]
             },
-            "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404."
+            "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404.\n\nПараметры — в JSON-теле:\n- `lang` — ru | uz — вместо заголовка X-Locale\n\nТот же адрес отвечает и на GET с теми же параметрами в строке запроса — так ходит сайт; приложению — POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
               "name": "Новость",
               "originalRequest": {
-                "method": "GET",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   },
                   {
-                    "key": "X-Locale",
-                    "value": "{{locale}}",
-                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
                 "url": {
@@ -212,7 +163,16 @@
                     "texniceskie-raboty-16"
                   ]
                 },
-                "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404."
+                "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "status": "OK",
               "code": 200,
@@ -228,16 +188,15 @@
             {
               "name": "Нет такой новости",
               "originalRequest": {
-                "method": "GET",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   },
                   {
-                    "key": "X-Locale",
-                    "value": "{{locale}}",
-                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
                 "url": {
@@ -250,7 +209,16 @@
                     "texniceskie-raboty-16"
                   ]
                 },
-                "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404."
+                "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML из редактора) и `main_image`. Неопубликованная или несуществующая — 404.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "status": "Not Found",
               "code": 404,
@@ -268,16 +236,15 @@
         {
           "name": "Категории новостей",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               },
               {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -288,38 +255,32 @@
               "path": [
                 "categories",
                 "news-categories"
-              ],
-              "query": [
-                {
-                  "key": "network",
-                  "value": "",
-                  "description": "5g | cdma — категории одной сети",
-                  "disabled": true
-                },
-                {
-                  "key": "lang",
-                  "value": "{{locale}}",
-                  "description": "ru | uz — вместо заголовка X-Locale",
-                  "disabled": true
-                }
               ]
             },
-            "description": "Для фильтра `category` у списка новостей. `network` у категории — какой сети она принадлежит."
+            "description": "Для фильтра `category` у списка новостей. `network` у категории — какой сети она принадлежит.\n\nПараметры — в JSON-теле:\n- `network` — 5g | cdma — категории одной сети\n- `lang` — ru | uz — вместо заголовка X-Locale\n\nТот же адрес отвечает и на GET с теми же параметрами в строке запроса — так ходит сайт; приложению — POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
               "name": "Категории",
               "originalRequest": {
-                "method": "GET",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   },
                   {
-                    "key": "X-Locale",
-                    "value": "{{locale}}",
-                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
                 "url": {
@@ -330,17 +291,18 @@
                   "path": [
                     "categories",
                     "news-categories"
-                  ],
-                  "query": [
-                    {
-                      "key": "network",
-                      "value": "",
-                      "description": "5g | cdma — категории одной сети",
-                      "disabled": true
-                    }
                   ]
                 },
-                "description": "Для фильтра `category` у списка новостей. `network` у категории — какой сети она принадлежит."
+                "description": "Для фильтра `category` у списка новостей. `network` у категории — какой сети она принадлежит.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "status": "OK",
               "code": 200,
@@ -358,87 +320,71 @@
         {
           "name": "FAQ — список",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               },
               {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/faqs?page=faq",
+              "raw": "{{base_url}}/faqs",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "faqs"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "faq",
-                  "description": "faq | help | cdma — раздел сайта, к которому привязан вопрос"
-                },
-                {
-                  "key": "category",
-                  "value": "",
-                  "description": "Категория: slug или id из /categories/faq-categories",
-                  "disabled": true
-                },
-                {
-                  "key": "lang",
-                  "value": "{{locale}}",
-                  "description": "ru | uz — вместо заголовка X-Locale",
-                  "disabled": true
-                }
               ]
             },
-            "description": "Опубликованные вопросы в порядке сортировки из админки. `answer` — HTML. Один вопрос может стоять на нескольких страницах сайта; `page=faq` — общий раздел «Вопросы и ответы», `help` — страница поддержки, `cdma` — лендинг CDMA. Без `page` — все."
+            "description": "Опубликованные вопросы в порядке сортировки из админки. `answer` — HTML. Один вопрос может стоять на нескольких страницах сайта; `page=faq` — общий раздел «Вопросы и ответы», `help` — страница поддержки, `cdma` — лендинг CDMA. Без `page` — все.\n\nПараметры — в JSON-теле:\n- `page` — faq | help | cdma — раздел сайта, к которому привязан вопрос\n- `category` — Категория: slug или id из /categories/faq-categories\n- `lang` — ru | uz — вместо заголовка X-Locale\n\nТот же адрес отвечает и на GET с теми же параметрами в строке запроса — так ходит сайт; приложению — POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lang\": \"{{locale}}\",\n  \"page\": \"faq\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
               "name": "Раздел «Вопросы и ответы» (урезано до двух)",
               "originalRequest": {
-                "method": "GET",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   },
                   {
-                    "key": "X-Locale",
-                    "value": "{{locale}}",
-                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
                 "url": {
-                  "raw": "{{base_url}}/faqs?page=faq",
+                  "raw": "{{base_url}}/faqs",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "faqs"
-                  ],
-                  "query": [
-                    {
-                      "key": "page",
-                      "value": "faq",
-                      "description": "faq | help | cdma — раздел сайта, к которому привязан вопрос"
-                    },
-                    {
-                      "key": "category",
-                      "value": "",
-                      "description": "Категория: slug или id из /categories/faq-categories",
-                      "disabled": true
-                    }
                   ]
                 },
-                "description": "Опубликованные вопросы в порядке сортировки из админки. `answer` — HTML. Один вопрос может стоять на нескольких страницах сайта; `page=faq` — общий раздел «Вопросы и ответы», `help` — страница поддержки, `cdma` — лендинг CDMA. Без `page` — все."
+                "description": "Опубликованные вопросы в порядке сортировки из админки. `answer` — HTML. Один вопрос может стоять на нескольких страницах сайта; `page=faq` — общий раздел «Вопросы и ответы», `help` — страница поддержки, `cdma` — лендинг CDMA. Без `page` — все.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lang\": \"{{locale}}\",\n  \"page\": \"faq\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "status": "OK",
               "code": 200,
@@ -456,16 +402,15 @@
         {
           "name": "Категории FAQ",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               },
               {
-                "key": "X-Locale",
-                "value": "{{locale}}",
-                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "url": {
@@ -476,32 +421,32 @@
               "path": [
                 "categories",
                 "faq-categories"
-              ],
-              "query": [
-                {
-                  "key": "lang",
-                  "value": "{{locale}}",
-                  "description": "ru | uz — вместо заголовка X-Locale",
-                  "disabled": true
-                }
               ]
             },
-            "description": "Для фильтра `category` у списка FAQ."
+            "description": "Для фильтра `category` у списка FAQ.\n\nПараметры — в JSON-теле:\n- `lang` — ru | uz — вместо заголовка X-Locale\n\nТот же адрес отвечает и на GET с теми же параметрами в строке запроса — так ходит сайт; приложению — POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
               "name": "Категории",
               "originalRequest": {
-                "method": "GET",
+                "method": "POST",
                 "header": [
                   {
                     "key": "Accept",
                     "value": "application/json"
                   },
                   {
-                    "key": "X-Locale",
-                    "value": "{{locale}}",
-                    "description": "ru | uz. Можно и ?locale=ru в строке запроса"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
                 "url": {
@@ -514,7 +459,16 @@
                     "faq-categories"
                   ]
                 },
-                "description": "Для фильтра `category` у списка FAQ."
+                "description": "Для фильтра `category` у списка FAQ.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lang\": \"{{locale}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
               },
               "status": "OK",
               "code": 200,

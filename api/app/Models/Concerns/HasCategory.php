@@ -44,7 +44,7 @@ trait HasCategory
      */
     public function scopeInCategory(Builder $query, mixed $category, string $relation = 'category'): Builder
     {
-        if (blank($category)) {
+        if (blank($category) || ! is_scalar($category)) {
             return $query;
         }
 

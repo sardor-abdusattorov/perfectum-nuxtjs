@@ -25,8 +25,14 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('site', SiteController::class)->name('site');
     Route::get('metrics', MetricsController::class)->name('metrics');
-    Route::get('categories/{taxonomy}', CategoryController::class)->name('categories');
-    Route::get('faqs', FaqController::class)->name('faqs');
+    /**
+     * The mobile app reads news, questions and categories with POST and a
+     * JSON body; the site reads the same rows with GET and a query string.
+     * One route answers both — the controllers read parameters from either
+     * place — so the two clients can never drift apart on what a filter means.
+     */
+    Route::match(['GET', 'POST'], 'categories/{taxonomy}', CategoryController::class)->name('categories');
+    Route::match(['GET', 'POST'], 'faqs', FaqController::class)->name('faqs');
     Route::get('documents', DocumentController::class)->name('documents');
     Route::get('coverage', [CoverageController::class, 'index'])->name('coverage');
     /**
@@ -52,8 +58,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('tariffs', [TariffController::class, 'index'])->name('tariffs.index');
     Route::get('tariffs/files', [TariffController::class, 'files'])->name('tariffs.files');
     Route::get('tariffs/{tariff}', [TariffController::class, 'show'])->name('tariffs.show');
-    Route::get('news', [NewsController::class, 'index'])->name('news.index');
-    Route::get('news/{news}', [NewsController::class, 'show'])->name('news.show');
+    Route::match(['GET', 'POST'], 'news', [NewsController::class, 'index'])->name('news.index');
+    Route::match(['GET', 'POST'], 'news/{news}', [NewsController::class, 'show'])->name('news.show');
     Route::get('actions', [ActionController::class, 'index'])->name('actions.index');
     Route::get('actions/{action}', [ActionController::class, 'show'])->name('actions.show');
     Route::get('vacancies', [VacancyController::class, 'index'])->name('vacancies.index');

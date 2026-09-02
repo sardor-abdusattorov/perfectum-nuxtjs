@@ -14,13 +14,20 @@ class FaqController
 {
     use ListsRecords;
 
+    /**
+     * `page` here names a section of the site, not a page number; a JSON body
+     * that sends a number where the query string sent a word is asking for
+     * nothing in particular and gets the whole list.
+     */
     public function __invoke(Request $request): JsonResponse
     {
+        $page = $request->input('page');
+
         $faqs = Faq::query()
             ->published()
             ->with('category')
-            ->onPage($request->query('page'))
-            ->inCategory($request->query('category'))
+            ->onPage(is_string($page) ? $page : null)
+            ->inCategory($request->input('category'))
             ->orderBy('sort')
             ->get();
 

@@ -26,6 +26,12 @@ it('keeps the scheme the visitor came with', function (): void {
         ->assertRedirect('https://perfectum.uz/api/v1/site');
 });
 
+it('sends a post on without letting the client turn it into a get', function (): void {
+    $this->postJson('https://admin.perfectum.uz/api/v1/news', ['lang' => 'uz'])
+        ->assertStatus(308)
+        ->assertRedirect('https://perfectum.uz/api/v1/news');
+});
+
 it('answers the api on the main domain as before', function (): void {
     $this->getJson('http://perfectum.uz/api/v1/site')->assertSuccessful();
 });
