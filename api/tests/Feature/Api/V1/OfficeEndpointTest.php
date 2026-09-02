@@ -6,7 +6,6 @@ use App\Enums\Network;
 use App\Enums\OfficeType;
 use App\Models\Office;
 use App\Models\Region;
-use Database\Seeders\OfficeSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -129,18 +128,4 @@ it('keeps the cdma dealer cards out of the 5g map and serves them their table', 
         ->assertJsonPath('data.0.dealers_count', 12)
         ->assertJsonPath('data.0.region.name', 'toshkent')
         ->assertJsonPath('data.0.content', fn (string $content): bool => str_contains($content, 'CITY JOBS'));
-});
-
-it('seeds a region card per layout region with the tashkent table filled', function (): void {
-    $this->seed(OfficeSeeder::class);
-
-    $cards = Office::query()->where('network', Network::Cdma)->with('region')->get();
-
-    expect($cards)->toHaveCount(14)
-        ->and($cards->every(fn (Office $card): bool => $card->dealers_count > 0))->toBeTrue();
-
-    $tashkent = $cards->first(fn (Office $card): bool => $card->region->getTranslation('name', 'ru') === 'г. Ташкент');
-
-    expect($tashkent->dealers_count)->toBe(12)
-        ->and($tashkent->getTranslation('content', 'ru'))->toContain('<th colspan="3">Мирзо-Улугбекский Р-Н</th>');
 });

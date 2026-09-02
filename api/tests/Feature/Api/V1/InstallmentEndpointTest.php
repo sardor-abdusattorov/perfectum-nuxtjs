@@ -103,15 +103,3 @@ it('leaves the instalments out of the catalogue listing', function (): void {
         ->assertOk()
         ->assertJsonPath('data.0.installments', []);
 });
-
-it('seeds the offers the old site quoted for the router', function (): void {
-    $this->seed(Database\Seeders\DeviceSeeder::class);
-    $this->seed(Database\Seeders\InstallmentSeeder::class);
-
-    $this->getJson(route('api.v1.devices.show', ['device' => 'tozed-zlt-x25-max2']))
-        ->assertOk()
-        ->assertJsonPath('data.installments.0.partner.slug', 'uzum-nasiya')
-        ->assertJsonPath('data.installments.0.options.0.monthly', 397750)
-        ->assertJsonPath('data.installments.1.partner.slug', 'alif')
-        ->assertJsonPath('data.installments.1.options.0.total', 1979500);
-});

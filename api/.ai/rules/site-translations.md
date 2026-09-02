@@ -1,5 +1,5 @@
 ---
-globs: database/seeders/SiteTranslationSeeder.php, app/Models/SiteTranslation.php, app/Filament/Resources/SiteTranslations/**
+globs: database/seeders/**, app/Models/SiteTranslation.php, app/Filament/Resources/SiteTranslations/**
 ---
 
 # Site translations

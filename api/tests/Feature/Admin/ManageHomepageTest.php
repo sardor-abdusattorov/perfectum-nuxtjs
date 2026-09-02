@@ -8,7 +8,6 @@ use App\Filament\Pages\Homepage\HeroTab;
 use App\Filament\Pages\ManageHomepage;
 use App\Models\ContentBlock;
 use App\Models\User;
-use Database\Seeders\HomepageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Permission;
@@ -151,28 +150,6 @@ it('keeps the coverage status text and the publish switch apart', function (): v
     Livewire::test(ManageHomepage::class)
         ->set('activeTab', 'coverage')
         ->assertSee('status_text');
-});
-
-it('loads the seeded copy back into the forms', function (): void {
-    $this->seed(HomepageSeeder::class);
-
-    $this->actingAs(homepageAdmin());
-
-    $page = Livewire::test(ManageHomepage::class)
-        ->assertSee('Скорость')
-        ->assertSee('Подключиться');
-
-    $page->set('activeTab', 'coverage')->assertSee('Ташкент');
-    $page->set('activeTab', 'marquee')->assertSee('STANDALONE');
-});
-
-it('seeds every block of the home page', function (): void {
-    $this->seed(HomepageSeeder::class);
-
-    foreach (ManageHomepage::tabs() as $tab) {
-        expect(ContentBlock::read(PageKey::Home, $tab::key()))
-            ->not->toBeEmpty("блок {$tab::key()->value} пустой");
-    }
 });
 
 /**

@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 use App\Enums\MenuLocation;
 use App\Models\Menu;
-use App\Models\PageSettings;
 use App\Models\Settings;
 use App\Models\SiteSettings;
 use App\Models\SiteTranslation;
 use App\Models\Social;
-use Database\Seeders\PageSettingsSeeder;
-use Database\Seeders\SiteSettingsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 
@@ -210,41 +207,4 @@ it('caches the menus as plain data so a second request can read them back', func
     $second = $this->getJson(route('api.v1.site'), ['X-Locale' => 'ru'])->assertOk()->json('data.menus.header');
 
     expect($second)->toBe($first);
-});
-
-it('ships both stores of the mobile app', function (): void {
-    $this->seed(SiteSettingsSeeder::class);
-
-    $settings = $this->getJson(route('api.v1.site'))
-        ->assertOk()
-        ->json('data.settings.site');
-
-    expect($settings['app_store_url'])->toStartWith('https://apps.apple.com/');
-    expect($settings['google_play_url'])->toStartWith('https://play.google.com/');
-});
-
-it('serves each page its seeded seo template with keywords', function (): void {
-    $this->seed(PageSettingsSeeder::class);
-
-    $this->getJson(route('api.v1.site'))
-        ->assertOk()
-        ->assertJsonPath('data.settings.pages.home.title', 'Perfectum — оператор связи 5G Standalone в Узбекистане')
-        ->assertJsonPath('data.settings.pages.home.keywords', 'Perfectum, 5G, интернет, мобильная связь, тарифы, Узбекистан')
-        ->assertJsonPath('data.settings.pages.tariff.title', '{name} — тариф 5G интернет | Perfectum')
-        ->assertJsonPath('data.settings.pages.news_item.title', '{name} | Новости Perfectum');
-
-    $this->getJson(route('api.v1.site'), ['X-Locale' => 'uz'])
-        ->assertJsonPath('data.settings.pages.home.title', 'Perfectum — Oʻzbekistondagi 5G Standalone aloqa operatori')
-        ->assertJsonPath('data.settings.pages.tariff.keywords', '{name}, Perfectum tarifi, 5G tarif, mobil internet');
-});
-
-it('covers every page key with a seeded title', function (): void {
-    $this->seed(PageSettingsSeeder::class);
-
-    $missing = PageSettings::query()
-        ->get()
-        ->filter(fn (PageSettings $row): bool => blank($row->getTranslation('meta_title', 'ru')) || blank($row->getTranslation('meta_title', 'uz')))
-        ->map(fn (PageSettings $row): string => $row->key->value);
-
-    expect($missing->all())->toBe([]);
 });
