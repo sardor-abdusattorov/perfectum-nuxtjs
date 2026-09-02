@@ -8,6 +8,7 @@ use App\Models\CoverageLayer;
 use App\Models\Region;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CoverageController
 {
@@ -43,11 +44,26 @@ class CoverageController
         ]);
     }
 
-    public function show(string $layer): JsonResponse
+    /**
+     * The validator hashes the stored column rather than the rendered body:
+     * both answer «not modified» for the same layer, but the column is a
+     * string the query already carries, while the body costs a decode of six
+     * megabytes of geometry, a rebuild and an encode — as much as sending it.
+     * A timestamp would be cheaper still and wrong: two saves within the same
+     * second share one, and the reader would keep the layer it has.
+     */
+    public function show(Request $request, string $layer): JsonResponse
     {
         $found = self::available()->where('key', $layer)->firstOrFail();
 
-        return response()->json($found->featureCollection());
+        $response = new JsonResponse;
+        $response->setEtag(hash('xxh128', (string) $found->getRawOriginal('geojson')));
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
+        return $response->setData($found->featureCollection());
     }
 
     private static function available(): Builder

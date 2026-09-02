@@ -122,6 +122,39 @@ it('lets a reader revalidate a layer instead of downloading it twice', function 
         ->assertNoContent(304);
 });
 
+/**
+ * Answering «not modified» must not cost what sending the layer costs. The
+ * model throws on an attribute it was never given, so a layer whose geometry
+ * is dropped on the way out of the database would blow the endpoint up the
+ * moment it tried to assemble the collection — a 304 here proves it did not.
+ */
+it('answers not modified without reading the geometry', function (): void {
+    coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
+
+    $etag = $this->getJson(route('api.v1.coverage.show', '5g'))->assertOk()->headers->get('ETag');
+
+    CoverageLayer::retrieved(fn (CoverageLayer $found) => $found->offsetUnset('geojson'));
+
+    $this->withHeader('If-None-Match', $etag)
+        ->getJson(route('api.v1.coverage.show', '5g'))
+        ->assertStatus(304);
+});
+
+it('stops honouring the old validator once the layer is replaced', function (): void {
+    $layer = coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
+
+    $stale = $this->getJson(route('api.v1.coverage.show', '5g'))->assertOk()->headers->get('ETag');
+
+    $layer->update(['geojson' => ['type' => 'FeatureCollection', 'features' => []]]);
+
+    $response = $this->withHeader('If-None-Match', $stale)
+        ->getJson(route('api.v1.coverage.show', '5g'))
+        ->assertOk()
+        ->assertJsonCount(0, 'features');
+
+    expect($response->headers->get('ETag'))->not->toBe($stale);
+});
+
 it('has nothing to draw for an unknown or unread layer', function (): void {
     coverageLayer(['key' => 'empty']);
 
