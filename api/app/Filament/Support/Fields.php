@@ -35,6 +35,17 @@ class Fields
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ];
 
+    /**
+     * @var array<int, string>
+     */
+    public const IMAGE_TYPES = [
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'image/webp',
+        'image/svg+xml',
+    ];
+
     public static function itemLabel(string $field): Closure
     {
         return function (array $state) use ($field): ?string {
@@ -108,6 +119,7 @@ class Fields
             ->fileAttachmentsDisk('public')
             ->fileAttachmentsDirectory(fn (): string => 'uploads/attachments/'.now()->format('Y/m'))
             ->fileAttachmentsVisibility('public')
+            ->fileAttachmentsAcceptedFileTypes(self::IMAGE_TYPES)
             ->registerActions([self::attachFilesWithImageEditor()])
             ->toolbarButtons([
                 ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
