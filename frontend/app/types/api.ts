@@ -19,6 +19,7 @@ export interface Settings {
   locales: string[]
   seo: Seo
   metrics: { enabled: boolean }
+  maps: { yandex_key: string | null }
   site: Record<string, string | null>
   pages: Record<string, PageSeo>
 }

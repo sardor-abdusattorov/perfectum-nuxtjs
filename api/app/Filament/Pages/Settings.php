@@ -126,6 +126,14 @@ class Settings extends Page implements HasForms
                                     ->rows(6)
                                     ->helperText(__('app.helper.metrics_google')),
                             ]),
+
+                        Tabs\Tab::make(__('app.label.tab_maps'))
+                            ->schema([
+                                TextInput::make('maps.yandex_key')
+                                    ->label(__('app.label.maps_yandex_key'))
+                                    ->maxLength(64)
+                                    ->helperText(__('app.helper.maps_yandex_key')),
+                            ]),
                     ]),
             ])
             ->statePath('data');

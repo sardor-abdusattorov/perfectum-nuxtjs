@@ -22,7 +22,7 @@ it('hands the whole site chrome back in one call', function (): void {
         ->assertOk()
         ->assertJsonStructure([
             'data' => [
-                'settings' => ['locale', 'locales', 'seo', 'metrics', 'site'],
+                'settings' => ['locale', 'locales', 'seo', 'metrics', 'maps', 'site'],
                 'menus' => ['header', 'footer'],
                 'socials',
                 'translations',
@@ -62,6 +62,18 @@ it('reports whether metrics exist without shipping the counter code', function (
         ->assertOk()
         ->assertJsonPath('data.settings.metrics.enabled', true)
         ->assertDontSee('ym()');
+});
+
+it('hands the browser the maps key it needs, and nothing when there is none', function (): void {
+    $this->getJson(route('api.v1.site'))
+        ->assertOk()
+        ->assertJsonPath('data.settings.maps.yandex_key', null);
+
+    Settings::set('maps.yandex_key', 'abc-123');
+
+    $this->getJson(route('api.v1.site'))
+        ->assertOk()
+        ->assertJsonPath('data.settings.maps.yandex_key', 'abc-123');
 });
 
 it('exposes published site settings only', function (): void {

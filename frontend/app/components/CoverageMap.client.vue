@@ -12,8 +12,7 @@ const emit = defineEmits<{ failed: [boolean] }>()
 
 const t = useT()
 const shapesOf = useCoverageShapes()
-const { locale } = useI18n()
-const config = useRuntimeConfig()
+const loadMaps = useYandexMaps()
 
 const root = useTemplateRef('root')
 const canvas = useTemplateRef('canvas')
@@ -27,37 +26,6 @@ let pin: any = null
 let me: any = null
 let saying: ReturnType<typeof setTimeout> | null = null
 const drawn: any[] = []
-
-const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
-
-function load(): Promise<void> {
-  if ((window as any).ymaps) {
-    return Promise.resolve()
-  }
-
-  const key = config.public.yandexMapsKey
-  const src = `https://api-maps.yandex.ru/2.1/?${key ? `apikey=${key}&` : ''}lang=${LANGS[locale.value] ?? 'ru_RU'}`
-
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>('script[data-ymaps]')
-
-    if (existing) {
-      existing.addEventListener('load', () => resolve())
-      existing.addEventListener('error', () => reject(new Error('ymaps')))
-
-      return
-    }
-
-    const script = document.createElement('script')
-
-    script.src = src
-    script.async = true
-    script.dataset.ymaps = ''
-    script.addEventListener('load', () => resolve())
-    script.addEventListener('error', () => reject(new Error('ymaps')))
-    document.head.appendChild(script)
-  })
-}
 
 /**
  * GeoJSON orders a pair as longitude first; the map wants latitude first.
@@ -137,34 +105,25 @@ async function draw(): Promise<void> {
 }
 
 onMounted(async () => {
-  try {
-    await load()
-  }
-  catch {
+  const ymaps = await loadMaps().catch(() => null)
+
+  if (!ymaps || !canvas.value) {
     failed.value = true
 
     return
   }
 
-  const ymaps = (window as any).ymaps
-
-  ymaps.ready(() => {
-    if (!canvas.value) {
-      return
-    }
-
-    map = new ymaps.Map(canvas.value, {
-      center: props.center ?? [41.6, 64.5],
-      zoom: props.center ? 10 : 6,
-      controls: [],
-    }, {
-      suppressMapOpenBlock: true,
-    })
-
-    map.behaviors.disable('scrollZoom')
-
-    draw()
+  map = new ymaps.Map(canvas.value, {
+    center: props.center ?? [41.6, 64.5],
+    zoom: props.center ? 10 : 6,
+    controls: [],
+  }, {
+    suppressMapOpenBlock: true,
   })
+
+  map.behaviors.disable('scrollZoom')
+
+  draw()
 })
 
 /**

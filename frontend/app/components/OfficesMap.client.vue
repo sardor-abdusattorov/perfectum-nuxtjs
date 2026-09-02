@@ -5,8 +5,7 @@ const props = defineProps<{ points: Office[], userCoords: [number, number] | nul
 const emit = defineEmits<{ select: [id: number] }>()
 
 const t = useT()
-const { locale } = useI18n()
-const config = useRuntimeConfig()
+const loadMaps = useYandexMaps()
 
 const canvas = useTemplateRef('canvas')
 const failed = ref(false)
@@ -16,41 +15,10 @@ let clusterer: any = null
 let userPlacemark: any = null
 const markers = new Map<number, any>()
 
-const LANGS: Record<string, string> = { ru: 'ru_RU', uz: 'uz_UZ', en: 'en_US' }
-
 function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, char => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] as string
   ))
-}
-
-function load(): Promise<void> {
-  if ((window as any).ymaps) {
-    return Promise.resolve()
-  }
-
-  const key = config.public.yandexMapsKey
-  const src = `https://api-maps.yandex.ru/2.1/?${key ? `apikey=${key}&` : ''}lang=${LANGS[locale.value] ?? 'ru_RU'}`
-
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>('script[data-ymaps]')
-
-    if (existing) {
-      existing.addEventListener('load', () => resolve())
-      existing.addEventListener('error', () => reject(new Error('ymaps')))
-
-      return
-    }
-
-    const script = document.createElement('script')
-
-    script.src = src
-    script.async = true
-    script.dataset.ymaps = ''
-    script.addEventListener('load', () => resolve())
-    script.addEventListener('error', () => reject(new Error('ymaps')))
-    document.head.appendChild(script)
-  })
 }
 
 function placemark(point: Office): any {
@@ -138,43 +106,34 @@ function focus(id: number): void {
 defineExpose({ focus })
 
 onMounted(async () => {
-  try {
-    await load()
-  }
-  catch {
+  const ymaps = await loadMaps().catch(() => null)
+
+  if (!ymaps || !canvas.value) {
     failed.value = true
 
     return
   }
 
-  const ymaps = (window as any).ymaps
-
-  ymaps.ready(() => {
-    if (!canvas.value) {
-      return
-    }
-
-    map = new ymaps.Map(canvas.value, {
-      center: [41.31, 64.5],
-      zoom: 6,
-      controls: ['zoomControl', 'geolocationControl', 'typeSelector', 'fullscreenControl'],
-    }, {
-      suppressMapOpenBlock: true,
-    })
-
-    clusterer = new ymaps.Clusterer({
-      preset: 'islands#invertedRedClusterIcons',
-      groupByCoordinates: false,
-      gridSize: 64,
-    })
-    map.geoObjects.add(clusterer)
-
-    draw()
-
-    if (props.userCoords) {
-      showUser(props.userCoords)
-    }
+  map = new ymaps.Map(canvas.value, {
+    center: [41.31, 64.5],
+    zoom: 6,
+    controls: ['zoomControl', 'geolocationControl', 'typeSelector', 'fullscreenControl'],
+  }, {
+    suppressMapOpenBlock: true,
   })
+
+  clusterer = new ymaps.Clusterer({
+    preset: 'islands#invertedRedClusterIcons',
+    groupByCoordinates: false,
+    gridSize: 64,
+  })
+  map.geoObjects.add(clusterer)
+
+  draw()
+
+  if (props.userCoords) {
+    showUser(props.userCoords)
+  }
 })
 
 onBeforeUnmount(() => {

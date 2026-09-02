@@ -43,6 +43,9 @@ class SiteController
                 'enabled' => filled(Settings::get('metrics.yandex'))
                     || filled(Settings::get('metrics.google')),
             ],
+            'maps' => [
+                'yandex_key' => Settings::get('maps.yandex_key') ?: null,
+            ],
             'site' => SiteSettings::published(),
             'pages' => PageSettings::map(),
         ];
