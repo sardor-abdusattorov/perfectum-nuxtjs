@@ -9,6 +9,7 @@ use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
@@ -32,6 +33,7 @@ class Page extends Model
         'meta_title',
         'meta_description',
         'redirect_from',
+        'is_group',
         'sort',
         'status',
     ];
@@ -42,6 +44,7 @@ class Page extends Model
         'views' => 'integer',
         'redirect_from' => 'array',
         'sort' => 'integer',
+        'is_group' => 'boolean',
         'status' => 'boolean',
     ];
 
@@ -62,6 +65,29 @@ class Page extends Model
 
     protected static function booted(): void
     {
+        /**
+         * A group is a heading and a list of cards, nothing else. The form
+         * hides the rest, but hidden fields are simply not written — whatever
+         * the page carried before the switch would stay in the table and come
+         * back the day someone turns grouping off. So it is cleared here, on
+         * every path into the row, and the picture goes off the disk with it.
+         */
+        static::saving(function (self $page): void {
+            if ($page->is_group) {
+                if (filled($page->image)) {
+                    Storage::disk('public')->delete($page->image);
+                }
+
+                $page->forceFill([
+                    'content' => null,
+                    'image' => null,
+                    'meta_title' => null,
+                    'meta_description' => null,
+                    'redirect_from' => null,
+                ]);
+            }
+        });
+
         static::saving(function (self $page): void {
             if (! $page->isDirty('redirect_from')) {
                 return;

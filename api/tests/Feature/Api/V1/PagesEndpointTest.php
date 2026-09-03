@@ -6,6 +6,7 @@ use App\Models\Page;
 use App\Models\Settings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -173,6 +174,45 @@ it('drops a deleted page from the hub it was on', function (): void {
 
     $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
         ->assertJsonPath('data.cards', []);
+});
+
+it('empties a page that becomes a group, so nothing comes back later', function (): void {
+    Storage::fake('public');
+    Storage::disk('public')->put('uploads/pages/hero.jpg', 'jpg');
+
+    $page = makePage([
+        'image' => 'uploads/pages/hero.jpg',
+        'meta_title' => ['ru' => 'Старый заголовок'],
+        'meta_description' => ['ru' => 'Старое описание'],
+        'redirect_from' => ['static-pages/oferta'],
+    ]);
+
+    $page->update(['is_group' => true]);
+
+    $page->refresh();
+
+    expect($page->content)->toBeEmpty()
+        ->and($page->image)->toBeNull()
+        ->and($page->meta_title)->toBeEmpty()
+        ->and($page->meta_description)->toBeEmpty()
+        ->and($page->redirect_from)->toBeNull();
+
+    Storage::disk('public')->assertMissing('uploads/pages/hero.jpg');
+});
+
+it('hands the site the card text from the page it points at', function (): void {
+    $hub = makePage(['slug' => 'polezno-znat', 'is_group' => true]);
+
+    makePage([
+        'slug' => 'o-standarte',
+        'parent_id' => $hub->getKey(),
+        'content' => ['ru' => '<p>Сеть «Perfectum» использует технологию CDMA 2000 1X.</p>'],
+    ]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertOk()
+        ->assertJsonPath('data.is_group', true)
+        ->assertJsonPath('data.cards.0.text', 'Сеть «Perfectum» использует технологию CDMA 2000 1X.');
 });
 
 it('maps every old address onto its page', function (): void {

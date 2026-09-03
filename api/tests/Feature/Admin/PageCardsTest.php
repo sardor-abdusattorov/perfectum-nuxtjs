@@ -38,6 +38,7 @@ it('lets a page be nothing but a list of cards', function (): void {
         ->fillForm([
             'title' => ['ru' => 'Полезно знать', 'uz' => 'Bilish foydali'],
             'slug' => 'polezno-znat',
+            'is_group' => true,
         ])
         ->call('create')
         ->assertHasNoFormErrors();
@@ -46,7 +47,7 @@ it('lets a page be nothing but a list of cards', function (): void {
 });
 
 it('collects the chosen pages onto the hub', function (): void {
-    $hub = cardPage('polezno-znat');
+    $hub = cardPage('polezno-znat', ['is_group' => true]);
     $first = cardPage('tarify');
     $second = cardPage('oplata');
 
@@ -61,7 +62,7 @@ it('collects the chosen pages onto the hub', function (): void {
 });
 
 it('takes a page off the hub when it is unpicked', function (): void {
-    $hub = cardPage('polezno-znat');
+    $hub = cardPage('polezno-znat', ['is_group' => true]);
     $kept = cardPage('tarify', ['parent_id' => $hub->getKey()]);
     $removed = cardPage('oplata', ['parent_id' => $hub->getKey()]);
 
@@ -75,7 +76,7 @@ it('takes a page off the hub when it is unpicked', function (): void {
 });
 
 it('does not offer the hub itself as one of its own cards', function (): void {
-    $hub = cardPage('polezno-znat');
+    $hub = cardPage('polezno-znat', ['is_group' => true]);
     cardPage('tarify');
 
     $options = Livewire::test(EditPage::class, ['record' => $hub->getRouteKey()])
@@ -89,7 +90,7 @@ it('does not offer the hub itself as one of its own cards', function (): void {
 });
 
 it('leaves the cards behind when the hub is deleted', function (): void {
-    $hub = cardPage('polezno-znat');
+    $hub = cardPage('polezno-znat', ['is_group' => true]);
     $card = cardPage('tarify', ['parent_id' => $hub->getKey()]);
 
     $hub->delete();

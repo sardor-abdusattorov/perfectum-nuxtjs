@@ -8,6 +8,7 @@ use App\Models\Page;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 /**
  * @mixin Page
@@ -26,13 +27,14 @@ class PageResource extends JsonResource
             'title' => $this->title,
             'content' => filled($this->content) ? $this->content : null,
             'image' => $this->imageUrl(),
+            'is_group' => $this->is_group,
             'parent' => $this->parent?->only('slug', 'title'),
             'cards' => $this->children
                 ->where('status', true)
                 ->map(fn (Page $card): array => [
                     'slug' => $card->slug,
                     'title' => $card->title,
-                    'image' => $card->imageUrl(),
+                    'text' => self::excerpt($card),
                 ])
                 ->values()
                 ->all(),
@@ -45,5 +47,17 @@ class PageResource extends JsonResource
             ],
             'updated_at' => $this->updated_at?->toIso8601String(),
         ];
+    }
+
+    /**
+     * The card carries the opening of the page under its heading, the way the
+     * old site did — nothing to fill in by hand, and it stays in step with the
+     * text it came from.
+     */
+    private static function excerpt(Page $card): string
+    {
+        $text = trim(html_entity_decode(strip_tags((string) $card->content)));
+
+        return Str::limit(preg_replace('/\s+/u', ' ', $text) ?? '', 180);
     }
 }

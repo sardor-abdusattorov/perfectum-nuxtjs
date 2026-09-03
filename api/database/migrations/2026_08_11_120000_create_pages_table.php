@@ -15,6 +15,7 @@ return new class extends Migration
             $table->json('title');
             $table->json('content')->nullable();
             $table->string('image')->nullable();
+            $table->boolean('is_group')->default(false);
             $table->unsignedInteger('sort')->default(0);
             $table->json('meta_title')->nullable();
             $table->json('meta_description')->nullable();

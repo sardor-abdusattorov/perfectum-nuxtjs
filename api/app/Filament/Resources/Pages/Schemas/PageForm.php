@@ -9,7 +9,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class PageForm
@@ -21,6 +23,11 @@ class PageForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
+                        Toggle::make('is_group')
+                            ->label(__('app.label.is_group'))
+                            ->helperText(__('app.helper.is_group'))
+                            ->live(),
+
                         TranslatableTabs::make('translations')
                             ->schema([
                                 TextInput::make('title')
@@ -31,7 +38,8 @@ class PageForm
 
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
-                                    ->helperText(__('app.helper.page_content')),
+                                    ->helperText(__('app.helper.page_content'))
+                                    ->visible(fn (Get $get): bool => ! $get('is_group')),
                             ]),
 
                         Fields::slug()
@@ -40,19 +48,26 @@ class PageForm
                         TagsInput::make('redirect_from')
                             ->label(__('app.label.redirect_from'))
                             ->helperText(__('app.helper.redirect_from'))
-                            ->placeholder('static-pages/oferta'),
+                            ->placeholder('static-pages/oferta')
+                            ->visible(fn (Get $get): bool => ! $get('is_group')),
 
                         Fields::image('pages')
-                            ->label(__('app.label.image')),
+                            ->label(__('app.label.image'))
+                            ->visible(fn (Get $get): bool => ! $get('is_group')),
 
                         Fields::sort(),
 
                         Fields::status(),
                     ]),
 
+                /**
+                 * A group holds nothing but the pages it gathers, so the text,
+                 * the picture and the SEO block go away with the switch — what
+                 * is left is a heading, an address and the cards themselves.
+                 */
                 Section::make(__('app.label.page_cards'))
                     ->description(__('app.helper.page_cards'))
-                    ->collapsed(fn (?Page $record): bool => $record?->children()->doesntExist() ?? true)
+                    ->visible(fn (Get $get): bool => (bool) $get('is_group'))
                     ->schema([
                         Select::make('children')
                             ->hiddenLabel()
@@ -66,6 +81,7 @@ class PageForm
                 Section::make(__('app.label.tab_seo'))
                     ->description(__('app.helper.page_seo'))
                     ->collapsed()
+                    ->visible(fn (Get $get): bool => ! $get('is_group'))
                     ->schema([
                         TranslatableTabs::make('seo_translations')
                             ->schema([

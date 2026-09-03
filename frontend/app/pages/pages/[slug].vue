@@ -37,92 +37,138 @@ useSeo({
 </script>
 
 <template>
-  <section v-if="page" class="article">
-    <div class="container">
-      <div class="article__inner">
-        <NuxtLink class="article__back" :to="back.to">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          {{ back.label }}
-        </NuxtLink>
+  <template v-if="page">
+    <!-- Группа: заголовок раздела и сетка карточек, как на прежнем сайте.
+         Ни чёрной шапки, ни белой плашки с текстом — их тут нечем наполнить. -->
+    <section v-if="page.is_group" class="page-group">
+      <div class="container">
+        <h1 class="page-group__title">{{ page.title }}</h1>
 
-        <div class="article__hero">
-          <h1 class="article__hero-title">{{ page.title }}</h1>
-        </div>
-
-        <div v-if="page.image || page.content" class="article__card">
-          <img v-if="page.image" class="article__image" :src="page.image" :alt="page.title">
-
-          <div v-if="page.content" class="article__content rich" v-html="page.content" />
-        </div>
-
-        <ul v-if="page.cards.length" class="page-cards">
-          <li v-for="card in page.cards" :key="card.slug" class="page-cards__item">
-            <NuxtLink class="page-cards__link" :to="localePath(`/pages/${card.slug}`)">
-              <img v-if="card.image" class="page-cards__image" :src="card.image" :alt="card.title">
-              <h2 class="page-cards__title">{{ card.title }}</h2>
-              <svg class="page-cards__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+        <ul v-if="page.cards.length" class="page-group__grid">
+          <li v-for="card in page.cards" :key="card.slug" class="page-group__card">
+            <NuxtLink class="page-group__link" :to="localePath(`/pages/${card.slug}`)">
+              <h2 class="page-group__card-title">{{ card.title }}</h2>
+              <p v-if="card.text" class="page-group__card-text">{{ card.text }}</p>
             </NuxtLink>
           </li>
         </ul>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section v-else class="article">
+      <div class="container">
+        <div class="article__inner">
+          <NuxtLink class="article__back" :to="back.to">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ back.label }}
+          </NuxtLink>
+
+          <div class="article__hero">
+            <h1 class="article__hero-title">{{ page.title }}</h1>
+          </div>
+
+          <div v-if="page.image || page.content" class="article__card">
+            <img v-if="page.image" class="article__image" :src="page.image" :alt="page.title">
+
+            <div v-if="page.content" class="article__content rich" v-html="page.content" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </template>
 </template>
 
 <style scoped>
-.page-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
-  margin-top: 32px;
+/* Размеры взяты с прежнего сайта: сетка в три колонки по 20px,
+   карточка со скруглением 16, подпись обрезается на третьей строке. */
+.page-group {
+  padding: 48px 0 72px;
+  background: var(--color-gray);
 }
 
-.page-cards__item {
-  min-height: 170px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: var(--radius);
+.page-group__title {
+  margin-bottom: 32px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-black);
+}
+
+.page-group__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.page-group__card {
+  border-radius: 16px;
   background: var(--color-white);
   transition: var(--transition);
 }
 
-.page-cards__item:hover {
-  border-color: rgba(0, 0, 0, 0.22);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.06);
+.page-group__card:hover {
+  box-shadow: 0 15px 30px rgba(41, 39, 88, 0.07);
 }
 
-.page-cards__link {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
+.page-group__link {
+  display: block;
   height: 100%;
-  padding: 28px 30px;
+  padding: 20px;
   color: inherit;
 }
 
-.page-cards__image {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.page-cards__title {
-  font-size: 20px;
-  font-weight: 500;
+.page-group__card-title {
+  min-height: 43px;
+  font-size: 17px;
+  font-weight: 600;
   line-height: 1.35;
   color: var(--color-black);
+  transition: var(--transition);
 }
 
-.page-cards__arrow {
-  width: 24px;
-  height: 24px;
-  margin-top: auto;
+.page-group__card:hover .page-group__card-title {
   color: var(--color-red);
+}
+
+.page-group__card-text {
+  margin-top: 10px;
+  min-height: 67px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1024px) {
+  .page-group__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .page-group {
+    padding: 32px 0 48px;
+  }
+
+  .page-group__title {
+    font-size: 24px;
+  }
+
+  .page-group__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-group__card-title,
+  .page-group__card-text {
+    min-height: 0;
+  }
 }
 
 .article__image {

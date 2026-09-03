@@ -47,7 +47,7 @@ export interface PageBlocks {
 export interface PageCard {
   slug: string
   title: string
-  image: string | null
+  text: string
 }
 
 export interface PageContent {
@@ -55,6 +55,7 @@ export interface PageContent {
   title: string
   content: string | null
   image: string | null
+  is_group: boolean
   parent: { slug: string, title: string } | null
   cards: PageCard[]
   seo: Seo

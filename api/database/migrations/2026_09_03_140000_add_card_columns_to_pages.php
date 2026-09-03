@@ -23,6 +23,10 @@ return new class extends Migration
                 $table->unsignedInteger('sort')->default(0)->after('image');
             }
 
+            if (! Schema::hasColumn('pages', 'is_group')) {
+                $table->boolean('is_group')->default(false)->after('image');
+            }
+
             $table->json('content')->nullable()->change();
         });
     }
@@ -37,6 +41,10 @@ return new class extends Migration
 
             if (Schema::hasColumn('pages', 'sort')) {
                 $table->dropColumn('sort');
+            }
+
+            if (Schema::hasColumn('pages', 'is_group')) {
+                $table->dropColumn('is_group');
             }
         });
     }
