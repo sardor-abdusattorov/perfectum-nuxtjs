@@ -61,10 +61,10 @@ class ApplicationsTable
                             Application::averageHandlingSeconds($query)
                         ))),
 
-                TextColumn::make('note')
-                    ->label(__('app.label.note_internal'))
+                TextColumn::make('notes.body')
+                    ->label(__('app.label.note_last'))
+                    ->state(fn (Application $record): ?string => $record->notes->first()?->body)
                     ->wrap()
-                    ->searchable()
                     ->placeholder('—')
                     ->toggleable(isToggledHiddenByDefault: true),
 

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('message')->nullable();
             $table->foreignId('status_id')->nullable()->constrained('application_statuses')->restrictOnDelete();
             $table->timestamp('processed_at')->nullable();
-            $table->text('note')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->timestamps();
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Carbon;
 
@@ -23,7 +24,6 @@ class Application extends Model
         'message',
         'status_id',
         'processed_at',
-        'note',
         'ip_address',
     ];
 
@@ -59,6 +59,16 @@ class Application extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(ApplicationStatus::class, 'status_id');
+    }
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(ApplicationNote::class)->newestFirst();
+    }
+
+    public function addNote(string $body): ?ApplicationNote
+    {
+        return blank(trim($body)) ? null : $this->notes()->create(['body' => trim($body)]);
     }
 
     public function handlingSeconds(): ?int

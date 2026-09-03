@@ -21,11 +21,11 @@ class ChangeApplicationStatusAction
             ->modalWidth('md')
             ->visible(fn (Application $record): bool => Gate::allows('update', $record))
             ->schema(self::schema())
-            ->fillForm(fn (Application $record): array => [
-                'status_id' => $record->status_id,
-                'note' => $record->note,
-            ])
-            ->action(fn (Application $record, array $data) => $record->update($data))
+            ->fillForm(fn (Application $record): array => ['status_id' => $record->status_id])
+            ->action(function (Application $record, array $data): void {
+                $record->update(['status_id' => $data['status_id']]);
+                $record->addNote((string) ($data['note'] ?? ''));
+            })
             ->successNotificationTitle(__('app.message.status_updated'));
     }
 
@@ -56,9 +56,10 @@ class ChangeApplicationStatusAction
 
     /**
      * The note is written at the moment the status changes — «не отвечает,
-     * перезвонить завтра» belongs next to the status it explains. A bulk change
-     * has no note: one text over a hundred applications would say nothing about
-     * any of them and would wipe what was already written.
+     * перезвонить завтра» belongs next to the status it explains, and it is
+     * added to the journal rather than replacing what is already there. A bulk
+     * change has no note: one text over a hundred applications would say
+     * nothing about any of them.
      *
      * @return array<int, Select|Textarea>
      */
@@ -72,8 +73,8 @@ class ChangeApplicationStatusAction
                 ->required(),
 
             $withNote ? Textarea::make('note')
-                ->label(__('app.label.note_internal'))
-                ->helperText(__('app.helper.note_internal'))
+                ->label(__('app.label.note_add'))
+                ->helperText(__('app.helper.note_add'))
                 ->rows(4)
                 ->maxLength(2000) : null,
         ]));

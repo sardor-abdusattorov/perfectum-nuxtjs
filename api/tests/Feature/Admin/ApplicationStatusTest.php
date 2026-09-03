@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Filament\Resources\ApplicationStatuses\Pages\CreateApplicationStatus;
-use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Models\Application;
+use App\Models\ApplicationNote;
 use App\Models\ApplicationStatus;
 use App\Models\ApplicationTheme;
 use Filament\Actions\Testing\TestAction;
@@ -162,7 +162,7 @@ it('reads a long wait in hours and days', function (int $seconds, string $expect
  * «Не отвечает, перезвонить после обеда» — то, что оператор пишет себе и
  * коллегам; посетитель этого не видит.
  */
-it('saves the note the operator writes beside the status', function (): void {
+it('keeps every note instead of replacing the one before it', function (): void {
     $application = Application::factory()->create();
 
     $admin = panelUser(['ViewAny:Application', 'View:Application']);
@@ -172,16 +172,43 @@ it('saves the note the operator writes beside the status', function (): void {
     Livewire::test(ListApplications::class)
         ->callAction(TestAction::make('changeStatus')->table($application), [
             'status_id' => status('no-answer')->getKey(),
-            'note' => 'Не берёт трубку, перезвонить после обеда',
+            'note' => 'Не берёт трубку',
         ]);
 
-    expect($application->fresh()->note)->toBe('Не берёт трубку, перезвонить после обеда')
-        ->and($application->fresh()->status->slug)->toBe('no-answer');
+    Livewire::test(ListApplications::class)
+        ->callAction(TestAction::make('changeStatus')->table($application), [
+            'status_id' => status('accepted')->getKey(),
+            'note' => 'Перезвонили, ждёт мастера',
+        ]);
+
+    $notes = $application->fresh()->notes;
+
+    expect($notes)->toHaveCount(2)
+        ->and($notes->first()->body)->toBe('Перезвонили, ждёт мастера')
+        ->and($notes->last()->body)->toBe('Не берёт трубку')
+        ->and($notes->first()->authorLabel())->toBe($admin->name)
+        ->and($application->fresh()->status->slug)->toBe('accepted');
 });
 
-it('does not wipe the notes when several applications change status at once', function (): void {
+it('does not add an empty note when the status changes without one', function (): void {
+    $application = Application::factory()->create();
+
+    $admin = panelUser(['ViewAny:Application', 'View:Application']);
+    $admin->givePermissionTo(Permission::findOrCreate('Update:Application', 'web'));
+    $this->actingAs($admin->refresh());
+
+    Livewire::test(ListApplications::class)
+        ->callAction(TestAction::make('changeStatus')->table($application), [
+            'status_id' => status('processed')->getKey(),
+            'note' => '   ',
+        ]);
+
+    expect($application->fresh()->notes)->toHaveCount(0);
+});
+
+it('does not touch the notes when several applications change status at once', function (): void {
     $applications = Application::factory()->count(2)->create();
-    $applications->each(fn (Application $item) => $item->update(['note' => 'Своя заметка '.$item->getKey()]));
+    $applications->each(fn (Application $item) => $item->addNote('Своя заметка '.$item->getKey()));
 
     $admin = panelUser(['ViewAny:Application', 'View:Application']);
     $admin->givePermissionTo(Permission::findOrCreate('Update:Application', 'web'));
@@ -194,15 +221,13 @@ it('does not wipe the notes when several applications change status at once', fu
         ]);
 
     foreach ($applications as $application) {
-        expect($application->fresh()->note)->toBe('Своя заметка '.$application->getKey())
+        expect($application->fresh()->notes)->toHaveCount(1)
+            ->and($application->fresh()->notes->first()->body)->toBe('Своя заметка '.$application->getKey())
             ->and($application->fresh()->status->slug)->toBe('accepted');
     }
 });
 
-it('keeps the note out of what the site is handed', function (): void {
-    expect((new Application)->getFillable())->toContain('note')
-        ->and(ApplicationController::class)->toBeString();
-
+it('keeps the journal out of what the site can write', function (): void {
     $this->postJson(route('api.v1.applications.store'), [
         'phone' => '998901234567',
         'theme' => ApplicationTheme::create(['name' => ['ru' => 'Тема']])->getKey(),
@@ -210,5 +235,5 @@ it('keeps the note out of what the site is handed', function (): void {
         'note' => 'подсунутая заметка',
     ])->assertCreated();
 
-    expect(Application::query()->value('note'))->toBeNull();
+    expect(ApplicationNote::query()->count())->toBe(0);
 });

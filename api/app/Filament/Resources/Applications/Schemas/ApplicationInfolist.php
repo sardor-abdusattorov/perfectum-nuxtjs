@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Applications\Schemas;
 
 use App\Filament\Resources\Applications\Actions\ChangeApplicationStatusAction;
 use App\Models\Application;
+use App\Models\ApplicationNote;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -29,11 +31,6 @@ class ApplicationInfolist
                             ->label(__('app.label.handling_time'))
                             ->state(fn (Application $record): ?string => Application::readableHandlingTime($record->handlingSeconds()))
                             ->placeholder('—'),
-
-                        TextEntry::make('note')
-                            ->label(__('app.label.note_internal'))
-                            ->placeholder('—')
-                            ->columnSpanFull(),
 
                         TextEntry::make('theme.name')
                             ->label(__('app.label.application_theme'))
@@ -69,6 +66,28 @@ class ApplicationInfolist
                             ->label(__('app.label.updated_at'))
                             ->dateTime('d.m.Y H:i')
                             ->placeholder('—'),
+                    ]),
+
+                Section::make(__('app.label.note_journal'))
+                    ->description(__('app.helper.note_journal'))
+                    ->columns(1)
+                    ->schema([
+                        RepeatableEntry::make('notes')
+                            ->hiddenLabel()
+                            ->placeholder('—')
+                            ->columns(1)
+                            ->schema([
+                                TextEntry::make('body')
+                                    ->hiddenLabel()
+                                    ->columnSpanFull(),
+
+                                TextEntry::make('created_at')
+                                    ->hiddenLabel()
+                                    ->dateTime('d.m.Y H:i')
+                                    ->badge()
+                                    ->color('gray')
+                                    ->formatStateUsing(fn (string $state, ApplicationNote $record): string => $record->authorLabel().' · '.$state),
+                            ]),
                     ]),
             ]);
     }
