@@ -1,0 +1,140 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_sqlite, sqlite3, mbstring, bcmath, gd, zip, intl
+          coverage: none
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: api/vendor
+          key: composer-${{ hashFiles('api/composer.lock') }}
+
+      - name: Install PHP deps
+        working-directory: api
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Prepare environment
+        working-directory: api
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run tests
+        working-directory: api
+        run: php artisan test --compact
+
+  build-frontend:
+    name: Build frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install deps
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
+
+      # A build that fails here fails before anything reaches the server.
+      - name: Build
+        working-directory: frontend
+        run: pnpm build
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [test, build-frontend]
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          command_timeout: 20m
+          script: |
+            set -euo pipefail
+
+            cd ${{ secrets.SERVER_APP_PATH }}
+
+            # Mirror origin/main exactly. fetch + reset --hard (not pull)
+            # realigns the tree even if tracked files drifted on the server,
+            # while leaving untracked files (.env, storage, public/build,
+            # uploaded media) alone.
+            git fetch origin main
+            git reset --hard origin/main
+
+            cd api
+
+            composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+
+            # The panel's own stylesheet is built from source, so it has to be
+            # rebuilt whenever the theme or a Filament version changes.
+            npm ci --no-audit --no-fund
+            npm run build
+
+            php artisan migrate --force
+            php artisan storage:link || true
+
+            # Publishes Filament and plugin static assets into public/ so the
+            # icons and editor bundles resolve.
+            php artisan filament:assets
+
+            # Regenerates policies and permissions for anything new, puts roles
+            # back on the panel guard and warms the caches.
+            php artisan project:update
+
+            cd ../frontend
+
+            pnpm install --frozen-lockfile
+            pnpm build
+
+            # The built server is already running; it only picks the new bundle
+            # up when the process restarts. The command lives in a secret so it
+            # fits whatever supervises it — pm2, systemd or something else. A
+            # deploy that quietly leaves the old bundle serving is worse than
+            # one that stops and says so.
+            RESTART='${{ secrets.SERVER_FRONTEND_RESTART }}'
+
+            if [ -z "$RESTART" ]; then
+              echo "SERVER_FRONTEND_RESTART не задан: фронтенд собран, но старый процесс всё ещё отдаёт прошлую сборку."
+              exit 1
+            fi
+
+            eval "$RESTART"
+
+            echo "Deploy complete"
