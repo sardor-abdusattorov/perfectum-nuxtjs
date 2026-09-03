@@ -23,6 +23,7 @@ export interface Service {
   ussd: string | null
   facts: ServiceFact[]
   steps: ServiceStep[]
+  files: string[]
   is_featured: boolean
   network: string | null
   category: { id: number, name: string, network: string | null } | null

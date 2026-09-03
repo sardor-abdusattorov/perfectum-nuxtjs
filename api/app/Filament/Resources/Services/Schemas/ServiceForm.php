@@ -116,6 +116,9 @@ class ServiceForm
 
                         Fields::image('services'),
 
+                        Fields::files('services')
+                            ->helperText(__('app.helper.service_files')),
+
                         Toggle::make('is_featured')
                             ->label(__('app.label.is_featured'))
                             ->helperText(__('app.helper.service_featured')),

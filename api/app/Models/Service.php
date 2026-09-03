@@ -25,6 +25,11 @@ class Service extends Model
 
     protected $table = 'services';
 
+    /**
+     * @var array<int, string>
+     */
+    protected array $attachedFileFields = ['icon', 'image', 'files'];
+
     protected $fillable = [
         'category_id',
         'network',
@@ -39,6 +44,7 @@ class Service extends Model
         'ussd',
         'facts',
         'steps',
+        'files',
         'is_featured',
         'sort',
         'status',
@@ -51,6 +57,7 @@ class Service extends Model
         'network' => Network::class,
         'facts' => 'array',
         'steps' => 'array',
+        'files' => 'array',
         'is_featured' => 'boolean',
         'status' => 'boolean',
     ];

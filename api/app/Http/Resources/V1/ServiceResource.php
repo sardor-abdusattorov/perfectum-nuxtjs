@@ -37,6 +37,11 @@ class ServiceResource extends JsonResource
             'ussd' => $this->ussd,
             'facts' => $this->rows($this->facts, ['label', 'value']),
             'steps' => $this->rows($this->steps, ['text']),
+            'files' => collect($this->files ?? [])
+                ->map(fn (string $path): ?string => stored_url($path))
+                ->filter()
+                ->values()
+                ->all(),
             'is_featured' => $this->is_featured,
             'network' => $this->network?->value,
             'category' => $this->whenLoaded('category', fn (): ?array => $this->category === null

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('ussd')->nullable();
             $table->json('facts')->nullable();
             $table->json('steps')->nullable();
+            $table->json('files')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->integer('sort')->default(0);
             $table->boolean('status')->default(true);

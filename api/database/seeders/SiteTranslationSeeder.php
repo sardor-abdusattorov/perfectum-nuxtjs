@@ -27,6 +27,7 @@ class SiteTranslationSeeder extends Seeder
     private function lines(): array
     {
         return [
+            'services.files' => ['ru' => 'Файлы', 'uz' => 'Fayllar'],
             'error.not_found_title' => ['ru' => 'Такой страницы нет', 'uz' => 'Bunday sahifa yo‘q'],
             'error.not_found_text' => [
                 'ru' => 'Возможно, адрес набран с опечаткой или страница переехала. Загляните в разделы ниже — то, что вы искали, скорее всего там.',

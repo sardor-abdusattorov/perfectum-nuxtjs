@@ -6,7 +6,6 @@ use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Enums\TenderState;
 use App\Filament\Support\Fields;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -45,17 +44,8 @@ class TenderForm
                         DatePicker::make('deadline_at')
                             ->label(__('app.label.deadline_at')),
 
-                        FileUpload::make('files')
-                            ->label(__('app.label.documents'))
-                            ->helperText(__('app.helper.tender_files'))
-                            ->disk('public')
-                            ->directory(fn () => 'uploads/tenders/'.now()->format('Y/m'))
-                            ->visibility('public')
-                            ->acceptedFileTypes(Fields::DOCUMENT_TYPES)
-                            ->multiple()
-                            ->downloadable()
-                            ->reorderable()
-                            ->maxSize(20480),
+                        Fields::files('tenders')
+                            ->helperText(__('app.helper.tender_files')),
 
                         Fields::status(),
                     ]),

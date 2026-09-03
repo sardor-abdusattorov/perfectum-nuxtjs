@@ -11,12 +11,17 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\RichEditor\Actions\AttachFilesAction;
+use Filament\Forms\Components\RichEditor\EditorCommand;
+use Filament\Forms\Components\RichEditor\RichEditorTool;
 use Filament\Forms\Components\RichEditor\TextColor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Support\Enums\Width;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Str;
 
 class Fields
 {
@@ -118,7 +123,13 @@ class Fields
             ->fileAttachmentsDirectory(fn (): string => 'uploads/attachments/'.now()->format('Y/m'))
             ->fileAttachmentsVisibility('public')
             ->fileAttachmentsAcceptedFileTypes(self::IMAGE_TYPES)
-            ->registerActions([self::attachFilesWithImageEditor()])
+            ->registerActions([self::attachFilesWithImageEditor(), self::attachDocumentAction()])
+            ->tools([
+                RichEditorTool::make('attachDocument')
+                    ->label(__('app.label.attach_document'))
+                    ->action()
+                    ->icon(Heroicon::OutlinedDocumentArrowDown),
+            ])
             ->toolbarButtons([
                 ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
                 ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'paragraph'],
@@ -126,11 +137,55 @@ class Fields
                 ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
                 ['highlight', 'textColor', 'clearFormatting'],
                 ['details', 'horizontalRule', 'lead', 'small', 'code'],
-                ['table', 'attachFiles'],
+                ['table', 'attachFiles', 'attachDocument'],
                 ['grid'],
                 ['undo', 'redo'],
                 ['fullscreen'],
             ]);
+    }
+
+    /**
+     * The editor's own attachment button always inserts an image node, so a PDF
+     * put through it renders as a broken picture. This one stores the file on
+     * the public disk straight away and drops a plain link in its place —
+     * a price list or a contract is something the visitor downloads, not looks
+     * at inside the article.
+     */
+    private static function attachDocumentAction(): Action
+    {
+        return Action::make('attachDocument')
+            ->label(__('app.label.attach_document'))
+            ->modalWidth(Width::Large)
+            ->schema([
+                self::file('documents')
+                    ->required(),
+
+                TextInput::make('label')
+                    ->label(__('app.label.link_text'))
+                    ->helperText(__('app.helper.attach_document'))
+                    ->maxLength(255),
+            ])
+            ->action(function (array $arguments, array $data, RichEditor $component): void {
+                $path = $data['file'] ?? null;
+                $url = stored_url(is_array($path) ? reset($path) : $path);
+
+                if (blank($url)) {
+                    return;
+                }
+
+                $component->runCommands(
+                    [EditorCommand::make('insertContent', arguments: [[
+                        'type' => 'text',
+                        'text' => Str::of((string) ($data['label'] ?? ''))->trim()->value()
+                            ?: basename((string) $url),
+                        'marks' => [[
+                            'type' => 'link',
+                            'attrs' => ['href' => $url, 'target' => '_blank', 'rel' => 'noopener'],
+                        ]],
+                    ]])],
+                    editorSelection: $arguments['editorSelection'] ?? null,
+                );
+            });
     }
 
     private static function attachFilesWithImageEditor(): Action
@@ -188,6 +243,14 @@ class Fields
             ->acceptedFileTypes(self::DOCUMENT_TYPES)
             ->downloadable()
             ->maxSize(20480);
+    }
+
+    public static function files(string $model, string $field = 'files'): FileUpload
+    {
+        return self::file($model, $field)
+            ->label(__('app.label.documents'))
+            ->multiple()
+            ->reorderable();
     }
 
     /**
