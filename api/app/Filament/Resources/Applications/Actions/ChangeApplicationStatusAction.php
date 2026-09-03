@@ -7,6 +7,7 @@ use App\Models\ApplicationStatus;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 
@@ -22,6 +23,7 @@ class ChangeApplicationStatusAction
             ->schema(self::schema())
             ->fillForm(fn (Application $record): array => [
                 'status_id' => $record->status_id,
+                'note' => $record->note,
             ])
             ->action(fn (Application $record, array $data) => $record->update($data))
             ->successNotificationTitle(__('app.message.status_updated'));
@@ -38,7 +40,7 @@ class ChangeApplicationStatusAction
             ->icon('heroicon-m-arrow-path')
             ->modalWidth('md')
             ->authorizeIndividualRecords('update')
-            ->schema(self::schema())
+            ->schema(self::schema(withNote: false))
             ->action(function (Builder $query, array $data): void {
                 $status = ApplicationStatus::query()->find($data['status_id']);
 
@@ -53,16 +55,27 @@ class ChangeApplicationStatusAction
     }
 
     /**
-     * @return array<int, Select>
+     * The note is written at the moment the status changes — «не отвечает,
+     * перезвонить завтра» belongs next to the status it explains. A bulk change
+     * has no note: one text over a hundred applications would say nothing about
+     * any of them and would wipe what was already written.
+     *
+     * @return array<int, Select|Textarea>
      */
-    private static function schema(): array
+    private static function schema(bool $withNote = true): array
     {
-        return [
+        return array_values(array_filter([
             Select::make('status_id')
                 ->label(__('app.label.status'))
                 ->options(ApplicationStatus::options())
                 ->native(false)
                 ->required(),
-        ];
+
+            $withNote ? Textarea::make('note')
+                ->label(__('app.label.note_internal'))
+                ->helperText(__('app.helper.note_internal'))
+                ->rows(4)
+                ->maxLength(2000) : null,
+        ]));
     }
 }

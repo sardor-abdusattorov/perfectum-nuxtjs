@@ -61,6 +61,13 @@ class ApplicationsTable
                             Application::averageHandlingSeconds($query)
                         ))),
 
+                TextColumn::make('note')
+                    ->label(__('app.label.note_internal'))
+                    ->wrap()
+                    ->searchable()
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
                     ->label(__('app.label.created'))
                     ->dateTime('d.m.Y H:i')

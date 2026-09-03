@@ -30,6 +30,11 @@ class ApplicationInfolist
                             ->state(fn (Application $record): ?string => Application::readableHandlingTime($record->handlingSeconds()))
                             ->placeholder('—'),
 
+                        TextEntry::make('note')
+                            ->label(__('app.label.note_internal'))
+                            ->placeholder('—')
+                            ->columnSpanFull(),
+
                         TextEntry::make('theme.name')
                             ->label(__('app.label.application_theme'))
                             ->badge()

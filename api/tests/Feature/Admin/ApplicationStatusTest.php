@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Filament\Resources\ApplicationStatuses\Pages\CreateApplicationStatus;
+use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Models\Application;
 use App\Models\ApplicationStatus;
+use App\Models\ApplicationTheme;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -155,3 +157,58 @@ it('reads a long wait in hours and days', function (int $seconds, string $expect
     [3600 * 3 + 60 * 12, '3 ч 12 мин'],
     [86400 * 2 + 3600 * 5, '2 д 5 ч'],
 ]);
+
+/**
+ * «Не отвечает, перезвонить после обеда» — то, что оператор пишет себе и
+ * коллегам; посетитель этого не видит.
+ */
+it('saves the note the operator writes beside the status', function (): void {
+    $application = Application::factory()->create();
+
+    $admin = panelUser(['ViewAny:Application', 'View:Application']);
+    $admin->givePermissionTo(Permission::findOrCreate('Update:Application', 'web'));
+    $this->actingAs($admin->refresh());
+
+    Livewire::test(ListApplications::class)
+        ->callAction(TestAction::make('changeStatus')->table($application), [
+            'status_id' => status('no-answer')->getKey(),
+            'note' => 'Не берёт трубку, перезвонить после обеда',
+        ]);
+
+    expect($application->fresh()->note)->toBe('Не берёт трубку, перезвонить после обеда')
+        ->and($application->fresh()->status->slug)->toBe('no-answer');
+});
+
+it('does not wipe the notes when several applications change status at once', function (): void {
+    $applications = Application::factory()->count(2)->create();
+    $applications->each(fn (Application $item) => $item->update(['note' => 'Своя заметка '.$item->getKey()]));
+
+    $admin = panelUser(['ViewAny:Application', 'View:Application']);
+    $admin->givePermissionTo(Permission::findOrCreate('Update:Application', 'web'));
+    $this->actingAs($admin->refresh());
+
+    Livewire::test(ListApplications::class)
+        ->selectTableRecords($applications->pluck('id')->all())
+        ->callAction(TestAction::make('changeStatus')->table()->bulk(), [
+            'status_id' => status('accepted')->getKey(),
+        ]);
+
+    foreach ($applications as $application) {
+        expect($application->fresh()->note)->toBe('Своя заметка '.$application->getKey())
+            ->and($application->fresh()->status->slug)->toBe('accepted');
+    }
+});
+
+it('keeps the note out of what the site is handed', function (): void {
+    expect((new Application)->getFillable())->toContain('note')
+        ->and(ApplicationController::class)->toBeString();
+
+    $this->postJson(route('api.v1.applications.store'), [
+        'phone' => '998901234567',
+        'theme' => ApplicationTheme::create(['name' => ['ru' => 'Тема']])->getKey(),
+        'message' => 'Текст',
+        'note' => 'подсунутая заметка',
+    ])->assertCreated();
+
+    expect(Application::query()->value('note'))->toBeNull();
+});

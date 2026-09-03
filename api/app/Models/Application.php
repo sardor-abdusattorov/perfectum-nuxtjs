@@ -23,6 +23,7 @@ class Application extends Model
         'message',
         'status_id',
         'processed_at',
+        'note',
         'ip_address',
     ];
 
