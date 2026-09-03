@@ -1,18 +1,6 @@
 import { gaugeAngle, gaugeLabel, gaugeNeedle, gaugeValue } from '~/utils/gauge'
 
-const documentHandlers = new Map()
 const teardown = []
-
-function bindDocument(key, type, handler) {
-  const previous = documentHandlers.get(key)
-
-  if (previous) {
-    document.removeEventListener(type, previous)
-  }
-
-  documentHandlers.set(key, handler)
-  document.addEventListener(type, handler)
-}
 
 function onFrame(callback) {
   let handle = requestAnimationFrame(function step(time) {
@@ -31,14 +19,6 @@ function observe(observer) {
   })
 
   return observer
-}
-
-function delay(callback, ms) {
-  const handle = setTimeout(callback, ms)
-
-  teardown.push(function () {
-    clearTimeout(handle)
-  })
 }
 
 function release() {
@@ -217,110 +197,6 @@ function initBlock1() {
 }
 
 function initBlock2() {
-  const covEl = document.getElementById("coverage-map");
-  if (covEl) {
-    const CITIES = {
-      "Ташкент": [41.311, 69.24],
-      "Самарканд": [39.654, 66.96],
-      "Бухара": [39.767, 64.421],
-      "Нукус": [42.46, 59.617],
-      "Ургенч": [41.55, 60.631],
-    };
-    let covMap = null;
-
-    function buildCoverage() {
-      covMap = new ymaps.Map(covEl, {
-        center: [41.6, 64.5],
-        zoom: 6,
-        controls: [],
-      }, {
-        suppressMapOpenBlock: true,
-        balloonPanelMaxMapArea: 400 * 400,
-      });
-      covMap.behaviors.disable("scrollZoom");
-
-      Object.keys(CITIES).forEach(function (name) {
-        covMap.geoObjects.add(new ymaps.Circle([CITIES[name], 26000], {
-          hintContent: "Зона покрытия · " + name,
-        }, {
-          strokeColor: "#e60000",
-          strokeWidth: 1.5,
-          fillColor: "#e60000",
-          fillOpacity: 0.18,
-        }));
-      });
-
-      delay(function () { covMap.container.fitToViewport(); }, 250);
-    }
-
-    document.querySelectorAll(".map_coverage .map__zoom-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        if (!covMap) return;
-        covMap.setZoom(covMap.getZoom() + (btn.dataset.zoom === "in" ? 1 : -1), {
-          duration: 200,
-        });
-      });
-    });
-
-    if (typeof ymaps !== "undefined" && typeof ymaps.ready === "function") {
-      ymaps.ready(buildCoverage);
-    }
-
-    delay(function () {
-      if (covMap) return;
-      covEl.innerHTML =
-        '<p class="map__fallback">Карта временно недоступна.<br />' +
-        "Проверить покрытие можно у оператора поддержки.</p>";
-    }, 8000);
-
-    const covForm = document.querySelector(".coverage-search");
-    const covSelect = covForm ? covForm.querySelector(".select__control") : null;
-    function flyToCity() {
-      const c = covSelect && CITIES[covSelect.value];
-      if (c && covMap) covMap.setCenter(c, 10, { duration: 800 });
-    }
-    if (covSelect) covSelect.addEventListener("change", flyToCity);
-    if (covForm) covForm.addEventListener("submit", function (e) { e.preventDefault(); flyToCity(); });
-
-    const covFind = covForm && covForm.querySelector(".coverage-search__find");
-    if (covFind) {
-      const covField = covFind.querySelector(".coverage-search__field");
-      const covInput = covFind.querySelector(".coverage-search__input");
-      const covBtn = covFind.querySelector(".coverage-search__btn");
-      const covClose = covFind.querySelector(".coverage-search__close");
-
-      function openFind() {
-        covFind.classList.add("coverage-search__find_open");
-        covForm.classList.add("coverage-search_searching");
-        covInput.focus();
-      }
-      function closeFind() {
-        covFind.classList.remove("coverage-search__find_open");
-        covForm.classList.remove("coverage-search_searching");
-        covInput.value = "";
-        if (covFind.contains(document.activeElement)) document.activeElement.blur();
-      }
-
-      covBtn.addEventListener("click", function (e) {
-        const shown = getComputedStyle(covField).visibility === "visible";
-        if (!shown) {
-          e.preventDefault();
-          openFind();
-          return;
-        }
-        covFind.classList.add("coverage-search__find_open");
-        covForm.classList.add("coverage-search_searching");
-        covInput.focus();
-      });
-      covClose.addEventListener("click", closeFind);
-      covInput.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeFind();
-      });
-      bindDocument("coverage-outside", "click", function (e) {
-        if (!covFind.contains(e.target) && !covInput.value) closeFind();
-      });
-    }
-  }
 
   const helpSection = document.querySelector(".help");
   if (helpSection) {
