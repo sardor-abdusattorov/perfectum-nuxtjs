@@ -53,8 +53,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # There is no package.json at the repository root, so the action cannot
-      # read `packageManager` out of frontend/ — the version has to be named.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -77,16 +75,17 @@ jobs:
 
   deploy:
     name: Deploy
-    # website-srv-01 sits on 172.16.24.133, inside Perfectum's network, so a
-    # GitHub-hosted runner cannot reach it over SSH. The job runs on the server
-    # itself instead — no host, user or key to keep as secrets.
     runs-on: [self-hosted, website-srv-01]
     needs: [test, build-frontend]
 
     env:
-      APP_PATH: /var/www/perfectum/production-v2
+      APP_PATH: /var/www/perfectum/perfectum-nuxtjs
       SERVICE: perfectum-v2-nuxt
       HEALTH_URL: http://127.0.0.1:3001/
+      NODE_USE_ENV_PROXY: '1'
+      COREPACK_PROXY: http://172.16.12.12:8080/
+      COREPACK_HTTPS_PROXY: http://172.16.12.12:8080/
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
 
     steps:
       - name: Pull main
@@ -95,15 +94,11 @@ jobs:
 
           if [ ! -d "$APP_PATH/.git" ]; then
             echo "$APP_PATH — не git-клон, деплою нечего обновлять."
-            echo "Один раз на сервере: git init -b main && git remote add origin <repo> && git fetch origin main"
             exit 1
           fi
 
           cd "$APP_PATH"
 
-          # fetch + reset, а не pull: возвращает дерево к main, даже если
-          # отслеживаемые файлы правили на сервере руками. Untracked (.env,
-          # storage, vendor, node_modules, .output) остаются на месте.
           git fetch origin main
           git reset --hard origin/main
 
@@ -113,23 +108,16 @@ jobs:
           cd "$APP_PATH/api"
 
           export NVM_DIR="$HOME/.nvm"
-          # shellcheck source=/dev/null
           . "$NVM_DIR/nvm.sh"
 
           composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
-          # Тема панели собирается из исходников — её надо пересобирать после
-          # смены темы или версии Filament.
           npm ci --no-audit --no-fund
           npm run build
 
           php artisan storage:link || true
           php artisan filament:assets
-
-          # Миграции, политики, роли на нужном гварде — и в конце optimize:clear.
           php artisan project:update
-
-          # Поэтому кэши греем уже после него, иначе прод останется без них.
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache
@@ -140,7 +128,6 @@ jobs:
           cd "$APP_PATH/frontend"
 
           export NVM_DIR="$HOME/.nvm"
-          # shellcheck source=/dev/null
           . "$NVM_DIR/nvm.sh"
 
           pnpm install --frozen-lockfile
@@ -150,19 +137,14 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Собранный сервер отдаёт прошлый бандл, пока процесс не перезапущен.
-          # Нужно правило sudo без пароля именно на эту команду.
           if ! sudo -n systemctl restart "$SERVICE"; then
             echo "Не удалось перезапустить $SERVICE."
-            echo "Проверьте: sudo -n systemctl restart $SERVICE"
-            echo "И правило: /etc/sudoers.d/perfectum-deploy"
+            echo "Проверьте правило: /etc/sudoers.d/perfectum-deploy"
             exit 1
           fi
 
-          # Перезапуск сам по себе ничего не обещает: сборка могла упасть на
-          # старте. Ждём, пока порт ответит, иначе деплой считается неудачным.
           for attempt in $(seq 1 30); do
-            if curl -fsS --max-time 5 -o /dev/null "$HEALTH_URL"; then
+            if curl -fsS --max-time 5 --noproxy '*' -o /dev/null "$HEALTH_URL"; then
               echo "Фронтенд отвечает на $HEALTH_URL"
               exit 0
             fi
