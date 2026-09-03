@@ -13,7 +13,7 @@ return new class extends Migration
     /**
      * @var array<int, string>
      */
-    private const TABLES = ['news', 'actions', 'services', 'devices', 'vacancies', 'tenders', 'pages'];
+    private const TABLES = ['news', 'actions', 'services', 'devices', 'vacancies', 'tenders', 'pages', 'tariffs'];
 
     public function up(): void
     {

@@ -80,6 +80,40 @@ it('keeps blocks and loose runs in the order they were written', function (): vo
         ->and($doc['content'][0]['content'][2]['content'][0]['text'])->toBe('После');
 });
 
+it('moves a table caption out in front of the table it titled', function (): void {
+    $doc = richDocument('<table><caption>Режим работы офиса</caption><tbody><tr><th>Будни</th><td>09:00-19:00</td></tr></tbody></table>');
+
+    expect(array_column($doc['content'], 'type'))->toBe(['paragraph', 'table'])
+        ->and($doc['content'][0]['content'][0]['text'])->toBe('Режим работы офиса')
+        ->and(array_column($doc['content'][1]['content'], 'type'))->toBe(['tableRow']);
+});
+
+it('leaves a table holding nothing but rows, whatever the old html put inside it', function (): void {
+    $doc = richDocument('<table><caption>Подпись</caption><colgroup><col></colgroup><tbody><tr><td>Ячейка</td></tr></tbody></table>');
+
+    $strays = array_filter(
+        $doc['content'][1]['content'],
+        fn (array $node): bool => $node['type'] !== 'tableRow',
+    );
+
+    expect($strays)->toBe([]);
+});
+
+it('drops a table that turned out to have no rows at all', function (): void {
+    $doc = richDocument('<table><caption>Только подпись</caption></table>');
+
+    expect(array_column($doc['content'], 'type'))->toBe(['paragraph'])
+        ->and($doc['content'][0]['content'][0]['text'])->toBe('Только подпись');
+});
+
+it('keeps the caption text when the block is saved back as html', function (): void {
+    $doc = richDocument('<table><caption>Режим работы офиса</caption><tbody><tr><th>Будни</th><td>09:00-19:00</td></tr></tbody></table>');
+
+    expect(RichContentRenderer::make($doc)->toHtml())
+        ->toContain('<p>Режим работы офиса</p>')
+        ->toContain('<table>');
+});
+
 it('hands anything that is not a document straight back', function (): void {
     expect((new RichContentStateCast)->set(null))->toBeNull()
         ->and((new RichContentStateCast)->set('<p>текст</p>'))->toBe('<p>текст</p>')

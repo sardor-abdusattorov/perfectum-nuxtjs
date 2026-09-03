@@ -30,7 +30,7 @@ class Tables
             ->numeric()
             ->sortable()
             ->alignEnd()
-            ->toggleable(isToggledHiddenByDefault: true);
+            ->toggleable();
     }
 
     public static function statusColumn(string $field = 'status'): ToggleColumn

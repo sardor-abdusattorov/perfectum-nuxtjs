@@ -38,6 +38,8 @@ class TariffsTable
                     ->description(fn ($record): ?string => $record->price_period)
                     ->placeholder('—'),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([

@@ -26,7 +26,7 @@ class ChangeApplicationStatusAction
                 $record->update(['status_id' => $data['status_id']]);
                 $record->addNote((string) ($data['note'] ?? ''));
             })
-            ->successNotificationTitle(__('app.message.status_updated'));
+            ->successNotificationTitle(__('app.notification.status_updated'));
     }
 
     /**
@@ -51,7 +51,7 @@ class ChangeApplicationStatusAction
                 }
             })
             ->deselectRecordsAfterCompletion()
-            ->successNotificationTitle(__('app.message.status_updated'));
+            ->successNotificationTitle(__('app.notification.status_updated'));
     }
 
     /**

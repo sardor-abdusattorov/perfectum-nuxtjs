@@ -45,8 +45,10 @@ class TariffController
         return response()->json(['data' => $files]);
     }
 
-    public function show(Tariff $tariff): JsonResponse
+    public function show(Request $request, Tariff $tariff): JsonResponse
     {
+        $tariff->registerView($request);
+
         return response()->json([
             'data' => TariffResource::make($tariff->loadMissing(['category', 'type']))->resolve(),
         ]);

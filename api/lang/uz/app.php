@@ -119,6 +119,7 @@ return [
         'page_settings_plural' => 'Sahifalar SEO',
         'page' => 'Sahifa',
         'og_image' => 'Ijtimoiy tarmoqlar uchun rasm',
+        'link' => 'Havola',
         'is_indexed' => 'Indekslash',
         'seo' => 'SEO',
         'news_category_single' => 'Yangilik toifasi',
@@ -384,6 +385,8 @@ return [
         'page_content' => 'Sahifa faqat kartochkalar roʻyxati boʻlsa, boʻsh qoldirsa ham boʻladi',
         'page_cards' => 'Tayyor sahifalardan kartochkalar roʻyxatini yigʻing — «Полезно знать» kabi. Tartibni har birining «Saralash» maydoni belgilaydi',
         'page_seo' => 'Boʻsh qoldirilsa — asosiy sozlamalardagi qiymatlar olinadi',
+        'og_image' => 'Havola messenjer yoki ijtimoiy tarmoqqa yuborilganda koʻrinadigan rasm. Boʻsh boʻlsa — asosiy sozlamalardagi rasm olinadi',
+        'is_indexed' => 'Sahifa Google va Yandeks qidiruviga tushmasligi uchun oʻchiring',
         'if_disabled_not_shown' => 'Oʻchirilgan boʻlsa — saytda koʻrsatilmaydi',
         'hero_slides' => 'Slaydlar karusel boʻlib aylanadi, tartibini surib oʻzgartirish mumkin',
         'lead_text' => 'Telefon oʻng tomonidagi xatboshi; mobil qurilmada uning ostida chiqadi. Yonidagi doʻkon tugmalari sayt sozlamalaridan olinadi',
@@ -461,6 +464,7 @@ return [
 
     'notification' => [
         'saved' => 'Saqlandi',
+        'status_updated' => 'Status oʻzgartirildi',
         'profile_updated' => 'Profil yangilandi',
         'password_updated' => 'Parol yangilandi',
         'confirm_logout_other_sessions' => 'Boshqa brauzer seanslaridan chiqishni tasdiqlash uchun parolni kiriting.',
@@ -513,10 +517,6 @@ return [
         'news' => 'Yangiliklar',
         'promo' => 'Aksiyalar',
         'dealers' => 'Dilerlar',
-    ],
-
-    'color' => [
-
     ],
 
     'suffix' => [
