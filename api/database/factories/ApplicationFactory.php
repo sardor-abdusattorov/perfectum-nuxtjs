@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Application;
+use App\Models\ApplicationStatus;
 use App\Models\ApplicationTheme;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +22,7 @@ class ApplicationFactory extends Factory
             'email' => fake()->safeEmail(),
             'theme_id' => ApplicationTheme::factory(),
             'message' => fake()->sentence(),
-            'status' => Application::STATUS_NEW,
+            'status_id' => ApplicationStatus::default()?->getKey(),
             'ip_address' => fake()->ipv4(),
         ];
     }

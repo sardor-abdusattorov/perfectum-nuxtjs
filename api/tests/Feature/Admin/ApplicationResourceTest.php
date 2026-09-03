@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Filament\Resources\Applications\Pages\ListApplications;
 use App\Models\Application;
+use App\Models\ApplicationStatus;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -49,7 +50,8 @@ it('leaves every status untouched when one application is opened', function (): 
         ->assertOk();
 
     foreach ($applications as $application) {
-        expect($application->fresh()->status)->toBe(Application::STATUS_NEW);
+        expect($application->fresh()->status->slug)->toBe('new')
+            ->and($application->fresh()->processed_at)->toBeNull();
     }
 });
 
@@ -61,14 +63,16 @@ it('changes the status of one application only', function (): void {
 
     $this->actingAs($this->admin->refresh());
 
+    $processed = ApplicationStatus::query()->where('slug', 'processed')->firstOrFail();
+
     Livewire::test(ListApplications::class)
         ->callAction(TestAction::make('changeStatus')->table($target), [
-            'status' => Application::STATUS_PROCESSED,
+            'status_id' => $processed->getKey(),
         ]);
 
-    expect($target->fresh()->status)->toBe(Application::STATUS_PROCESSED);
-    expect($applications->get(1)->fresh()->status)->toBe(Application::STATUS_NEW);
-    expect($applications->get(2)->fresh()->status)->toBe(Application::STATUS_NEW);
+    expect($target->fresh()->status->slug)->toBe('processed');
+    expect($applications->get(1)->fresh()->status->slug)->toBe('new');
+    expect($applications->get(2)->fresh()->status->slug)->toBe('new');
 });
 
 it('hides the status change from an account without the update permission', function (): void {
@@ -79,5 +83,5 @@ it('hides the status change from an account without the update permission', func
     Livewire::test(ListApplications::class)
         ->assertActionHidden(TestAction::make('changeStatus')->table($application));
 
-    expect($application->fresh()->status)->toBe(Application::STATUS_NEW);
+    expect($application->fresh()->status->slug)->toBe('new');
 });

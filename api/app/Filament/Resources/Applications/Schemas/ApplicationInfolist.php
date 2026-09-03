@@ -18,12 +18,17 @@ class ApplicationInfolist
                 Section::make(__('app.label.application_single'))
                     ->columns(1)
                     ->schema([
-                        TextEntry::make('status')
+                        TextEntry::make('status.name')
                             ->label(__('app.label.status'))
                             ->badge()
-                            ->color(fn(?string $state): string => Application::statusColor($state))
-                            ->formatStateUsing(fn(?string $state): string => Application::statusLabel($state))
+                            ->color(fn (Application $record): string => $record->status?->color ?? 'gray')
+                            ->placeholder('—')
                             ->hintAction(ChangeApplicationStatusAction::make()),
+
+                        TextEntry::make('processed_at')
+                            ->label(__('app.label.handling_time'))
+                            ->state(fn (Application $record): ?string => Application::readableHandlingTime($record->handlingSeconds()))
+                            ->placeholder('—'),
 
                         TextEntry::make('theme.name')
                             ->label(__('app.label.application_theme'))

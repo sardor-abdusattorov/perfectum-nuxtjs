@@ -74,6 +74,11 @@ return [
         'message' => 'Сообщение',
         'ip_address' => 'IP-адрес',
         'created' => 'Создано',
+        'application_status_single' => 'Статус заявки',
+        'application_status_plural' => 'Статусы заявок',
+        'is_default_status' => 'Статус по умолчанию',
+        'handling_time' => 'Время обработки',
+        'handling_time_average' => 'В среднем',
         'free_number_filter_single' => 'Фильтр номеров CDMA',
         'free_number_filter_plural' => 'Номера CDMA',
         'filter_type' => 'Тип фильтра',
@@ -403,6 +408,8 @@ return [
         'seo_og_image' => 'Рекомендуемый размер: 1200x630px. Формат PNG или JPEG.',
         'metrics_yandex' => 'Вставьте сюда код счётчика Яндекс.Метрики',
         'metrics_google' => 'Вставьте сюда код Google Analytics',
+        'is_default_status' => 'Этот статус получает каждая новая заявка. Он же означает «ещё не обработана»',
+        'status_in_use' => 'Статус нельзя удалить: он стоит у заявок. Выключите его, чтобы больше не предлагался',
         'maps_yandex_key' => 'Ключ JavaScript API из кабинета разработчика Яндекса. Без него карта покрытия и карта офисов пишут в консоль «Invalid API key», а поиск по адресу не работает',
         'tariff_type' => 'Чип-фильтр в списке и подпись на карточке — «Тариф 5G», «Qulay ежемесячные»',
         'price_value' => 'Только число, как на карточке — 100 000',
@@ -542,11 +549,6 @@ return [
         'speed' => 'Скорость',
     ],
 
-    'application_status' => [
-        'new' => 'Новая',
-        'processed' => 'Обработана',
-    ],
-
     'filter_type' => [
         'prefix' => 'Префикс',
         'number' => 'Серия',
@@ -624,5 +626,21 @@ return [
     'menu_location' => [
         'header' => 'Шапка 5G',
         'footer' => 'Подвал 5G',
+    ],
+
+    'badge_color' => [
+        'gray' => 'Серый',
+        'danger' => 'Красный',
+        'warning' => 'Оранжевый',
+        'success' => 'Зелёный',
+        'info' => 'Голубой',
+        'primary' => 'Синий',
+    ],
+
+    'duration' => [
+        'seconds' => ':value с',
+        'minutes' => ':value мин',
+        'hours' => ':value ч',
+        'days' => ':value д',
     ],
 ];

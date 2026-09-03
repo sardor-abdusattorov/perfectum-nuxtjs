@@ -27,7 +27,6 @@ it('stores an application with a normalised phone', function (): void {
         'phone' => '+998 (90) 123-45-67',
         'theme_id' => $this->theme->id,
         'message' => 'Хочу подключить интернет',
-        'status' => Application::STATUS_NEW,
     ]);
 });
 

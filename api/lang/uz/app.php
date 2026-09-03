@@ -74,6 +74,11 @@ return [
         'message' => 'Xabar',
         'ip_address' => 'IP-manzil',
         'created' => 'Yaratilgan',
+        'application_status_single' => 'Ariza statusi',
+        'application_status_plural' => 'Ariza statuslari',
+        'is_default_status' => 'Boshlangʻich status',
+        'handling_time' => 'Ishlov berish vaqti',
+        'handling_time_average' => 'Oʻrtacha',
         'free_number_filter_single' => 'CDMA raqamlar filtri',
         'free_number_filter_plural' => 'CDMA raqamlar',
         'filter_type' => 'Filtr turi',
@@ -403,6 +408,8 @@ return [
         'seo_og_image' => 'Tavsiya etilgan oʻlcham: 1200x630px. PNG yoki JPEG formati.',
         'metrics_yandex' => 'Yandex Metrika hisoblagich kodini shu yerga joylashtiring',
         'metrics_google' => 'Google Analytics kodini shu yerga joylashtiring',
+        'is_default_status' => 'Har bir yangi ariza shu statusni oladi. U «hali ishlov berilmagan» degani',
+        'status_in_use' => 'Statusni oʻchirib boʻlmaydi: u arizalarda turibdi. Taklif qilinmasligi uchun uni oʻchiring',
         'maps_yandex_key' => 'Yandex dasturchi kabinetidagi JavaScript API kaliti. U bo‘lmasa qamrov va ofislar xaritasi konsolga «Invalid API key» yozadi, manzil bo‘yicha qidiruv ishlamaydi',
         'tariff_type' => 'Roʻyxatdagi chip-filtr va kartochkadagi yozuv — «Тариф 5G», «Qulay oylik»',
         'price_value' => 'Faqat son, kartochkadagidek — 100 000',
@@ -547,11 +554,6 @@ return [
         'speed' => 'Tezlik',
     ],
 
-    'application_status' => [
-        'new' => 'Yangi',
-        'processed' => 'Koʻrib chiqilgan',
-    ],
-
     'filter_type' => [
         'prefix' => 'Prefiks',
         'number' => 'Seriya',
@@ -629,5 +631,21 @@ return [
     'menu_location' => [
         'header' => '5G yuqori panel',
         'footer' => '5G pastki panel',
+    ],
+
+    'badge_color' => [
+        'gray' => 'Kulrang',
+        'danger' => 'Qizil',
+        'warning' => 'Toʻq sariq',
+        'success' => 'Yashil',
+        'info' => 'Moviy',
+        'primary' => 'Koʻk',
+    ],
+
+    'duration' => [
+        'seconds' => ':value s',
+        'minutes' => ':value daq',
+        'hours' => ':value soat',
+        'days' => ':value kun',
     ],
 ];

@@ -4,14 +4,17 @@ namespace App\Filament\Resources\Applications\Tables;
 
 use App\Filament\Resources\Applications\Actions\ChangeApplicationStatusAction;
 use App\Models\Application;
+use App\Models\ApplicationStatus;
 use App\Models\ApplicationTheme;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Query\Builder;
 
 class ApplicationsTable
 {
@@ -41,12 +44,22 @@ class ApplicationsTable
                     ->searchable()
                     ->placeholder('—'),
 
-                TextColumn::make('status')
+                TextColumn::make('status.name')
                     ->label(__('app.label.status'))
                     ->badge()
-                    ->color(fn (?string $state): string => Application::statusColor($state))
-                    ->formatStateUsing(fn (?string $state): string => Application::statusLabel($state))
+                    ->color(fn (Application $record): string => $record->status?->color ?? 'gray')
+                    ->placeholder('—')
                     ->sortable(),
+
+                TextColumn::make('processed_at')
+                    ->label(__('app.label.handling_time'))
+                    ->state(fn (Application $record): ?string => Application::readableHandlingTime($record->handlingSeconds()))
+                    ->placeholder('—')
+                    ->summarize(Summarizer::make()
+                        ->label(__('app.label.handling_time_average'))
+                        ->using(fn (Builder $query): ?string => Application::readableHandlingTime(
+                            Application::averageHandlingSeconds($query)
+                        ))),
 
                 TextColumn::make('created_at')
                     ->label(__('app.label.created'))
@@ -55,9 +68,9 @@ class ApplicationsTable
                     ->placeholder('—'),
             ])
             ->filters([
-                SelectFilter::make('status')
+                SelectFilter::make('status_id')
                     ->label(__('app.label.status'))
-                    ->options(Application::getStatusOptions()),
+                    ->options(ApplicationStatus::options()),
 
                 SelectFilter::make('theme_id')
                     ->label(__('app.label.application_theme'))

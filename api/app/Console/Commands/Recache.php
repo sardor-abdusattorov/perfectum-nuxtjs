@@ -14,6 +14,8 @@ final class Recache extends Command
 
     public function handle(): void
     {
+        $this->call('permission:cache-reset');
+
         $this->call('filament:optimize-clear');
         $this->call('optimize:clear');
         $this->call('optimize');

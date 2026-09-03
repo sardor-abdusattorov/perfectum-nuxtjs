@@ -31,6 +31,7 @@ it('renders the list and create page of every resource', function (string $resou
 })->with([
     ['actions', 'Action'],
     ['application-themes', 'ApplicationTheme'],
+    ['application-statuses', 'ApplicationStatus'],
     ['news-categories', 'NewsCategory'],
     ['action-categories', 'ActionCategory'],
     ['faq-categories', 'FaqCategory'],

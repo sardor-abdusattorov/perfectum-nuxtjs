@@ -42,7 +42,7 @@ class ApplicationResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $new = static::$model::where('status', Application::STATUS_NEW)->count();
+        $new = static::$model::query()->whereNull('processed_at')->count();
 
         return $new > 0 ? (string) $new : null;
     }

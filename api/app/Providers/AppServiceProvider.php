@@ -8,6 +8,7 @@ use App\Filament\Resources\Activities\Widgets\ActivityTrendChartWidget;
 use App\Filament\Resources\Activities\Widgets\HighRiskActionsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopEventsChartWidget;
 use App\Filament\Resources\Activities\Widgets\TopUsersChartWidget;
+use App\Models\ApplicationStatus;
 use App\Models\ContentBlock;
 use App\Models\Menu;
 use App\Models\Page;
@@ -85,6 +86,7 @@ class AppServiceProvider extends ServiceProvider
             $taxonomy::observe(TaxonomyObserver::class);
         }
 
+        ApplicationStatus::observe(TaxonomyObserver::class);
         ContentBlock::observe(ContentBlockObserver::class);
         Menu::observe(MenuObserver::class);
         Page::observe(PageObserver::class);

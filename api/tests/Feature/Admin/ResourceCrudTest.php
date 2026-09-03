@@ -8,6 +8,7 @@ use App\Enums\PageKey;
 use App\Models\Action;
 use App\Models\ActionCategory;
 use App\Models\Application;
+use App\Models\ApplicationStatus;
 use App\Models\ApplicationTheme;
 use App\Models\CoverageLayer;
 use App\Models\Device;
@@ -79,6 +80,9 @@ function crudRecords(): array
         ]),
         ApplicationTheme::class => fn (): Model => ApplicationTheme::create([
             'name' => ['ru' => 'Подключение', 'uz' => 'Ulanish'],
+        ]),
+        ApplicationStatus::class => fn (): Model => ApplicationStatus::create([
+            'name' => ['ru' => 'Перезвонить', 'uz' => 'Qayta qoʻngʻiroq'], 'slug' => 'perezvonit',
         ]),
         CoverageLayer::class => fn (): Model => CoverageLayer::create([
             'key' => 'coverage-5g', 'name' => ['ru' => 'Покрытие', 'uz' => 'Qamrov'],

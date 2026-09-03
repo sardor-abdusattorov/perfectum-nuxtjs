@@ -26,6 +26,8 @@ final class ProjectUpdate extends Command
             '--panel' => 'admin',
         ]);
 
+        $this->call('permission:cache-reset');
+
         $this->call('filament:optimize-clear');
         $this->call('optimize:clear');
     }

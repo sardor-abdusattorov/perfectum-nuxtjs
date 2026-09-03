@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\StoreApplicationRequest;
 use App\Models\Application;
+use App\Models\ApplicationStatus;
 use Illuminate\Http\JsonResponse;
 
 class ApplicationController
@@ -16,7 +17,7 @@ class ApplicationController
             'phone' => $request->formattedPhone(),
             'theme_id' => $request->validated('theme'),
             'message' => $request->validated('message'),
-            'status' => Application::STATUS_NEW,
+            'status_id' => ApplicationStatus::default()?->getKey(),
             'ip_address' => $request->ip(),
         ]);
 

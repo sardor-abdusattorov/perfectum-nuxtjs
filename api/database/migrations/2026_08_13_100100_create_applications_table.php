@@ -15,7 +15,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->foreignId('theme_id')->nullable()->constrained('application_themes')->restrictOnDelete();
             $table->text('message')->nullable();
-            $table->string('status', 20)->default('new')->index();
+            $table->foreignId('status_id')->nullable()->constrained('application_statuses')->restrictOnDelete();
+            $table->timestamp('processed_at')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->timestamps();
 
