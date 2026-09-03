@@ -35,9 +35,11 @@ function rollPagesBackToTheFlatShape(): void
 
 function runThePageCardsMigration(): void
 {
-    $migration = require database_path('migrations/2026_09_03_140000_add_card_columns_to_pages.php');
+    foreach (['2026_09_03_140000_add_card_columns_to_pages', '2026_09_03_170000_add_is_group_to_pages'] as $file) {
+        $migration = require database_path("migrations/{$file}.php");
 
-    $migration->up();
+        $migration->up();
+    }
 }
 
 /**
@@ -79,6 +81,34 @@ it('lets a hub page be saved without any text of its own', function (): void {
     ]);
 
     expect($hub->fresh()->content)->toBeEmpty();
+});
+
+/**
+ * The site was already live when the group switch arrived, so its column could
+ * not ride along in the migration that had run months earlier — Laravel never
+ * opens that file again. This is the shape production was actually in.
+ */
+it('adds the group column to a table that already carries the card ones', function (): void {
+    rollPagesBackToTheFlatShape();
+
+    $earlier = require database_path('migrations/2026_09_03_140000_add_card_columns_to_pages.php');
+    $earlier->up();
+
+    expect(Schema::hasColumn('pages', 'is_group'))->toBeFalse();
+
+    $later = require database_path('migrations/2026_09_03_170000_add_is_group_to_pages.php');
+    $later->up();
+
+    expect(Schema::hasColumn('pages', 'is_group'))->toBeTrue();
+
+    $page = Page::create([
+        'slug' => 'polezno-znat',
+        'title' => ['ru' => 'Полезно знать'],
+        'is_group' => true,
+        'status' => true,
+    ]);
+
+    expect($page->fresh()->is_group)->toBeTrue();
 });
 
 it('runs twice without complaining, as a re-run deploy would', function (): void {
