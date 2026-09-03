@@ -33,7 +33,8 @@ class MenuForm
                         TextInput::make('key')
                             ->label(__('app.label.key'))
                             ->helperText(__('app.helper.menu_key'))
-                            ->alphaDash(),
+                            ->alphaDash()
+                            ->maxLength(255),
 
                         Select::make('parent_id')
                             ->label(__('app.label.parent_item'))

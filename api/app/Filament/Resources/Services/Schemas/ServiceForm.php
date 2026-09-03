@@ -56,7 +56,8 @@ class ServiceForm
                     ->schema([
                         TextInput::make('ussd')
                             ->label(__('app.label.ussd'))
-                            ->helperText(__('app.helper.service_ussd')),
+                            ->helperText(__('app.helper.service_ussd'))
+                            ->maxLength(255),
 
                         TranslatableTabs::make('price_translations')
                             ->schema([

@@ -61,7 +61,8 @@ class TariffForm
                             ->schema([
                                 TextInput::make('price')
                                     ->label(__('app.label.price_value'))
-                                    ->helperText(__('app.helper.price_value')),
+                                    ->helperText(__('app.helper.price_value'))
+                                    ->maxLength(255),
 
                                 TranslatableTabs::make('price_translations')
                                     ->schema([

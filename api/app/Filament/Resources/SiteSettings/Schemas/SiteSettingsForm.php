@@ -21,11 +21,13 @@ class SiteSettingsForm
                             ->label(__('app.label.name'))
                             ->helperText(__('app.helper.unique_setting_identifier'))
                             ->required()
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255),
 
                         TextInput::make('value')
                             ->label(__('app.label.value'))
-                            ->helperText(__('app.helper.setting_value_pairs')),
+                            ->helperText(__('app.helper.setting_value_pairs'))
+                            ->maxLength(255),
 
                         Toggle::make('is_published')
                             ->label(__('app.label.show_on_site'))
