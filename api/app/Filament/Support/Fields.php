@@ -63,6 +63,8 @@ class Fields
             ->label(__('app.label.slug'))
             ->helperText(__('app.helper.slug'))
             ->unique(ignoreRecord: true)
+            ->live(onBlur: true)
+            ->afterStateUpdated(fn (Set $set, ?string $state) => $set($field, Slug::fromInput($state)))
             ->alphaDash()
             ->maxLength(255);
     }

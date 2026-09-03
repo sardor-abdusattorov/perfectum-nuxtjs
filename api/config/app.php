@@ -14,6 +14,8 @@ return [
 
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
+    'display_timezone' => env('APP_DISPLAY_TIMEZONE', 'Asia/Tashkent'),
+
     'locale' => env('APP_LOCALE', 'ru'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ru'),

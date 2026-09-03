@@ -62,7 +62,7 @@ class ActivityResource extends BaseResource
 
             TextColumn::make('created_at')
                 ->label(static::resourceLabel('logged_at'))
-                ->dateTime(static::defaultDateTimeFormat(), config('app.timezone'))
+                ->dateTime(static::defaultDateTimeFormat(), config('app.display_timezone'))
                 ->sortable(),
         ];
     }

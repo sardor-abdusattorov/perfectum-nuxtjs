@@ -348,7 +348,7 @@ return [
         'redirect_from' => 'Eski sayt yoʻllari, ulardan shu sahifaga 301-redirekt olib keladi. Manzilni qoʻyib Enter bosing — domen va sleshlar oʻzi kesiladi',
         'network' => 'Qaysi tarmoq uchun — 5G, CDMA yoki ikkalasi',
         'menu_key' => 'Lotin harflarida — sider qayta ishga tushganda bandni shu orqali topadi. Oʻz bandlaringizni kalitsiz qoldirsa ham boʻladi',
-        'slug' => 'Lotin harflarida. Boʻsh qoldirsangiz — sarlavhadan yigʻiladi',
+        'slug' => 'Lotin harflarida. Boʻsh qoldirsangiz — sarlavhadan yigʻiladi. Havolani butunlay qoʻysangiz ham boʻladi — ortiqchasi kesiladi',
         'entity_category' => 'Yozuv shu orqali kerakli boʻlim va tarmoqqa tushadi',
         'category_type' => 'Turkum qaysi roʻyxatda chiqishini belgilaydi',
         'category_slug' => 'Lotin harflarida — frontend shu boʻyicha filtrlaydi',

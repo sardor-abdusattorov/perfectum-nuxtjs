@@ -42,6 +42,41 @@ class Slug
         return $base.'-'.$suffix;
     }
 
+    public static function fromInput(?string $value): string
+    {
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return '';
+        }
+
+        $value = (string) preg_replace('#^[a-z][a-z0-9+.-]*://[^/]+#i', '', $value);
+        $value = (string) strtok($value, '#');
+
+        [$path, $query] = array_pad(explode('?', $value, 2), 2, null);
+
+        if (filled($query)) {
+            parse_str((string) $query, $params);
+
+            $filter = collect($params)
+                ->filter(fn (mixed $item): bool => is_string($item) && filled($item))
+                ->last();
+
+            if (filled($filter)) {
+                return static::base((string) $filter);
+            }
+        }
+
+        $segments = array_values(array_filter(
+            explode('/', (string) $path),
+            fn (string $segment): bool => trim($segment) !== '',
+        ));
+
+        $last = end($segments);
+
+        return $last === false ? '' : static::base($last);
+    }
+
     public static function base(string $text): string
     {
         $slug = trim(mb_substr(Str::slug($text, '-', 'ru'), 0, static::MAX_LENGTH), '-');

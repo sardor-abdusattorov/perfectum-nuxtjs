@@ -30,6 +30,7 @@ use BezhanSalleh\LanguageSwitch\Enums\Placement;
 use BezhanSalleh\LanguageSwitch\Enums\PlacementMode;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 use Filament\Forms\Components\Field;
+use Filament\Support\Facades\FilamentTimezone;
 use Filament\Support\Facades\FilamentView;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
@@ -108,6 +109,8 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureFilament(): void
     {
+        FilamentTimezone::set(config('app.display_timezone'));
+
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
 
         FilamentShield::enforcePolicies();

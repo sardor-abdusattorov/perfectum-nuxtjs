@@ -33,6 +33,10 @@ trait GeneratesSlug
     protected function fillSlug(array $data): array
     {
         if (filled($data['slug'] ?? null)) {
+            $data['slug'] = Slug::fromInput((string) $data['slug']);
+        }
+
+        if (filled($data['slug'] ?? null)) {
             return $data;
         }
 
