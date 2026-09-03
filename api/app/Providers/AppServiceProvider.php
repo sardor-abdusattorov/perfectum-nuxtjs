@@ -27,6 +27,7 @@ use App\Observers\SiteTranslationObserver;
 use App\Observers\SocialObserver;
 use App\Observers\TaxonomyObserver;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
+use BezhanSalleh\FilamentShield\Support\Utils;
 use BezhanSalleh\LanguageSwitch\Enums\Placement;
 use BezhanSalleh\LanguageSwitch\Enums\PlacementMode;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
@@ -42,6 +43,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -71,6 +74,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureObservers();
+        $this->configureRoles();
         $this->configureDB();
         $this->configureModels();
         $this->configureFilament();
@@ -95,6 +99,20 @@ class AppServiceProvider extends ServiceProvider
         SiteSettings::observe(SiteSettingsObserver::class);
         SiteTranslation::observe(SiteTranslationObserver::class);
         Social::observe(SocialObserver::class);
+    }
+
+    /**
+     * Shield offers the guard as a free text field, and a role saved under any
+     * guard but the panel's own silently grants nothing at all. The application
+     * authenticates through one guard, so that is the only one a role or a
+     * permission may carry.
+     */
+    private function configureRoles(): void
+    {
+        $guard = fn (): string => Utils::getFilamentAuthGuard() ?: (string) config('auth.defaults.guard');
+
+        Role::saving(fn (Role $role) => $role->guard_name = $guard());
+        Permission::saving(fn (Permission $permission) => $permission->guard_name = $guard());
     }
 
     private function configureDB(): void

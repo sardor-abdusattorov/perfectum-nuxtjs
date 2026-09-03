@@ -88,7 +88,7 @@ final class RepairRoles extends Command
             $this->repoint('role_has_permissions', 'permission_id', 'role_id', $permission->getKey(), $canonical->getKey());
             $this->repoint('model_has_permissions', 'permission_id', 'model_id', $permission->getKey(), $canonical->getKey());
 
-            $permission->delete();
+            $this->drop('permissions', $permission->getKey());
         }
 
         $this->info("Права: перенесено на {$guard} — {$moved}, дубликатов слито — {$merged}.");
@@ -126,7 +126,7 @@ final class RepairRoles extends Command
             $this->repoint('role_has_permissions', 'role_id', 'permission_id', $role->getKey(), $canonical->getKey());
             $this->repoint('model_has_roles', 'role_id', 'model_id', $role->getKey(), $canonical->getKey());
 
-            $role->delete();
+            $this->drop('roles', $role->getKey());
         }
     }
 
@@ -140,6 +140,17 @@ final class RepairRoles extends Command
 
         DB::table($table)->where($column, $from)->whereIn($other, $taken)->delete();
         DB::table($table)->where($column, $from)->update([$column => $to]);
+    }
+
+    /**
+     * Spatie builds the `users` relation from the guard, so a row carrying one
+     * no provider answers for cannot be deleted through Eloquent at all — its
+     * own deleting hook throws. The pivots are already detached by hand above,
+     * so the row goes straight out.
+     */
+    private function drop(string $table, int $id): void
+    {
+        DB::table($table)->where('id', $id)->delete();
     }
 
     private function restorePanelAccess(string $guard): void
