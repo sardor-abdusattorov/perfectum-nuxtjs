@@ -554,8 +554,8 @@ sup {
   z-index: 70;
 }
 
-.header .header__menu-item_has-submenu:has(:focus-visible) .header__submenu,
-.header .header__menu-item_has-submenu:focus-within .header__submenu {
+.header .header__menu-item_has-submenu:not(.header__menu-item_closed):has(:focus-visible) .header__submenu,
+.header .header__menu-item_has-submenu:not(.header__menu-item_closed):focus-within .header__submenu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);

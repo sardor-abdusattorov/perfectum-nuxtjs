@@ -6,33 +6,34 @@ const t = useT()
 const mobileMenu = useMobileMenu()
 const route = useRoute()
 
-const SECTION = '.header__menu-item_has-submenu'
+/**
+ * Following a link out of a submenu leaves the cursor sitting on the item that
+ * opened it, so the dropdown would hang over the page just arrived at. Only
+ * that one item is held shut, and only until the cursor leaves it — a
+ * neighbour has nothing to do with the link that was clicked and must open on
+ * hover straight away.
+ */
+const closedItem = ref<number | null>(null)
 
-const submenuClosed = ref(false)
-
-function releaseSubmenu(event: PointerEvent): void {
-  if ((event.target as HTMLElement | null)?.closest(SECTION)) {
-    return
+function releaseSubmenu(id: number): void {
+  if (closedItem.value === id) {
+    closedItem.value = null
   }
-
-  submenuClosed.value = false
-  window.removeEventListener('pointermove', releaseSubmenu)
 }
 
 watch(() => route.fullPath, () => {
-  submenuClosed.value = true
-
   if (!import.meta.client) {
     return
   }
 
   const active = document.activeElement
+  const item = active instanceof HTMLElement ? active.closest('.header__menu-item') : null
 
-  if (active instanceof HTMLElement && active.closest('.header__submenu')) {
+  closedItem.value = item instanceof HTMLElement ? Number(item.dataset.menuItem) : null
+
+  if (item && active instanceof HTMLElement) {
     active.blur()
   }
-
-  window.addEventListener('pointermove', releaseSubmenu, { passive: true })
 })
 </script>
 
@@ -53,10 +54,12 @@ watch(() => route.fullPath, () => {
                           v-for="item in menu"
                           :key="item.id"
                           class="header__menu-item"
+                          :data-menu-item="item.id"
                           :class="[
                               item.children.length && 'header__menu-item_has-submenu',
-                              submenuClosed && 'header__menu-item_closed',
+                              closedItem === item.id && 'header__menu-item_closed',
                           ]"
+                          @pointerleave="releaseSubmenu(item.id)"
                       >
                           <LayoutMenuLink :item="item" link-class="header__link" />
 
