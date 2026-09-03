@@ -32,6 +32,8 @@ class PagesTable
                     ->copyable()
                     ->searchable(),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
 
                 TextColumn::make('updated_at')

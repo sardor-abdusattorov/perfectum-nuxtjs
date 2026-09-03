@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\CleansUpAttachedFiles;
+use App\Models\Concerns\CountsViews;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Spatie\Translatable\HasTranslations;
 class Page extends Model
 {
     use CleansUpAttachedFiles;
+    use CountsViews;
     use HasMediaUrl;
     use HasTranslations;
     use Publishable;
@@ -33,6 +35,7 @@ class Page extends Model
     public $translatable = ['title', 'content', 'meta_title', 'meta_description'];
 
     protected $casts = [
+        'views' => 'integer',
         'redirect_from' => 'array',
         'status' => 'boolean',
     ];

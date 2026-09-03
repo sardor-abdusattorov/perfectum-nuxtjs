@@ -74,6 +74,7 @@ return [
         'message' => 'Сообщение',
         'ip_address' => 'IP-адрес',
         'created' => 'Создано',
+        'views' => 'Просмотры',
         'application_status_single' => 'Статус заявки',
         'application_status_plural' => 'Статусы заявок',
         'is_default_status' => 'Статус по умолчанию',

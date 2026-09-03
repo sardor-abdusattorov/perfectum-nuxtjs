@@ -74,6 +74,7 @@ return [
         'message' => 'Xabar',
         'ip_address' => 'IP-manzil',
         'created' => 'Yaratilgan',
+        'views' => 'Koʻrishlar',
         'application_status_single' => 'Ariza statusi',
         'application_status_plural' => 'Ariza statuslari',
         'is_default_status' => 'Boshlangʻich status',

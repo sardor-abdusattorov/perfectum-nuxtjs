@@ -41,6 +41,8 @@ class ActionsTable
                     ->placeholder('—')
                     ->sortable(),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([

@@ -27,8 +27,10 @@ class DeviceController
         return DeviceResource::collection($this->paginate($records, $request, ['name', 'brand.name']));
     }
 
-    public function show(Device $device): JsonResponse
+    public function show(Request $request, Device $device): JsonResponse
     {
+        $device->registerView($request);
+
         return response()->json(['data' => DeviceResource::make(
             $device->loadMissing([
                 'category',

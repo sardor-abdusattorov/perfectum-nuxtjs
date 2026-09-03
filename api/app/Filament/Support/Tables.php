@@ -12,11 +12,27 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 
 class Tables
 {
+    /**
+     * How many readers the record has had. Sortable, so the list answers
+     * «what is being read» without leaving the panel; hidden by default
+     * because it is a number to look up, not one to scan past every day.
+     */
+    public static function viewsColumn(string $field = 'views'): TextColumn
+    {
+        return TextColumn::make($field)
+            ->label(__('app.label.views'))
+            ->numeric()
+            ->sortable()
+            ->alignEnd()
+            ->toggleable(isToggledHiddenByDefault: true);
+    }
+
     public static function statusColumn(string $field = 'status'): ToggleColumn
     {
         return ToggleColumn::make($field)

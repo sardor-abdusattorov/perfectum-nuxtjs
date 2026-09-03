@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Network;
 use App\Models\Concerns\BelongsToNetwork;
 use App\Models\Concerns\CleansUpAttachedFiles;
+use App\Models\Concerns\CountsViews;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
@@ -17,6 +18,7 @@ class Service extends Model
         BelongsToNetwork::scopeForNetwork insteadof HasCategory;
     }
     use CleansUpAttachedFiles;
+    use CountsViews;
     use HasMediaUrl;
     use HasTranslations;
     use Publishable;
@@ -45,6 +47,7 @@ class Service extends Model
     public $translatable = ['name', 'excerpt', 'lead', 'content', 'price'];
 
     protected $casts = [
+        'views' => 'integer',
         'network' => Network::class,
         'facts' => 'array',
         'steps' => 'array',

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('in_stock')->default(true);
             $table->integer('sort')->default(0);
             $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
 
             $table->index(['status', 'sort']);

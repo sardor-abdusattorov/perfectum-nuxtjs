@@ -48,6 +48,8 @@ class DevicesTable
                     ->label(__('app.label.in_stock'))
                     ->boolean(),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([

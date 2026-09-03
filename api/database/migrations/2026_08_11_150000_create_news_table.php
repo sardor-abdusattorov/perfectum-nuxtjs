@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('is_featured')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
 
             $table->index(['status', 'published_at']);

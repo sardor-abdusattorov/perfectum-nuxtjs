@@ -33,6 +33,8 @@ class VacanciesTable
                     ->label(__('app.label.sort'))
                     ->sortable(),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([

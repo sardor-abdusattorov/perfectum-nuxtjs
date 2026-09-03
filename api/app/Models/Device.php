@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\CleansUpAttachedFiles;
+use App\Models\Concerns\CountsViews;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
@@ -14,6 +15,7 @@ use Spatie\Translatable\HasTranslations;
 class Device extends Model
 {
     use CleansUpAttachedFiles;
+    use CountsViews;
     use HasCategory;
     use HasMediaUrl;
     use HasTranslations;
@@ -39,6 +41,7 @@ class Device extends Model
     public $translatable = ['name', 'excerpt', 'content'];
 
     protected $casts = [
+        'views' => 'integer',
         'specs' => 'array',
         'in_stock' => 'boolean',
         'status' => 'boolean',

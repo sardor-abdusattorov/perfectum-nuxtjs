@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('deadline_at')->nullable();
             $table->date('published_at')->nullable();
             $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
 
             $table->index(['status', 'deadline_at']);

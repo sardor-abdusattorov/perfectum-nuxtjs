@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('meta_description')->nullable();
             $table->json('redirect_from')->nullable();
             $table->boolean('status')->default(true)->index();
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

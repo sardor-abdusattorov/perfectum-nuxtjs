@@ -33,6 +33,8 @@ class TendersTable
                     ->placeholder('—')
                     ->sortable(),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([

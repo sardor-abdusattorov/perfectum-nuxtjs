@@ -25,8 +25,10 @@ class TenderController
         return TenderResource::collection($this->paginate($records, $request, ['title']));
     }
 
-    public function show(Tender $tender): JsonResponse
+    public function show(Request $request, Tender $tender): JsonResponse
     {
+        $tender->registerView($request);
+
         return response()->json(['data' => TenderResource::make($tender)->resolve()]);
     }
 }

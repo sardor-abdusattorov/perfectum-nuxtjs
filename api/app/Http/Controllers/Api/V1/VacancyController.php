@@ -24,8 +24,10 @@ class VacancyController
         return VacancyResource::collection($this->paginate($records, $request, ['title']));
     }
 
-    public function show(Vacancy $vacancy): JsonResponse
+    public function show(Request $request, Vacancy $vacancy): JsonResponse
     {
+        $vacancy->registerView($request);
+
         return response()->json(['data' => VacancyResource::make($vacancy)->resolve()]);
     }
 }

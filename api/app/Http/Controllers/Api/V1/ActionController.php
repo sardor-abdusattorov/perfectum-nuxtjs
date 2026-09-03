@@ -27,8 +27,10 @@ class ActionController
         return ActionResource::collection($this->paginate($records, $request, ['title']));
     }
 
-    public function show(Action $action): JsonResponse
+    public function show(Request $request, Action $action): JsonResponse
     {
+        $action->registerView($request);
+
         return response()->json(['data' => ActionResource::make($action->loadMissing('category'))->resolve()]);
     }
 }

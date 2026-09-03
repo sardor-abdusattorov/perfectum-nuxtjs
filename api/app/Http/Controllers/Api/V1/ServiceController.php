@@ -28,8 +28,10 @@ class ServiceController
         return ServiceResource::collection($this->paginate($records, $request, ['name', 'excerpt']));
     }
 
-    public function show(Service $service): JsonResponse
+    public function show(Request $request, Service $service): JsonResponse
     {
+        $service->registerView($request);
+
         return response()->json(['data' => ServiceResource::make($service->loadMissing('category'))->resolve()]);
     }
 }

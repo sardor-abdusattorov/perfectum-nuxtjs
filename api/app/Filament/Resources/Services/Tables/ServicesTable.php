@@ -39,6 +39,8 @@ class ServicesTable
                     ->color('gray')
                     ->placeholder('—'),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([

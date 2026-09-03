@@ -28,8 +28,10 @@ class NewsController
         return NewsResource::collection($this->paginate($news, $request, ['title']));
     }
 
-    public function show(News $news): JsonResponse
+    public function show(Request $request, News $news): JsonResponse
     {
+        $news->registerView($request);
+
         return response()->json(['data' => NewsResource::make($news->loadMissing('category'))->resolve()]);
     }
 }

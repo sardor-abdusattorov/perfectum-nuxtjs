@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('starts_at')->nullable();
             $table->date('ends_at')->nullable();
             $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
 
             $table->index(['status', 'ends_at']);

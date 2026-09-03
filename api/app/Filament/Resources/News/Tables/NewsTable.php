@@ -40,6 +40,8 @@ class NewsTable
                     ->date()
                     ->sortable(),
 
+                Tables::viewsColumn(),
+
                 Tables::statusColumn(),
             ])
             ->filters([
