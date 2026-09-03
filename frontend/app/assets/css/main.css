@@ -376,25 +376,78 @@ sup {
 
   z-index: 100;
   color: var(--color-white);
-  background: var(--color-black);
+  background: linear-gradient(90deg, #14161f 0%, #2a1116 55%, var(--color-red) 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
 }
 
 .preview-bar__row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 14px;
   min-height: var(--preview-bar-height);
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
-.preview-bar__text {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: 0.04em;
-  text-align: center;
+.preview-bar__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.preview-bar__badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+.preview-bar__hint {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-bar__exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.preview-bar__exit svg {
+  width: 14px;
+  height: 14px;
+}
+
+.preview-bar__exit:hover {
+  border-color: var(--color-white);
+  background: var(--color-white);
+  color: var(--color-black);
 }
 
 .preview-bar ~ .wrapper .header {
@@ -402,8 +455,17 @@ sup {
 }
 
 @media all and (max-width: 768px) {
-  .preview-bar__text {
-    font-size: 13px;
+  .preview-bar__hint {
+    display: none;
+  }
+
+  .preview-bar__row {
+    justify-content: space-between;
+  }
+
+  .preview-bar__badge {
+    font-size: 11px;
+    letter-spacing: 0.04em;
   }
 }
 

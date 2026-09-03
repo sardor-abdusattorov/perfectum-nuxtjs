@@ -28,6 +28,9 @@ class SiteTranslationSeeder extends Seeder
     {
         return [
             'services.files' => ['ru' => 'Файлы', 'uz' => 'Fayllar'],
+            'preview.notice' => ['ru' => 'Режим просмотра', 'uz' => 'Koʻrish rejimi'],
+            'preview.hint' => ['ru' => 'Черновик виден только вам по ссылке из админки', 'uz' => 'Qoralama faqat sizga, admin paneldagi havola orqali koʻrinadi'],
+            'preview.exit' => ['ru' => 'Выйти', 'uz' => 'Chiqish'],
             'error.not_found_title' => ['ru' => 'Такой страницы нет', 'uz' => 'Bunday sahifa yo‘q'],
             'error.not_found_text' => [
                 'ru' => 'Возможно, адрес набран с опечаткой или страница переехала. Загляните в разделы ниже — то, что вы искали, скорее всего там.',
