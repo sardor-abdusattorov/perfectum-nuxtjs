@@ -53,6 +53,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # There is no package.json at the repository root, so the action cannot
+      # read `packageManager` out of frontend/ — the version has to be named.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -75,49 +77,99 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    # website-srv-01 sits on 172.16.24.133, inside Perfectum's network, so a
+    # GitHub-hosted runner cannot reach it over SSH. The job runs on the server
+    # itself instead — no host, user or key to keep as secrets.
+    runs-on: [self-hosted, website-srv-01]
     needs: [test, build-frontend]
 
+    env:
+      APP_PATH: /var/www/perfectum/production-v2
+      SERVICE: perfectum-v2-nuxt
+      HEALTH_URL: http://127.0.0.1:3001/
+
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT }}
-          command_timeout: 20m
-          script: |
-            set -euo pipefail
+      - name: Pull main
+        run: |
+          set -euo pipefail
 
-            cd ${{ secrets.SERVER_APP_PATH }}
+          if [ ! -d "$APP_PATH/.git" ]; then
+            echo "$APP_PATH — не git-клон, деплою нечего обновлять."
+            echo "Один раз на сервере: git init -b main && git remote add origin <repo> && git fetch origin main"
+            exit 1
+          fi
 
-            git fetch origin main
-            git reset --hard origin/main
+          cd "$APP_PATH"
 
-            cd api
+          # fetch + reset, а не pull: возвращает дерево к main, даже если
+          # отслеживаемые файлы правили на сервере руками. Untracked (.env,
+          # storage, vendor, node_modules, .output) остаются на месте.
+          git fetch origin main
+          git reset --hard origin/main
 
-            composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+      - name: Build backend
+        run: |
+          set -euo pipefail
+          cd "$APP_PATH/api"
 
-            npm ci --no-audit --no-fund
-            npm run build
+          export NVM_DIR="$HOME/.nvm"
+          # shellcheck source=/dev/null
+          . "$NVM_DIR/nvm.sh"
 
-            php artisan migrate --force
-            php artisan storage:link || true
-            php artisan filament:assets
-            php artisan project:update
+          composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
-            cd ../frontend
+          # Тема панели собирается из исходников — её надо пересобирать после
+          # смены темы или версии Filament.
+          npm ci --no-audit --no-fund
+          npm run build
 
-            pnpm install --frozen-lockfile
-            pnpm build
+          php artisan storage:link || true
+          php artisan filament:assets
 
-            RESTART='${{ secrets.SERVER_FRONTEND_RESTART }}'
-            RESTART="${RESTART:-sudo systemctl restart perfectum-new-nuxt}"
+          # Миграции, политики, роли на нужном гварде — и в конце optimize:clear.
+          php artisan project:update
 
-            if ! eval "$RESTART"; then
-              echo "Не удалось перезапустить фронтенд: «$RESTART»."
-              exit 1
+          # Поэтому кэши греем уже после него, иначе прод останется без них.
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+      - name: Build frontend
+        run: |
+          set -euo pipefail
+          cd "$APP_PATH/frontend"
+
+          export NVM_DIR="$HOME/.nvm"
+          # shellcheck source=/dev/null
+          . "$NVM_DIR/nvm.sh"
+
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Restart and check
+        run: |
+          set -euo pipefail
+
+          # Собранный сервер отдаёт прошлый бандл, пока процесс не перезапущен.
+          # Нужно правило sudo без пароля именно на эту команду.
+          if ! sudo -n systemctl restart "$SERVICE"; then
+            echo "Не удалось перезапустить $SERVICE."
+            echo "Проверьте: sudo -n systemctl restart $SERVICE"
+            echo "И правило: /etc/sudoers.d/perfectum-deploy"
+            exit 1
+          fi
+
+          # Перезапуск сам по себе ничего не обещает: сборка могла упасть на
+          # старте. Ждём, пока порт ответит, иначе деплой считается неудачным.
+          for attempt in $(seq 1 30); do
+            if curl -fsS --max-time 5 -o /dev/null "$HEALTH_URL"; then
+              echo "Фронтенд отвечает на $HEALTH_URL"
+              exit 0
             fi
 
-            echo "Deploy complete"
+            sleep 2
+          done
+
+          echo "$SERVICE перезапущен, но $HEALTH_URL не ответил за минуту."
+          systemctl status "$SERVICE" --no-pager --lines 30 || true
+          exit 1
