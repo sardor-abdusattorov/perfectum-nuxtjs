@@ -84,6 +84,8 @@ const facts = computed<ServiceFact[]>(() => {
                   <div class="cdma-prose rich" v-html="service.content"></div>
               </template>
 
+              <FileList :files="service.files ?? []" :title="t('services.files', 'Файлы')" />
+
               <NuxtLink class="cdma-back" :to="localePath('/cdma') + '#cdma-services'">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8"
