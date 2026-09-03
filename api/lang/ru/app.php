@@ -83,7 +83,6 @@ return [
         'application_status_plural' => 'Статусы заявок',
         'is_default_status' => 'Статус по умолчанию',
         'handling_time' => 'Время обработки',
-        'handling_time_average' => 'В среднем',
         'free_number_filter_single' => 'Фильтр номеров CDMA',
         'free_number_filter_plural' => 'Номера CDMA',
         'filter_type' => 'Тип фильтра',

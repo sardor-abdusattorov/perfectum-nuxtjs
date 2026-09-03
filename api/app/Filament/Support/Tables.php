@@ -28,6 +28,7 @@ class Tables
         return TextColumn::make($field)
             ->label(__('app.label.views'))
             ->numeric()
+            ->default(0)
             ->sortable()
             ->alignEnd()
             ->toggleable();

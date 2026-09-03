@@ -83,7 +83,6 @@ return [
         'application_status_plural' => 'Ariza statuslari',
         'is_default_status' => 'Boshlangʻich status',
         'handling_time' => 'Ishlov berish vaqti',
-        'handling_time_average' => 'Oʻrtacha',
         'free_number_filter_single' => 'CDMA raqamlar filtri',
         'free_number_filter_plural' => 'CDMA raqamlar',
         'filter_type' => 'Filtr turi',

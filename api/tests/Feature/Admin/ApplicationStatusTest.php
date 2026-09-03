@@ -134,22 +134,6 @@ it('stamps the handling time on a bulk status change too', function (): void {
     Carbon::setTestNow();
 });
 
-it('averages the handling time over what the list is showing', function (): void {
-    Carbon::setTestNow('2026-09-03 09:00:00');
-
-    foreach ([600, 1200, 1800] as $seconds) {
-        $application = Application::factory()->create();
-        $application->forceFill(['processed_at' => now()->addSeconds($seconds)])->saveQuietly();
-    }
-
-    Application::factory()->create();
-
-    expect(Application::averageHandlingSeconds(Application::query()))->toBe(1200)
-        ->and(Application::readableHandlingTime(1200))->toBe('20 мин');
-
-    Carbon::setTestNow();
-});
-
 it('reads a long wait in hours and days', function (int $seconds, string $expected): void {
     expect(Application::readableHandlingTime($seconds))->toBe($expected);
 })->with([

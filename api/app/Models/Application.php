@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use Database\Factories\ApplicationFactory;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Support\Carbon;
 
 class Application extends Model
 {
@@ -76,29 +73,6 @@ class Application extends Model
         return $this->processed_at === null || $this->created_at === null
             ? null
             : max(0, (int) $this->created_at->diffInSeconds($this->processed_at));
-    }
-
-    /**
-     * The average over whatever the list is currently showing, so a filter by
-     * subject or by status answers «how long do these take».
-     */
-    public static function averageHandlingSeconds(QueryBuilder|EloquentBuilder $query): ?int
-    {
-        $rows = (clone $query)
-            ->whereNotNull('processed_at')
-            ->whereNotNull('created_at')
-            ->get(['created_at', 'processed_at']);
-
-        if ($rows->isEmpty()) {
-            return null;
-        }
-
-        $total = $rows->sum(fn (object $row): int => max(
-            0,
-            Carbon::parse($row->processed_at)->getTimestamp() - Carbon::parse($row->created_at)->getTimestamp(),
-        ));
-
-        return (int) round($total / $rows->count());
     }
 
     public static function readableHandlingTime(?int $seconds): ?string

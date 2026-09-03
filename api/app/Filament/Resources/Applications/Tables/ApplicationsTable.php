@@ -10,11 +10,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Query\Builder;
 
 class ApplicationsTable
 {
@@ -54,12 +52,7 @@ class ApplicationsTable
                 TextColumn::make('processed_at')
                     ->label(__('app.label.handling_time'))
                     ->state(fn (Application $record): ?string => Application::readableHandlingTime($record->handlingSeconds()))
-                    ->placeholder('—')
-                    ->summarize(Summarizer::make()
-                        ->label(__('app.label.handling_time_average'))
-                        ->using(fn (Builder $query): ?string => Application::readableHandlingTime(
-                            Application::averageHandlingSeconds($query)
-                        ))),
+                    ->placeholder('—'),
 
                 TextColumn::make('notes.body')
                     ->label(__('app.label.note_last'))
