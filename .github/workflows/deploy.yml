@@ -21,7 +21,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.5'
           extensions: pdo_sqlite, sqlite3, mbstring, bcmath, gd, zip, intl
           coverage: none
 
@@ -55,11 +55,13 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 11
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: pnpm
           cache-dependency-path: frontend/pnpm-lock.yaml
 
@@ -67,7 +69,6 @@ jobs:
         working-directory: frontend
         run: pnpm install --frozen-lockfile
 
-      # A build that fails here fails before anything reaches the server.
       - name: Build
         working-directory: frontend
         run: pnpm build
@@ -91,10 +92,6 @@ jobs:
 
             cd ${{ secrets.SERVER_APP_PATH }}
 
-            # Mirror origin/main exactly. fetch + reset --hard (not pull)
-            # realigns the tree even if tracked files drifted on the server,
-            # while leaving untracked files (.env, storage, public/build,
-            # uploaded media) alone.
             git fetch origin main
             git reset --hard origin/main
 
@@ -102,20 +99,12 @@ jobs:
 
             composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
-            # The panel's own stylesheet is built from source, so it has to be
-            # rebuilt whenever the theme or a Filament version changes.
             npm ci --no-audit --no-fund
             npm run build
 
             php artisan migrate --force
             php artisan storage:link || true
-
-            # Publishes Filament and plugin static assets into public/ so the
-            # icons and editor bundles resolve.
             php artisan filament:assets
-
-            # Regenerates policies and permissions for anything new, puts roles
-            # back on the panel guard and warms the caches.
             php artisan project:update
 
             cd ../frontend
@@ -123,18 +112,11 @@ jobs:
             pnpm install --frozen-lockfile
             pnpm build
 
-            # The built server is already running; it only picks the new bundle
-            # up when the process restarts. Unit name as on the server today;
-            # SERVER_FRONTEND_RESTART overrides it if the unit is ever renamed
-            # or replaced by something else. A deploy that quietly leaves the
-            # old bundle serving is worse than one that stops and says so, so
-            # the restart is checked rather than assumed.
             RESTART='${{ secrets.SERVER_FRONTEND_RESTART }}'
             RESTART="${RESTART:-sudo systemctl restart perfectum-new-nuxt}"
 
             if ! eval "$RESTART"; then
               echo "Не удалось перезапустить фронтенд: «$RESTART»."
-              echo "Сборка на месте, но отдаётся прошлая. Проверьте имя юнита и правило sudo без пароля."
               exit 1
             fi
 

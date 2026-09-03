@@ -11,13 +11,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify-json/simple-icons": "^1.2.93",
-    "@nuxt/icon": "^2.5.0",
+    "@iconify-json/simple-icons": "^1.2.94",
+    "@nuxt/icon": "^2.5.1",
     "@nuxtjs/i18n": "^10.6.0",
     "nuxt": "^4.5.2",
-    "swiper": "^14.1.0",
-    "vue": "^3.5.41",
-    "vue-router": "^5.2.0"
+    "swiper": "^14.2.0",
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3"
