@@ -124,17 +124,18 @@ jobs:
             pnpm build
 
             # The built server is already running; it only picks the new bundle
-            # up when the process restarts. The command lives in a secret so it
-            # fits whatever supervises it — pm2, systemd or something else. A
-            # deploy that quietly leaves the old bundle serving is worse than
-            # one that stops and says so.
+            # up when the process restarts. Unit name as on the server today;
+            # SERVER_FRONTEND_RESTART overrides it if the unit is ever renamed
+            # or replaced by something else. A deploy that quietly leaves the
+            # old bundle serving is worse than one that stops and says so, so
+            # the restart is checked rather than assumed.
             RESTART='${{ secrets.SERVER_FRONTEND_RESTART }}'
+            RESTART="${RESTART:-sudo systemctl restart perfectum-new-nuxt}"
 
-            if [ -z "$RESTART" ]; then
-              echo "SERVER_FRONTEND_RESTART не задан: фронтенд собран, но старый процесс всё ещё отдаёт прошлую сборку."
+            if ! eval "$RESTART"; then
+              echo "Не удалось перезапустить фронтенд: «$RESTART»."
+              echo "Сборка на месте, но отдаётся прошлая. Проверьте имя юнита и правило sudo без пароля."
               exit 1
             fi
-
-            eval "$RESTART"
 
             echo "Deploy complete"
