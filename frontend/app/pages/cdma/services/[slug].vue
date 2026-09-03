@@ -17,10 +17,6 @@ if (!service.value) {
 
 useSeo({ title: () => service.value?.name ?? '' })
 
-/**
- * The price and the USSD code always open the fact list; the admin's own
- * facts follow them.
- */
 const facts = computed<ServiceFact[]>(() => {
   const entry = service.value
 
@@ -38,7 +34,7 @@ const facts = computed<ServiceFact[]>(() => {
 
 <template>
   <template v-if="service">
-      <!-- CDMA HERO -->
+      
       <section class="cdma-hero cdma-hero_slim">
           <div class="container">
               <nav class="cdma-crumbs" :aria-label="t('common.breadcrumbs')">
@@ -58,8 +54,7 @@ const facts = computed<ServiceFact[]>(() => {
           </div>
       </section>
 
-      <!-- CDMA SERVICE -->
-      <section class="cdma-detail">
+<section class="cdma-detail">
           <div class="container">
               <span v-if="service.category" class="cdma-badge">{{ service.category.name }}</span>
               <p v-if="service.lead || service.excerpt" class="cdma-detail__lead" v-html="rich(service.lead ?? service.excerpt)"></p>
@@ -99,7 +94,6 @@ const facts = computed<ServiceFact[]>(() => {
           </div>
       </section>
 
-      <!-- CDMA FOOTER SECTION -->
-      <CdmaSectionFooter />
+<CdmaSectionFooter />
   </template>
 </template>

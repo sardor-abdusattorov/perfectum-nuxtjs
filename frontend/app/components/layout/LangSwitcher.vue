@@ -9,10 +9,6 @@ const root = ref<HTMLElement | null>(null)
 
 const codes = computed(() => locales.value.map(item => (typeof item === 'string' ? item : item.code)))
 
-/**
- * Only a plain left-click on another locale starts a navigation here —
- * modified clicks open a new tab and would leave the loader hanging.
- */
 function onSwitch(code: string, event: MouseEvent): void {
   open.value = false
 

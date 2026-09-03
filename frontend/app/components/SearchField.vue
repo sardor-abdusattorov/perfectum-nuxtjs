@@ -8,11 +8,6 @@ watch(() => props.modelValue, (value) => {
   draft.value = value
 })
 
-/**
- * The query is handed over on submit — Enter or the button — so a search
- * reaches the API once instead of on every keystroke. An emptied field is
- * the exception: clearing it drops the filter straight away.
- */
 watch(draft, (value) => {
   if (value.trim() === '' && props.modelValue !== '') {
     emit('update:modelValue', '')

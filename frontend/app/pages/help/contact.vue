@@ -37,11 +37,6 @@ function phoneDigits(): string {
   return phone.value.replace(/\D/g, '')
 }
 
-/**
- * The rendered value always opens with the +998 literal, so its digits are
- * dropped before counting; a pasted international number sheds its country
- * code too, while a bare local number starting with 99 stays intact.
- */
 function onPhone(event: Event): void {
   const input = event.target as HTMLInputElement
   let digits = input.value.replace(/\D/g, '')

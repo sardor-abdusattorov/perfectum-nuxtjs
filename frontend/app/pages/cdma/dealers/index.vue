@@ -7,7 +7,6 @@ useSeo({ titleKey: 'seo.cdma_dealers' })
 
 const { data } = await useOffices({ network: 'cdma', type: 'dealer' })
 
-/** each CDMA entry is a region card: the name, a hand-kept count, a table inside */
 const cards = computed(() => (data.value?.offices ?? [])
   .filter(office => office.region)
   .map(office => ({

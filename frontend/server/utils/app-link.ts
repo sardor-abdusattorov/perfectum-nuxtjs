@@ -1,18 +1,5 @@
 import type { H3Event } from 'h3'
 
-/**
- * The old site answered /app with a page that tried to open the mobile app and
- * fell back to the store — an address that still rides in QR codes, SMS and
- * printed material, so it has to keep working on the new site.
- *
- * It cannot be a page under app/pages: i18n runs with a prefix strategy, and
- * /app carries no locale. A route here is served before the router is reached,
- * so the address stays exactly as it was printed.
- *
- * The path after /app is passed on to the app — /app/tariffs opens the tariffs
- * screen — and is cut down to the characters a route can contain, because it
- * is read back inside a script tag.
- */
 const PACKAGE = 'uz.rwc.perfectum'
 const SCHEME = 'perfectum'
 const PLAY = `https://play.google.com/store/apps/details?id=${PACKAGE}`

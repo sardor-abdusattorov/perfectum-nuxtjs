@@ -59,8 +59,6 @@ export function useDeviceCatalog() {
       const [categories, devices] = await Promise.all([
         $api<ApiResponse<Taxonomy[]>>('/categories/device-categories'),
         (async () => {
-          // the catalogue is browsed whole — chips, brands and the pager all
-          // count every model, so the pages are gathered before rendering
           const all: Device[] = []
 
           for (let page = 1; page <= 10; page++) {
@@ -97,10 +95,6 @@ export function useDevice(slug: MaybeRefOrGetter<string>) {
   )
 }
 
-/**
- * The chip row lists every category holding at least one device, plus the
- * shop-window tab for whatever is on sale today.
- */
 export function useDeviceTabs(catalog: Ref<DeviceCatalog | null>) {
   const t = useT()
 

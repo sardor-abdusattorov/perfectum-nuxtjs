@@ -1,8 +1,4 @@
 <script setup lang="ts">
-/**
- * The card's mark comes from the admin's icon picker, rendered to SVG on the
- * server the same way the social icons arrive — the site only prints markup.
- */
 defineProps<{ svg?: string | null }>()
 </script>
 

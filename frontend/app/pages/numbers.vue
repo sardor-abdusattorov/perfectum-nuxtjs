@@ -44,12 +44,6 @@ function mask(): string | undefined {
   return pattern === '*******' ? undefined : `80${pattern}`
 }
 
-/**
- * The page renders at once and the billing request runs behind the
- * preloader, so a slow BSS never blocks navigation. A failure says the
- * search is unavailable rather than that no number matched — the visitor
- * would otherwise read a dead gateway as a sold-out catalogue.
- */
 async function load(): Promise<void> {
   if (busy.value) {
     return

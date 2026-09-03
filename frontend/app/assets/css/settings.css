@@ -16,9 +16,6 @@
   font-display: swap;
 }
 
-/* ============================================================
-   Tokens
-   ============================================================ */
 :root {
   --color-red: #E60000;
   --color-black: #000000;
@@ -34,8 +31,7 @@
   --radius: 24px;
   --radius-pill: 80px;
 
-  /* Dark media panels: red glow ellipse + soft white disc */
-  --media-glow: rgb(128, 0, 0) 0%, rgb(122, 0, 0) 17%, rgb(110, 0, 0) 28%,
+--media-glow: rgb(128, 0, 0) 0%, rgb(122, 0, 0) 17%, rgb(110, 0, 0) 28%,
     rgb(92, 0, 0) 39%, rgb(68, 0, 0) 50%, rgb(41, 0, 0) 61%, rgb(19, 0, 0) 72%,
     rgb(6, 0, 0) 83%, rgb(0, 0, 0) 100%;
   --media-glow-sm: rgb(101, 0, 0) 0%, rgb(96, 0, 0) 17%, rgb(88, 0, 0) 28%,
@@ -52,32 +48,20 @@
   --preview-bar-height: 44px;
 }
 
-/* ============================================================
-   Base
-   ============================================================ */
 * {
   box-sizing: border-box;
 }
 html {
   scroll-behavior: smooth;
-  /* the modal locks the page with `overflow: hidden` on body, which takes
-     the gutter away and slides every centred row sideways. Reserving it
-     here keeps the width the same locked or not — and it has to be `html`:
-     body hands its overflow to the viewport, so the gutter set on body is
-     never the one the viewport uses. */
+
   scrollbar-gutter: stable;
 }
 
-/* `scrollbar-width` is deliberately left off — setting it makes Chrome drop
-   these rules for the standard track. */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-/* the page itself gets a wider gutter — an 8px inset thumb is fine inside a
-   table but too thin to grab for a whole page. Chrome reads the viewport
-   scrollbar off `body`; the same rules on `html` never reach it. */
 body::-webkit-scrollbar {
   width: 16px;
   height: 16px;
@@ -96,8 +80,6 @@ body::-webkit-scrollbar-thumb {
   background-clip: padding-box;
 }
 
-/* touch layouts get half the gutter — the bar is an indicator there, not a
-   grab handle */
 @media (max-width: 768px) {
   ::-webkit-scrollbar {
     width: 4px;
@@ -160,10 +142,6 @@ button {
   padding: 0 24px;
 }
 
-/* ============================================================
-   Shared components
-   ============================================================ */
-
 .section__head {
   display: flex;
   align-items: flex-end;
@@ -195,10 +173,6 @@ button {
 .arrow-link:hover svg {
   transform: translateX(4px);
 }
-
-/* ============================================================
-   Utilities
-   ============================================================ */
 
 .visually-hidden {
   position: absolute;

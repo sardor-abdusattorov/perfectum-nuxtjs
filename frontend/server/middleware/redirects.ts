@@ -1,12 +1,3 @@
-/**
- * The old site's addresses (static-pages/…) still ride in ads and messengers.
- * Every page in the admin may list the old paths it answers for; the API
- * serves them as one map, and this middleware sends the visitor on with a 301.
- *
- * Known first segments skip the lookup entirely, so ordinary pages never wait
- * on it — only a path that would otherwise 404 consults the map, which is
- * refreshed at most once a minute and forgiven when the API is down.
- */
 const OWN_ROUTES = new Set([
   'about-company', 'actions', 'app', 'careers', 'cdma', 'contacts', 'coverage-area',
   'devices', 'documents', 'faq', 'help', 'news', 'numbers', 'offices',
@@ -49,7 +40,6 @@ export default defineEventHandler(async (event) => {
       map = response.data ?? {}
     }
     catch {
-      // the site must outlive the api; retry after the ttl
     }
   }
 

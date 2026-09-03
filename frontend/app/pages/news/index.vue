@@ -19,7 +19,6 @@ const featured = computed(() => (
 ))
 
 const rest = computed(() => items.value.filter(item => item !== featured.value))
-
 </script>
 
 <template>

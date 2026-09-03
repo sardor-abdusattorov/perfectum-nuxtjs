@@ -21,11 +21,6 @@ export function useSeo(input: SeoInput = {}) {
 
   const entity = computed(() => toValue(input.title) || '')
 
-  /**
-   * A page template may carry `{name}` where the record's own title belongs
-   * ("{name} — тариф 5G интернет"). With no record to name yet, the template
-   * yields to the site-wide default rather than printing the placeholder.
-   */
   function fill(template: string): string {
     if (!template.includes('{name}')) {
       return template
@@ -60,11 +55,6 @@ export function useSeo(input: SeoInput = {}) {
     title,
     description,
     keywords,
-    /**
-     * A preview link is meant for the person it was sent to. Pasted into a
-     * public chat it can be followed by a crawler too, so the previewed page
-     * asks not to be indexed whatever it says otherwise.
-     */
     robots: () => (preview.active.value ? 'noindex, nofollow' : null)
       || toValue(input.robots)
       || (page.value && page.value.indexed === false ? 'noindex, nofollow' : null)

@@ -1,9 +1,3 @@
-/**
- * Chromium ships no ICU data for uz-UZ, so `Intl` prints "M03" in the browser
- * where the SSR runtime printed "mart" — the month names and the date pattern
- * are site translations instead, and the string is built from the ISO parts so
- * no timezone can shift the day either.
- */
 export function useDates() {
   const t = useT()
 

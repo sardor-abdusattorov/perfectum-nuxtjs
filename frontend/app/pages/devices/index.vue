@@ -10,10 +10,6 @@ useSeo({ page: 'devices', titleKey: 'seo.devices' })
 const { data: catalog } = await useDeviceCatalog()
 const tabs = useDeviceTabs(catalog)
 
-/**
- * The open tab lives in the address by its slug, so a link opens the catalogue
- * on the very section it advertises.
- */
 const router = useRouter()
 
 const active = ref(typeof route.query.category === 'string' ? route.query.category : '')
@@ -44,12 +40,6 @@ const isCdma = computed(() => (
   catalog.value?.categories.find(category => category.slug === active.value)?.network === 'cdma'
 ))
 
-/**
- * A category is browsed brand by brand, the way the old site's compatibility
- * list did: the tab lists the brands and the models wait on the brand's own
- * page. What is in stock today is a shelf rather than a category, so that tab
- * lays the devices out at once.
- */
 const stock = computed(() => active.value === 'stock')
 
 const brands = computed(() => {
@@ -66,7 +56,6 @@ const brands = computed(() => {
 </script>
 
 <template>
-  <!-- PAGE HERO -->
   <section class="page-hero page-hero_inner page-hero_devices">
       <div class="container">
           <div class="page-hero__inner">
@@ -86,8 +75,7 @@ const brands = computed(() => {
       </div>
   </section>
 
-  <!-- DEVICES -->
-  <section class="devices">
+<section class="devices">
       <div class="container">
           <DeviceChips :tabs="tabs" :active="active" @select="active = $event" />
 

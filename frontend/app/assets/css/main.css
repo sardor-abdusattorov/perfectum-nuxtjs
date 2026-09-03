@@ -2,23 +2,10 @@
 
 @import url("settings.css");
 
-/* ==========================================================
-   PERFECTUM — MAIN STYLESHEET
-   Ordered by page, top to bottom by block. Media queries at the end.
-   ========================================================== */
-
-/* ==========================================================
-   BASE
-   Base helpers shared by every page
-   ========================================================== */
-
 b,
 strong {
   font-weight: 700;
 }
-
-/* The reset gives every inline tag `font: inherit`, which also wipes the
-   meaning out of the tags the editor writes; they get it back here. */
 
 em,
 i,
@@ -53,9 +40,6 @@ sup {
   top: -0.5em;
 }
 
-/* A few things the editor writes carry a class of its own; nothing in the
-   design uses those names, so they are styled wherever the content lands. */
-
 .color {
   color: var(--color, inherit);
 }
@@ -82,23 +66,11 @@ sup {
   margin-bottom: 0;
 }
 
-/* ==========================================================
-   EDITOR CONTENT
-   The admin's editor writes bare tags — it has no way to put a class on a
-   list, a heading or a table — so every block that prints what an editor
-   wrote wears .rich, and everything the editor can emit is styled here once.
-   A page that forgot the class showed a bare borderless table — that is how
-   this was found. Page-specific rules further down still override these.
-   ========================================================== */
-
 .rich {
   font-size: 17px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.75);
-  /* anywhere, not break-word: both break a long word that would overflow,
-     but only anywhere lets a column narrow below its longest word, which is
-     what keeps a table of links inside a phone screen. What it used to
-     collapse was the caption, and that is held open by its own rule below. */
+
   overflow-wrap: anywhere;
 }
 
@@ -209,9 +181,6 @@ sup {
   border-radius: var(--radius);
 }
 
-/* The table itself is the scroll container for when it is too wide, so the
-   row box inside — the editor writes rows straight into tbody, never a thead —
-   plays the table and stretches to the full column. */
 .rich table {
   display: block;
   width: 100%;
@@ -228,17 +197,10 @@ sup {
   border-collapse: collapse;
 }
 
-/* the scroll container above turns the table into a block, and a caption
-   left as a table-caption inside one wraps itself in an anonymous table and
-   shrinks to a single column of letters. */
 .rich table > caption {
   display: block;
   width: 100%;
 }
-
-/* ==========================================================
-   Страница ошибки
-   ========================================================== */
 
 .error-page {
   padding: 96px 0 120px;
@@ -407,15 +369,11 @@ sup {
   color: var(--color-black);
   cursor: pointer;
 }
-/* ==========================================================
-   PREVIEW BAR
-   A draft looks exactly like a published page; the strip says it is not one.
-   ========================================================== */
 
 .preview-bar {
   position: sticky;
   top: 0;
-  /* above the header it pushes down, below the menu and the overlay */
+
   z-index: 100;
   color: var(--color-white);
   background: var(--color-black);
@@ -439,7 +397,6 @@ sup {
   text-transform: uppercase;
 }
 
-/* the header sticks under the strip instead of behind it */
 .preview-bar ~ .wrapper .header {
   top: var(--preview-bar-height);
 }
@@ -449,11 +406,6 @@ sup {
     font-size: 13px;
   }
 }
-
-/* ==========================================================
-   HEADER
-   Site header (Frame 408)
-   ========================================================== */
 
 .header {
   position: sticky;
@@ -652,10 +604,6 @@ sup {
   gap: 3px 0;
 }
 
-/* The frames draw a 24px icon and nothing around it, so the button keeps that
-   box. The tap area is grown by a pseudo-element instead of by width/height:
-   sizing the button to 44 pushed it past the container's gutter and needed a
-   negative margin to pull the icon back. */
 .header .header__hamburger-button::before {
   content: "";
   position: absolute;
@@ -666,8 +614,6 @@ sup {
 }
 
 .header .header__hamburger-button .header__hamburger-line {
-  /* the frames draw a 24px icon flush with the 24px gutter (menu at x=354 in
-     the 402 frames); the 44px button keeps the tap target around it */
   width: 24px;
 }
 
@@ -742,11 +688,6 @@ sup {
   display: none;
 }
 
-/* ==========================================================
-   BURGER MENU
-   Off-canvas menu + overlay
-   ========================================================== */
-
 .menu {
   position: fixed;
   inset: 0;
@@ -768,8 +709,7 @@ sup {
   display: flex;
   flex-direction: column;
   gap: 6px 0;
-  /* the glow the dark bands carry, laid over the panel colour so it fades out
-     instead of ending on flat black */
+
   background-color: #0c0c0e;
   background-image: radial-gradient(
     88% 200px at 98% 44%,
@@ -785,8 +725,7 @@ sup {
   );
   padding: 16px;
   transform: translateX(100%);
-  /* only the slide is animated, and the panel keeps its own layer: `all` made
-     Safari repaint the gradient on every frame of the opening */
+
   transition: transform 0.3s ease;
   will-change: transform;
   overflow-y: auto;
@@ -938,11 +877,6 @@ sup {
   visibility: visible;
 }
 
-/* ==========================================================
-   PAGE HERO
-   Shared inner-page hero
-   ========================================================== */
-
 .page-hero.page-hero_numbers::before {
   display: none;
 }
@@ -1015,8 +949,6 @@ sup {
   padding: 84px 0 46px;
 }
 
-/* Frame 1201:792: band 91-441, crumbs 131 h24, eyebrow 175, H1 207 on a
-   132 box, card 382 lapping the band by 59 */
 .page-hero.page-hero_single_tariff {
   padding: 40px 0 102px;
 }
@@ -1107,8 +1039,6 @@ sup {
   padding: 40px 0 92px;
 }
 
-/* Frame 1238:693: crumbs 131 on a 24px row, eyebrow 175, H1 220 (2 lines of
-   79), subtitle 399, band closing at 579. */
 .page-hero.page-hero_services .page-hero__crumbs {
   height: 24px;
   margin-bottom: 20px;
@@ -1143,9 +1073,6 @@ sup {
   margin-bottom: 17px;
 }
 
-/* Every red halo on the site is a scaled gradient, never a blurred solid: a
-   `filter: blur()` layer this large is re-rasterised by Safari on each
-   composite, and on iPhones that is what made opening the menu crawl. */
 .page-hero::before {
   content: "";
   position: absolute;
@@ -1174,11 +1101,6 @@ sup {
 .page-hero.page-hero_services .page-hero__subtitle {
   max-width: 504px;
 }
-
-/* ==========================================================
-   SHARED CONTROLS
-   Buttons, selects, fields, search, slider nav
-   ========================================================== */
 
 .slider-nav {
   display: flex;
@@ -1261,8 +1183,6 @@ sup {
   border-color: rgba(0, 0, 0, 0.3);
 }
 
-/* the glyph is a 12x8 chevron - drawing it in a square box stretches it and
-   thickens the stroke with it */
 .select__chevron {
   position: absolute;
   top: 50%;
@@ -1317,8 +1237,6 @@ sup {
   border-color: var(--color-red);
 }
 
-/* a message that grows the field pushes the whole row of filters out of line,
-   so it hangs under the field instead — the layout never moves */
 .field__error {
   position: absolute;
   z-index: 3;
@@ -1467,11 +1385,6 @@ sup {
   color: var(--color-black);
   background: var(--color-white);
 }
-
-/* ==========================================================
-   SHARED BLOCKS
-   Blocks reused on several pages
-   ========================================================== */
 
 .tariff-feat {
   display: flex;
@@ -1711,8 +1624,6 @@ sup {
   background: #e8e8e8;
 }
 
-/* Group 2131332450 in frames 1277:1998 and 1360:1123: 39x82, inset 32 on the
-   desktop map and 24 on the phone */
 .map__zoom {
   position: absolute;
   z-index: 1;
@@ -1776,8 +1687,6 @@ sup {
   height: 20px;
 }
 
-/* the geolocation prompt is the browser's, so the map says out loud what it
-   is waiting for and what came of it */
 .map__hint {
   position: absolute;
   z-index: 1;
@@ -1860,10 +1769,6 @@ sup {
   height: 100%;
 }
 
-/* The API draws its own balloon around our content — a white box with a
-   border, a shadow and a tail — so the card ended up outlined twice. Its
-   class names carry the build number (ymaps-2-1-79-balloon…), hence the
-   substring match. The close button keeps its own chrome. */
 .map [class*="-balloon"]:not([class*="close"]),
 .map [class*="-balloon__layout"],
 .map [class*="-balloon__content"],
@@ -1873,8 +1778,7 @@ sup {
 .map [class*="-balloon-panel__content"] {
   width: auto;
   max-width: none;
-  /* the API caps the content box and hands it its own scrollbar; our card is
-     short enough to show whole, so let it size itself */
+
   max-height: none;
   padding: 0;
   margin: 0;
@@ -1914,8 +1818,6 @@ sup {
   box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
 }
 
-/* On a phone-sized map the API docks the balloon along the bottom instead of
-   floating it, so it can never be clipped by the map's rounded corners. */
 .map [class*="-balloon-panel"] .map__balloon {
   width: 100%;
   border-radius: 20px 20px 0 0;
@@ -2068,17 +1970,11 @@ sup {
   color: rgba(0, 0, 0, 0.6);
 }
 
-/* ==========================================================
-   INDEX — HERO
-   ========================================================== */
-
 .hero {
   overflow: hidden;
   background: var(--color-black);
 }
 
-/* Frame 440 on slide 253:83: four bullets 11 tall, 16 apart, white at 44%,
-   the active one a 64-wide pill, centred 24 above the band's bottom edge */
 .hero .hero__slider {
   --swiper-pagination-bottom: 24px;
   --swiper-pagination-bullet-width: 11px;
@@ -2398,10 +2294,6 @@ sup {
   flex-direction: row;
 }
 
-/* ==========================================================
-   INDEX — MARQUEE
-   ========================================================== */
-
 .marquee {
   background: var(--color-red);
   overflow: hidden;
@@ -2432,10 +2324,6 @@ sup {
   background: var(--color-white);
   border-radius: 50%;
 }
-
-/* ==========================================================
-   INDEX — CHOOSE
-   ========================================================== */
 
 .choose {
   margin-bottom: 145px;
@@ -2550,10 +2438,6 @@ sup {
   font-weight: 700;
   line-height: normal;
 }
-
-/* ==========================================================
-   INDEX — TARIFFS
-   ========================================================== */
 
 .tariffs {
   background: var(--color-black);
@@ -2864,10 +2748,6 @@ sup {
   background: var(--color-red);
 }
 
-/* ==========================================================
-   INDEX — FEATURES
-   ========================================================== */
-
 .features {
   color: var(--color-black);
   margin-bottom: 80px;
@@ -3162,10 +3042,6 @@ sup {
   margin-bottom: 4px;
 }
 
-/* ==========================================================
-   INDEX — COVERAGE
-   ========================================================== */
-
 .coverage {
   background: var(--color-black);
   padding: 80px 0 110px 0;
@@ -3277,8 +3153,6 @@ sup {
   text-transform: uppercase;
 }
 
-/* Frame 1277:1998: band 91-579, eyebrow 175, bar 527 lapping the band by 52,
-   map 683 h870 */
 .page-hero.page-hero_coverage {
   padding: 40px 0 100px;
 }
@@ -3305,9 +3179,6 @@ sup {
   background: transparent;
 }
 
-/* full screen takes the whole block, so the city, the address and the network
-   switch stay with the map instead of being left behind on the page — and the
-   selector has to outweigh the transparent background above */
 .coverage.coverage_map:fullscreen {
   display: flex;
   width: 100vw;
@@ -3316,8 +3187,6 @@ sup {
   background: var(--color-white);
 }
 
-/* the page keeps its scrollbar behind the expanded block, and the browser
-   paints that strip with the backdrop — black by default */
 .coverage.coverage_map:fullscreen::backdrop {
   background: var(--color-white);
 }
@@ -3338,10 +3207,6 @@ sup {
   height: auto;
   min-height: 0;
 }
-
-/* ==========================================================
-   INDEX — APP PROMO
-   ========================================================== */
 
 .app-promo {
   background: var(--color-red);
@@ -3421,15 +3286,10 @@ sup {
   opacity: 0.65;
 }
 
-/* ==========================================================
-   NUMBERS
-   ========================================================== */
-
 .numbers {
   margin-bottom: 80px;
 }
 
-/* Frame 1029:7063 runs the eight price chips on one auto-width row */
 .numbers .numbers__prices {
   display: flex;
   flex-wrap: wrap;
@@ -3782,10 +3642,6 @@ sup {
   pointer-events: none;
 }
 
-/* ==========================================================
-   TARIFFS LIST
-   ========================================================== */
-
 .tariffs-list .tariffs-list__card-head,
 .tariff-detail .tariff-detail__head {
   display: flex;
@@ -4075,10 +3931,6 @@ sup {
   background: var(--color-red);
 }
 
-/* ==========================================================
-   TARIFF DETAIL
-   ========================================================== */
-
 .tariff-detail {
   margin-top: -91px;
   margin-bottom: 80px;
@@ -4218,8 +4070,6 @@ sup {
   cursor: pointer;
 }
 
-/* the gap belongs between the heading and the text it opens, so a folded
-   block is just the heading */
 .tariff-detail .tariff-detail__more[open] .tariff-detail__more-summary {
   margin-bottom: 38px;
 }
@@ -4427,8 +4277,6 @@ body.overflow__hidden {
   object-fit: contain;
 }
 
-/* the instalment window keeps the modal shell of the tariff card and fills it
-   with one card per partner, the way the old site quoted them */
 .pay-modal {
   position: fixed;
   inset: 0;
@@ -4692,9 +4540,6 @@ body.overflow__hidden {
   color: rgba(255, 255, 255, 0.58);
 }
 
-/* ============================================================
-   OFFICES — locator (filter panel + map)
-   ============================================================ */
 .offices {
   position: relative;
   z-index: 1;
@@ -4708,7 +4553,7 @@ body.overflow__hidden {
   align-items: stretch;
   margin-bottom: 56px;
 }
-/* --- filter panel --- */
+
 .offices-filter {
   display: flex;
   flex-direction: column;
@@ -4733,9 +4578,7 @@ body.overflow__hidden {
   background: var(--color-white);
   transition: var(--transition);
 }
-/* normalize задаёт input[type=search]{box-sizing:content-box} со специфичностью
-   (0,1,1), которая выше одного класса → возвращаем border-box более специфичным
-   селектором, иначе width:100% + большие паддинги вылезают за карточку фильтра. */
+
 .offices-filter__search .offices-filter__search-input {
   box-sizing: border-box;
 }
@@ -4808,8 +4651,7 @@ body.overflow__hidden {
   width: 18px;
   height: 18px;
 }
-/* Пин зашит fill="#E60000"; на красном ховере он сливается — делаем белым
-   (CSS fill перебивает presentation-атрибут). */
+
 .offices-filter__locate:hover svg path {
   fill: #fff;
 }
@@ -4846,9 +4688,6 @@ body.overflow__hidden {
   color: rgba(0, 0, 0, 0.55);
 }
 
-/* ============================================================
-   OFFICES — found points list
-   ============================================================ */
 .offices__heading {
   margin-bottom: 24px;
   font-size: 18px;
@@ -4858,8 +4697,7 @@ body.overflow__hidden {
 .offices__list {
   margin-bottom: 8px;
 }
-/* Прелоадер списка точек: тот же красный спиннер, что на странице numbers.
-   Виден, пока JS/карта не отрисуют список (потом скрипт вешает is-hidden). */
+
 .offices__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -4910,9 +4748,7 @@ body.overflow__hidden {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.55);
 }
-/* ============================================================
-   OFFICES — interactive Leaflet map integration
-   ============================================================ */
+
 .offices__head {
   display: flex;
   align-items: baseline;
@@ -4933,7 +4769,7 @@ body.overflow__hidden {
   width: 100%;
   height: 100%;
 }
-/* leaflet zoom control → project style */
+
 .map__popup-tag_dealer {
   background: var(--color-black);
 }
@@ -4963,7 +4799,6 @@ body.overflow__hidden {
   color: var(--color-red);
 }
 
-/* Автокомплит поиска офисов: выпадающий список совпадений */
 .offices-filter__suggest {
   position: absolute;
   top: calc(100% + 6px);
@@ -5022,19 +4857,10 @@ body.overflow__hidden {
   color: var(--color-muted);
 }
 
-/* ==========================================================
-   SERVICES
-   ========================================================== */
-
 .services {
   margin-bottom: 80px;
 }
 
-/* Everything below is frame 1238:693 measured off the 1920 slide, kept under
-   .services so the blocks it shares with actions, news and faq do not move.
-   Card 527-876 (349) lapping the band by 52; section title 932 (2 lines of
-   60) with the count on its last line at 1023; service cards 1092-1438; the
-   support panel 1494-1885. */
 .services .filter-search {
   margin-bottom: 56px;
   padding: 40px 40px 27px;
@@ -5103,7 +4929,6 @@ body.overflow__hidden {
   transition: var(--transition);
 }
 
-/* the whole card is the link, the way news-card and cdma-service-card are */
 .service-card .service-card__link {
   display: flex;
   flex-direction: column;
@@ -5195,8 +5020,6 @@ body.overflow__hidden {
   color: var(--color-white);
 }
 
-/* Rectangle 5095 on frame 1719:1628 is rounded 88 — the card is only 100 tall
-   there, so it reads as a pill; services keeps the 24 of its own frame. */
 .devices .filter-search {
   border-radius: 88px;
 }
@@ -5275,13 +5098,6 @@ body.overflow__hidden {
   font-size: 16px;
   color: var(--color-muted);
 }
-
-/* ==========================================================
-   BRAND DEVICES
-   The models of one brand: the same white-card language as the
-   brand catalog, one card per device with the photo above the
-   model name.
-   ========================================================== */
 
 .brand-head {
   display: flex;
@@ -5421,13 +5237,6 @@ body.overflow__hidden {
   text-align: center;
   color: rgba(0, 0, 0, 0.6);
 }
-
-/* ==========================================================
-   DEVICE VIEW
-   The single-device page, measured on frame 1719:1462:
-   card column 433 + 88 gutter + 1037 spec column inside the
-   1558 content column.
-   ========================================================== */
 
 .device-view .callout {
   margin-bottom: 56px;
@@ -5576,7 +5385,6 @@ body.overflow__hidden {
   color: var(--color-muted);
 }
 
-/* a row with no value is a section header carried over from the old catalogue */
 .spec-list .spec-list__row_group {
   grid-template-columns: minmax(0, 1fr);
   min-height: 0;
@@ -5665,10 +5473,6 @@ body.overflow__hidden {
   color: #f8fafc;
 }
 
-/* Frame 1273:1103 on the 1920 slide: band 91-429, crumbs 131, H1 220 on a 79
-   line; the search card at 355 h200 lapping the band by 74; "Все акции" 611
-   at 48/60; cards 711 h418 with a 145 media strip. Scoped to .actions so news
-   and faq, which share these blocks, do not move. */
 .page-hero.page-hero_actions {
   padding: 40px 0 130px;
 }
@@ -5683,8 +5487,6 @@ body.overflow__hidden {
   line-height: 79px;
 }
 
-/* Frames 1273:1103 and 1275:1502 draw the same search card: 355 h200, input
-   389 h55, chips 473 h44. */
 .actions .filter-search,
 .news .filter-search {
   margin-top: -106px;
@@ -5877,10 +5679,6 @@ body.overflow__hidden {
   background: var(--color-red);
   color: var(--color-white);
 }
-
-/* ==========================================================
-   ARTICLE (ACTION / NEWS DETAIL)
-   ========================================================== */
 
 .article {
   padding: 32px 0 120px;
@@ -6095,8 +5893,6 @@ body.overflow__hidden {
   color: rgba(0, 0, 0, 0.75);
 }
 
-/* Frame 1275:1502 on the 1920 slide: band 91-429 with the glow ellipse, crumbs
-   131, H1 220 on a 79 line, the search card at 355 lapping the band by 74. */
 .page-hero.page-hero_news {
   padding: 40px 0 130px;
 }
@@ -6249,8 +6045,6 @@ body.overflow__hidden {
   background: radial-gradient(68.4% 171.3% at 85.7% 90.3%, var(--media-glow));
 }
 
-/* a photo replaces the colour panel, so the panel's disc goes and a scrim
-   takes over keeping the chips and the title readable */
 .news-card__media_photo,
 .news-feature__media_photo,
 .promo-card__media_photo,
@@ -6344,8 +6138,6 @@ body.overflow__hidden {
   color: var(--color-white);
 }
 
-/* Frames 1277:1998 and 1360:1371: bar 1558x100, label at 40, the city select
-   is a 55px pill on #f0f0f0, the search button a 48px black disc at 26. */
 .coverage-search {
   position: relative;
   display: flex;
@@ -6396,9 +6188,6 @@ body.overflow__hidden {
   color: var(--color-black);
 }
 
-/* prod opens an address field out of the search button. Collapsed it is a
-   zero-width sliver, so the bar still reads exactly as the frame draws it;
-   the three switches live on the group so there is one place to set them. */
 .coverage-search__layers {
   display: flex;
   flex-wrap: wrap;
@@ -6472,8 +6261,6 @@ body.overflow__hidden {
   min-width: 0;
 }
 
-/* padding and border collapse with the width — a border-box cannot go below
-   them, and the leftover sliver would push the button off its frame position */
 .coverage-search__find_open,
 .coverage-search__find:focus-within {
   --field-width: 333px;
@@ -6483,10 +6270,6 @@ body.overflow__hidden {
   --field-visibility: visible;
   --field-gap: 12px;
 }
-
-/* the field opens on a click and keeps itself open while it holds focus:
-   opening it on hover reflowed the bar under the pointer, the pointer fell
-   outside and it slammed shut again — the whole row shivered */
 
 .coverage-search__field {
   display: flex;
@@ -6567,7 +6350,6 @@ body.overflow__hidden {
   height: 24px;
 }
 
-/* the search card laps the band, so leave the frame's 16px under the copy */
 .page-hero.page-hero_faq {
   padding-bottom: 90px;
 }
@@ -6575,10 +6357,6 @@ body.overflow__hidden {
 .faq {
   margin-bottom: 80px;
 }
-
-/* ==========================================================
-   ABOUT COMPANY
-   ========================================================== */
 
 .about-stats {
   display: grid;
@@ -6635,7 +6413,6 @@ body.overflow__hidden {
   padding-left: 40px;
 }
 
-/* Line 48 runs the whole column and past the last dot, fading out on the way */
 .timeline::before {
   content: "";
   position: absolute;
@@ -6683,10 +6460,6 @@ body.overflow__hidden {
   color: var(--color-red);
   margin-bottom: 8px;
 }
-
-/* ==========================================================
-   CONTACTS
-   ========================================================== */
 
 .contacts-grid {
   display: grid;
@@ -6750,9 +6523,6 @@ body.overflow__hidden {
   color: var(--color-black);
 }
 
-/* Frame 289: a white pill 10 in from every edge, carrying the three brand
-   badges at 26 with a 12 label beside each. It runs the full 315 the card
-   gives it, so the row is spread rather than gapped. */
 .contact-card__socials {
   display: flex;
   flex-wrap: wrap;
@@ -6777,8 +6547,6 @@ body.overflow__hidden {
   color: var(--color-red);
 }
 
-/* the facebook badge exports 26x25.84 — contain keeps that, and keeps the
-   three glyphs on one baseline */
 .contact-card__social-icon {
   flex: 0 0 auto;
   display: inline-flex;
@@ -6801,10 +6569,6 @@ body.overflow__hidden {
   color: var(--color-red);
   font-weight: 600;
 }
-
-/* ==========================================================
-   CAREERS
-   ========================================================== */
 
 .careers-intro .careers-intro__title {
   max-width: 760px;
@@ -6895,10 +6659,6 @@ body.overflow__hidden {
 .vac__count b {
   color: var(--color-black);
 }
-
-/* ==========================================================
-   VACANCY
-   ========================================================== */
 
 .vacancy {
   padding: 55px 0 100px;
@@ -7025,10 +6785,6 @@ body.overflow__hidden {
   text-decoration: underline;
 }
 
-/* ==========================================================
-   DOCUMENTS
-   ========================================================== */
-
 .doc-group {
   margin-bottom: 40px;
 }
@@ -7134,7 +6890,6 @@ body.overflow__hidden {
   height: 18px;
 }
 
-/* Frame 1376:1030: band 91-430, crumbs 131, H1 220 h88, cards 486 503x250 */
 .page-hero.page-hero_procurement {
   padding: 40px 0 122px;
 }
@@ -7180,7 +6935,6 @@ body.overflow__hidden {
   transition: var(--transition);
 }
 
-/* the whole card is the link, the way news-card and service-card are */
 .tender-card .tender-card__link {
   display: flex;
   flex-direction: column;
@@ -7233,8 +6987,6 @@ body.overflow__hidden {
   background: #9c9c9c;
 }
 
-/* Frame 1376:1427: band 91-430, panel 372 lapping by 58, aside 422 wide with
-   a 56 gutter, nav items 58 on a 16 gap, rows 80 on a 24 gap */
 .page-hero.page-hero_help {
   padding: 40px 0 122px;
 }
@@ -7262,8 +7014,7 @@ body.overflow__hidden {
   background: #f8f8f8;
   border-radius: var(--radius);
   box-shadow: 0 31px 55px rgba(0, 0, 0, 0.11);
-  /* `clip` trims the aside to the radius exactly as `hidden` did, without
-     turning the panel into a scrollport that pins the preloader's spinner */
+
   overflow: clip;
 }
 
@@ -7369,9 +7120,6 @@ body.overflow__hidden {
   min-height: 320px;
 }
 
-/* one veil for both waits, and it only paints when there is something to
-   veil: the first load has nothing under it, so a solid fill there just cut a
-   white rectangle out of the panel's grey */
 .help-numbers__preloader {
   display: none;
   position: absolute;
@@ -7393,9 +7141,6 @@ body.overflow__hidden {
   background: rgba(248, 248, 248, 0.72);
 }
 
-/* a loaded block runs taller than the viewport, so a spinner centred on it
-   lands off-screen for anyone who searched from the pager at the bottom. The
-   first load has no table yet and fits, so it just centres. */
 .help-numbers.is-busy:not(.is-loading) .help-numbers__spinner {
   position: sticky;
   top: calc(50vh - 24px);
@@ -7550,10 +7295,6 @@ body.overflow__hidden {
   display: none;
 }
 
-/* ==========================================================
-   LOCALE LOADER
-   ========================================================== */
-
 .locale-loader {
   position: fixed;
   inset: 0;
@@ -7582,10 +7323,6 @@ body.overflow__hidden {
   border-radius: 50%;
   animation: numbers-spin 0.8s linear infinite;
 }
-
-/* ==========================================================
-   TOAST
-   ========================================================== */
 
 .toast {
   position: fixed;
@@ -7629,10 +7366,6 @@ body.overflow__hidden {
   opacity: 0;
   transform: translateY(12px);
 }
-
-/* ==========================================================
-   COOKIES
-   ========================================================== */
 
 .cookies {
   position: fixed;
@@ -7683,10 +7416,6 @@ body.overflow__hidden {
   background: var(--color-white);
   color: var(--color-red);
 }
-
-/* ==========================================================
-   FOOTER
-   ========================================================== */
 
 .footer {
   background: #fefefe;
@@ -7858,11 +7587,6 @@ body.overflow__hidden {
   color: var(--color-white);
 }
 
-/* ==========================================================
-   MISC
-   Anything the classifier could not place
-   ========================================================== */
-
 @keyframes coverage-glow {
   0%,
   100% {
@@ -7891,11 +7615,6 @@ textarea,
 select {
   box-sizing: border-box;
 }
-
-/* ==========================================================
-   MEDIA STYLES
-   The eight project breakpoints, always in this order.
-   ========================================================== */
 
 @media all and (min-width: 1400px) and (max-width: 1699.98px) {
   .numbers .numbers__card {
@@ -7988,8 +7707,7 @@ select {
   .container {
     max-width: 1606px;
   }
-  /* only here is the card wide enough for the row to span its full 295 the
-     way Frame 289 lays it out; below this it centres and wraps instead */
+
   .contact-card__socials {
     justify-content: space-between;
   }
@@ -8192,7 +7910,7 @@ select {
     min-height: 280px;
     padding: 36px;
   }
-  /* the card drops to 216 here, and AUDIOVOX needs 183 at 34px */
+
   .brand-card__name {
     font-size: 28px;
   }
@@ -8572,8 +8290,7 @@ select {
   .offices__layout {
     grid-template-columns: 360px 1fr;
   }
-  /* a 360 column leaves the stat cards 96 wide, and "показано" does not fit
-     across them at 16 */
+
   .offices-filter__stat span {
     font-size: 14px;
   }
@@ -9464,9 +9181,7 @@ select {
   .section-head__title.section-head__title_upper {
     font-size: 30px;
   }
-  /* the frame drew one 354x57 pill, but the network switch has to live in the
-     bar too: below 768 the card keeps the pill's face and lets its controls
-     wrap onto a second line instead of stacking them on top of each other */
+
   .coverage-search {
     flex-wrap: wrap;
     gap: 10px;
@@ -9518,7 +9233,7 @@ select {
     width: 20px;
     height: 20px;
   }
-  /* while the address is open it takes the whole row and the rest steps aside */
+
   .coverage-search_searching .coverage-search__select,
   .coverage-search_searching .coverage-search__layers {
     display: none;
@@ -9738,7 +9453,7 @@ select {
   .timeline {
     padding-left: 0;
   }
-  /* the dot column moves with the padding, so the line has to follow */
+
   .timeline::before {
     left: 7.5px;
   }
@@ -9828,10 +9543,7 @@ select {
     padding: 24px 0;
     border-left: 0;
   }
-  /* frames 1392:1741 and 1393:907 hang the panel off the content, not the
-     viewport: its box starts at the first block under the tab title and runs
-     344 down. Vector 190 puts the panel edge at 11.28 on 7px corners, so
-     collapsed it shows an 11.3px sliver. */
+
   .help__aside {
     position: fixed;
     top: 0;
@@ -9864,9 +9576,7 @@ select {
     width: 24px;
     height: 24px;
   }
-  /* the nub, cut to the curve Vector 190 draws between y 141.613 and 202.931:
-     it hugs the panel edge, peaks 6.7 out and comes back, so a radius cannot
-     express it - the path is the segment rebased into this 24x61.32 box */
+
   .help__aside-tab {
     display: flex;
     align-items: center;
@@ -10046,8 +9756,7 @@ select {
     font-size: 30px;
     max-width: 90%;
   }
-  /* frame 620:241 runs the phone hero straight into the marquee with no
-     bullets under it — on touch the band is swiped, not clicked */
+
   .hero .hero__pagination {
     display: none;
   }
@@ -10373,9 +10082,7 @@ select {
     line-height: normal;
   }
 
-  /* Frame 1353:4572: eyebrow 88, H1 110 on a 33px line, subtitle 183 and the
-     band closing at 273, where the chip card laps it by 32. */
-  .page-hero.page-hero_devices {
+.page-hero.page-hero_devices {
     padding-bottom: 45px;
   }
   .page-hero.page-hero_devices .page-hero__eyebrow {
@@ -10403,8 +10110,7 @@ select {
   .brand-grid {
     gap: 8px;
   }
-  /* Rectangle 5068: 173x78 on a 12px radius and a 0.5px rgba(0,0,0,.22)
-     hairline, with no shadow at all */
+
   .brand-card {
     min-height: 78px;
     padding: 12px;
@@ -10413,35 +10119,28 @@ select {
     box-shadow: none;
   }
 
-  /* The phone frames draw every content card as a plain 0.5px rgba(0,0,0,.22)
-     hairline with no shadow — 1359:942 for news, 1353:5393 for a promo. The
-     drop shadows are a desktop thing. */
-  .news-card,
+.news-card,
   .news-feature,
   .promo-card {
     border: 0.5px solid rgba(0, 0, 0, 0.22);
     box-shadow: none;
   }
 
-  /* 1368:2490 blurs the tab pill 27.5, not 55 */
-  .company .company-nav,
+.company .company-nav,
   .company-nav {
     box-shadow: 0 8px 27.5px rgba(0, 0, 0, 0.11);
   }
 
-  /* 1251:1249: the offices panel is a flat #F8F8F8 card, no shadow */
-  .offices .offices-filter,
+.offices .offices-filter,
   .offices-filter {
     box-shadow: none;
   }
 
-  /* 1360:1371: the coverage bar is white on a 4/5.5 shadow, not 31/55 */
-  .coverage .coverage-search,
+.coverage .coverage-search,
   .coverage-search {
     box-shadow: 0 4px 5.5px rgba(0, 0, 0, 0.11);
   }
-  /* the wordmarks run 18-31 tall in the frame — artel 27, BlackBerry 23 — and
-     only the apple glyph is tall at 48, so it keeps its own cap */
+
   .brand-card .brand-card__logo {
     width: auto;
     max-width: 100%;
@@ -10501,7 +10200,7 @@ select {
   .page-hero.page-hero_coverage {
     padding: 40px 0 45px;
   }
-  /* frame 1360:1123 stacks eyebrow 88, H1 110, subtitle 174 */
+
   .page-hero.page-hero_coverage .page-hero__eyebrow,
   .page-hero.page-hero_coverage .page-hero__title {
     margin-bottom: 8px;
@@ -10771,8 +10470,7 @@ select {
     gap: 16px;
   }
 
-  /* Frame 1360:1382: band 48-277, H1 on a 28 line, card 232 lapping by 45 */
-  .page-hero.page-hero_faq {
+.page-hero.page-hero_faq {
     padding: 40px 0 61px;
   }
   .page-hero.page-hero_faq .page-hero__title {
@@ -10830,8 +10528,7 @@ select {
     padding: 8px 8px 8px 16px;
   }
 
-  /* the phone frames set the H1 solid, without the desktop -0.04em track */
-  .page-hero .page-hero__title,
+.page-hero .page-hero__title,
   .page-hero.page-hero_numbers .page-hero__title {
     font-size: 32px;
     line-height: 38px;
@@ -10846,7 +10543,7 @@ select {
   .services .section-head {
     margin-bottom: 24px;
   }
-  /* Frames 1353:5187 and 1359:767: head bottom 417, first card 449 */
+
   .actions .section-head,
   .news .section-head {
     margin-bottom: 32px;
@@ -11258,7 +10955,6 @@ select {
   }
 }
 
-/* Мобильный адаптив карточек точек (перенесено из reference custom.css) */
 @media (max-width: 576px) {
   .office-card__title {
     font-size: 12px;
@@ -11273,8 +10969,7 @@ select {
     margin-bottom: 15px;
   }
 
-  /* Размеры страницы офисов на мобиле по макету (iPhone 402px) */
-  .page-hero.page-hero_office .page-hero__title {
+.page-hero.page-hero_office .page-hero__title {
     font-size: 32px;
   }
   .page-hero.page-hero_office .page-hero__subtitle {
@@ -11293,8 +10988,7 @@ select {
     min-height: 372px;
   }
 
-  /* Контролы фильтра на мобиле компактнее — по макету все ~40px высотой */
-  .offices-filter__search-input,
+.offices-filter__search-input,
   .offices-filter .select__control {
     height: 40px;
     padding: 0 44px 0 16px;
@@ -11324,14 +11018,11 @@ select {
     font-size: 12px;
   }
 
-  /* Hero офиса: компактный низ, чтобы карточка фильтра наезжала как в макете
-     (в дизайне тёмный зазор под подзаголовком ~15px, карта фильтра наезжает ~20px) */
-  .page-hero.page-hero_office {
+.page-hero.page-hero_office {
     padding: 40px 0 36px 0;
     margin-bottom: 0;
   }
-  /* Красное свечение hero точь-в-точь по макету: эллипс 283×126, blur 61,
-     opacity .65, в правом-верхнем углу с выходом за край (mask-group из Figma) */
+
   .page-hero.page-hero_office::after {
     top: 55%;
     right: -16%;

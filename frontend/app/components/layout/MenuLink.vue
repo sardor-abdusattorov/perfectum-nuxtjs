@@ -23,7 +23,5 @@ const { external, to } = useUrl(() => props.item.url)
     :rel="item.target ? 'noopener' : undefined"
   >{{ item.name }}</NuxtLink>
 
-  <!-- a heading that only gathers other pages: it opens the list, it does not
-       lead anywhere, and it stays reachable from the keyboard -->
-  <span v-else :class="linkClass" tabindex="0" role="button" aria-haspopup="true">{{ item.name }}</span>
+<span v-else :class="linkClass" tabindex="0" role="button" aria-haspopup="true">{{ item.name }}</span>
 </template>

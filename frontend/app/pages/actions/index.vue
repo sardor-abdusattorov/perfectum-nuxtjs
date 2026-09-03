@@ -11,7 +11,6 @@ const { data } = await useActionsList({ network: '5g', category, search, page },
 const items = computed(() => data.value?.items ?? [])
 const meta = computed(() => data.value?.meta ?? { current_page: 1, last_page: 1, total: 0 })
 const categories = computed(() => data.value?.categories ?? [])
-
 </script>
 
 <template>

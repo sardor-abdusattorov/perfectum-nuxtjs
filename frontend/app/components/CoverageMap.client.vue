@@ -27,9 +27,6 @@ let me: any = null
 let saying: ReturnType<typeof setTimeout> | null = null
 const drawn: any[] = []
 
-/**
- * GeoJSON orders a pair as longitude first; the map wants latitude first.
- */
 function flip(ring: number[][]): number[][] {
   return ring.map(([lng, lat]) => [lat, lng])
 }
@@ -68,11 +65,6 @@ async function draw(): Promise<void> {
     fillRule: 'evenOdd',
   }
 
-  /**
-   * The planning export is one MultiPolygon of tens of thousands of disjoint
-   * patches. They are drawn even-odd in batches: one geo-object per batch
-   * keeps the map responsive where one object per patch would bury it.
-   */
   const BATCH = 2000
 
   for (const feature of shapes.features) {
@@ -126,10 +118,6 @@ onMounted(async () => {
   draw()
 })
 
-/**
- * The wheel scrolls the page until Ctrl joins in — then it zooms the map,
- * the way every embedded map behaves.
- */
 function onModifier(event: KeyboardEvent): void {
   if (event.key !== 'Control' || !map) {
     return
@@ -142,11 +130,6 @@ function releaseScrollZoom(): void {
   map?.behaviors.disable('scrollZoom')
 }
 
-/**
- * Full screen takes the whole block — the city, the address and the network
- * switch included — because a map without its controls is a picture. The
- * map is told to re-measure once the browser has resized the block.
- */
 function onFullscreenChange(): void {
   expanded.value = document.fullscreenElement !== null
 
@@ -165,11 +148,6 @@ async function toggleFullscreen(): Promise<void> {
     : target.requestFullscreen()).catch(() => {})
 }
 
-/**
- * The browser answers the geolocation prompt in its own time and may never
- * answer at all, so the button says what it is doing and clears up after
- * itself either way.
- */
 function say(text: string): void {
   hint.value = text
 
@@ -247,10 +225,6 @@ function zoom(step: number): void {
   map?.setZoom(map.getZoom() + step, { duration: 200 })
 }
 
-/**
- * Drops a pin on the geocoded address and flies to it, so the caller only has
- * to know whether the address resolved at all.
- */
 async function find(query: string): Promise<boolean> {
   const ymaps = (window as any).ymaps
 

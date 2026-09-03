@@ -182,9 +182,6 @@ function initBlock1() {
     }
   }
 
-  // one dial per slide, each resting on its own number: the sweep runs in the
-  // dial's own angles so the needle and the readout say the same thing at every
-  // frame, whatever the slide is set to
   const gauges = [];
   document.querySelectorAll(".hero__gauge").forEach(function (svg) {
     const needle = svg.querySelector(".hero__gauge-needle");
@@ -217,7 +214,6 @@ function initBlock1() {
       });
     });
   }
-
 }
 
 function initBlock2() {
@@ -336,7 +332,6 @@ function initBlock2() {
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }
-
   }
 
   document.querySelectorAll(".company-nav").forEach(function (nav) {
@@ -400,7 +395,6 @@ function initBlock2() {
     }
   });
 }
-
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {

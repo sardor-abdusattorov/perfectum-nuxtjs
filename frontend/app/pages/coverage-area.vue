@@ -33,10 +33,6 @@ const open = ref(false)
 const missing = ref(false)
 const broken = ref(false)
 
-/**
- * Collapsed, the round button is the handle that opens the field; once there is
- * something to look for it becomes the search itself.
- */
 async function find(): Promise<void> {
   if (!address.value.trim()) {
     open.value = true

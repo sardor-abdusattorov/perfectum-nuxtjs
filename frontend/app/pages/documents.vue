@@ -37,10 +37,6 @@ const { data } = await useAsyncData(
 
 const groups = computed(() => data.value ?? [])
 
-/**
- * The card downloads the visitor's own language; the rest are offered next
- * to it so a document translated three ways stays one row.
- */
 function translations(doc: DocumentItem): DocumentDownload[] {
   return doc.files.filter(file => file.url !== null && file.url !== doc.url)
 }

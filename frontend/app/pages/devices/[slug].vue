@@ -26,10 +26,6 @@ const price = computed(() => (
 const installments = computed(() => device.value?.installments ?? [])
 const paying = ref(false)
 
-/**
- * The pager walks the device's own category in catalogue order and wraps at
- * both ends, so the arrows always lead somewhere.
- */
 const siblings = computed(() => {
   const devices = catalog.value?.devices ?? []
   const category = device.value?.category?.id
@@ -58,7 +54,7 @@ const pager = computed(() => {
 
 <template>
   <template v-if="device">
-      <!-- PAGE HERO -->
+      
       <section class="page-hero page-hero_inner page-hero_devices">
           <div class="container">
               <div class="page-hero__inner">
@@ -92,8 +88,7 @@ const pager = computed(() => {
           </div>
       </section>
 
-      <!-- DEVICE -->
-      <section class="devices device-view">
+<section class="devices device-view">
           <div class="container">
               <DeviceChips :tabs="tabs" :active="activeTab" linked />
 

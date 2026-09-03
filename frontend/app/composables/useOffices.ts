@@ -45,10 +45,6 @@ export function useOffices(query: OfficeQuery = {}) {
   )
 }
 
-/**
- * A dealer is listed under its own brand name, an office under the district it
- * sits in — neither ever has both.
- */
 export function officeTitle(office: Office): string {
   return office.name || office.district || office.region?.name || office.address
 }

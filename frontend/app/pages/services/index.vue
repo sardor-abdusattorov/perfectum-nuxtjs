@@ -8,11 +8,6 @@ const { data: catalog } = await useServiceCatalog('5g')
 
 const query = ref('')
 
-/**
- * The open category lives in the address as its slug, so the state of the
- * switch is a link anyone can send; «все» is the bare page. The address only
- * seeds the ref — from then on the switch owns it and writes itself back.
- */
 const route = useRoute()
 const router = useRouter()
 
@@ -65,7 +60,6 @@ function countLabel(count: number): string {
 </script>
 
 <template>
-  <!-- PAGE HERO -->
   <section class="page-hero page-hero_inner page-hero_services">
       <div class="container">
           <div class="page-hero__inner">
@@ -85,8 +79,7 @@ function countLabel(count: number): string {
       </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="services">
+<section class="services">
       <div class="container">
           <div class="filter-search">
               <h2 class="filter-search__heading">{{ t('services.catalog_heading') }}</h2>

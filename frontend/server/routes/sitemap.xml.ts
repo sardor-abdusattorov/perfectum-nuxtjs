@@ -1,12 +1,3 @@
-/**
- * Nine hundred addresses now answer on this site, and most of them are reached
- * through a filter a crawler cannot press. The map lists every one of them in
- * both languages, each address naming the other as its alternate so the two
- * versions are indexed as one page rather than as duplicates.
- *
- * The lists come from the API in one request apiece and are held for an hour —
- * a news item published in the admin appears in the map on the next refresh.
- */
 const LOCALES = ['ru', 'uz'] as const
 
 const PAGES = [
@@ -86,7 +77,6 @@ export default defineEventHandler(async (event) => {
       }
     }
     catch {
-      // the map must outlive the api; the rest of the site is still listed
     }
   }
 

@@ -31,7 +31,6 @@ const modelsCount = computed(() => t('devices.models_count').replace('{n}', Stri
 </script>
 
 <template>
-  <!-- PAGE HERO -->
   <section class="page-hero page-hero_inner page-hero_devices">
       <div class="container">
           <div class="page-hero__inner">
@@ -57,8 +56,7 @@ const modelsCount = computed(() => t('devices.models_count').replace('{n}', Stri
       </div>
   </section>
 
-  <!-- BRAND DEVICES -->
-  <section class="devices">
+<section class="devices">
       <div class="container">
           <DeviceChips :tabs="tabs" :active="activeTab" linked />
 

@@ -33,10 +33,6 @@ function connect(): void {
   })
 }
 
-/**
- * The feature note arrives wrapped in brackets — "(Исходящие по Узбекистану)" —
- * and becomes the caption above the value on this page.
- */
 function featureCaption(feature: TariffFeature): string {
   return feature.note.replace(/^\(/, '').replace(/\)$/, '')
 }
@@ -44,7 +40,7 @@ function featureCaption(feature: TariffFeature): string {
 
 <template>
   <template v-if="tariff">
-      <!-- CDMA HERO -->
+      
       <section class="cdma-hero cdma-hero_slim">
           <div class="container">
               <nav class="cdma-crumbs" :aria-label="t('common.breadcrumbs')">
@@ -64,8 +60,7 @@ function featureCaption(feature: TariffFeature): string {
           </div>
       </section>
 
-      <!-- CDMA TARIFF -->
-      <section class="cdma-detail">
+<section class="cdma-detail">
           <div class="container">
               <span v-if="tariff.type" class="cdma-badge">{{ tariff.type.name }}</span>
 
@@ -102,7 +97,6 @@ function featureCaption(feature: TariffFeature): string {
           </div>
       </section>
 
-      <!-- CDMA FOOTER SECTION -->
-      <CdmaSectionFooter />
+<CdmaSectionFooter />
   </template>
 </template>

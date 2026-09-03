@@ -10,11 +10,6 @@ const SECTION = '.header__menu-item_has-submenu'
 
 const submenuClosed = ref(false)
 
-/**
- * The list stays shut until the pointer actually leaves the section it was
- * opened from: releasing on the first movement anywhere reopened it under a
- * cursor that had not moved off the heading yet.
- */
 function releaseSubmenu(event: PointerEvent): void {
   if ((event.target as HTMLElement | null)?.closest(SECTION)) {
     return
@@ -31,11 +26,6 @@ watch(() => route.fullPath, () => {
     return
   }
 
-  /**
-   * The link that was just followed keeps the focus, and a focused list is an
-   * open list however far the pointer has gone — the page changed, so the menu
-   * that led there lets go.
-   */
   const active = document.activeElement
 
   if (active instanceof HTMLElement && active.closest('.header__submenu')) {

@@ -1,11 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{ uid: string, value?: string | number | null }>()
 
-/**
- * The needle is drawn pointing at the top of the scale, so a slide that reads
- * anything else has to turn it. Rendering the turn here rather than leaving it
- * to the animation means the dial is already right in the served HTML.
- */
 const reading = computed(() => gaugeReading(props.value))
 const needle = computed(() => reading.value === null
   ? undefined

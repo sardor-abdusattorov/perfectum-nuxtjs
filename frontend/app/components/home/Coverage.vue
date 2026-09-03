@@ -5,11 +5,6 @@ const cities = computed(() => published(block.value.cities))
 const { locale } = useI18n()
 const rail = useTemplateRef('rail')
 
-/**
- * The row held four cities and cut off the fifth; the list grows with the
- * network, so it drags instead. Four or fewer still fill the row and Swiper
- * leaves them alone.
- */
 useSlider(rail, {
   slidesPerView: 'auto',
   watchOverflow: true,

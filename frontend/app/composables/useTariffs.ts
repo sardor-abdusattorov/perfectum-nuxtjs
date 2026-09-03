@@ -70,14 +70,7 @@ export function useTariff(slug: MaybeRefOrGetter<string>) {
   )
 }
 
-/**
- * Category, subcategory, tariff — the three levels the catalogue is built on.
- * The chips list only the subcategories present in the open category, and
- * switching category resets them, the way the old site behaved.
- */
 export function useTariffFilter(catalog: Ref<TariffCatalog | null>, { address = false } = {}) {
-  // a category switched out of the catalogue keeps serving its own section
-  // (the CDMA landing), it just loses its tab here and on the homepage
   const categories = computed(() => (
     (catalog.value?.categories ?? []).filter(item => item.in_catalog !== false)
   ))
@@ -98,13 +91,6 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>, { address = 
     type.value ? inCategory.value.filter(item => item.type?.id === type.value) : inCategory.value
   ))
 
-  /**
-   * On the tariffs page the two switches are the state of the page, so they
-   * live in the address as slugs and the view becomes a link anyone can send;
-   * the old positional ?tab= is still read, advertising may carry it. Inside a
-   * section of another page they are just a control — a rail on the home page
-   * has no business rewriting that page's address — so this is asked for.
-   */
   const route = useRoute()
   const router = useRouter()
 
@@ -140,7 +126,6 @@ export function useTariffFilter(catalog: Ref<TariffCatalog | null>, { address = 
     router.replace({ query: { ...route.query, tab: undefined, category: open, type: chip } })
   })
 
-  // the chips belong to the open category, so changing it drops the chosen one
   watch(category, (next, previous) => {
     if (previous !== '') {
       type.value = ''

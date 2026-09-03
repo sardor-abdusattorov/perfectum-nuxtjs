@@ -3,12 +3,6 @@ import type { NuxtError } from '#app'
 
 const props = defineProps<{ error: NuxtError }>()
 
-/**
- * Nuxt renders this instead of app.vue, so the chrome the layout draws — the
- * menus, the socials, the interface strings — has to be fetched here too.
- * A failure leaves the header bare rather than replacing one error with
- * another, which is why nothing here reads the answer without a fallback.
- */
 await useSite()
 
 const localePath = useLocalePath()
@@ -34,10 +28,6 @@ const links = computed(() => [
   { to: '/help/contact', label: t('error.link_contact', 'Связаться с нами') },
 ])
 
-/**
- * A plain link would keep the failed route in the error state, so every way
- * out of this page clears it and navigates in one step.
- */
 function leave(path: string): void {
   clearError({ redirect: localePath(path) })
 }

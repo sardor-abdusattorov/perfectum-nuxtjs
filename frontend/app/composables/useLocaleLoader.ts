@@ -7,12 +7,6 @@ export function useLocaleLoader() {
   const run = useState('locale-loader-run', () => 0)
   const shownAt = useState('locale-loader-shown-at', () => 0)
 
-  /**
-   * A switch that lands within DELAY shows nothing at all — the veil is
-   * there for a slow answer, not as a ceremony. The counter identifies the
-   * run, so a timer left over from an earlier switch cannot touch the veil
-   * a later one owns.
-   */
   function show(): void {
     const stamp = ++run.value
 
@@ -24,10 +18,6 @@ export function useLocaleLoader() {
     after(FAILSAFE, stamp, () => (active.value = false))
   }
 
-  /**
-   * Called when the new page has loaded. A veil already up stays for HOLD,
-   * so a switch that only just missed the delay does not strobe.
-   */
   function hide(): void {
     const wait = active.value ? HOLD - (Date.now() - shownAt.value) : 0
     const stamp = ++run.value

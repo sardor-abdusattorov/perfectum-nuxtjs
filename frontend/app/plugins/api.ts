@@ -17,22 +17,10 @@ export default defineNuxtPlugin(nuxtApp => {
         options.headers.set('X-Locale', value)
       }
 
-      /**
-       * A draft is a 404 for the site, and the preview token is what lifts
-       * that for the one record it names. The middleware moved it out of the
-       * address into a cookie; every page reaches the API through here, so
-       * the token travels from here too — the page never has to know it
-       * exists, and it never shows up in the location bar.
-       */
       if (preview.value) {
         options.query = { ...options.query, preview: preview.value }
       }
     },
-    /**
-     * Every caller handles its own failure and says so on the page, so these
-     * lines are a trail for whoever is looking — a warning, not an error the
-     * browser had to swallow.
-     */
     onRequestError({ request, error }) {
       console.warn(`[api] ${import.meta.server ? 'SSR' : 'браузер'} не достучался до ${request}: ${error.message}`)
     },

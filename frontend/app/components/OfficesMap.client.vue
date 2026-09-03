@@ -27,11 +27,6 @@ function placemark(point: Office): any {
 
   const dealer = point.type === 'dealer'
 
-  /**
-   * The API's own chrome is stripped in CSS so the card can be ours, which
-   * means the whole balloon has to come out of one slot — a header and a body
-   * would be laid out by the API between them.
-   */
   const marker = new ymaps.Placemark([point.lat, point.lng], {
     balloonContent:
       `<div class="map__balloon">`
@@ -69,10 +64,6 @@ function draw(): void {
   clusterer.add([...markers.values()])
 }
 
-/**
- * The balloon opens even when the point is currently folded into a cluster,
- * the way the live site does it.
- */
 function openBalloon(id: number): void {
   const marker = markers.get(id)
 

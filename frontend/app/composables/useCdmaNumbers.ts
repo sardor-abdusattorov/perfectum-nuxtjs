@@ -31,11 +31,6 @@ export interface CdmaPayload {
 
 export const CDMA_PER_PAGE = 15
 
-/**
- * The gateway lives outside our API and answers slowly, so the page renders
- * first and the filters arrive behind a preloader. The search itself is the
- * same on the support page and on the CDMA one — only the markup differs.
- */
 export function useCdmaNumbers() {
   const { $api } = useNuxtApp()
 
@@ -99,10 +94,6 @@ export function useCdmaNumbers() {
     }
   }
 
-  /**
-   * The gateway searches by up to four digits, and the field shows them the
-   * way a number is read — 56-54 — while the search keeps the bare digits.
-   */
   const masked = computed(() => (
     number.value.length > 2
       ? `${number.value.slice(0, 2)}-${number.value.slice(2)}`

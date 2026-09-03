@@ -45,10 +45,6 @@ export function useCoverage() {
   )
 }
 
-/**
- * The map draws one layer at a time, so a collection is fetched when it is
- * first switched to and kept for the rest of the visit.
- */
 const shapes = new Map<string, Promise<CoverageShapes>>()
 
 export function useCoverageShapes() {

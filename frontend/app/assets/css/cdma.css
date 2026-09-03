@@ -1,37 +1,5 @@
 @charset "UTF-8";
 
-/* ============================================================
-   PERFECTUM — CDMA
-
-   Styles for the CDMA section only. Loaded after main.css on
-   cdma-*.html, so shared blocks (header, footer, select, faq)
-   come from main.css and are only adjusted here.
-
-   1. CDMA INDEX — HERO
-   2. CDMA INDEX — TABS
-   3. CDMA INDEX — SECTION
-   4. CDMA INDEX — CHIPS
-   5. CDMA INDEX — RAIL
-   6. CDMA INDEX — TARIFF CARD
-   7. CDMA INDEX — SERVICE CARD
-   8. CDMA INDEX — NUMBERS
-   9. CDMA INDEX — NEWS
-   10. CDMA INDEX — PROMO
-   11. CDMA INDEX — FAQ
-   12. CDMA INDEX — SUPPORT
-   13. CDMA INDEX — CTA
-   14. CDMA INNER — HERO
-   15. CDMA DEALERS INDEX — REGIONS
-   16. CDMA DEALERS VIEW — TABLE
-   17. CDMA DETAIL — SHARED
-   18. CDMA TARIFF VIEW
-   19. CDMA SERVICE VIEW
-   20. CDMA ARTICLE — ACTION / NEWS
-   21. CDMA FOOTER
-   22. CDMA CONNECT — TABLES
-   23. MEDIA
-   ============================================================ */
-
 :root {
   --cdma-orange: #ec5901;
   --cdma-cream: #fbf7ef;
@@ -42,10 +10,6 @@
   --cdma-date: #6f6f6f;
   --cdma-text: #3a3a3a;
 }
-
-/* ============================================================
-   1. CDMA INDEX — HERO
-   ============================================================ */
 
 .cdma-hero {
   padding: 100px 0 70px;
@@ -70,10 +34,6 @@
   line-height: 22px;
   color: var(--color-white);
 }
-
-/* ============================================================
-   2. CDMA INDEX — TABS
-   ============================================================ */
 
 .cdma-section[id] {
   scroll-margin-top: 177px;
@@ -151,10 +111,6 @@
   border-bottom-color: var(--color-red);
 }
 
-/* ============================================================
-   3. CDMA INDEX — SECTION
-   ============================================================ */
-
 .cdma-section {
   padding-top: 72px;
 }
@@ -189,10 +145,6 @@
   border-radius: 8px;
 }
 
-/* ============================================================
-   4. CDMA INDEX — CHIPS
-   ============================================================ */
-
 .cdma-chips {
   display: flex;
   flex-wrap: wrap;
@@ -223,13 +175,6 @@
   border-color: var(--color-black);
 }
 
-/* ============================================================
-   5. CDMA INDEX — RAIL
-   A Swiper carousel: the track bleeds to the viewport edge so the
-   next card is clipped by the window, not by the 1558px column, and
-   the scrollbar is Swiper's own — draggable, not decorative.
-   ============================================================ */
-
 .cdma-rail {
   margin-top: 40px;
 }
@@ -259,10 +204,6 @@
   background: var(--color-red);
   border-radius: 4px;
 }
-
-/* ============================================================
-   6. CDMA INDEX — TARIFF CARD
-   ============================================================ */
 
 .cdma-tariff-card {
   display: flex;
@@ -366,10 +307,6 @@
   border-color: var(--color-red);
 }
 
-/* ============================================================
-   7. CDMA INDEX — SERVICE CARD
-   ============================================================ */
-
 .cdma-service-card {
   display: flex;
   flex-direction: column;
@@ -440,10 +377,6 @@
   color: rgba(0, 0, 0, 0.6);
   margin-bottom: 16px;
 }
-
-/* ============================================================
-   8. CDMA INDEX — NUMBERS
-   ============================================================ */
 
 .cdma-numbers {
   display: flex;
@@ -572,8 +505,6 @@
   color: var(--color-red-ink);
 }
 
-/* the gateway can answer with a hundred rows, so the table scrolls on its own
-   instead of stretching the section */
 .cdma-numbers__table-wrap {
   margin-top: 24px;
   overflow-x: auto;
@@ -632,9 +563,6 @@
   display: flex;
 }
 
-/* only the re-search has a table to veil; the first load has nothing under it,
-   and only a loaded block runs past the viewport, so only there does the
-   spinner have to stick to stay in sight */
 .cdma-numbers-block.is-busy:not(.is-loading) .cdma-numbers-block__preloader {
   background: rgba(255, 255, 255, 0.72);
 }
@@ -668,18 +596,12 @@
   color: var(--color-red);
 }
 
-/* ============================================================
-   9. CDMA INDEX — NEWS
-   ============================================================ */
-
 .cdma-news {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-/* the grid carries no space of its own, so the pager below it would sit
-   flush against the last row of cards */
 .cdma-section .pagination {
   margin-top: 48px;
 }
@@ -743,10 +665,6 @@
   line-height: 33px;
   color: var(--color-muted);
 }
-
-/* ============================================================
-   10. CDMA INDEX — PROMO
-   ============================================================ */
 
 .cdma-promo {
   display: grid;
@@ -817,12 +735,6 @@
   color: var(--color-muted);
 }
 
-/* ============================================================
-   11. CDMA INDEX — FAQ
-   Reuses the faq-item block; only the CDMA skin differs:
-   a 60px pill row with a solid black toggle.
-   ============================================================ */
-
 .faq-accordion_cdma {
   display: flex;
   flex-direction: column;
@@ -859,10 +771,6 @@
   line-height: 22px;
   color: rgba(0, 0, 0, 0.6);
 }
-
-/* ============================================================
-   12. CDMA INDEX — SUPPORT
-   ============================================================ */
 
 .cdma-support {
   display: grid;
@@ -932,10 +840,6 @@
   line-height: 20px;
   color: var(--color-muted);
 }
-
-/* ============================================================
-   13. CDMA INDEX — CTA
-   ============================================================ */
 
 .cdma-cta {
   position: relative;
@@ -1029,12 +933,6 @@
   color: var(--color-black);
 }
 
-/* ============================================================
-   14. CDMA INNER — HERO
-   Same 339px orange band as the portal, but with a breadcrumb
-   instead of the strapline.
-   ============================================================ */
-
 .cdma-hero_inner {
   padding: 40px 0 122px;
 }
@@ -1072,10 +970,6 @@
 .cdma-hero_inner .cdma-hero__title {
   margin-top: 65px;
 }
-
-/* ============================================================
-   15. CDMA DEALERS INDEX — REGIONS
-   ============================================================ */
 
 .cdma-regions {
   padding-top: 56px;
@@ -1146,10 +1040,6 @@
   opacity: 1;
 }
 
-/* ============================================================
-   16. CDMA DEALERS VIEW — TABLE
-   ============================================================ */
-
 .cdma-dealers {
   padding-top: 56px;
   padding-bottom: 186px;
@@ -1182,9 +1072,6 @@
   margin-bottom: 43px;
 }
 
-/* the region's table now comes out of the admin editor as bare tags, so the
-   frame's look is pinned to the wrapper: cream header, hairline rows, and a
-   full-width th row inside tbody reads as the district band */
 .cdma-dealers__content {
   overflow-x: auto;
   border: 1px solid #e1deda;
@@ -1246,12 +1133,6 @@
 .cdma-dealers__content td:first-child {
   padding-left: 40px;
 }
-
-/* ============================================================
-   17. CDMA DETAIL — SHARED
-   Tariff and service pages share a 195px orange band, a tinted
-   category chip, a lead paragraph and a red back link.
-   ============================================================ */
 
 .cdma-hero_slim {
   padding: 40px 0 32px;
@@ -1316,10 +1197,6 @@
   width: 24px;
   height: 24px;
 }
-
-/* ============================================================
-   18. CDMA TARIFF VIEW
-   ============================================================ */
 
 .cdma-detail .cdma-price {
   display: flex;
@@ -1421,10 +1298,6 @@
   color: var(--color-black);
 }
 
-/* ============================================================
-   19. CDMA SERVICE VIEW
-   ============================================================ */
-
 .cdma-detail .cdma-facts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1515,8 +1388,6 @@
   margin-top: 24px;
 }
 
-/* The editor content of a wired service arrives as bare tags, so they read
-   the same as the hand-classed paragraphs of the static mock-up. */
 .cdma-prose p,
 .cdma-prose li {
   font-size: 16px;
@@ -1528,11 +1399,6 @@
 .cdma-prose ol {
   gap: 8px;
 }
-
-/* ============================================================
-   20. CDMA ARTICLE — ACTION / NEWS
-   Both article pages run in a 995px column centred in the grid.
-   ============================================================ */
 
 .cdma-detail_article .cdma-article-wrap {
   max-width: 995px;
@@ -1661,12 +1527,6 @@
   margin-top: 36px;
 }
 
-/* ============================================================
-   21. CDMA FOOTER
-   Every CDMA slide ends on this grey bar instead of the main
-   site footer.
-   ============================================================ */
-
 .cdma-footer {
   padding: 84px 0 83px;
   background: #f1f1f1;
@@ -1720,20 +1580,6 @@
   color: var(--color-muted);
 }
 
-/* ============================================================
-   22. CDMA CONNECT — TABLES
-   The "Qanday ulanish kerak" page, measured on frame 1742:2824.
-   Its band is the 195px one the tariff and service pages already
-   use, so the page carries cdma-hero_slim and only the stack
-   below it is new: 1558-wide cards 42px apart, then a run of
-   legal paragraphs each closed by a rule. Colours sampled from
-   the render: a #FBFBFB card on a #FEFEFE sheet, an #F2F2F2
-   header band, #3A3A3A body copy against black labels.
-   The card is padded 20px, so the table inside it runs from
-   x=20 to x=1538 and the label column ends on the frame's
-   divider at x=325 without any hand-set widths on the rest.
-   ============================================================ */
-
 .cdma-connect {
   padding: 56px 0 96px;
   background: #fefefe;
@@ -1754,8 +1600,6 @@
   color: var(--color-black);
 }
 
-/* the article comes from the editor, so its tables carry no classes of
-   their own and inherit the panel look by element */
 .cdma-connect .cdma-connect__article table {
   width: 100%;
   margin-bottom: 42px;
@@ -1819,11 +1663,6 @@
   line-height: 26px;
   color: rgba(0, 0, 0, 0.7);
 }
-
-/* ============================================================
-   23. MEDIA
-   Same breakpoints, in the same order, as main.css.
-   ============================================================ */
 
 @media all and (min-width: 1400px) and (max-width: 1699.98px) {
   .cdma-tabs .cdma-tabs__list {

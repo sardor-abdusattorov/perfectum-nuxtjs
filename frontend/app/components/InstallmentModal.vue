@@ -12,10 +12,6 @@ const emit = defineEmits<{ close: [] }>()
 
 const t = useT()
 
-/**
- * Every partner keeps its own term while the window is open, so switching
- * one does not reset the figures the visitor is comparing it against.
- */
 const chosen = ref<Record<string, number>>({})
 
 watch(() => props.offers, (offers) => {

@@ -13,11 +13,6 @@ const cta = useBlock('cdma', 'cta')
 
 const supportCards = computed(() => published(support.value.cards))
 
-/**
- * The order and the wording of the landing's own navigation are the admin's;
- * where each link leads belongs to this page and stays here. A link to another
- * page needs the locale in front of it, an anchor within this one does not.
- */
 const SECTION_TARGETS: Record<string, string> = {
   tariffs: '#cdma-tariffs',
   services: '#cdma-services',
@@ -39,10 +34,6 @@ const sectionLinks = computed(() => published(sections.value.items)
   }))
   .filter(item => item.target && item.title))
 
-/**
- * The page draws six independent sections, so they are fetched together: one
- * round-trip of depth instead of six waiting on each other.
- */
 const [
   { data: faqData },
   { data: newsData },
@@ -96,10 +87,6 @@ const { long: dateLong } = useDates()
 
 const news = computed(() => newsData.value?.items ?? [])
 
-/**
- * A support card may point at a page of this site or straight at a phone or
- * messenger; only the former goes through the locale prefix.
- */
 const EXTERNAL = /^(https?:)?\/\/|^(mailto|tel|sms):/
 
 function cardLink(url: string): string {
@@ -133,9 +120,7 @@ useSlider(tariffRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-tariffs .cdma-r
 useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma-rail__bar', draggable: true } }, () => `${locale.value}:${serviceCategory.value}`)
 </script>
 
-
 <template>
-  <!-- CDMA HERO -->
   <section class="cdma-hero">
       <div class="container">
           <h1 class="cdma-hero__title" v-html="rich(hero.title)"></h1>
@@ -143,8 +128,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </section>
 
-  <!-- CDMA TABS -->
-  <nav class="cdma-tabs" :aria-label="t('cdma.sections_label')">
+<nav class="cdma-tabs" :aria-label="t('cdma.sections_label')">
       <div class="container">
           <ul class="cdma-tabs__list">
               <li v-for="(link, index) in sectionLinks" :key="link.key" class="cdma-tabs__item">
@@ -160,8 +144,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </nav>
 
-  <!-- CDMA TARIFFS -->
-  <section class="cdma-section" id="cdma-tariffs">
+<section class="cdma-section" id="cdma-tariffs">
       <div class="container">
           <h2 class="cdma-section__title">{{ t('cdma.tariffs_title') }}</h2>
           <ul class="cdma-chips">
@@ -199,8 +182,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </section>
 
-  <!-- CDMA SERVICES -->
-  <section class="cdma-section" id="cdma-services">
+<section class="cdma-section" id="cdma-services">
       <div class="container">
           <h2 class="cdma-section__title">{{ t('cdma.services_title') }}</h2>
           <ul class="cdma-chips">
@@ -237,16 +219,14 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </section>
 
-  <!-- CDMA NUMBERS -->
-  <section class="cdma-section" id="cdma-numbers">
+<section class="cdma-section" id="cdma-numbers">
       <div class="container">
           <h2 class="cdma-section__title">{{ t('cdma.numbers_title') }}</h2>
           <CdmaFreeNumbers />
       </div>
   </section>
 
-  <!-- CDMA NEWS -->
-  <section class="cdma-section" id="cdma-news">
+<section class="cdma-section" id="cdma-news">
       <div class="container">
           <div class="cdma-section__head">
               <h2 class="cdma-section__title">{{ t('cdma.news_title') }}</h2>
@@ -269,8 +249,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </section>
 
-  <!-- CDMA PROMO -->
-  <section class="cdma-section" id="cdma-promo">
+<section class="cdma-section" id="cdma-promo">
       <div class="container">
           <h2 class="cdma-section__title">{{ t('cdma.promo_title') }}</h2>
           <ul class="cdma-promo">
@@ -287,16 +266,14 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </section>
 
-  <!-- CDMA FAQ -->
-  <section class="cdma-section" id="cdma-faq">
+<section class="cdma-section" id="cdma-faq">
       <div class="container">
           <h2 class="cdma-section__title">{{ t('cdma.faq_title') }}</h2>
           <FaqAccordion v-if="faqs.length" class="faq-accordion_cdma" :items="faqs" />
       </div>
   </section>
 
-  <!-- CDMA SUPPORT -->
-  <section class="cdma-section" id="cdma-support">
+<section class="cdma-section" id="cdma-support">
       <div class="container">
           <h2 class="cdma-section__title">{{ t('cdma.support_title') }}</h2>
           <ul v-if="supportCards.length" class="cdma-support">
@@ -315,8 +292,7 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
       </div>
   </section>
 
-  <!-- CDMA CTA -->
-  <section v-if="cta.title" class="cdma-cta">
+<section v-if="cta.title" class="cdma-cta">
       <div class="container">
           <span v-if="cta.kicker" class="cdma-cta__kicker">{{ cta.kicker }}</span>
           <h2 class="cdma-cta__title">{{ cta.title }}</h2>
