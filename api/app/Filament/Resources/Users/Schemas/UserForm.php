@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Filament\Support\Fields;
+use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 
 class UserForm
@@ -48,11 +50,16 @@ class UserForm
 
                         Select::make('roles')
                             ->label(__('app.label.roles'))
+                            ->helperText(__('app.helper.roles'))
                             ->searchable()
                             ->preload()
                             ->required()
                             ->multiple()
-                            ->relationship('roles', 'name'),
+                            ->relationship(
+                                'roles',
+                                'name',
+                                fn (Builder $query): Builder => $query->where('name', '!=', Utils::getPanelUserRoleName()),
+                            ),
                     ]),
             ]);
     }

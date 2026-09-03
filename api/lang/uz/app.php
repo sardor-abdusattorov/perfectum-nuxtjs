@@ -408,6 +408,7 @@ return [
         'seo_og_image' => 'Tavsiya etilgan oʻlcham: 1200x630px. PNG yoki JPEG formati.',
         'metrics_yandex' => 'Yandex Metrika hisoblagich kodini shu yerga joylashtiring',
         'metrics_google' => 'Google Analytics kodini shu yerga joylashtiring',
+        'roles' => 'Xizmatchi panel_user roli oʻzi beriladi — u bu yerda yoʻq va uni olib boʻlmaydi',
         'is_default_status' => 'Har bir yangi ariza shu statusni oladi. U «hali ishlov berilmagan» degani',
         'status_in_use' => 'Statusni oʻchirib boʻlmaydi: u arizalarda turibdi. Taklif qilinmasligi uchun uni oʻchiring',
         'maps_yandex_key' => 'Yandex dasturchi kabinetidagi JavaScript API kaliti. U bo‘lmasa qamrov va ofislar xaritasi konsolga «Invalid API key» yozadi, manzil bo‘yicha qidiruv ishlamaydi',
