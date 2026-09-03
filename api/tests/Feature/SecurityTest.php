@@ -78,15 +78,26 @@ it('escapes a search term so its wildcards cannot scan the table', function (): 
         ->assertJsonCount(0, 'data');
 });
 
-it('shuts a user with no role out of the panel', function (): void {
+/**
+ * The door is open to any signed-in account by decision — what a role is for
+ * here is the sidebar behind it, and that is where the check has to hold.
+ */
+it('lets any signed-in account through the door and shows it nothing', function (): void {
     $stranger = User::factory()->create();
     $admin = User::factory()->create();
     $admin->assignRole(Role::findOrCreate('super_admin', 'web'));
 
     $panel = Filament\Facades\Filament::getPanel('admin');
 
-    expect($stranger->canAccessPanel($panel))->toBeFalse()
+    expect($stranger->canAccessPanel($panel))->toBeTrue()
         ->and($admin->canAccessPanel($panel))->toBeTrue();
+
+    $this->actingAs($stranger);
+
+    $visible = collect($panel->getResources())
+        ->filter(fn (string $resource): bool => $resource::canViewAny());
+
+    expect($visible)->toBeEmpty();
 });
 
 it('guards the block editors behind their own permission', function (): void {
