@@ -3,12 +3,13 @@ const props = defineProps<{ active: 'faq' | 'numbers' | 'contact' }>()
 
 const localePath = useLocalePath()
 const t = useT()
+const settings = useSiteSettings()
 
-const items = computed(() => [
+const items = computed(() => ([
   { key: 'faq', to: '/help', label: t('help.nav_faq') },
   { key: 'numbers', to: '/help/numbers', label: t('help.nav_numbers') },
   { key: 'contact', to: '/help/contact', label: t('help.nav_contact') },
-] as const)
+] as const).filter(item => settings.value?.help?.[item.key] !== false))
 
 function isActive(key: string): boolean {
   return key === props.active

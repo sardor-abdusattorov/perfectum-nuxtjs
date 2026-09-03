@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use App\Filament\Support\StatusToggle;
 use App\Models\Settings as SettingsModel;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Actions\Action;
@@ -133,6 +134,18 @@ class Settings extends Page implements HasForms
                                     ->label(__('app.label.maps_yandex_key'))
                                     ->maxLength(64)
                                     ->helperText(__('app.helper.maps_yandex_key')),
+                            ]),
+
+                        Tabs\Tab::make(__('app.label.tab_help'))
+                            ->schema([
+                                StatusToggle::make('help.faq')
+                                    ->label(__('app.label.help_faq')),
+
+                                StatusToggle::make('help.numbers')
+                                    ->label(__('app.label.help_numbers')),
+
+                                StatusToggle::make('help.contact')
+                                    ->label(__('app.label.help_contact')),
                             ]),
                     ]),
             ])

@@ -46,6 +46,11 @@ class SiteController
             'maps' => [
                 'yandex_key' => Settings::get('maps.yandex_key') ?: null,
             ],
+            'help' => [
+                'faq' => Settings::get('help.faq') !== false,
+                'numbers' => Settings::get('help.numbers') !== false,
+                'contact' => Settings::get('help.contact') !== false,
+            ],
             'site' => SiteSettings::published(),
             'pages' => PageSettings::map(),
         ];

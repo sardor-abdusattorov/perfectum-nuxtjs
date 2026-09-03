@@ -20,6 +20,7 @@ export interface Settings {
   seo: Seo
   metrics: { enabled: boolean }
   maps: { yandex_key: string | null }
+  help: { faq: boolean, numbers: boolean, contact: boolean }
   site: Record<string, string | null>
   pages: Record<string, PageSeo>
 }
