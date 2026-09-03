@@ -32,6 +32,14 @@ class PagesTable
                     ->copyable()
                     ->searchable(),
 
+                TextColumn::make('children_count')
+                    ->label(__('app.label.page_cards'))
+                    ->counts('children')
+                    ->badge()
+                    ->color('gray')
+                    ->formatStateUsing(fn (int $state): ?string => $state > 0 ? (string) $state : null)
+                    ->placeholder('—'),
+
                 Tables::viewsColumn(),
 
                 Tables::statusColumn(),

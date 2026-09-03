@@ -7,6 +7,8 @@ use App\Models\Concerns\CountsViews;
 use App\Models\Concerns\HasMediaUrl;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
@@ -22,6 +24,7 @@ class Page extends Model
     protected $table = 'pages';
 
     protected $fillable = [
+        'parent_id',
         'slug',
         'title',
         'content',
@@ -29,6 +32,7 @@ class Page extends Model
         'meta_title',
         'meta_description',
         'redirect_from',
+        'sort',
         'status',
     ];
 
@@ -37,8 +41,24 @@ class Page extends Model
     protected $casts = [
         'views' => 'integer',
         'redirect_from' => 'array',
+        'sort' => 'integer',
         'status' => 'boolean',
     ];
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
+     * Unscoped on purpose: the admin picker attaches and detaches through this
+     * relationship, and a filter here would hide an unpublished card from the
+     * picker and leave it silently attached.
+     */
+    public function children(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_id')->orderBy('sort')->orderBy('id');
+    }
 
     protected static function booted(): void
     {

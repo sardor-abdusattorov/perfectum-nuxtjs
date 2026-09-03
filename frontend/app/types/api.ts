@@ -44,11 +44,19 @@ export interface PageBlocks {
   blocks: Record<string, Record<string, any>>
 }
 
+export interface PageCard {
+  slug: string
+  title: string
+  image: string | null
+}
+
 export interface PageContent {
   slug: string
   title: string
-  content: string
+  content: string | null
   image: string | null
+  parent: { slug: string, title: string } | null
+  cards: PageCard[]
   seo: Seo
   updated_at: string | null
 }

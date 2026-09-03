@@ -19,6 +19,14 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true })
 }
 
+const back = computed(() => {
+  const parent = page.value?.parent
+
+  return parent
+    ? { to: localePath(`/pages/${parent.slug}`), label: parent.title }
+    : { to: localePath('/'), label: t('common.back_home') }
+})
+
 useSeo({
   title: () => page.value?.seo.title,
   description: () => page.value?.seo.description,
@@ -32,28 +40,91 @@ useSeo({
   <section v-if="page" class="article">
     <div class="container">
       <div class="article__inner">
-        <NuxtLink class="article__back" :to="localePath('/')">
+        <NuxtLink class="article__back" :to="back.to">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          {{ t('common.back_home') }}
+          {{ back.label }}
         </NuxtLink>
 
         <div class="article__hero">
           <h1 class="article__hero-title">{{ page.title }}</h1>
         </div>
 
-        <div class="article__card">
+        <div v-if="page.image || page.content" class="article__card">
           <img v-if="page.image" class="article__image" :src="page.image" :alt="page.title">
 
-          <div class="article__content rich" v-html="page.content" />
+          <div v-if="page.content" class="article__content rich" v-html="page.content" />
         </div>
+
+        <ul v-if="page.cards.length" class="page-cards">
+          <li v-for="card in page.cards" :key="card.slug" class="page-cards__item">
+            <NuxtLink class="page-cards__link" :to="localePath(`/pages/${card.slug}`)">
+              <img v-if="card.image" class="page-cards__image" :src="card.image" :alt="card.title">
+              <h2 class="page-cards__title">{{ card.title }}</h2>
+              <svg class="page-cards__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </NuxtLink>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+.page-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.page-cards__item {
+  min-height: 170px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius);
+  background: var(--color-white);
+  transition: var(--transition);
+}
+
+.page-cards__item:hover {
+  border-color: rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.06);
+}
+
+.page-cards__link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  height: 100%;
+  padding: 28px 30px;
+  color: inherit;
+}
+
+.page-cards__image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.page-cards__title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-black);
+}
+
+.page-cards__arrow {
+  width: 24px;
+  height: 24px;
+  margin-top: auto;
+  color: var(--color-red);
+}
+
 .article__image {
   width: 100%;
   height: auto;

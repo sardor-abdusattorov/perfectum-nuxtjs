@@ -10,10 +10,12 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('parent_id')->nullable()->constrained('pages')->nullOnDelete();
             $table->string('slug')->unique();
             $table->json('title');
-            $table->json('content');
+            $table->json('content')->nullable();
             $table->string('image')->nullable();
+            $table->unsignedInteger('sort')->default(0);
             $table->json('meta_title')->nullable();
             $table->json('meta_description')->nullable();
             $table->json('redirect_from')->nullable();

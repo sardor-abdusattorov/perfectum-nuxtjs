@@ -114,6 +114,67 @@ it('caches the page as plain data so a second request can read it back', functio
     expect($second)->toBe($first);
 });
 
+it('hands the site the cards of a hub page in the order the admin set', function (): void {
+    $hub = makePage(['slug' => 'polezno-znat', 'content' => null]);
+
+    makePage(['slug' => 'vtoraya', 'parent_id' => $hub->getKey(), 'sort' => 2, 'title' => ['ru' => 'Вторая']]);
+    makePage(['slug' => 'pervaya', 'parent_id' => $hub->getKey(), 'sort' => 1, 'title' => ['ru' => 'Первая']]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertOk()
+        ->assertJsonPath('data.content', null)
+        ->assertJsonPath('data.parent', null)
+        ->assertJsonPath('data.cards.0.slug', 'pervaya')
+        ->assertJsonPath('data.cards.0.title', 'Первая')
+        ->assertJsonPath('data.cards.1.slug', 'vtoraya');
+});
+
+it('keeps an unpublished card off the hub page', function (): void {
+    $hub = makePage(['slug' => 'polezno-znat']);
+    makePage(['slug' => 'chernovik', 'parent_id' => $hub->getKey(), 'status' => false]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertOk()
+        ->assertJsonPath('data.cards', []);
+});
+
+it('points a card page back at the hub it belongs to', function (): void {
+    $hub = makePage(['slug' => 'polezno-znat', 'title' => ['ru' => 'Полезно знать']]);
+    makePage(['slug' => 'tarify', 'parent_id' => $hub->getKey()]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'tarify']))
+        ->assertOk()
+        ->assertJsonPath('data.parent.slug', 'polezno-znat')
+        ->assertJsonPath('data.parent.title', 'Полезно знать')
+        ->assertJsonPath('data.cards', []);
+});
+
+it('refreshes the hub page when one of its cards is renamed', function (): void {
+    $hub = makePage(['slug' => 'polezno-znat']);
+    $card = makePage(['slug' => 'tarify', 'parent_id' => $hub->getKey(), 'title' => ['ru' => 'Тарифы']]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertJsonPath('data.cards.0.title', 'Тарифы');
+
+    $card->update(['title' => ['ru' => 'Наши тарифы']]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertJsonPath('data.cards.0.title', 'Наши тарифы');
+});
+
+it('drops a deleted page from the hub it was on', function (): void {
+    $hub = makePage(['slug' => 'polezno-znat']);
+    $card = makePage(['slug' => 'tarify', 'parent_id' => $hub->getKey()]);
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertJsonCount(1, 'data.cards');
+
+    $card->delete();
+
+    $this->getJson(route('api.v1.pages.show', ['page' => 'polezno-znat']))
+        ->assertJsonPath('data.cards', []);
+});
+
 it('maps every old address onto its page', function (): void {
     makePage(['redirect_from' => ['static-pages/cookie-policy', 'static-pages/cookies']]);
     makePage([

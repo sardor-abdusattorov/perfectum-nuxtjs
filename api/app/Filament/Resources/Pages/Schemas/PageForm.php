@@ -4,10 +4,11 @@ namespace App\Filament\Resources\Pages\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
+use App\Models\Page;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -30,7 +31,7 @@ class PageForm
 
                                 Fields::editor('content')
                                     ->label(__('app.label.content'))
-                                    ->required(),
+                                    ->helperText(__('app.helper.page_content')),
                             ]),
 
                         Fields::slug()
@@ -44,10 +45,22 @@ class PageForm
                         Fields::image('pages')
                             ->label(__('app.label.image')),
 
-                        Toggle::make('status')
-                            ->label(__('app.label.show_on_site'))
-                            ->helperText(__('app.helper.if_disabled_not_shown'))
-                            ->default(true),
+                        Fields::sort(),
+
+                        Fields::status(),
+                    ]),
+
+                Section::make(__('app.label.page_cards'))
+                    ->description(__('app.helper.page_cards'))
+                    ->collapsed(fn (?Page $record): bool => $record?->children()->doesntExist() ?? true)
+                    ->schema([
+                        Select::make('children')
+                            ->hiddenLabel()
+                            ->relationship('children', 'title', ignoreRecord: true)
+                            ->getOptionLabelFromRecordUsing(fn (Page $record): string => $record->title)
+                            ->multiple()
+                            ->searchable()
+                            ->preload(),
                     ]),
 
                 Section::make(__('app.label.tab_seo'))

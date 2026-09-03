@@ -24,8 +24,18 @@ class PageResource extends JsonResource
         return [
             'slug' => $this->slug,
             'title' => $this->title,
-            'content' => $this->content,
+            'content' => filled($this->content) ? $this->content : null,
             'image' => $this->imageUrl(),
+            'parent' => $this->parent?->only('slug', 'title'),
+            'cards' => $this->children
+                ->where('status', true)
+                ->map(fn (Page $card): array => [
+                    'slug' => $card->slug,
+                    'title' => $card->title,
+                    'image' => $card->imageUrl(),
+                ])
+                ->values()
+                ->all(),
             'seo' => [
                 'title' => filled($this->meta_title) ? $this->meta_title : $this->title,
                 'description' => filled($this->meta_description) ? $this->meta_description : $defaults['description'],
