@@ -21,6 +21,8 @@ const {
 const localePath = useLocalePath()
 const t = useT()
 
+useHelpSection('numbers')
+
 useSeo({ titleKey: 'seo.numbers' })
 </script>
 

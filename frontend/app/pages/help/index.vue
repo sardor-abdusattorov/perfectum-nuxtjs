@@ -2,6 +2,8 @@
 const localePath = useLocalePath()
 const t = useT()
 
+useHelpSection('faq')
+
 useSeo({ page: 'help', titleKey: 'seo.help' })
 
 const { data } = await useFaqs({ page: 'help' })

@@ -7,6 +7,8 @@ const t = useT()
 const { locale } = useI18n()
 const { $api } = useNuxtApp()
 
+useHelpSection('contact')
+
 useSeo({ titleKey: 'seo.help_contact' })
 
 const MESSAGE_LIMIT = 500
