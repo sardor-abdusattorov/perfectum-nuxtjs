@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Facades\Filament;
 use Illuminate\Console\Command;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 /**
@@ -16,7 +18,7 @@ use Spatie\Permission\PermissionRegistrar;
  */
 final class UserAccess extends Command
 {
-    protected $signature = 'user:access {email} {--fresh : forget the cached permissions first}';
+    protected $signature = 'user:access {email} {--fresh : forget the cached permissions first} {--grant : give the account the panel_user role}';
 
     protected $description = 'Show what a panel account may see';
 
@@ -37,6 +39,14 @@ final class UserAccess extends Command
 
         $panel = Filament::getPanel('admin');
         Filament::setCurrentPanel($panel);
+
+        if ($this->option('grant')) {
+            $user->assignRole(Role::findOrCreate(Utils::getPanelUserRoleName(), Utils::getFilamentAuthGuard()));
+            app(PermissionRegistrar::class)->forgetCachedPermissions();
+            $user = $user->refresh();
+            $this->line('Роль '.Utils::getPanelUserRoleName().' выдана.');
+        }
+
         auth()->login($user);
 
         $this->line('Пользователь: '.$user->name.' <'.$user->email.'>');
@@ -46,6 +56,7 @@ final class UserAccess extends Command
 
         if (! $user->canAccessPanel($panel)) {
             $this->warn('Нужна роль panel_user или super_admin — без неё панель не откроется совсем.');
+            $this->warn('Выдать её этому аккаунту: php artisan user:access '.$user->email.' --grant');
         }
 
         $visible = collect($panel->getResources())
