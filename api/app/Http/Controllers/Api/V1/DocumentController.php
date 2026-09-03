@@ -62,6 +62,7 @@ class DocumentController
                     'name' => $document->name,
                     'url' => $document->url() ?? ($files[0]['url'] ?? null),
                     'size' => $document->readableSize() ?? ($files[0]['size'] ?? null),
+                    'downloadable' => $document->is_downloadable,
                     'files' => $files,
                 ];
             })

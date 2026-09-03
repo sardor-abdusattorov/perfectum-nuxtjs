@@ -46,7 +46,7 @@ function fileName(url: string): string {
               <h2 class="article__files-title">{{ t('services.files', 'Файлы') }}</h2>
               <ul class="article__files-list">
                 <li v-for="file in service.files" :key="file">
-                  <a class="article__file" :href="file" target="_blank" rel="noopener">
+                  <a class="article__file" :href="storageUrl(file)" target="_blank" rel="noopener">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
                       <path d="M14 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Documents\Schemas;
 
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use App\Filament\Support\Fields;
+use App\Filament\Support\StatusToggle;
 use App\Models\DocumentCategory;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -29,6 +30,11 @@ class DocumentForm
                                 Fields::file('documents')
                                     ->helperText(__('app.helper.document_file')),
                             ]),
+
+                        StatusToggle::make('is_downloadable')
+                            ->label(__('app.label.is_downloadable'))
+                            ->helperText(__('app.helper.is_downloadable'))
+                            ->default(true),
 
                         Fields::sort(),
 

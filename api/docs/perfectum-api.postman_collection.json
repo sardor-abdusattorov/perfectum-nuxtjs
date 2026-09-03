@@ -716,6 +716,172 @@
               "body": "{\n  \"message\": \"No query results for model [App\\\\Models\\\\CoverageLayer].\"\n}"
             }
           ]
+        },
+        {
+          "name": "Новости — списком (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "news"
+              ]
+            },
+            "description": "То же, что GET-версия, но параметры идут в JSON-теле — для наборов, где GET со строкой запроса неудобен.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"network\": \"5g\",\n  \"category\": null,\n  \"search\": \"\",\n  \"page\": 1,\n  \"per_page\": 9\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Новость по слагу (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news/texniceskie-raboty-16",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "news",
+                "texniceskie-raboty-16"
+              ]
+            },
+            "description": "То же, что GET-версия, но параметры идут в JSON-теле — для наборов, где GET со строкой запроса неудобен.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "FAQ — списком (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/faqs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "faqs"
+              ]
+            },
+            "description": "То же, что GET-версия, но параметры идут в JSON-теле — для наборов, где GET со строкой запроса неудобен.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": \"faq\",\n  \"category\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Категории таксономии (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Locale",
+                "value": "{{locale}}",
+                "description": "ru | uz. Равнозначно ?locale=ru и ?lang=ru в строке запроса, и Accept-Language"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/news-categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "news-categories"
+              ]
+            },
+            "description": "То же, что GET-версия, но параметры идут в JSON-теле — для наборов, где GET со строкой запроса неудобен.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"network\": \"5g\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
         }
       ]
     },

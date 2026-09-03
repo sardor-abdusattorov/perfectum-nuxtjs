@@ -6822,6 +6822,7 @@ body.overflow__hidden {
 }
 
 .doc-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 24px;
@@ -6829,6 +6830,27 @@ body.overflow__hidden {
   background: #f6f6f6;
   border-radius: var(--radius);
   transition: var(--transition);
+}
+
+/* Растянут на всю карточку, чтобы документ открывался нажатием куда угодно.
+   Ссылка внутри ссылки — недопустимая разметка, поэтому язык и «Скачать»
+   лежат рядом и поднимаются над ней. */
+.doc-item .doc-item__open {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.doc-item .doc-item__open:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+.doc-item .doc-item__lang,
+.doc-item .doc-item__download {
+  position: relative;
+  z-index: 2;
 }
 
 .doc-item:hover {

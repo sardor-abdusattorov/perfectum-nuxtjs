@@ -14,6 +14,7 @@ return new class extends Migration
             $table->json('name');
             $table->json('file')->nullable();
             $table->json('size')->nullable();
+            $table->boolean('is_downloadable')->default(true);
             $table->unsignedInteger('sort')->default(0);
             $table->boolean('status')->default(true)->index();
             $table->timestamps();

@@ -11,6 +11,7 @@ interface DocumentItem {
   name: string
   url: string | null
   size: string | null
+  downloadable: boolean
   files: DocumentDownload[]
 }
 
@@ -60,6 +61,14 @@ function translations(doc: DocumentItem): DocumentDownload[] {
         <h2 v-if="group.name" class="doc-group__title">{{ group.name }}</h2>
         <ul class="doc-list">
           <li v-for="doc in group.documents" :key="doc.url ?? doc.name" class="doc-item">
+            <a
+              v-if="doc.url"
+              class="doc-item__open"
+              :href="storageUrl(doc.url)"
+              target="_blank"
+              rel="noopener"
+              :aria-label="doc.name"
+            ></a>
             <span class="doc-item__icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="67" height="67" viewBox="0 0 67 67"
               fill="none">
@@ -81,13 +90,15 @@ function translations(doc: DocumentItem): DocumentDownload[] {
                   v-for="file in translations(doc)"
                   :key="file.url!"
                   class="doc-item__lang"
-                  :href="file.url!"
+                  :href="storageUrl(file.url)"
                   :hreflang="file.language"
-                  download
+                  target="_blank"
+                  rel="noopener"
+                  :download="doc.downloadable ? '' : undefined"
                 >{{ file.language.toUpperCase() }}</a>
               </p>
             </div>
-            <a v-if="doc.url" class="doc-item__download" :href="doc.url" download>
+            <a v-if="doc.url && doc.downloadable" class="doc-item__download" :href="storageUrl(doc.url)" download>
               {{ t('documents.download') }}
               <svg viewBox="0 0 24 24"
               fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

@@ -29,13 +29,20 @@ class Document extends Model
         'name',
         'file',
         'size',
+        'is_downloadable',
         'sort',
         'status',
     ];
 
     public $translatable = ['name', 'file', 'size'];
 
+    /**
+     * @var array<string, mixed>
+     */
+    protected $attributes = ['is_downloadable' => true];
+
     protected $casts = [
+        'is_downloadable' => 'boolean',
         'status' => 'boolean',
     ];
 
