@@ -24,7 +24,7 @@ class DeviceController
             ->inCategory($request->query('category'))
             ->orderBy('sort');
 
-        return DeviceResource::collection($this->paginate($records, $request, ['name', 'brand']));
+        return DeviceResource::collection($this->paginate($records, $request, ['name', 'brand.name']));
     }
 
     public function show(Device $device): JsonResponse

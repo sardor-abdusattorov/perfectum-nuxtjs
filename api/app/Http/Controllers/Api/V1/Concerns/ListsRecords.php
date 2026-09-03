@@ -16,7 +16,7 @@ trait ListsRecords
     private const MAX_PER_PAGE = 100;
 
     /**
-     * @param  array<int, string>  $searchable
+     * @param  array<int, string>  $searchable  own columns, or `relation.column`
      */
     protected function paginate(Builder $query, Request $request, array $searchable = []): LengthAwarePaginator
     {
@@ -26,7 +26,18 @@ trait ListsRecords
             ->when($searchable !== [] && $search !== '', function (Builder $builder) use ($searchable, $search): void {
                 $builder->where(function (Builder $inner) use ($searchable, $search): void {
                     foreach ($searchable as $column) {
-                        $inner->orWhere($column, 'like', "%{$search}%");
+                        if (! str_contains($column, '.')) {
+                            $inner->orWhere($column, 'like', "%{$search}%");
+
+                            continue;
+                        }
+
+                        [$relation, $field] = explode('.', $column, 2);
+
+                        $inner->orWhereHas(
+                            $relation,
+                            fn (Builder $related) => $related->where($field, 'like', "%{$search}%"),
+                        );
                     }
                 });
             })
