@@ -19,14 +19,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * The content arrived with its files renamed into this site's own layout —
- * uploads/{model}/legacy — while the files themselves still sit wherever the
- * old site kept them. Drop that site's storage/app/public (plus its webroot
- * pictures folder) into storage/app/old_files/public: every file the content
- * references is found by its name in any subfolder and laid down at its new
- * address. Nothing unreferenced is carried over.
- */
 final class OldFilesImport extends Command
 {
     protected $signature = 'old-files:import
@@ -117,11 +109,6 @@ final class OldFilesImport extends Command
     }
 
     /**
-     * The old hashed names are unique, so a file is found by its name no
-     * matter which folder the old site filed it under. The lookup forgives
-     * what a copy between systems mangles: letter case and percent-encoded
-     * spaces in human-named files.
-     *
      * @return array<string, string>
      */
     private function index(string $source): array
@@ -140,10 +127,6 @@ final class OldFilesImport extends Command
         return mb_strtolower(rawurldecode($name));
     }
 
-    /**
-     * The documents were seeded before their files arrived, so the size the
-     * model normally stamps on upload is filled in here instead.
-     */
     private function stampDocumentSizes(): void
     {
         Document::query()->each(function (Document $document): void {
@@ -162,10 +145,6 @@ final class OldFilesImport extends Command
     }
 
     /**
-     * Every path the seeded rows point at: the image columns, the files the
-     * tenders and documents carry, the icons inside the tariff buttons, and
-     * the /storage/... links every translation of every body holds.
-     *
      * @return Collection<int, string>
      */
     private function referenced(): Collection
@@ -191,7 +170,6 @@ final class OldFilesImport extends Command
             $paths = $paths->merge(array_values($document->getTranslations('file')));
         }
 
-        // whatever shape the buttons take, an icon is a value under that key
         foreach (Tariff::query()->toBase()->pluck('buttons') as $raw) {
             $paths = $paths->merge($this->values(json_decode((string) $raw, true), 'icon'));
         }

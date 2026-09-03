@@ -10,10 +10,14 @@ class Social extends Model
 {
     public const CACHE_TTL = 86400;
 
-    /** @var array<string, string|null> */
+    /**
+     * @var array<string, string|null>
+     */
     private static array $names = [];
 
-    /** @var array<string, string|null> */
+    /**
+     * @var array<string, string|null>
+     */
     private static array $icons = [];
 
     protected $table = 'socials';
@@ -50,11 +54,6 @@ class Social extends Model
         return 'socials.published';
     }
 
-    /**
-     * The picker stores a Blade Icons name, but an Iconify one
-     * (`simple-icons:facebook`) is what a designer copies, so both are
-     * accepted and resolved to the name the icon set actually registers.
-     */
     public static function iconName(?string $name): ?string
     {
         if (blank($name)) {

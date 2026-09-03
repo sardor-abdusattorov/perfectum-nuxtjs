@@ -50,10 +50,6 @@ trait ListsRecords
         return Network::tryFrom($this->scalar($request, 'network'));
     }
 
-    /**
-     * `%` and `_` are LIKE wildcards: left as they are, a single character
-     * would ask the database to scan every row of every searchable column.
-     */
     private function searchTerm(Request $request): string
     {
         $search = trim(mb_substr($this->scalar($request, 'search'), 0, 100));
@@ -61,10 +57,6 @@ trait ListsRecords
         return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $search);
     }
 
-    /**
-     * Anything that is not a positive number asks for the default page, not
-     * for a page of one.
-     */
     private function perPage(Request $request): int
     {
         $perPage = (int) $this->scalar($request, 'per_page');
@@ -72,11 +64,6 @@ trait ListsRecords
         return min($perPage > 0 ? $perPage : self::PER_PAGE, self::MAX_PER_PAGE);
     }
 
-    /**
-     * A filter arrives in the query string from the site and in the JSON body
-     * from the app; the request reads both. A body can also carry an array or
-     * an object where a string was expected — that is no filter at all.
-     */
     private function scalar(Request $request, string $key, string $default = ''): string
     {
         $value = $request->input($key, $default);

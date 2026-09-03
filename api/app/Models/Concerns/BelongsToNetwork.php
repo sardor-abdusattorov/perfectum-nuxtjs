@@ -9,10 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait BelongsToNetwork
 {
-    /**
-     * Records marked as shared belong to both sections, so a section query
-     * always asks for its own network plus the shared ones.
-     */
     public function scopeForNetwork(Builder $query, ?Network $network): Builder
     {
         if ($network === null || $network === Network::Both) {

@@ -29,12 +29,6 @@ it('returns the blocks of a page resolved into the requested locale', function (
         ->assertJsonPath('data.blocks.marquee.items.0.text', 'Limitsiz');
 });
 
-/**
- * The admin stores an upload as the bare path it occupies on the disk. Every
- * other payload turns that into an address before it leaves; a block used to go
- * out untouched, so the page received `uploads/…` and the browser resolved it
- * against whatever address the visitor happened to be on.
- */
 it('hands over the address of an upload, not the path it sits at', function (): void {
     Storage::fake('public');
     Storage::disk('public')->put('uploads/content-blocks/2026/08/logo.png', 'png');
@@ -90,11 +84,6 @@ it('rejects a page key that does not exist', function (): void {
     $this->getJson('/api/v1/blocks/not-a-page')->assertNotFound();
 });
 
-/**
- * The order of the CDMA landing's own navigation is the admin's to change, so
- * the site is handed the links in the order they were stored and nothing else
- * decides it.
- */
 it('hands the cdma sections out in the stored order', function (): void {
     ContentBlock::write(PageKey::Cdma, ContentBlockKey::Sections, [
         'items' => [

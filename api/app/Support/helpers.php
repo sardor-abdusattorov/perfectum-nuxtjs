@@ -34,11 +34,6 @@ if (! function_exists('app_locales')) {
 }
 
 if (! function_exists('stored_url')) {
-    /**
-     * A row can outlive its file — a database restored without the storage
-     * folder leaves the column pointing at nothing. Answering null there lets
-     * the frontend fall back instead of laying out a broken image.
-     */
     function stored_url(mixed $path): ?string
     {
         if (! is_string($path) || blank($path)) {

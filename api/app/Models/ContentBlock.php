@@ -23,11 +23,6 @@ class ContentBlock extends Model
         'key' => ContentBlockKey::class,
     ];
 
-    /**
-     * Reading resolves every translatable node down to the current locale, so
-     * the site never deals with per-locale arrays. The admin needs the raw
-     * shape instead and calls getRawData().
-     */
     protected function data(): Attribute
     {
         return Attribute::make(
@@ -39,18 +34,6 @@ class ContentBlock extends Model
     }
 
     /**
-     * The site only ever prints what it is handed, so both of the panel's
-     * shorthands are spelled out here.
-     *
-     * A node whose `icon` names one from the panel's set gets an `icon_svg`
-     * sibling with the rendered mark, the way the socials payload carries
-     * theirs.
-     *
-     * An upload is stored as the bare path it occupies on the disk, and every
-     * other payload runs it through `stored_url()` before it leaves. A block
-     * used to go out as raw JSON, so `uploads/...` reached the page and the
-     * browser resolved it against whatever address the visitor was on.
-     *
      * @param  array<array-key, mixed>  $value
      * @return array<array-key, mixed>
      */
@@ -128,9 +111,6 @@ class ContentBlock extends Model
     }
 
     /**
-     * A node is a translation set when every one of its keys is a locale code,
-     * which lets any depth of the JSON carry translations without a schema.
-     *
      * @param  array<mixed>  $value
      */
     protected static function isTranslatable(array $value): bool

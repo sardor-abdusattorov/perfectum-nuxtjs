@@ -46,10 +46,6 @@ beforeEach(function (): void {
     ]);
 });
 
-/**
- * Most of the feed belongs to one section or the other, so an editor looking
- * for a CDMA notice should not have to read past the 5G ones.
- */
 it('narrows the news list to one network', function (): void {
     Livewire::test(ListNews::class)
         ->assertCanSeeTableRecords([$this->fiveG, $this->cdma])

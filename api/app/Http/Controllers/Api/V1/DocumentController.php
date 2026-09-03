@@ -10,10 +10,6 @@ use Illuminate\Http\JsonResponse;
 
 class DocumentController
 {
-    /**
-     * The page lists documents under their category heading, so the grouping
-     * is done here and an uncategorised file lands in its own trailing group.
-     */
     public function __invoke(): JsonResponse
     {
         $documents = Document::query()
@@ -44,11 +40,6 @@ class DocumentController
     }
 
     /**
-     * The file of the current locale is offered first and the rest travel
-     * along, so a page can hand over a translation the visitor asks for. A
-     * document whose files are all missing from the disk is left out rather
-     * than handed over as a row that downloads nothing.
-     *
      * @param  iterable<Document>|null  $documents
      * @return array<int, array<string, mixed>>
      */

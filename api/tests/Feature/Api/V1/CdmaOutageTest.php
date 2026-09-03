@@ -21,12 +21,6 @@ beforeEach(function (): void {
     ]);
 });
 
-/**
- * The CDMA page asks for the filters on every visit, and a gateway that is
- * down answers by timing out. Paying that timeout once per visitor is what
- * empties a worker pool, so the outage is remembered and the rest are served
- * from what the panel holds.
- */
 it('reaches a dead gateway once and serves the panel prices after that', function (): void {
     $reached = 0;
     Http::fake(function () use (&$reached) {

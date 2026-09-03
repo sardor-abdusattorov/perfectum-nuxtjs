@@ -163,10 +163,6 @@ it('serves a taxonomy from cache and drops it when a category changes', function
         ->assertJsonPath('data.0.name', 'novoe-imya');
 });
 
-/**
- * The open category of a listing lives in the address as its slug, so every
- * taxonomy the site filters by hands one out.
- */
 it('hands out a slug for every category the site filters by', function (): void {
     TariffCategory::create([
         'name' => ['ru' => 'Домашний интернет', 'uz' => 'Uy internet'],
@@ -199,10 +195,6 @@ it('hands out a slug for every category the site filters by', function (): void 
     }
 });
 
-/**
- * A link carries the slug, the panel and older links carry the id: the listing
- * answers to both and to nothing else.
- */
 it('filters a listing by the category slug as well as by its id', function (): void {
     $network = category(NewsCategory::class, Network::Both, 'razvitie-seti');
     news(['category_id' => $network->id, 'slug' => 'v-seti']);
@@ -219,11 +211,6 @@ it('filters a listing by the category slug as well as by its id', function (): v
     expect($this->getJson(route('api.v1.news.index').'?category=net-takoy')->assertOk()->json('data'))->toBe([]);
 });
 
-/**
- * The promos the old site published run on CDMA codes, so the 5G listing must
- * not carry them: they used to arrive uncategorised and then vanish the moment
- * a visitor picked a category.
- */
 it('keeps a cdma promo out of the 5g listing', function (): void {
     $promo = fn (array $attributes): Action => Action::create(array_merge([
         'title' => ['ru' => 'Акция', 'uz' => 'Aksiya'],

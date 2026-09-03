@@ -46,10 +46,6 @@ it('keeps the draft a 404 without a token', function (): void {
     $this->getJson(route('api.v1.pages.show', ['page' => 'chernovik']))->assertNotFound();
 });
 
-/**
- * A link travels further than it was meant to. It still opens the one record it
- * was made for and nothing else.
- */
 it('refuses a token issued for another record', function (): void {
     draftPage();
     $other = draftPage(['slug' => 'drugoy']);
@@ -93,10 +89,6 @@ it('refuses a token that was tampered with or made up', function (): void {
     }
 });
 
-/**
- * The token opens one address, never a listing: a draft that showed up in the
- * feed or the search would be published in every way that matters.
- */
 it('never lets a draft into a listing', function (): void {
     $draft = News::create([
         'title' => ['ru' => 'Черновик новости'],
@@ -123,16 +115,11 @@ it('never lets a draft into a listing', function (): void {
     expect($slugs)->toContain('zhivaya-novost')
         ->and($slugs)->not->toContain('chernovik-novosti');
 
-    /** its own address still opens, which is the whole point */
     $this->getJson(route('api.v1.news.show', ['news' => 'chernovik-novosti']).'?'.PreviewToken::PARAM.'='.$token)
         ->assertOk()
         ->assertJsonPath('data.slug', 'chernovik-novosti');
 });
 
-/**
- * The page endpoint caches what it answers. A preview must not be served to the
- * next visitor, and must not be answered from a copy made before the last save.
- */
 it('keeps a preview out of the cache', function (): void {
     $page = draftPage();
 

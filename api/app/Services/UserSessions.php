@@ -7,12 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-/**
- * Reads and maintains the database-backed sessions for the current user — the
- * data behind the profile page's "active devices" list and its "log out other
- * sessions" action. Keeps raw sessions-table access and user-agent sniffing
- * out of the Filament page.
- */
 class UserSessions
 {
     public function isSupported(): bool
@@ -21,8 +15,6 @@ class UserSessions
     }
 
     /**
-     * Active sessions for the current user, newest first.
-     *
      * @return array<int, array{id: string, ip_address: ?string, browser: string, platform: string, is_current_device: bool, last_active: string}>
      */
     public function forCurrentUser(): array
@@ -55,11 +47,6 @@ class UserSessions
             ->toArray();
     }
 
-    /**
-     * Log the current user out of every other device. Returns false when the
-     * database session driver isn't active (so the caller can report that the
-     * feature is unsupported), true once the other sessions are cleared.
-     */
     public function logoutOthers(string $password): bool
     {
         if (! $this->isSupported()) {

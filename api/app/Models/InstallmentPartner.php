@@ -22,7 +22,9 @@ class InstallmentPartner extends Model
         'status' => 'boolean',
     ];
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     public array $attachedFileFields = ['logo'];
 
     public function installments(): HasMany

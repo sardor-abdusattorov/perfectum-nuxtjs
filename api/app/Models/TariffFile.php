@@ -14,7 +14,9 @@ class TariffFile extends Model
 
     protected $table = 'tariff_files';
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     protected array $attachedFileFields = ['file'];
 
     protected $fillable = [

@@ -36,10 +36,14 @@ class ProfileSettings extends Page implements HasActions, HasForms
 
     protected static ?string $slug = 'profile';
 
-    /** @var array<string, mixed> */
+    /**
+     * @var array<string, mixed>
+     */
     public ?array $profileData = [];
 
-    /** @var array<string, mixed> */
+    /**
+     * @var array<string, mixed>
+     */
     public ?array $passwordData = [];
 
     public function getTitle(): string

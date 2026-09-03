@@ -37,11 +37,6 @@ class Page extends Model
         'status' => 'boolean',
     ];
 
-    /**
-     * The admin pastes old addresses however the ad carried them — with the
-     * domain, a locale prefix, slashes on either end. Boiled down to the bare
-     * path here, the redirect map only ever has one spelling to match against.
-     */
     protected static function booted(): void
     {
         static::saving(function (self $page): void {

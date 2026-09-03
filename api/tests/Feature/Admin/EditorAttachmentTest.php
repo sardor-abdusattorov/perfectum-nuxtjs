@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 uses(RefreshDatabase::class);
 
-/**
- * Mirrors the rule Filament builds in HasFileAttachments::getUploadedFileAttachment().
- */
 function editorAccepts(UploadedFile $file): bool
 {
     $types = Fields::editor('content')->getFileAttachmentsAcceptedFileTypes() ?? [];

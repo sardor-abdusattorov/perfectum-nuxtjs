@@ -10,17 +10,6 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Request;
 use JsonException;
 
-/**
- * A draft is a 404 for the site. The token lifts that for one record and for
- * whoever holds the link — an editor checking their own work, or a client asked
- * to look before it goes live.
- *
- * It names the record it opens, so a link forwarded further than intended still
- * opens nothing else, it carries its own expiry, and it is sealed with the
- * application key: nothing about it can be edited into a key for another
- * record. Nowhere does it widen a listing — a draft stays out of the feed and
- * out of the map; only its own address answers.
- */
 class PreviewToken
 {
     public const PARAM = 'preview';
@@ -36,9 +25,6 @@ class PreviewToken
         ], JSON_THROW_ON_ERROR));
     }
 
-    /**
-     * Whether the address being answered carries a token for this very record.
-     */
     public static function allows(Model $record): bool
     {
         $payload = self::payload(Request::query(self::PARAM));
@@ -49,10 +35,6 @@ class PreviewToken
             && ((int) ($payload['until'] ?? 0)) >= now()->getTimestamp();
     }
 
-    /**
-     * A token was offered at all — the cheap check that keeps the extra lookup
-     * and the cache bypass off every ordinary request.
-     */
     public static function requested(): bool
     {
         return filled(Request::query(self::PARAM));

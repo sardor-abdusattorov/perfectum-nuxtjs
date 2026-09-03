@@ -48,14 +48,11 @@ class News extends Model
         'status' => 'boolean',
     ];
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     public array $attachedFileFields = ['preview_image', 'main_image'];
 
-    /**
-     * The list shows one large card above the grid, so the flag is a
-     * position rather than a property — claiming it releases whoever
-     * held it before.
-     */
     protected static function booted(): void
     {
         static::saved(function (self $news): void {
@@ -68,11 +65,6 @@ class News extends Model
         });
     }
 
-    /**
-     * An editor holds a record back by dating it forward, so until that moment
-     * it is off the site entirely — the feed skips it and its own page is a 404
-     * rather than a guessable preview of an embargoed announcement.
-     */
     public function scopePublished(Builder $query): Builder
     {
         return $query

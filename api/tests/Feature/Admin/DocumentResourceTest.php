@@ -36,8 +36,7 @@ it('stamps the size of the file on the tab it was uploaded to', function (): voi
         ->fillForm([
             'category_id' => $category->id,
             'name' => ['ru' => 'Оферта', 'uz' => 'Oferta'],
-            // a faked create() declares a size but writes nothing, so the
-            // bytes have to be real for the disk to report them
+
             'file' => [
                 'ru' => [UploadedFile::fake()->createWithContent('offer-ru.pdf', str_repeat('p', 320 * 1024))],
                 'uz' => [UploadedFile::fake()->createWithContent('offer-uz.pdf', str_repeat('p', 64 * 1024))],

@@ -21,11 +21,6 @@ it('leaves the feeds the old site published open to anyone', function (string $p
         ->assertHeader('Access-Control-Allow-Origin', '*');
 })->with(['documents', 'coverage']);
 
-/**
- * An .env written before FRONTEND_URL existed used to fall through to APP_URL,
- * and the api would then name its own address as the one browser origin it
- * trusted — which is nobody, so every page on the site went blank.
- */
 it('falls back to the site, never to the api itself, when FRONTEND_URL is unset', function (): void {
     $repository = Env::getRepository();
     $previous = $repository->get('FRONTEND_URL');

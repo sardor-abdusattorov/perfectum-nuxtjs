@@ -11,11 +11,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-/**
- * The site reads these endpoints with GET and a query string; the mobile app
- * sends POST with a JSON body. Both must land on the same rows in the same
- * order, so every case asks twice and compares.
- */
 function mobileCategory(string $model, string $slug, string $ru, string $uz): mixed
 {
     return $model::create([
@@ -143,11 +138,6 @@ it('lists categories and questions to a post as it does to a get', function (): 
         ->assertJsonPath('data.0.question', 'Qanday?');
 });
 
-/**
- * A query string only ever carries strings; a JSON body can carry a number,
- * an array or an object in the same field. None of those is a filter, and
- * none of them may take the endpoint down.
- */
 it('shrugs off a body whose filters have the wrong shape', function (): void {
     $this->postJson(route('api.v1.faqs'), ['page' => 1, 'category' => ['podderzhka']])->assertOk();
 

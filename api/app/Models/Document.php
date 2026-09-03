@@ -19,7 +19,9 @@ class Document extends Model
 
     protected $table = 'documents';
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     protected array $attachedFileFields = ['file'];
 
     protected $fillable = [
@@ -37,9 +39,6 @@ class Document extends Model
         'status' => 'boolean',
     ];
 
-    /**
-     * The size is stamped on upload so the list never stats every file.
-     */
     protected static function booted(): void
     {
         static::saving(function (self $document): void {
@@ -69,10 +68,6 @@ class Document extends Model
         return $query->orderBy('sort')->orderBy('id');
     }
 
-    /**
-     * A locale with no file of its own is handed the default one, so a
-     * document uploaded once is still offered everywhere.
-     */
     public function url(?string $locale = null): ?string
     {
         return stored_url($this->translated('file', $locale));

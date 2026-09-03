@@ -49,11 +49,6 @@ it('names the types of the shared upload helper', function (): void {
         ->and(Fields::image('news')->getAcceptedFileTypes())->toBe(['image/*']);
 });
 
-/**
- * The public disk is the web root, so an upload field that names no types is
- * how a .php file gets in — every raw field must restrict itself the way the
- * shared helpers already do.
- */
 it('restricts the file types of every upload field in the admin', function (string $file): void {
     $source = (string) file_get_contents($file);
     $fields = substr_count($source, 'FileUpload::make(');
@@ -100,11 +95,6 @@ it('guards the block editors behind their own permission', function (): void {
     expect(ManageHomepage::canAccess())->toBeFalse();
 });
 
-/**
- * The shield trait keeps the resolved permission in a static, so mounting it on
- * the shared base class let whichever editor was checked first answer for all
- * six of them.
- */
 it('does not let one block editor answer for another', function (): void {
     $this->actingAs(panelUser(['View:ManageCdma']));
 
@@ -113,11 +103,6 @@ it('does not let one block editor answer for another', function (): void {
         ->and(ManageContacts::canAccess())->toBeFalse();
 });
 
-/**
- * Server-side rendering funnels every visitor through the frontend host, so the
- * read budget has to be generous while the calls that reach a paid upstream
- * stay tight.
- */
 it('throttles the reads generously and the upstream proxies tightly', function (): void {
     expect($this->getJson(route('api.v1.news.index'))->headers->get('X-RateLimit-Limit'))->toBe('600');
 

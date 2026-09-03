@@ -18,9 +18,6 @@ trait TranslatesRepeaterRows
     }
 
     /**
-     * Repeater rows keep one value per locale, so every listed field is
-     * resolved down to the requested one before the row leaves the API.
-     *
      * @param  array<int, array<string, mixed>>|null  $rows
      * @param  array<int, string>  $fields
      * @return array<int, array<string, mixed>>

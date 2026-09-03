@@ -20,7 +20,9 @@ class Tariff extends Model
 
     protected $table = 'tariffs';
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     protected array $attachedFileFields = ['image', 'modal_image'];
 
     protected $fillable = [

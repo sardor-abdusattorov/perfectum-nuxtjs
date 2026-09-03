@@ -91,10 +91,6 @@ it('keeps buttons and the two hero switches inside a slide', function (): void {
     expect(ContentBlock::query()->where('key', ContentBlockKey::Hero)->exists())->toBeTrue();
 });
 
-/**
- * The needle reads the number, so a slide that keeps a value the dial cannot
- * point at would show a speed the artwork never marks.
- */
 it('keeps the gauge value inside the scale the artwork draws', function (): void {
     ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
         'slides' => [
@@ -152,11 +148,6 @@ it('keeps the coverage status text and the publish switch apart', function (): v
         ->assertSee('status_text');
 });
 
-/**
- * The rich editor keeps its live state as a TipTap document, so editing one
- * word of a slide title travels as a property path eleven levels deep — one
- * past the depth Livewire ships with, which refused the whole save.
- */
 it('accepts an edit buried inside a translated rich editor of a repeater row', function (): void {
     ContentBlock::write(PageKey::Home, ContentBlockKey::Hero, [
         'slides' => [['title' => ['ru' => '<p>Скорость</p>'], 'status' => true]],

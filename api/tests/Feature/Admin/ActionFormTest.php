@@ -36,10 +36,6 @@ function promoPayload(array $attributes = []): array
     ], $attributes);
 }
 
-/**
- * The 5G listing filters by category chips, so a promo without one would show
- * up under «Все» and disappear the moment a visitor picked a chip.
- */
 it('asks for a category before a 5g promo is published', function (): void {
     Livewire::test(CreateAction::class)
         ->fillForm(promoPayload())
@@ -60,10 +56,6 @@ it('asks for a category before a 5g promo is published', function (): void {
     expect(Action::query()->sole()->category_id)->toBe($category->getKey());
 });
 
-/**
- * The CDMA landing has no chips, so those promos carry no category at all —
- * the panel hides the field for them and must not demand it either.
- */
 it('does not ask a cdma promo for a category', function (): void {
     Livewire::test(CreateAction::class)
         ->fillForm(promoPayload(['network' => Network::Cdma->value]))

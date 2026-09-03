@@ -9,10 +9,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 
-/**
- * Every inner page opens with the same eyebrow, title and subtitle, so the
- * tab is written once and each manager only says which page it edits.
- */
 abstract class PageHeroTab extends ContentTab
 {
     public static function key(): ContentBlockKey

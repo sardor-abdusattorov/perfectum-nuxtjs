@@ -48,7 +48,9 @@ class Action extends Model
         'status' => 'boolean',
     ];
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     public array $attachedFileFields = ['preview_image', 'main_image'];
 
     public static function categoryModel(): string

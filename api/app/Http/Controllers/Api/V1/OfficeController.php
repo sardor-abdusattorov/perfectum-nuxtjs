@@ -15,10 +15,6 @@ class OfficeController
 {
     use ListsRecords;
 
-    /**
-     * The page plots every point on one map and filters them in the browser,
-     * so the whole list is returned at once rather than paginated.
-     */
     public function __invoke(Request $request): JsonResponse
     {
         $offices = Office::query()

@@ -35,12 +35,6 @@ class FreeNumberService
     }
 
     /**
-     * A gateway that is down answers by timing out, and the timeout is the
-     * whole cost: the CDMA page asks for the filters on every visit, and each
-     * visit would hold a worker for it. One request discovers the outage; for
-     * the minute after, the rest are refused straight away and fall back to
-     * what the panel holds without touching the network.
-     *
      * @template T
      *
      * @param  callable(): T  $call

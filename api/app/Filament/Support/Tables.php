@@ -35,10 +35,6 @@ class Tables
             ->options(PublishedStatus::getStatusOptions());
     }
 
-    /**
-     * The site is two sections sharing one panel, and a listing that holds
-     * both — news, promos, services — is read one section at a time.
-     */
     public static function networkFilter(string $field = 'network'): SelectFilter
     {
         return SelectFilter::make($field)
@@ -57,13 +53,6 @@ class Tables
     }
 
     /**
-     * One dropdown per row instead of a strip of labels: four actions side by
-     * side pushed the row past its edge, and an unlabeled icon among labeled
-     * buttons read as noise. In the dropdown every action keeps its full name.
-     *
-     * The preview action hides itself for a record that has no address on the
-     * site, so every listing may offer it and only the ones with pages show it.
-     *
      * @return array<int, mixed>
      */
     public static function actions(): array

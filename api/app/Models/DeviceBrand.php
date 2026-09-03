@@ -22,7 +22,9 @@ class DeviceBrand extends Model
         'status' => 'boolean',
     ];
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     public array $attachedFileFields = ['logo'];
 
     public function devices(): HasMany

@@ -8,11 +8,6 @@ use App\Models\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
-/**
- * The old site's addresses still ride in ads and messengers, so every page
- * may name the paths it answers for. The site's server consults this map and
- * sends the visitor on with a 301.
- */
 class RedirectController
 {
     public function __invoke(): JsonResponse

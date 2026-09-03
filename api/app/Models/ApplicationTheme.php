@@ -11,7 +11,9 @@ use Spatie\Translatable\HasTranslations;
 
 class ApplicationTheme extends Model
 {
-    /** @use HasFactory<ApplicationThemeFactory> */
+    /**
+     * @use HasFactory<ApplicationThemeFactory>
+     */
     use HasFactory;
 
     use HasTranslations;
@@ -36,10 +38,6 @@ class ApplicationTheme extends Model
         return $this->hasMany(Application::class, 'theme_id');
     }
 
-    /**
-     * A subject that has collected applications is retired by unpublishing it:
-     * deleting it would take the grouping off every one of them.
-     */
     public function isInUse(): bool
     {
         return $this->applications()->exists();

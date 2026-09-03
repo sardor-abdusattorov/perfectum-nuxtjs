@@ -5,11 +5,6 @@ declare(strict_types=1);
 use App\Filament\Support\RichContentStateCast;
 use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
-/**
- * The editor in the browser refuses a document that breaks its own schema, so
- * the shapes below are the ones the PHP parser hands over for HTML written the
- * way the old site wrote it.
- */
 function richDocument(string $html): array
 {
     return (new RichContentStateCast)->set(

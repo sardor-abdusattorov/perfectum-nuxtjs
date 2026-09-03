@@ -41,11 +41,6 @@ use App\Filament\Resources\Tenders\TenderResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Resources\Vacancies\VacancyResource;
 
-/**
- * Two items sharing a sort leave their order to chance, which is how the
- * sidebar drifted before: the entry an editor opens every day sat under the
- * taxonomies that feed it.
- */
 it('puts the working item at the top of its group and numbers the rest after it', function (string $group, array $classes): void {
     $sorts = [];
 

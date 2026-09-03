@@ -47,10 +47,6 @@ it('offers the preview from the listing, not only from the form', function (): v
         ->assertActionVisible(TestAction::make('preview')->table($service));
 });
 
-/**
- * The action lives in the shared row actions, so every listing carries it. A
- * record with no address on the site has nothing to open and must not show it.
- */
 it('stays hidden for a record that has no page on the site', function (): void {
     $region = Region::create(['name' => ['ru' => 'Ташкент'], 'status' => true]);
 

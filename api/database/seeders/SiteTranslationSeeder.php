@@ -7,12 +7,6 @@ namespace Database\Seeders;
 use App\Models\SiteTranslation;
 use Illuminate\Database\Seeder;
 
-/**
- * Interface strings the site asks for by key. Every row lands under the one
- * category the panel writes, so whoever edits a line later finds it where the
- * rest of them live. Russian and Uzbek only — English stays a tab in the panel
- * for someone to fill, and every reader falls back to a filled locale.
- */
 class SiteTranslationSeeder extends Seeder
 {
     private const CATEGORY = 'app';

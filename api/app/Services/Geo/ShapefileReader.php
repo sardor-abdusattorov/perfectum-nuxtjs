@@ -7,17 +7,6 @@ namespace App\Services\Geo;
 use RuntimeException;
 use ZipArchive;
 
-/**
- * Turns the zipped ESRI shapefile the network team exports into GeoJSON.
- *
- * Only the geometry file is read: the map draws outlines, so the attribute
- * table beside it has nothing the site shows. The planning tool exports one
- * polygon record whose thousands of parts are separate coverage patches —
- * mostly cells of a uniform metric grid — so the patches ship flat as a
- * MultiPolygon and are meant to be filled even-odd; adjacent grid cells are
- * merged into larger rectangles first, which is what keeps the payload and
- * the browser's drawing workload sane.
- */
 class ShapefileReader
 {
     private const TYPE_POLYLINE = 3;
@@ -202,10 +191,6 @@ class ShapefileReader
         );
     }
 
-    /**
-     * Picks the metres-to-degrees conversion the .prj asks for; null means
-     * the file already speaks degrees.
-     */
     private function projector(string $projection): ?callable
     {
         if (str_contains($projection, '3857')
@@ -247,9 +232,6 @@ class ShapefileReader
     }
 
     /**
-     * The standard inverse of the transverse Mercator the planning tool
-     * exports in (UTM over WGS84), accurate to well under a metre.
-     *
      * @param  array{central_meridian: float, scale_factor: float, false_easting: float, false_northing: float}  $p
      * @return array<int, float>
      */
@@ -297,12 +279,6 @@ class ShapefileReader
     }
 
     /**
-     * The grid export draws every covered cell as its own square. Whole
-     * columns of touching squares collapse into single rectangles here, which
-     * routinely shrinks tens of thousands of rings by an order of magnitude
-     * without moving a single edge. Rings that are not grid squares — traced
-     * outlines, merged blobs — pass through untouched.
-     *
      * @param  array<int, array<int, array<int, float>>>  $rings
      * @return array<int, array<int, array<int, float>>>
      */
@@ -399,9 +375,6 @@ class ShapefileReader
     }
 
     /**
-     * A ring qualifies as a grid square when it traces one axis-aligned
-     * square with whole-metre corners.
-     *
      * @param  array<int, array<int, array<int, float>>>  $ring
      * @return array{0: float, 1: float, 2: int}|null
      */

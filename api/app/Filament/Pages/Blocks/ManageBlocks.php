@@ -46,12 +46,6 @@ abstract class ManageBlocks extends Page
         $this->form->fill($this->data);
     }
 
-    /**
-     * Only the open tab is rendered: a page holds several of them, and building
-     * the markup of every editor, repeater and upload on load is what made
-     * these pages heavy. The state of the closed ones still travels in `data`,
-     * so unsaved edits survive a switch.
-     */
     public function form(Schema $schema): Schema
     {
         $tabs = [];

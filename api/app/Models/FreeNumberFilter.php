@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class FreeNumberFilter extends Model
 {
-    /** @use HasFactory<FreeNumberFilterFactory> */
+    /**
+     * @use HasFactory<FreeNumberFilterFactory>
+     */
     use HasFactory;
 
     use Publishable;

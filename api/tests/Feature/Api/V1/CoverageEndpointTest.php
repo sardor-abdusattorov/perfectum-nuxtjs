@@ -82,10 +82,6 @@ it('serves the collection of one layer', function (): void {
         ->assertJsonCount(1, 'features');
 });
 
-/**
- * A feature's `properties` must be a JSON object; the array cast turns an
- * empty one into `[]`, which the map SDKs on the phones reject outright.
- */
 it('serves every feature with an object for its properties', function (): void {
     coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [
         ['type' => 'Feature', 'properties' => [], 'geometry' => ['type' => 'Point', 'coordinates' => [69.24, 41.3]]],
@@ -100,11 +96,6 @@ it('serves every feature with an object for its properties', function (): void {
         ->and($response->json('features.0.geometry.coordinates'))->toBe([69.24, 41.3]);
 });
 
-/**
- * The layer is the heaviest thing the API serves and the only one that never
- * varies by language, so a reader that already holds it re-asks with its etag
- * rather than downloading the geometry again.
- */
 it('lets a reader revalidate a layer instead of downloading it twice', function (): void {
     coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
 
@@ -120,12 +111,6 @@ it('lets a reader revalidate a layer instead of downloading it twice', function 
         ->assertNoContent(304);
 });
 
-/**
- * Answering «not modified» must not cost what sending the layer costs. The
- * model throws on an attribute it was never given, so a layer whose geometry
- * is dropped on the way out of the database would blow the endpoint up the
- * moment it tried to assemble the collection — a 304 here proves it did not.
- */
 it('answers not modified without reading the geometry', function (): void {
     coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
 

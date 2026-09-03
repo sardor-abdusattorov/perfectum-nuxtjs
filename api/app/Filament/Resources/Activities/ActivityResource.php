@@ -11,11 +11,6 @@ use Illuminate\Support\Str;
 use MrAdder\FilamentLogger\Resources\ActivityResource as BaseResource;
 use MrAdder\FilamentLogger\Resources\ActivityResource\Support\ActivityResourceTableOptions;
 
-/**
- * Localized wrapper around the filament-logger activity resource: the package
- * hard-codes English labels for the risk column and stores raw `log_name` /
- * `event` values, so both are routed through the published translation file.
- */
 class ActivityResource extends BaseResource
 {
     public static function getNavigationBadge(): ?string
@@ -77,10 +72,6 @@ class ActivityResource extends BaseResource
         return ListActivities::class;
     }
 
-    /**
-     * Translate a value stored in the activity table. Falls back to a headline
-     * of the raw value so unmapped events stay readable.
-     */
     protected static function translateState(string $group, ?string $state): string
     {
         if (blank($state)) {

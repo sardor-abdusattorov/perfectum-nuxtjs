@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Application extends Model
 {
-    /** @use HasFactory<ApplicationFactory> */
+    /**
+     * @use HasFactory<ApplicationFactory>
+     */
     use HasFactory;
 
     public const STATUS_NEW = 'new';

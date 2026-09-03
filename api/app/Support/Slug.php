@@ -42,12 +42,6 @@ class Slug
         return $base.'-'.$suffix;
     }
 
-    /**
-     * The slug is read by people — it stands in the address bar of an advert —
-     * so Cyrillic is transliterated the way Russian is written in latin here:
-     * «Для физических лиц» becomes dlya-fizicheskih-lits, not the scientific
-     * dlia-fiziceskix-lic the default rules produce.
-     */
     public static function base(string $text): string
     {
         $slug = trim(mb_substr(Str::slug($text, '-', 'ru'), 0, static::MAX_LENGTH), '-');

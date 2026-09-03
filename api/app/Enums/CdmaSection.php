@@ -6,14 +6,6 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-/**
- * The places the CDMA landing's own navigation can point at. Most are blocks
- * further down the same page, one is a page of its own — the site tells them
- * apart by the leading '#', so the panel never has to.
- *
- * The order and the wording of the links are the admin's; where each one leads
- * is the layout's, and stays here.
- */
 enum CdmaSection: string implements HasLabel
 {
     case Tariffs = 'tariffs';

@@ -20,13 +20,6 @@ class SaveAction
                 ->label(__('app.action.save'))
                 ->keyBindings(['mod+s'])
                 ->action(function (Action $action) use ($key, $tabClass): void {
-                    /**
-                     * The state is read from the tab this button sits in rather
-                     * than from the whole form: a page holds several tabs, and
-                     * validating all of them would let a required field the
-                     * editor never opened block a save it has nothing to do
-                     * with.
-                     */
                     $tab = $action->getSchemaComponent()?->getContainer()->getParentComponent();
 
                     $state = $tab?->getChildSchema()?->getState() ?? [];

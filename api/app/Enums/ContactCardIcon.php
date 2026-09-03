@@ -7,10 +7,6 @@ namespace App\Enums;
 use App\Models\Social;
 use Filament\Support\Contracts\HasLabel;
 
-/**
- * The marks a contact card may wear, drawn from the icon set the panel ships
- * with — picked and rendered exactly the way the social links do it.
- */
 enum ContactCardIcon: string implements HasLabel
 {
     case Building = 'heroicon-o-building-office';

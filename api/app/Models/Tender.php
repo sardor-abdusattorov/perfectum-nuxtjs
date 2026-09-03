@@ -16,7 +16,9 @@ class Tender extends Model
 
     protected $table = 'tenders';
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     protected array $attachedFileFields = ['files'];
 
     protected $fillable = [

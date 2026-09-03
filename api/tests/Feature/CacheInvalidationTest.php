@@ -20,12 +20,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-/**
- * Everything here holds for a day once it is warm, so a missed invalidation is
- * not a slow site, it is an editor telling the client the change did not save.
- * Each case warms the endpoint, edits the row, and asks the same endpoint
- * again — no cache clearing in between, which is exactly what production does.
- */
 function siteValue(string $path, string $locale = 'ru'): mixed
 {
     return test()->withHeader('Accept-Language', $locale)
@@ -163,11 +157,6 @@ it('shows an edited page straight away', function (): void {
     expect($title())->toBe('О нас')->and($title('uz'))->toBe('Biz haqimizda');
 });
 
-/**
- * The map is keyed by the bare path the site middleware computes, so however
- * the old address was pasted — with the domain, a locale prefix, a query — it
- * matches on the way in.
- */
 it('shows an edited redirect straight away, however it was pasted', function (): void {
     $page = Page::create([
         'title' => ['ru' => 'Тарифы'],

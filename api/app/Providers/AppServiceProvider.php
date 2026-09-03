@@ -43,9 +43,6 @@ use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         $this->configureRenderHooks();
@@ -69,9 +66,6 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         $this->configureObservers();
@@ -128,11 +122,6 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * The activity log widgets are rendered as header widgets of a resource
-     * page rather than panel widgets, so Filament never registers them with
-     * Livewire — the package registers its own the same way.
-     */
     private function configureActivityLogWidgets(): void
     {
         $widgets = [
@@ -148,14 +137,6 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Rendering happens on the server, so every visitor's page issues its API
-     * calls from the one frontend host: a per-IP budget tight enough to matter
-     * would throttle the whole site rather than an abuser. The read endpoints
-     * are cheap and cached and get room accordingly, while the two proxies onto
-     * the billing and CDMA gateways — the only calls that cost anyone real
-     * money — are held to a rate a human search can live with.
-     */
     private function configureLimit(): void
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(600)->by($request->user()?->id ?: $request->ip()));

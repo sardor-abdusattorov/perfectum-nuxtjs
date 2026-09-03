@@ -12,10 +12,6 @@ use Illuminate\Http\Request;
 
 class CoverageController
 {
-    /**
-     * The map draws one layer at a time, so the list carries only what the
-     * switch needs and each collection is fetched on demand.
-     */
     public function index(): JsonResponse
     {
         $layers = self::available()
@@ -44,14 +40,6 @@ class CoverageController
         ]);
     }
 
-    /**
-     * The validator hashes the stored column rather than the rendered body:
-     * both answer «not modified» for the same layer, but the column is a
-     * string the query already carries, while the body costs a decode of six
-     * megabytes of geometry, a rebuild and an encode — as much as sending it.
-     * A timestamp would be cheaper still and wrong: two saves within the same
-     * second share one, and the reader would keep the layer it has.
-     */
     public function show(Request $request, string $layer): JsonResponse
     {
         $found = self::available()->where('key', $layer)->firstOrFail();

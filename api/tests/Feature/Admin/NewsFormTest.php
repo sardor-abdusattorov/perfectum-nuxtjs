@@ -45,11 +45,6 @@ function newsFormCategory(): NewsCategory
     ]);
 }
 
-/**
- * Both feeds filter by category chips — /news for 5G and /cdma/news for CDMA
- * — so the field belongs on the form of either network. It was once hidden for
- * CDMA, which left the editor no way to file a CDMA item under a chip.
- */
 it('asks every news item for a category, whichever network it belongs to', function (string $network): void {
     Livewire::test(CreateNews::class)
         ->fillForm(newsFormPayload(['network' => $network]))

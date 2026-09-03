@@ -20,7 +20,9 @@ class CoverageLayer extends Model
 
     protected $table = 'coverage_layers';
 
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     protected array $attachedFileFields = ['file'];
 
     protected $fillable = [
@@ -42,12 +44,6 @@ class CoverageLayer extends Model
         'status' => 'boolean',
     ];
 
-    /**
-     * The archive is read once, when it is uploaded, so the site is handed
-     * plain GeoJSON instead of unpacking a shapefile in every visitor's
-     * browser. The shape count is stamped alongside it so the layer list
-     * never has to load the whole collection to size it.
-     */
     protected static function booted(): void
     {
         static::saving(function (self $layer): void {
@@ -67,11 +63,6 @@ class CoverageLayer extends Model
     }
 
     /**
-     * The array cast flattens the empty `properties` object of every feature
-     * into `[]`, which strict GeoJSON readers refuse — the mobile map SDKs
-     * among them. It is restored on the way out, so the site and the app
-     * read the same valid collection.
-     *
      * @return array<string, mixed>|null
      */
     public function featureCollection(): ?array

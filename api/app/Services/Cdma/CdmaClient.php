@@ -68,9 +68,6 @@ class CdmaClient
     }
 
     /**
-     * The gateway answers XML where MyTagNames lists the columns and every
-     * Resources element carries them base64-encoded.
-     *
      * @return array<int, array<string, string>>
      */
     private function parse(string $xml): array
@@ -92,7 +89,9 @@ class CdmaClient
         $rows = [];
 
         foreach ($document->getElementsByTagName('Resources') as $resource) {
-            /** @var DOMElement $resource */
+            /**
+             * @var DOMElement $resource
+             */
             $row = [];
 
             foreach ($columns as $column) {
@@ -107,11 +106,6 @@ class CdmaClient
 
     private function http(): PendingRequest
     {
-        /**
-         * A host that is simply unreachable should be reported in seconds
-         * rather than after the whole read timeout — the request holds a
-         * worker for every second it waits.
-         */
         return Http::baseUrl(rtrim((string) config('services.cdma.url'), '/'))
             ->connectTimeout((int) config('services.cdma.connect_timeout', 5))
             ->timeout((int) config('services.cdma.timeout', 20));

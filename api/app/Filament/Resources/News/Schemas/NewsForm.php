@@ -26,12 +26,6 @@ class NewsForm
                             ->options(collect(Network::getOptions())->except(Network::Both->value)->all())
                             ->default(Network::FiveG->value),
 
-                        /**
-                         * Both feeds filter by category chips — /news for 5G and
-                         * /cdma/news for CDMA — so a news item of either network
-                         * needs one. Without it the record shows under «Все» and
-                         * disappears the moment a visitor picks a chip.
-                         */
                         Fields::category(NewsCategory::class)
                             ->required(),
 

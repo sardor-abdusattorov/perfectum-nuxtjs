@@ -14,11 +14,6 @@ class PageController
 {
     public function __invoke(Page $page): JsonResponse
     {
-        /**
-         * A preview is one editor looking at one draft, and it changes with
-         * every save — it reads past the cache and, more to the point, never
-         * writes an unpublished page into it for the next visitor to be served.
-         */
         if (PreviewToken::requested()) {
             return response()->json(['data' => PageResource::make($page)->resolve()]);
         }

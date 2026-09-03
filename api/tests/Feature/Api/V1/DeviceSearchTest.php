@@ -23,10 +23,6 @@ function maker(string $name, string $slug): DeviceBrand
     return DeviceBrand::query()->create(['name' => $name, 'slug' => $slug, 'sort' => 1, 'status' => true]);
 }
 
-/**
- * `brand` is a relation, not a column, so asking the devices table for it threw
- * a query exception on every search the app or a crawler sent.
- */
 it('answers a device search instead of failing on the brand relation', function (): void {
     branded('ZLT X25', 'zlt-x25', maker('Tozed', 'tozed'));
 

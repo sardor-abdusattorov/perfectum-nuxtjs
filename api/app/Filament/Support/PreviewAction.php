@@ -18,15 +18,6 @@ use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Opens the record on the site the way a visitor will see it, published or not.
- * The address carries a token good for this one record and for a day, so a
- * draft can be sent to whoever signs it off without publishing it first.
- *
- * The map below is the one place the admin knows where each record lives on
- * the site — a CDMA record lives in its own corner of the CDMA landing, and
- * the tariff's network comes from its category.
- */
 class PreviewAction
 {
     public static function make(): Action

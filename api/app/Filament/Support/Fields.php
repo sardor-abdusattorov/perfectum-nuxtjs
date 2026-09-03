@@ -21,10 +21,6 @@ use Filament\Schemas\Components\Utilities\Set;
 class Fields
 {
     /**
-     * The public disk is served straight out of the web root, where nginx hands
-     * anything ending in .php to the interpreter, so every upload field that
-     * writes there must name the types it accepts.
-     *
      * @var array<int, string>
      */
     public const DOCUMENT_TYPES = [
@@ -135,13 +131,6 @@ class Fields
             ]);
     }
 
-    /**
-     * The stock attach-files modal builds its upload field without the crop
-     * button and offers no switch to turn it on, so the editor registers its
-     * own action under the same name — a registered action replaces the
-     * default one — same modal, same saving, plus the image editor. The alt
-     * field must come along: replacing the schema replaces all of it.
-     */
     private static function attachFilesWithImageEditor(): Action
     {
         return AttachFilesAction::make()
@@ -165,11 +154,6 @@ class Fields
             ]);
     }
 
-    /**
-     * A long article does not fit the box the form gives it, so the last
-     * toolbar button opens the editor full screen; the button itself comes
-     * from mdobes/rich-editor-fullscreen, which registers with every editor.
-     */
     private static function richEditor(string $field, string $size): RichEditor
     {
         return RichEditor::make($field)
@@ -239,10 +223,6 @@ class Fields
             ->searchable();
     }
 
-    /**
-     * The design ships four feature icons and the card layout is built around
-     * them, so the field picks one rather than uploading a fifth.
-     */
     public static function featureIcon(string $field = 'icon'): Select
     {
         return Select::make($field)

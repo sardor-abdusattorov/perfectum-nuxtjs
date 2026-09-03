@@ -66,10 +66,6 @@ it('leaves the applications alone when the bulk delete skips a used subject', fu
     expect(Application::count())->toBe(1);
 });
 
-/**
- * The database is the last line: whatever route a delete arrives by, an
- * application is never left without the subject it was filed under.
- */
 it('will not let the database drop a subject out from under an application', function (): void {
     $theme = ApplicationTheme::factory()->create();
     Application::factory()->create(['theme_id' => $theme->id]);

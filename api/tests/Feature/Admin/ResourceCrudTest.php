@@ -57,10 +57,6 @@ beforeEach(function (): void {
 });
 
 /**
- * One row per resource the panel offers, each building a record its form
- * accepts. A closure rather than an array so a record can bring the category
- * or the brand its form asks for.
- *
  * @return array<class-string<Model>, callable(): Model>
  */
 function crudRecords(): array
@@ -205,8 +201,6 @@ function crudRecords(): array
 }
 
 /**
- * The activity log is written by the application, never by hand.
- *
  * @return array<int, class-string<Model>>
  */
 function readOnlyModels(): array
@@ -239,9 +233,6 @@ function grantEveryVerb(string $model): User
     return tap($user->refresh(), fn (User $user) => test()->actingAs($user));
 }
 
-/**
- * A resource added without a row above would otherwise go untested forever.
- */
 it('has a record for every resource in the panel', function (): void {
     $covered = [...array_keys(crudRecords()), ...readOnlyModels()];
 

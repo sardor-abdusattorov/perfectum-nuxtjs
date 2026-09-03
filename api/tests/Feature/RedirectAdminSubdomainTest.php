@@ -10,10 +10,6 @@ beforeEach(function (): void {
     $this->withoutVite();
 });
 
-/**
- * The API resolves on every host the app answers for, so without this the
- * admin subdomain would publish a second copy of every feed.
- */
 it('sends an api request on the admin subdomain to the main domain, query and all', function (): void {
     $this->getJson('http://admin.perfectum.uz/api/v1/news?network=5g&page=2')
         ->assertMovedPermanently()

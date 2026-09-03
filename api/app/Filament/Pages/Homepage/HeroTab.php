@@ -17,10 +17,6 @@ use Filament\Schemas\Components\Utilities\Get;
 
 class HeroTab extends ContentTab
 {
-    /**
-     * The dial's ticks are drawn into the artwork and stop at a thousand, so a
-     * larger number would only peg the needle at the end of the scale.
-     */
     public const GAUGE_MAX = 1000;
 
     public static function key(): ContentBlockKey

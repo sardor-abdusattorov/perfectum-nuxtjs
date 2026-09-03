@@ -6,10 +6,6 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-/**
- * A card names which contacts it shows; the values themselves stay in the
- * site settings so an email is never edited in two places.
- */
 enum ContactCard: string implements HasLabel
 {
     case Office = 'office';

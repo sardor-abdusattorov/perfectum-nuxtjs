@@ -20,10 +20,6 @@ trait HasCategory
         return $this->belongsTo(static::categoryModel());
     }
 
-    /**
-     * A record without a category belongs to the whole site, so it stays in
-     * every section.
-     */
     public function scopeForNetwork(Builder $query, ?Network $network): Builder
     {
         if ($network === null) {
@@ -37,11 +33,6 @@ trait HasCategory
         );
     }
 
-    /**
-     * A listing is filtered by the slug in the address — that is what a link
-     * carries and what survives a reseed. An id still works: it is what the
-     * panel and older links pass.
-     */
     public function scopeInCategory(Builder $query, mixed $category, string $relation = 'category'): Builder
     {
         if (blank($category) || ! is_scalar($category)) {

@@ -19,11 +19,6 @@ class SetLocale
             ?? $request->header('X-Locale')
             ?? $request->getPreferredLanguage($locales);
 
-        /**
-         * The fallback rather than `app.locale`: setting the locale writes
-         * into that key, so in a long-lived process the default would become
-         * whatever the previous request asked for.
-         */
         app()->setLocale(
             in_array($locale, $locales, true) ? $locale : config('app.fallback_locale')
         );

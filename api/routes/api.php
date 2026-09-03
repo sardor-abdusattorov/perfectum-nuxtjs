@@ -25,22 +25,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('site', SiteController::class)->name('site');
     Route::get('metrics', MetricsController::class)->name('metrics');
-    /**
-     * The mobile app reads news, questions and categories with POST and a
-     * JSON body; the site reads the same rows with GET and a query string.
-     * One route answers both — the controllers read parameters from either
-     * place — so the two clients can never drift apart on what a filter means.
-     */
+
     Route::match(['GET', 'POST'], 'categories/{taxonomy}', CategoryController::class)->name('categories');
     Route::match(['GET', 'POST'], 'faqs', FaqController::class)->name('faqs');
     Route::get('documents', DocumentController::class)->name('documents');
     Route::get('coverage', [CoverageController::class, 'index'])->name('coverage');
-    /**
-     * A layer is megabytes of geometry that changes when the network team
-     * uploads a new export — a few times a year. It carries no translated
-     * field, so one cached copy serves every reader; the validator lets a
-     * phone or a proxy re-ask with its etag and get 304 instead of the file.
-     */
+
     Route::get('coverage/{layer}', [CoverageController::class, 'show'])
         ->middleware('cache.headers:public;max_age=3600;etag')
         ->name('coverage.show');

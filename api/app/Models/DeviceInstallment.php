@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * One partner's offer for one device: the terms it lends over and what the
- * visitor pays each month, exactly as the partner quotes them.
- */
 class DeviceInstallment extends Model
 {
     protected $table = 'device_installments';
@@ -36,9 +32,6 @@ class DeviceInstallment extends Model
     }
 
     /**
-     * A partner quotes either figure and the other follows from the term, so
-     * the admin fills in what it was given and the site shows both.
-     *
      * @return array<int, array{term: int, monthly: int, total: int}>
      */
     public function terms(): array

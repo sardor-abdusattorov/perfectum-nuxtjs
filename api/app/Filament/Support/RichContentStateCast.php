@@ -6,23 +6,14 @@ namespace App\Filament\Support;
 
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 
-/**
- * The PHP side of TipTap parses HTML literally: `<td>текст</td>` becomes a
- * table cell holding a bare string, and `<li>текст</li>` a list item holding
- * one. The editor in the browser demands a block there, and a document that
- * breaks its own schema takes ProseMirror down on the first click — the field
- * throws «Called contentMatchAt on a node with invalid content» and empties
- * itself. Most of the content carried over from the old site is written that
- * way, so the loose runs are wrapped on the way into the form.
- */
 class RichContentStateCast implements StateCast
 {
-    /** @var array<int, string> */
+    /**
+     * @var array<int, string>
+     */
     private const INLINE = ['text', 'hardBreak', 'image'];
 
     /**
-     * Nodes whose children the editor's schema declares as `block+`.
-     *
      * @var array<int, string>
      */
     private const BLOCKS_ONLY = [
@@ -65,7 +56,6 @@ class RichContentStateCast implements StateCast
             $node['content'] = $this->wrap($node['content']);
         }
 
-        /** A list item is `paragraph block*`: a nested list cannot open it. */
         if (($node['type'] ?? '') === 'listItem' && ($node['content'][0]['type'] ?? 'paragraph') !== 'paragraph') {
             array_unshift($node['content'], ['type' => 'paragraph']);
         }

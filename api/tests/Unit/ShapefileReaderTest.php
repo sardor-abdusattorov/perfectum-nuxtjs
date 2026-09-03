@@ -145,7 +145,6 @@ it('refuses a file that is not an archive', function (): void {
 });
 
 it('converts utm metres into degrees', function (): void {
-    // a point sitting on the zone's central meridian resolves to exactly 63°E
     $path = shapefileZip(
         [[[500000.0, 4573000.0], [500020.0, 4573000.0], [500020.0, 4573020.0], [500000.0, 4573000.0]]],
         'PROJCS["WGS_1984_UTM_Zone_41N",PROJECTION["Transverse_Mercator"],PARAMETER["central_meridian",63],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0]]'

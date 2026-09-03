@@ -29,9 +29,6 @@ class Region extends Model
         'status' => 'boolean',
     ];
 
-    /**
-     * A region the coverage map can fly to is one that knows where it is.
-     */
     public function scopeLocated(Builder $query): Builder
     {
         return $query->whereNotNull('latitude')->whereNotNull('longitude');

@@ -35,10 +35,6 @@ class StoreApplicationRequest extends FormRequest
         ];
     }
 
-    /**
-     * The dump keeps its numbers as "+998 (XX) XXX-XX-XX", so new rows
-     * follow the same shape.
-     */
     public function formattedPhone(): string
     {
         $local = substr((string) $this->validated('phone'), 3);

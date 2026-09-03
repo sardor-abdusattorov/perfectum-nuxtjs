@@ -58,8 +58,6 @@ class Menu extends Model
     }
 
     /**
-     * Top level items of a menu with their published children, ready to render.
-     *
      * @return Collection<int, self>
      */
     public static function tree(MenuLocation $location): Collection
