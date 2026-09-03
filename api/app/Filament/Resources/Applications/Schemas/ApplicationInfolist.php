@@ -28,6 +28,11 @@ class ApplicationInfolist
                             ->hintAction(ChangeApplicationStatusAction::make()),
 
                         TextEntry::make('processed_at')
+                            ->label(__('app.label.answered_at'))
+                            ->dateTime('d.m.Y H:i')
+                            ->placeholder('—'),
+
+                        TextEntry::make('handling_time')
                             ->label(__('app.label.handling_time'))
                             ->state(fn (Application $record): ?string => Application::readableHandlingTime($record->handlingSeconds()))
                             ->placeholder('—'),

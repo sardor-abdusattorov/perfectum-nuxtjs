@@ -83,6 +83,7 @@ return [
         'application_status_plural' => 'Ariza statuslari',
         'is_downloadable' => 'Yuklab olishga ruxsat',
         'is_default_status' => 'Boshlangʻich status',
+        'answered_at' => 'Qachon javob berilgan',
         'handling_time' => 'Ishlov berish vaqti',
         'free_number_filter_single' => 'CDMA raqamlar filtri',
         'free_number_filter_plural' => 'CDMA raqamlar',

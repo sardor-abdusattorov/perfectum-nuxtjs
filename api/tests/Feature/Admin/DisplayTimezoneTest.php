@@ -34,3 +34,18 @@ it('prints an application five hours later than it is stored', function (): void
         ->assertSee('03.09.2026 09:26')
         ->assertDontSee('03.09.2026 04:26');
 });
+
+it('shows when the application was answered, by Tashkent as well', function (): void {
+    $application = Application::factory()->create();
+
+    $application->forceFill([
+        'created_at' => '2026-09-03 04:26:00',
+        'processed_at' => '2026-09-03 05:10:00',
+    ])->saveQuietly();
+
+    $this->actingAs(panelUser(['ViewAny:Application', 'View:Application']));
+
+    Livewire::test(ListApplications::class)
+        ->assertSee('03.09.2026 10:10')
+        ->assertDontSee('03.09.2026 05:10');
+});

@@ -83,6 +83,7 @@ return [
         'application_status_plural' => 'Статусы заявок',
         'is_downloadable' => 'Разрешить скачивание',
         'is_default_status' => 'Статус по умолчанию',
+        'answered_at' => 'Когда ответили',
         'handling_time' => 'Время обработки',
         'free_number_filter_single' => 'Фильтр номеров CDMA',
         'free_number_filter_plural' => 'Номера CDMA',
