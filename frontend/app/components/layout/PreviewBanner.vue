@@ -21,10 +21,6 @@ function leave(): void {
         {{ t('preview.notice', 'Режим просмотра') }}
       </span>
 
-      <span class="preview-bar__hint">
-        {{ t('preview.hint', 'Черновик виден только вам по ссылке из админки') }}
-      </span>
-
       <button type="button" class="preview-bar__exit" @click="leave">
         {{ t('preview.exit', 'Выйти') }}
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

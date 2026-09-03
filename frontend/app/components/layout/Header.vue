@@ -4,7 +4,6 @@ const menu = useMenu('header')
 const setting = useSetting()
 const t = useT()
 const mobileMenu = useMobileMenu()
-const route = useRoute()
 
 /**
  * Following a link out of a submenu leaves the cursor sitting on the item that
@@ -21,20 +20,27 @@ function releaseSubmenu(id: number): void {
   }
 }
 
-watch(() => route.fullPath, () => {
+/**
+ * Hung on the click and not on the route: following FAQ while already on the
+ * FAQ page changes no address, so nothing would ever tell the menu to close —
+ * it stayed open, and hovering a neighbour then put two dropdowns on screen
+ * side by side.
+ */
+function closeSubmenu(id: number, event: MouseEvent): void {
+  closedItem.value = id
+
   if (!import.meta.client) {
     return
   }
 
-  const active = document.activeElement
-  const item = active instanceof HTMLElement ? active.closest('.header__menu-item') : null
-
-  closedItem.value = item instanceof HTMLElement ? Number(item.dataset.menuItem) : null
-
-  if (item && active instanceof HTMLElement) {
-    active.blur()
+  // A mouse click has to give the focus up, or `:focus-within` reopens the
+  // dropdown the moment the cursor leaves. `detail` is 0 when the link was
+  // followed from the keyboard, where the focus is the only way to tell where
+  // you are, so there it stays put.
+  if (event.detail > 0 && document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur()
   }
-})
+}
 </script>
 
 <template>
@@ -60,6 +66,7 @@ watch(() => route.fullPath, () => {
                               closedItem === item.id && 'header__menu-item_closed',
                           ]"
                           @pointerleave="releaseSubmenu(item.id)"
+                          @click="closeSubmenu(item.id, $event)"
                       >
                           <LayoutMenuLink :item="item" link-class="header__link" />
 

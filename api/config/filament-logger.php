@@ -204,17 +204,17 @@ return [
         'color' => 'success',
 
         'exclude' => [
-
+            // App\Filament\Resources\UserResource::class,
         ],
         'ignore' => [
             'updated_at',
             'remember_token',
         ],
         'ignore_for_models' => [
-
+            // App\Models\User::class => ['last_seen_at', 'login_count'],
         ],
         'ignore_for_resources' => [
-
+            // App\Filament\Resources\UserResource::class => ['last_seen_at', 'login_count'],
         ],
         'cluster' => null,
         'navigation_group' => 'app.label.administration',
@@ -265,14 +265,17 @@ return [
             'remember_token',
         ],
         'ignore_for' => [
-
+            // App\Models\User::class => ['last_seen_at', 'login_count'],
         ],
         'register' => [
-
+            // App\Models\User::class,
         ],
     ],
 
     'custom' => [
-
+        // [
+        //     'log_name' => 'Custom',
+        //     'color' => 'primary',
+        // ]
     ],
 ];
