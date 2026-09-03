@@ -8,6 +8,7 @@ use BezhanSalleh\FilamentShield\Support\Utils;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -122,4 +123,30 @@ it('does not let the roles field take panel access away', function (): void {
 
     expect($target->fresh()->hasRole('HR'))->toBeTrue()
         ->and($target->fresh()->hasRole(Utils::getPanelUserRoleName()))->toBeTrue();
+});
+
+/**
+ * shield:super-admin hands the role every permission id there is, without
+ * looking at the guard, so a single row left under another one aborts the whole
+ * deploy with «There is no [permission] with ID …». The repair runs first in
+ * project:update for exactly this reason.
+ */
+it('lets the deploy finish after a permission was left under another guard', function (): void {
+    User::factory()->create();
+    Permission::findOrCreate('ViewAny:Vacancy', 'web');
+
+    DB::table('permissions')->insert([
+        'name' => 'ViewAny:Vacancy', 'guard_name' => 'Tender',
+        'created_at' => now(), 'updated_at' => now(),
+    ]);
+
+    expect(fn () => $this->artisan('shield:super-admin', ['--user' => '1', '--panel' => 'admin'])->run())
+        ->toThrow(PermissionDoesNotExist::class);
+
+    $this->artisan('roles:repair')->assertSuccessful();
+
+    expect(DB::table('permissions')->where('guard_name', '!=', 'web')->count())->toBe(0);
+
+    $this->artisan('shield:super-admin', ['--user' => '1', '--panel' => 'admin'])
+        ->assertSuccessful();
 });

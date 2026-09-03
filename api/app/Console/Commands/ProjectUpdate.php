@@ -21,6 +21,8 @@ final class ProjectUpdate extends Command
             '--option' => 'policies_and_permissions',
             '--ignore-existing-policies' => true,
         ]);
+        $this->call('roles:repair');
+
         $this->call('shield:super-admin', [
             '--user' => '1',
             '--panel' => 'admin',
