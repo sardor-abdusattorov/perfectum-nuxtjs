@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
-function coverageZip(): string
+function coverageZip(?array $ring = null): string
 {
-    $ring = [[69.1, 41.2], [69.4, 41.2], [69.4, 41.4], [69.1, 41.2]];
+    $ring ??= [[69.1, 41.2], [69.4, 41.2], [69.4, 41.4], [69.1, 41.2]];
 
     $body = pack('V', 5);
     $body .= pack('d4', 69.1, 41.2, 69.4, 41.4);
@@ -61,6 +61,94 @@ it('reads the archive into geojson when it is attached', function (): void {
     $layer->update(['file' => $path]);
 
     expect($layer->fresh()->features)->toBe(1);
+});
+
+function storedLayer(array $ring): CoverageLayer
+{
+    Storage::fake('public');
+
+    $path = Storage::disk('public')->putFile(
+        'uploads/coverage',
+        new UploadedFile(coverageZip($ring), 'coverage.zip', 'application/zip', null, true)
+    );
+
+    $layer = coverageLayer();
+    $layer->update(['file' => $path]);
+
+    return $layer->fresh();
+}
+
+function storedRing(CoverageLayer $layer): array
+{
+    return $layer->geojson['features'][0]['geometry']['coordinates'][0];
+}
+
+/**
+ * The contours are traced off a twenty-metre grid, so the fifth and sixth
+ * decimals are reprojection remainder, not measurement — and being close to
+ * random they are what gzip cannot pack. Four decimals is eleven metres.
+ */
+it('trims the shapes to the precision the map can use', function (): void {
+    $layer = storedLayer([
+        [69.65770612, 40.79734212],
+        [69.65794212, 40.79732912],
+        [69.65796098, 40.79750843],
+        [69.65770612, 40.79734212],
+    ]);
+
+    expect(storedRing($layer))->toBe([
+        [69.6577, 40.7973],
+        [69.6579, 40.7973],
+        [69.658, 40.7975],
+        [69.6577, 40.7973],
+    ]);
+});
+
+it('drops a point that rounding has moved onto its neighbour', function (): void {
+    $layer = storedLayer([
+        [69.657701, 40.797341],
+        [69.657702, 40.797342],
+        [69.658912, 40.797508],
+        [69.657701, 40.797341],
+    ]);
+
+    expect(storedRing($layer))->toBe([
+        [69.6577, 40.7973],
+        [69.6589, 40.7975],
+        [69.6577, 40.7973],
+    ]);
+});
+
+it('reads the archive again on command, so a layer stored before keeps up', function (): void {
+    $layer = storedLayer([
+        [69.65770612, 40.79734212],
+        [69.65794212, 40.79732912],
+        [69.65796098, 40.79750843],
+        [69.65770612, 40.79734212],
+    ]);
+
+    $layer->forceFill(['geojson' => ['type' => 'FeatureCollection', 'features' => [[
+        'type' => 'Feature',
+        'properties' => [],
+        'geometry' => ['type' => 'Polygon', 'coordinates' => [[[69.657706, 40.797342]]]],
+    ]]]])->saveQuietly();
+
+    expect(storedRing($layer->fresh())[0])->toBe([69.657706, 40.797342]);
+
+    $this->artisan('coverage:refresh')->assertSuccessful();
+
+    expect(storedRing($layer->fresh())[0])->toBe([69.6577, 40.7973])
+        ->and($layer->fresh()->features)->toBe(1);
+});
+
+it('leaves a layer alone when its archive is gone', function (): void {
+    Storage::fake('public');
+
+    $layer = coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => [['type' => 'Feature']]]]);
+
+    $this->artisan('coverage:refresh')->assertSuccessful();
+
+    expect($layer->fresh()->geojson['features'])->toHaveCount(1);
 });
 
 it('lists a published layer that has shapes without its collection', function (): void {

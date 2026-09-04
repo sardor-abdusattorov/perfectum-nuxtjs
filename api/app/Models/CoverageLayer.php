@@ -63,6 +63,24 @@ class CoverageLayer extends Model
     }
 
     /**
+     * Reads the archive again and stores what comes out. The shapes are written
+     * once, on upload, so a layer loaded before the reader changed keeps the old
+     * numbers until something asks for them to be read anew.
+     */
+    public function refreshShapes(): bool
+    {
+        $geojson = self::read($this);
+
+        if ($geojson === null) {
+            return false;
+        }
+
+        $this->geojson = $geojson;
+
+        return $this->save();
+    }
+
+    /**
      * @return array<string, mixed>|null
      */
     public function featureCollection(): ?array

@@ -22,6 +22,16 @@ class ShapefileReader
     private const WGS84_FLATTENING = 1 / 298.257223563;
 
     /**
+     * Four decimals is about eleven metres, and the coverage contours are traced
+     * off a twenty-metre raster grid — the fifth and sixth decimals carry no
+     * measurement, only the remainder of the reprojection. They cost real
+     * traffic: those digits are close to random, so gzip cannot pack them, and
+     * the layer went over the wire more than twice the weight of the same
+     * shapes written as whole numbers.
+     */
+    private const PRECISION = 4;
+
+    /**
      * @return array<string, mixed>
      */
     public function fromZip(string $path): array
@@ -181,14 +191,37 @@ class ShapefileReader
     private function convert(array $rings, ?callable $project): array
     {
         return array_map(
-            fn (array $ring): array => array_map(
+            fn (array $ring): array => $this->dropRepeats(array_map(
                 fn (array $point): array => $project === null
-                    ? [round($point[0], 6), round($point[1], 6)]
+                    ? [round($point[0], self::PRECISION), round($point[1], self::PRECISION)]
                     : $project($point[0], $point[1]),
                 $ring,
-            ),
+            )),
             $rings,
         );
+    }
+
+    /**
+     * Rounding pulls neighbours that stood a few centimetres apart onto the same
+     * spot. Repeating a point draws nothing and only adds weight; the closing
+     * point of a ring is not a repeat of its neighbour, so it stays.
+     *
+     * @param  array<int, array<int, float>>  $ring
+     * @return array<int, array<int, float>>
+     */
+    private function dropRepeats(array $ring): array
+    {
+        $kept = [];
+
+        foreach ($ring as $point) {
+            if ($kept !== [] && end($kept) === $point) {
+                continue;
+            }
+
+            $kept[] = $point;
+        }
+
+        return count($kept) > 1 ? $kept : $ring;
     }
 
     private function projector(string $projection): ?callable
@@ -226,8 +259,8 @@ class ShapefileReader
     private function fromMercator(float $x, float $y): array
     {
         return [
-            round($x / self::EARTH_RADIUS * 180 / M_PI, 6),
-            round((2 * atan(exp($y / self::EARTH_RADIUS)) - M_PI_2) * 180 / M_PI, 6),
+            round($x / self::EARTH_RADIUS * 180 / M_PI, self::PRECISION),
+            round((2 * atan(exp($y / self::EARTH_RADIUS)) - M_PI_2) * 180 / M_PI, self::PRECISION),
         ];
     }
 
@@ -275,7 +308,7 @@ class ShapefileReader
             + (5 - 2 * $c1 + 28 * $t1 - 3 * $c1 ** 2 + 8 * $ep2 + 24 * $t1 ** 2) * $d ** 5 / 120
         ) / $cos;
 
-        return [round(rad2deg($longitude), 6), round(rad2deg($latitude), 6)];
+        return [round(rad2deg($longitude), self::PRECISION), round(rad2deg($latitude), self::PRECISION)];
     }
 
     /**
