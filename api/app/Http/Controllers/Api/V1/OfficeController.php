@@ -21,8 +21,8 @@ class OfficeController
             ->published()
             ->with('region')
             ->forNetwork($this->network($request))
-            ->ofType(OfficeType::tryFrom((string) $request->query('type', '')))
-            ->inRegion($request->query('region'))
+            ->ofType(OfficeType::tryFrom($this->scalar($request, 'type')))
+            ->inRegion($this->scalar($request, 'region'))
             ->ordered()
             ->get();
 

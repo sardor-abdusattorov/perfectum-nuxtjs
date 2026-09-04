@@ -1,0 +1,355 @@
+{
+  "info": {
+    "name": "Perfectum API — публичные ручки",
+    "description": "Публичный API сайта Perfectum для мобильного приложения. Только чтение, ключ не нужен, лимит 600 запросов в минуту на IP. Все ответы — JSON, полезное всегда лежит в `data`.\n\n**Язык** — любым из четырёх способов, приоритет сверху вниз: `?locale=uz`, `?lang=uz`, заголовок `X-Locale: uz`, заголовок `Accept-Language: uz-UZ,uz;q=0.9`. Без них — русский; неизвестный язык молча отдаёт русский.\n\n**Переменные коллекции**: `base_url` — адрес API, `locale` — язык ответа.\n\nПример ответа каждой ручки — в её описании. Ошибки: 404 `{\"message\": \"Not Found\"}` на несуществующий slug, 429 при превышении лимита.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Новости — список",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/news?network=5g&page=1&per_page=9",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "news"
+          ],
+          "query": [
+            {
+              "key": "network",
+              "value": "5g",
+              "description": "5g | cdma — новости одной сети (общие попадают в обе)"
+            },
+            {
+              "key": "category",
+              "value": "",
+              "description": "Категория: slug или id из «Категории новостей»",
+              "disabled": true
+            },
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Страница, с 1"
+            },
+            {
+              "key": "per_page",
+              "value": "9",
+              "description": "Записей на странице, максимум 100"
+            },
+            {
+              "key": "search",
+              "value": "",
+              "description": "Поиск по заголовку",
+              "disabled": true
+            },
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Опубликованные новости: закреплённые первыми, дальше по дате. Тело новости (`content`) в списке не отдаётся — только в карточке. Пагинация в `meta` (`current_page`, `last_page`, `total`), ссылки на соседние страницы в `links`.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200 (урезан до двух записей)**\n\n```json\n{\n  \"data\": [\n    {\n      \"slug\": \"texniceskie-raboty-16\",\n      \"title\": \"Технические работы\",\n      \"excerpt\": \"Уважаемые абоненты! С 20:00 03.08.2026 до 09:00 04.08.2026 будут недоступны сервисы самообслуживания и приём платежей. Приносим извинения за возможные неудобств…\",\n      \"preview_image\": null,\n      \"main_image\": null,\n      \"is_featured\": false,\n      \"published_at\": \"2026-08-02\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Сеть и покрытие\",\n        \"slug\": \"razvitie-seti\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    },\n    {\n      \"slug\": \"texniceskie-raboty-15\",\n      \"title\": \"Технические работы\",\n      \"excerpt\": \"Уважаемые абоненты! С 22:00 30.07.2026 до 04:00 31.07.2026 будут недоступны сервисы самообслуживания и приём платежей. Приносим извинения за возможные неудобств…\",\n      \"preview_image\": null,\n      \"main_image\": null,\n      \"is_featured\": false,\n      \"published_at\": \"2026-07-29\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Сеть и покрытие\",\n        \"slug\": \"razvitie-seti\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    }\n  ],\n  \"links\": {\n    \"first\": \"https://perfectum.uz/api/v1/news?network=5g&per_page=2&page=1\",\n    \"last\": \"https://perfectum.uz/api/v1/news?network=5g&per_page=2&page=9\",\n    \"prev\": null,\n    \"next\": \"https://perfectum.uz/api/v1/news?network=5g&per_page=2&page=2\"\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 9,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"&laquo; Previous\",\n        \"page\": null,\n        \"active\": false\n      },\n      {\n        \"url\": \"https://perfectum.uz/api/v1/news?network=5g&per_page=2&page=1\",\n        \"label\": \"1\",\n        \"page\": 1,\n        \"active\": true\n      },\n      \"…\"\n    ],\n    \"path\": \"https://perfectum.uz/api/v1/news\",\n    \"per_page\": 2,\n    \"to\": 2,\n    \"total\": 17\n  }\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "Новость — одна",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/news/texniceskie-raboty-16",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "news",
+            "texniceskie-raboty-16"
+          ],
+          "query": [
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "В пути — `slug` из списка. Здесь есть полное тело `content` (HTML) и `main_image`. Неопубликованная или несуществующая новость — 404 `{\"message\": \"Not Found\"}`.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200**\n\n```json\n{\n  \"data\": {\n    \"slug\": \"texniceskie-raboty-16\",\n    \"title\": \"Технические работы\",\n    \"excerpt\": \"Уважаемые абоненты! С 20:00 03.08.2026 до 09:00 04.08.2026 будут недоступны сервисы самообслуживания и приём платежей. Приносим извинения за возможные неудобства и благодарим за понимание.\",\n    \"content\": \"<p><span>Уважаемые абоненты!</span><br><span>С 20:00 03.08.2026 до 09:00 04.08.2026 будут недоступны сервисы самообслуживания и приём платежей.</span><br><span>Приносим извинения за возможные неудобства и благодарим за п…\",\n    \"preview_image\": null,\n    \"main_image\": null,\n    \"is_featured\": false,\n    \"published_at\": \"2026-08-02\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Сеть и покрытие\",\n      \"slug\": \"razvitie-seti\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    }\n  }\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "Категории новостей",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/categories/news-categories",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "categories",
+            "news-categories"
+          ],
+          "query": [
+            {
+              "key": "network",
+              "value": "",
+              "description": "5g | cdma — категории одной сети",
+              "disabled": true
+            },
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Для фильтра `category` у списка новостей. `network` — какой сети принадлежит категория.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200**\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Сеть и покрытие\",\n      \"slug\": \"razvitie-seti\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Услуги и сервисные номера\",\n      \"slug\": \"produkty-i-uslugi\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Компания и акции\",\n      \"slug\": \"kompaniya\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    }\n  ]\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "FAQ — список",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/faqs?page=faq",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "faqs"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "faq",
+              "description": "faq | help | cdma — раздел сайта, к которому привязан вопрос"
+            },
+            {
+              "key": "category",
+              "value": "",
+              "description": "Категория: slug или id из «Категории FAQ»",
+              "disabled": true
+            },
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Опубликованные вопросы в порядке сортировки из админки, `answer` — HTML. Один вопрос может стоять на нескольких разделах: `page=faq` — «Вопросы и ответы», `help` — страница поддержки, `cdma` — раздел CDMA. Без `page` — все.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200 (урезан до двух записей)**\n\n```json\n{\n  \"data\": [\n    {\n      \"question\": \"Нужен ли специальный смартфон для мобильной связи 5G SA?\",\n      \"answer\": \"<p>Да. Для работы в сети необходим смартфон с поддержкой стандарта 5G SA и совместимых диапазонов частот с актуальной прошивкой. Список проверенных устройств регулярно обновляется на нашем сайте — рекомендуем проверить совместимость вашего устройства перед подключением.</p><p><a href=\\\"/ru/devices\\\">Совместимость устройств</a></p>\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Подключение\",\n        \"slug\": \"podklyuchenie\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    },\n    {\n      \"question\": \"Можно ли использовать eSIM?\",\n      \"answer\": \"<p>Да, сеть Perfectum 5G SA поддерживает eSIM. Для активации необходимо, чтобы ваш смартфон поддерживал eSIM. Оформить eSIM можно в офисах продаж Perfectum, через приложение или личный кабинет на сайте.</p>\",\n      \"category\": {\n        \"id\": 5,\n        \"name\": \"SIM и eSIM\",\n        \"slug\": \"sim-i-esim\",\n        \"network\": \"both\",\n        \"in_catalog\": null\n      }\n    }\n  ]\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "Категории FAQ",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/categories/faq-categories",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "categories",
+            "faq-categories"
+          ],
+          "query": [
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Для фильтра `category` у списка FAQ.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200 (урезан до трёх записей)**\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Подключение\",\n      \"slug\": \"podklyuchenie\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Мобильная связь\",\n      \"slug\": \"mobilnaya-svyaz\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Домашний интернет\",\n      \"slug\": \"domashniy-internet\",\n      \"network\": \"both\",\n      \"in_catalog\": null\n    },\n    \"…\"\n  ]\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "Офисы и дилеры",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"lang\": \"ru\",\n  \"type\": \"dealer\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/offices",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "offices"
+          ]
+        },
+        "description": "Точки продаж и обслуживания: `type` — `office` (собственный офис) или `dealer` (дилер). Без `type` — и те и другие, в порядке сортировки из админки. Неопубликованные не отдаются.\n\nПоля тела (все необязательные):\n\n- `lang` — `ru` | `uz`, язык названий и адресов; без него — русский;\n- `type` — `office` | `dealer`; неизвестное значение фильтр не применяет;\n- `region` — `id` региона; отдельной ручки под справочник нет и не нужно: у каждой точки есть свой `region` с `id` и названием, так что список регионов собирается из этого же ответа;\n- `network` — `5g` | `cdma`; без него — точки обеих сетей.\n\nУ дилеров CDMA адреса лежат таблицей в `content` (HTML), а `dealers_count` — сколько точек за этим дилером; у офисов 5G наоборот заполнены `address`, `lat` и `lng`, а `content` и `dealers_count` пустые.\n\nТот же адрес отвечает и на **GET** с параметрами в строке запроса: `/offices?type=dealer&lang=ru`.\n\n**Ответ 200 на {\"lang\": \"ru\"}**\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"type\": \"office\",\n      \"name\": \"Центральный офис\",\n      \"district\": \"Мирабадский район\",\n      \"address\": \"ул. Шевченко, 21\",\n      \"phone\": \"+998 71 200-00-05\",\n      \"lat\": 41.2975,\n      \"lng\": 69.2807,\n      \"dealers_count\": null,\n      \"content\": null,\n      \"region\": {\n        \"id\": 1,\n        \"name\": \"г. Ташкент\"\n      }\n    },\n    {\n      \"id\": 2,\n      \"type\": \"dealer\",\n      \"name\": \"ООО «ABASA TELECOM»\",\n      \"district\": \"г. Бухара\",\n      \"address\": \"ул. Мустакиллик, 4\",\n      \"phone\": \"+998 65 223-11-22\",\n      \"lat\": 39.7681,\n      \"lng\": 64.4556,\n      \"dealers_count\": null,\n      \"content\": null,\n      \"region\": {\n        \"id\": 2,\n        \"name\": \"Бухарская область\"\n      }\n    },\n    {\n      \"id\": 3,\n      \"type\": \"dealer\",\n      \"name\": \"ООО «CITY JOBS»\",\n      \"district\": null,\n      \"address\": null,\n      \"phone\": null,\n      \"lat\": null,\n      \"lng\": null,\n      \"dealers_count\": 12,\n      \"content\": \"<table><tbody><tr><td>ул. Навои, 30</td></tr></tbody></table>\",\n      \"region\": {\n        \"id\": 1,\n        \"name\": \"г. Ташкент\"\n      }\n    }\n  ]\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "Зона покрытия — слои",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/coverage",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coverage"
+          ],
+          "query": [
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Слои карты: `key` (`5g`, `4g`, `voice`), название, цвет, число контуров и `url` на GeoJSON слоя. `cities` — центры регионов с координатами `[lat, lng]`, чтобы было куда двигать карту.\n\n**Ответ 200 (города урезаны до трёх)**\n\n```json\n{\n  \"data\": [\n    {\n      \"key\": \"5g\",\n      \"name\": \"5G Standalone\",\n      \"color\": \"#e60000\",\n      \"features\": 1,\n      \"url\": \"https://perfectum.uz/api/v1/coverage/5g\"\n    }\n  ],\n  \"cities\": [\n    {\n      \"id\": 1,\n      \"name\": \"г. Ташкент\",\n      \"center\": [\n        41.2995,\n        69.2401\n      ]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Ташкентская область\",\n      \"center\": [\n        41.0167,\n        69.35\n      ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Андижанская область\",\n      \"center\": [\n        40.7821,\n        72.3442\n      ]\n    },\n    \"…\"\n  ]\n}\n```"
+      },
+      "response": []
+    },
+    {
+      "name": "Зона покрытия — GeoJSON слоя",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/coverage/5g",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coverage",
+            "5g"
+          ],
+          "query": [
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Готовый GeoJSON FeatureCollection в WGS84, координаты `[lng, lat]`. Слой 5G сейчас около 6 МБ. Отдаётся с `Cache-Control: public, max-age=3600` и `ETag` — сохраните ETag и пришлите его в `If-None-Match`, тогда неизменившийся слой вернётся как 304 без тела. Слой без загруженного файла или с неизвестным ключом — 404.\n\n**Ответ 200 (урезан до одного контура)**\n\n```json\n{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {},\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                69.657706,\n                40.797342\n              ],\n              [\n                69.657942,\n                40.797329\n              ],\n              [\n                69.65796,\n                40.797508\n              ],\n              [\n                69.657724,\n                40.797521\n              ]\n            ]\n          ]\n        ]\n      }\n    }\n  ]\n}\n```"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://perfectum.uz/api/v1"
+    },
+    {
+      "key": "locale",
+      "value": "ru"
+    }
+  ]
+}

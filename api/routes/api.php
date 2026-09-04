@@ -34,7 +34,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('coverage/{layer}', [CoverageController::class, 'show'])
         ->middleware('cache.headers:public;max_age=3600;etag')
         ->name('coverage.show');
-    Route::get('offices', OfficeController::class)->name('offices');
+    Route::match(['GET', 'POST'], 'offices', OfficeController::class)->name('offices');
     Route::post('numbers', NumberController::class)->middleware('throttle:upstream')->name('numbers');
     Route::get('cdma-numbers/filters', [CdmaNumberController::class, 'filters'])->name('cdma-numbers.filters');
     Route::post('cdma-numbers', [CdmaNumberController::class, 'search'])->middleware('throttle:upstream')->name('cdma-numbers.search');

@@ -55,6 +55,41 @@ it('filters by type', function (): void {
         ->assertJsonPath('data.0.name', 'ABASA');
 });
 
+it('answers the same list to a json body as to a query string', function (): void {
+    office();
+    office(['type' => OfficeType::Dealer, 'name' => 'ABASA', 'sort' => 2]);
+
+    $get = $this->getJson(route('api.v1.offices', ['type' => 'dealer']))->assertOk()->json('data');
+    $post = $this->postJson(route('api.v1.offices'), ['type' => 'dealer', 'lang' => 'ru'])->assertOk()->json('data');
+
+    expect($post)->toBe($get)
+        ->and($post)->toHaveCount(1)
+        ->and($post[0]['name'])->toBe('ABASA');
+});
+
+it('reads the language and the region from the json body', function (): void {
+    office();
+    $buxoro = region('buxoro-viloyati');
+    office(['region_id' => $buxoro->id, 'sort' => 2]);
+
+    $this->postJson(route('api.v1.offices'), ['lang' => 'uz'])
+        ->assertOk()
+        ->assertJsonPath('data.0.address', "Shevchenko ko'chasi, 21");
+
+    $this->postJson(route('api.v1.offices'), ['region' => $buxoro->id])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.region.name', 'buxoro-viloyati');
+});
+
+it('shrugs off a body whose filters have the wrong shape', function (): void {
+    office();
+
+    $this->postJson(route('api.v1.offices'), ['type' => ['dealer'], 'region' => ['1'], 'network' => ['5g']])
+        ->assertOk()
+        ->assertJsonCount(1, 'data');
+});
+
 it('filters by region', function (): void {
     office();
     $buxoro = region('buxoro-viloyati');
