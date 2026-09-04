@@ -3,9 +3,11 @@
 declare(strict_types=1);
 
 use App\Models\CoverageLayer;
+use App\Models\NewsCategory;
 use App\Models\Region;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
@@ -185,10 +187,40 @@ it('keeps the layer usable when the archive cannot be read', function (): void {
         ->assertJsonCount(0, 'data');
 });
 
-it('leaves a region without coordinates out of the city list', function (): void {
+it('hands over the layers alone, without a list of regions', function (): void {
+    coverageLayer(['geojson' => ['type' => 'FeatureCollection', 'features' => []]]);
+    Region::create(['name' => ['ru' => 'г. Ташкент'], 'latitude' => 41.2995, 'longitude' => 69.2401, 'sort' => 1, 'status' => true]);
+
+    $this->getJson(route('api.v1.coverage'))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonMissingPath('cities');
+});
+
+it('carries the centre of a region in the taxonomy the map reads', function (): void {
+    Region::create(['name' => ['ru' => 'г. Ташкент', 'uz' => 'Toshkent sh.'], 'latitude' => 41.2995, 'longitude' => 69.2401, 'sort' => 1, 'status' => true]);
     Region::create(['name' => ['ru' => 'Без точки'], 'sort' => 99, 'status' => true]);
 
-    $names = collect($this->getJson(route('api.v1.coverage'))->assertOk()->json('cities'))->pluck('name');
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'regions']), ['X-Locale' => 'uz'])
+        ->assertOk()
+        ->assertJsonPath('data.0.name', 'Toshkent sh.')
+        ->assertJsonPath('data.0.center', [41.2995, 69.2401])
+        ->assertJsonPath('data.1.center', null);
+});
 
-    expect($names)->not->toContain('Без точки');
+it('leaves a centre off a taxonomy that has no coordinates', function (): void {
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))->assertOk();
+
+    NewsCategory::create([
+        'name' => ['ru' => 'Компания'],
+        'slug' => 'kompaniya',
+        'sort' => 1,
+        'status' => true,
+    ]);
+
+    Cache::flush();
+
+    $this->getJson(route('api.v1.categories', ['taxonomy' => 'news-categories']))
+        ->assertOk()
+        ->assertJsonPath('data.0.center', null);
 });

@@ -27,8 +27,10 @@ export interface CoverageCity {
   center: [number, number]
 }
 
-interface CoveragePayload extends ApiResponse<CoverageLayer[]> {
-  cities: CoverageCity[]
+interface RegionRow {
+  id: number
+  name: string
+  center: [number, number] | null
 }
 
 export function useCoverage() {
@@ -37,10 +39,19 @@ export function useCoverage() {
 
   return useAsyncData(
     'coverage',
-    () => $api<CoveragePayload>('/coverage').then(response => ({
-      layers: response.data,
-      cities: response.cities,
-    })),
+    async () => {
+      const [layers, regions] = await Promise.all([
+        $api<ApiResponse<CoverageLayer[]>>('/coverage'),
+        $api<ApiResponse<RegionRow[]>>('/categories/regions'),
+      ])
+
+      return {
+        layers: layers.data,
+        cities: regions.data
+          .filter((region): region is RegionRow & { center: [number, number] } => region.center !== null)
+          .map(({ id, name, center }) => ({ id, name, center })),
+      }
+    },
     { watch: [locale], default: () => ({ layers: [] as CoverageLayer[], cities: [] as CoverageCity[] }) },
   )
 }

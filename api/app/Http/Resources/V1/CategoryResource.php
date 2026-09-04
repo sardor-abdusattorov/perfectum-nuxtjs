@@ -28,6 +28,20 @@ class CategoryResource extends JsonResource
             'slug' => array_key_exists('slug', $attributes) ? $this->slug : null,
             'network' => array_key_exists('network', $attributes) ? $this->network?->value : null,
             'in_catalog' => array_key_exists('in_catalog', $attributes) ? (bool) $this->in_catalog : null,
+            'center' => $this->center($attributes),
         ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     * @return array<int, float>|null
+     */
+    private function center(array $attributes): ?array
+    {
+        if (! array_key_exists('latitude', $attributes) || $this->latitude === null || $this->longitude === null) {
+            return null;
+        }
+
+        return [$this->latitude, $this->longitude];
     }
 }
