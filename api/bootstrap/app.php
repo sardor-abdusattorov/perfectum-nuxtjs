@@ -25,8 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->throttleApi();
 
-        $middleware->trustProxies(at: (string) env('TRUSTED_PROXIES', '*'));
-
         $middleware->replace(HandleCors::class, HandleApiCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
