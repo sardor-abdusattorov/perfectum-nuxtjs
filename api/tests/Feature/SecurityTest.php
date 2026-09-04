@@ -10,6 +10,7 @@ use App\Models\News;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
@@ -114,10 +115,23 @@ it('does not let one block editor answer for another', function (): void {
         ->and(ManageContacts::canAccess())->toBeFalse();
 });
 
-it('throttles the reads generously and the upstream proxies tightly', function (): void {
-    expect($this->getJson(route('api.v1.news.index'))->headers->get('X-RateLimit-Limit'))->toBe('600');
+/**
+ * Whole streets of subscribers share one address behind a mobile operator, so a
+ * per-address ceiling on reading counts them as one reader and starts refusing
+ * the app. Reading is cheap and cached; what costs money is writing and the
+ * upstream proxies, and those keep their limits.
+ */
+it('lets anyone read as much as they like', function (): void {
+    expect($this->getJson(route('api.v1.news.index'))->headers->get('X-RateLimit-Limit'))->toBeNull()
+        ->and(RateLimiter::limiter('api'))->toBeNull();
+});
 
+it('keeps the upstream proxies and the application form on a tight leash', function (): void {
     $this->postJson(route('api.v1.numbers'), ['sku' => 'x']);
 
     expect(RateLimiter::limiter('upstream')(request())->maxAttempts)->toBe(30);
+
+    $limits = collect(Route::getRoutes()->getByName('api.v1.applications.store')->gatherMiddleware());
+
+    expect($limits)->toContain('throttle:10,1');
 });

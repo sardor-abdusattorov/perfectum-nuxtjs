@@ -23,8 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
             SetLocale::class,
         ]);
 
-        $middleware->throttleApi();
-
         $middleware->replace(HandleCors::class, HandleApiCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
