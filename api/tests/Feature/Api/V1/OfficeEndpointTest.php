@@ -82,6 +82,25 @@ it('reads the language and the region from the json body', function (): void {
         ->assertJsonPath('data.0.region.name', 'buxoro-viloyati');
 });
 
+it('keeps the cdma table rows out of a five g body', function (): void {
+    office(['network' => Network::FiveG]);
+    office([
+        'network' => Network::Cdma,
+        'type' => OfficeType::Dealer,
+        'address' => null,
+        'district' => null,
+        'dealers_count' => 12,
+        'content' => ['ru' => '<table><tbody><tr><td>ООО «CITY JOBS»</td></tr></tbody></table>'],
+        'sort' => 2,
+    ]);
+
+    $this->postJson(route('api.v1.offices'), ['lang' => 'ru', 'network' => '5g'])
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.address', 'улица Шевченко, 21')
+        ->assertJsonPath('data.0.content', null);
+});
+
 it('shrugs off a body whose filters have the wrong shape', function (): void {
     office();
 
