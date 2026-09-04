@@ -20,6 +20,8 @@ class FaqForm
             ->components([
                 Section::make(__('app.label.basic_information'))
                     ->schema([
+                        Fields::network(),
+
                         Fields::category(FaqCategory::class),
 
                         TranslatableTabs::make('translations')

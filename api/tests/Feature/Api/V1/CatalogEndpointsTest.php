@@ -129,6 +129,70 @@ it('serves faqs of the requested page only', function (): void {
     $this->getJson(route('api.v1.faqs'))->assertOk()->assertJsonCount(2, 'data');
 });
 
+it('serves faqs of one network, keeping the shared ones', function (): void {
+    Faq::create([
+        'question' => ['ru' => 'Как проверить баланс?'],
+        'answer' => ['ru' => '<p>Наберите *100#</p>'],
+        'network' => Network::Cdma,
+        'pages' => [Faq::PAGE_CDMA],
+    ]);
+    Faq::create([
+        'question' => ['ru' => 'Нужен ли смартфон с 5G?'],
+        'answer' => ['ru' => '<p>Да</p>'],
+        'network' => Network::FiveG,
+        'pages' => [Faq::PAGE_FAQ],
+    ]);
+    Faq::create([
+        'question' => ['ru' => 'Как подключиться?'],
+        'answer' => ['ru' => '<p>Через приложение</p>'],
+        'pages' => [Faq::PAGE_FAQ],
+    ]);
+
+    $this->getJson(route('api.v1.faqs', ['network' => '5g']))
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonPath('data.0.question', 'Нужен ли смартфон с 5G?');
+
+    $this->getJson(route('api.v1.faqs', ['network' => 'cdma']))
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonPath('data.0.question', 'Как проверить баланс?');
+
+    $this->getJson(route('api.v1.faqs'))->assertOk()->assertJsonCount(3, 'data');
+
+    $this->postJson(route('api.v1.faqs'), ['network' => '5g'])->assertOk()->assertJsonCount(2, 'data');
+});
+
+it('narrows faqs by network and page at once', function (): void {
+    Faq::create([
+        'question' => ['ru' => 'Только поддержка 5G'],
+        'answer' => ['ru' => '<p>Да</p>'],
+        'network' => Network::FiveG,
+        'pages' => [Faq::PAGE_HELP],
+    ]);
+    Faq::create([
+        'question' => ['ru' => 'Только вопросы 5G'],
+        'answer' => ['ru' => '<p>Да</p>'],
+        'network' => Network::FiveG,
+        'pages' => [Faq::PAGE_FAQ],
+    ]);
+
+    $this->getJson(route('api.v1.faqs', ['network' => '5g', 'page' => 'help']))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.question', 'Только поддержка 5G');
+});
+
+it('leaves a question on both networks when nothing is chosen', function (): void {
+    $faq = Faq::create([
+        'question' => ['ru' => 'Как подключиться?'],
+        'answer' => ['ru' => '<p>Через приложение</p>'],
+        'pages' => [Faq::PAGE_FAQ],
+    ]);
+
+    expect($faq->fresh()->network)->toBe(Network::Both);
+});
+
 it('paginates a long list', function (): void {
     foreach (range(1, 15) as $index) {
         news(['slug' => "novost-{$index}"]);

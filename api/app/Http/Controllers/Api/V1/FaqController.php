@@ -21,6 +21,7 @@ class FaqController
         $faqs = Faq::query()
             ->published()
             ->with('category')
+            ->forNetwork($this->network($request))
             ->onPage(is_string($page) ? $page : null)
             ->inCategory($request->input('category'))
             ->orderBy('sort')

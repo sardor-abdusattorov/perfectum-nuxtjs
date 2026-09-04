@@ -17,14 +17,15 @@ export interface FaqQuery {
 export function useFaqs(query: FaqQuery) {
   const { locale } = useI18n()
   const { $api } = useNuxtApp()
+  const network = useNetwork()
 
   return useAsyncData(
     `faqs:${query.page}`,
     async () => {
       const [faqs, categories] = await Promise.all([
-        $api<ApiResponse<FaqItem[]>>('/faqs', { params: { page: query.page } }),
+        $api<ApiResponse<FaqItem[]>>('/faqs', { params: { page: query.page, network: network.value } }),
         query.withCategories
-          ? $api<ApiResponse<Taxonomy[]>>('/categories/faq-categories')
+          ? $api<ApiResponse<Taxonomy[]>>('/categories/faq-categories', { params: { network: network.value } })
           : Promise.resolve({ data: [] as Taxonomy[] }),
       ])
 

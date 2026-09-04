@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Network;
+use App\Models\Concerns\BelongsToNetwork;
 use App\Models\Concerns\HasCategory;
 use App\Models\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +12,10 @@ use Spatie\Translatable\HasTranslations;
 
 class Faq extends Model
 {
-    use HasCategory;
+    use BelongsToNetwork;
+    use HasCategory {
+        BelongsToNetwork::scopeForNetwork insteadof HasCategory;
+    }
     use HasTranslations;
     use Publishable;
 
@@ -26,6 +31,7 @@ class Faq extends Model
 
     protected $fillable = [
         'category_id',
+        'network',
         'question',
         'answer',
         'pages',
@@ -36,11 +42,13 @@ class Faq extends Model
     public $translatable = ['question', 'answer'];
 
     protected $casts = [
+        'network' => Network::class,
         'pages' => 'array',
         'status' => 'boolean',
     ];
 
     protected $attributes = [
+        'network' => 'both',
         'pages' => '["faq"]',
     ];
 

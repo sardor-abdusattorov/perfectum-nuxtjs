@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('faq_categories')->nullOnDelete();
+            $table->string('network', 10)->default('both')->index();
             $table->json('question');
             $table->json('answer');
             $table->json('pages');

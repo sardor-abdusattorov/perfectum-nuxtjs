@@ -20,6 +20,10 @@ class FaqsTable
                     ->wrap()
                     ->sortable(),
 
+                TextColumn::make('network')
+                    ->label(__('app.label.network'))
+                    ->badge(),
+
                 TextColumn::make('category.name')
                     ->label(__('app.label.category'))
                     ->badge()
@@ -37,6 +41,8 @@ class FaqsTable
                 Tables::statusColumn(),
             ])
             ->filters([
+                Tables::networkFilter(),
+
                 Tables::categoryFilter(FaqCategory::class),
 
                 Tables::statusFilter(),
