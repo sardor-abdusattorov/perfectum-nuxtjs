@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CoverageLayerResource extends Resource
 {
@@ -46,6 +47,22 @@ class CoverageLayerResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return (string) static::$model::count();
+    }
+
+    /**
+     * The panel never shows the geometry — the form is the archive and a few
+     * words around it. But Filament fills the form from every attribute of the
+     * record, so the whole contour set travelled into the Livewire component
+     * and back on each request: six megabytes in a payload Livewire refuses
+     * past eight. Leaving the column out of the query is what keeps the page
+     * open; `has_shapes` carries the one thing the list actually asks of it.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->select(['id', 'key', 'name', 'color', 'file', 'features', 'sort', 'status', 'created_at', 'updated_at'])
+            ->selectRaw('geojson is not null as has_shapes')
+            ->withCasts(['has_shapes' => 'boolean']);
     }
 
     public static function form(Schema $schema): Schema
