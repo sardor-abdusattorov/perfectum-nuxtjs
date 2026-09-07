@@ -78,10 +78,11 @@ function connect(): void {
           </div>
         </article>
 
-<details
+        <details
           v-for="(description, index) in tariff.descriptions"
           :key="index"
           class="tariff-detail__more"
+          open
         >
           <summary class="tariff-detail__more-summary">
             {{ description.name }}
