@@ -55,5 +55,6 @@ export function useSetting() {
 export function useT() {
   const data = site()
 
-  return (key: string, fallback?: string): string => data.value?.translations[key] ?? fallback ?? key
+  return (key: string, fallback = ''): string =>
+    data.value?.translations[key] ?? fallback
 }
