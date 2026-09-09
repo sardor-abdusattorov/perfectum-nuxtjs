@@ -316,6 +316,43 @@
       "response": []
     },
     {
+      "name": "Документ — один",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/documents/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "documents",
+            "1"
+          ],
+          "query": [
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Один документ по тому же `id`, что стоит у него в списке. Нужен, когда клиента привели прямо на документ — по ссылке из пуша или из другого экрана — и списка под рукой нет.\n\nПоля те же, что в списке, плюс `category` с разделом, к которому документ приписан (или `null`, если раздела нет). Неопубликованный документ, документ без файла и неизвестный `id` — 404.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200**\n\n```json\n{\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Публичная оферта\",\n    \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/oferta-ru.pdf\",\n    \"size\": \"234 КБ\",\n    \"downloadable\": true,\n    \"files\": [\n      {\n        \"language\": \"ru\",\n        \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/oferta-ru.pdf\",\n        \"size\": \"234 КБ\"\n      },\n      {\n        \"language\": \"uz\",\n        \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/oferta-uz.pdf\",\n        \"size\": \"230 КБ\"\n      }\n    ],\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Публичная оферта\"\n    }\n  }\n}\n```"
+      },
+      "response": []
+    },
+    {
       "name": "Зона покрытия — GeoJSON слоя",
       "request": {
         "method": "GET",

@@ -28,7 +28,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
 
     Route::match(['GET', 'POST'], 'categories/{taxonomy}', CategoryController::class)->name('categories');
     Route::match(['GET', 'POST'], 'faqs', FaqController::class)->name('faqs');
-    Route::match(['GET', 'POST'], 'documents', DocumentController::class)->name('documents');
+    Route::match(['GET', 'POST'], 'documents', [DocumentController::class, 'index'])->name('documents');
+    Route::match(['GET', 'POST'], 'documents/{document}', [DocumentController::class, 'show'])->name('documents.show');
     Route::get('coverage', [CoverageController::class, 'index'])->name('coverage');
 
     Route::get('coverage/{layer}', [CoverageController::class, 'show'])

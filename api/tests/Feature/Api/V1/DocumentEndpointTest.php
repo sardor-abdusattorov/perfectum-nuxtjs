@@ -198,3 +198,37 @@ it('answers a json body the way it answers a query string', function (): void {
     expect($post)->toBe($get)
         ->and($post[0]['documents'][0]['url'])->toEndWith('offer-uz.pdf');
 });
+
+it('hands over one document by the id the list carries', function (): void {
+    $category = documentCategory('dogovory');
+
+    $offer = document(['category_id' => $category->id], [
+        'ru' => 'uploads/documents/offer-ru.pdf',
+        'uz' => 'uploads/documents/offer-uz.pdf',
+    ]);
+
+    $this->getJson(route('api.v1.documents.show', ['document' => $offer->id, 'lang' => 'uz']))
+        ->assertOk()
+        ->assertJsonPath('data.id', $offer->id)
+        ->assertJsonPath('data.name', 'Oferta')
+        ->assertJsonPath('data.category.name', 'Dogovory')
+        ->assertJsonPath('data.url', fn (string $url): bool => str_ends_with($url, 'offer-uz.pdf'))
+        ->assertJsonCount(2, 'data.files');
+});
+
+it('leaves a document without a category with an empty one', function (): void {
+    $loose = document(['category_id' => null]);
+
+    $this->getJson(route('api.v1.documents.show', $loose->id))
+        ->assertOk()
+        ->assertJsonPath('data.category', null);
+});
+
+it('has nothing to show for an unpublished document, one without a file, or an unknown id', function (): void {
+    $hidden = document(['status' => false]);
+    $empty = document([], []);
+
+    $this->getJson(route('api.v1.documents.show', $hidden->id))->assertNotFound();
+    $this->getJson(route('api.v1.documents.show', $empty->id))->assertNotFound();
+    $this->getJson(route('api.v1.documents.show', 9999))->assertNotFound();
+});
