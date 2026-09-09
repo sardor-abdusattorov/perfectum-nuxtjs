@@ -1656,6 +1656,9 @@
   color: rgba(0, 0, 0, 0.6);
   border-bottom: 1px solid var(--cdma-border);
 }
+.cdma-connect .cdma-connect__article table p{
+  margin-bottom: 0;
+}
 
 .cdma-connect .cdma-connect__article p {
   margin-bottom: 20px;
