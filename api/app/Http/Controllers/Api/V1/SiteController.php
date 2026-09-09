@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\MenuLocation;
+use App\Enums\PageKey;
 use App\Http\Resources\V1\MenuResource;
 use App\Http\Resources\V1\SocialResource;
 use App\Models\Menu;
@@ -53,6 +54,23 @@ class SiteController
             ],
             'site' => SiteSettings::published(),
             'pages' => PageSettings::map(),
+            'cookie' => $this->cookie(),
+        ];
+    }
+
+    /**
+     * The bar stands on every page, so its wording rides along with the rest of
+     * the site rather than with the blocks of the homepage it is edited on.
+     *
+     * @return array{text: ?string, accept: ?string}
+     */
+    private function cookie(): array
+    {
+        $block = content_blocks(PageKey::Home)['cookie'] ?? [];
+
+        return [
+            'text' => $block['text'] ?? null,
+            'accept' => $block['accept'] ?? null,
         ];
     }
 

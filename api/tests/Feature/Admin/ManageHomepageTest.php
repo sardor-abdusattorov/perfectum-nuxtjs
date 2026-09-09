@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\ContentBlockKey;
 use App\Enums\PageKey;
+use App\Filament\Pages\Homepage\CookieTab;
 use App\Filament\Pages\Homepage\HeroTab;
 use App\Filament\Pages\ManageHomepage;
 use App\Models\ContentBlock;
@@ -183,4 +184,25 @@ it('requires the title in ru and uz but not in en', function (): void {
     expect($marked('ru'))->toBeTrue()
         ->and($marked('uz'))->toBeTrue()
         ->and($marked('en'))->toBeFalse();
+});
+
+it('offers the cookie notice as an editor, so the link fits in it', function (): void {
+    $this->actingAs(homepageAdmin());
+
+    Livewire::test(ManageHomepage::class)
+        ->set('activeTab', 'cookie')
+        ->assertSee('cookie.text')
+        ->assertSee('cookie.accept');
+});
+
+it('writes the cookie notice into the block the site reads', function (): void {
+    CookieTab::save([
+        'text' => ['ru' => '<p>Мы используем cookie. <a href="/ru/pages/cookie">Подробнее</a></p>'],
+        'accept' => ['ru' => 'Принять'],
+    ]);
+
+    expect(ContentBlock::read(PageKey::Home, ContentBlockKey::Cookie))->toBe([
+        'text' => ['ru' => '<p>Мы используем cookie. <a href="/ru/pages/cookie">Подробнее</a></p>'],
+        'accept' => ['ru' => 'Принять'],
+    ]);
 });

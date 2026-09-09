@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Filament\Pages\Blocks\ManageBlocks;
 use App\Filament\Pages\Homepage\AppPromoTab;
 use App\Filament\Pages\Homepage\ChooseTab;
+use App\Filament\Pages\Homepage\CookieTab;
 use App\Filament\Pages\Homepage\CoverageTab;
 use App\Filament\Pages\Homepage\FeaturesTab;
 use App\Filament\Pages\Homepage\HeroTab;
@@ -31,6 +32,7 @@ class ManageHomepage extends ManageBlocks
             FeaturesTab::class,
             CoverageTab::class,
             AppPromoTab::class,
+            CookieTab::class,
         ];
     }
 

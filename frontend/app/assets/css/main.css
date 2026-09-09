@@ -7439,6 +7439,25 @@ body.overflow__hidden {
   color: rgba(255, 255, 255, 0.8);
 }
 
+.cookies .cookies__text p {
+  margin: 0;
+}
+
+.cookies .cookies__text p + p {
+  margin-top: 8px;
+}
+
+.cookies .cookies__text a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: var(--transition);
+}
+
+.cookies .cookies__text a:hover {
+  color: var(--color-red);
+}
+
 .cookies .cookies__accept {
   flex: 0 0 auto;
   background: var(--color-red);

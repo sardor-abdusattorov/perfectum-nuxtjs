@@ -23,6 +23,7 @@ export interface Settings {
   help: { faq: boolean, numbers: boolean, contact: boolean }
   site: Record<string, string | null>
   pages: Record<string, PageSeo>
+  cookie: { text: string | null, accept: string | null }
 }
 
 export interface MenuItem {
