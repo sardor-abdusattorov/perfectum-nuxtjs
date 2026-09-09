@@ -297,3 +297,29 @@ it('keeps a cdma promo out of the 5g listing', function (): void {
         ->and($listing(['network' => '5g', 'category' => 'mobilnaya-svyaz']))->toBe(['letnyaya'])
         ->and($listing(['network' => 'cdma']))->toBe(['internet-bonus']);
 });
+
+/**
+ * The app reads a story from the list it already has, so the body travels with
+ * it. Every other feed still keeps its body for the card alone.
+ */
+it('carries the whole news body in the list', function (): void {
+    $category = category(NewsCategory::class, Network::Both, 'kompaniya');
+
+    news(['category_id' => $category->id, 'content' => ['ru' => '<p>Полный текст новости</p>']]);
+
+    $this->getJson(route('api.v1.news.index'))
+        ->assertOk()
+        ->assertJsonPath('data.0.content', '<p>Полный текст новости</p>');
+});
+
+it('keeps the body out of the other feeds', function (): void {
+    Vacancy::create(['title' => ['ru' => 'Инженер'], 'slug' => 'inzhener', 'content' => ['ru' => '<p>Условия</p>']]);
+
+    $this->getJson(route('api.v1.vacancies.index'))
+        ->assertOk()
+        ->assertJsonMissingPath('data.0.content');
+
+    $this->getJson(route('api.v1.vacancies.show', 'inzhener'))
+        ->assertOk()
+        ->assertJsonPath('data.content', '<p>Условия</p>');
+});

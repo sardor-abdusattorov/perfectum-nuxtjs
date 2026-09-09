@@ -6904,21 +6904,6 @@ body.overflow__hidden {
   transition: var(--transition);
 }
 
-.doc-item__lang:hover {
-  color: var(--color-red);
-  border-color: var(--color-red);
-}
-
-.doc-item__lang_current {
-  color: var(--color-white);
-  background: var(--color-red);
-  border-color: var(--color-red);
-}
-
-.doc-item__lang_current:hover {
-  color: var(--color-white);
-  opacity: 0.85;
-}
 
 .doc-item__download {
   display: inline-flex;

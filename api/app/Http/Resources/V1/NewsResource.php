@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\V1\Concerns\OmitsBodyFromLists;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
+ * Unlike the other feeds, the news list carries the whole body: the mobile app
+ * shows a story straight from the list it already downloaded, and asking it to
+ * fetch every item again to read one was the wrong trade.
+ *
  * @mixin News
  */
 class NewsResource extends JsonResource
 {
-    use OmitsBodyFromLists;
-
     public static $wrap = null;
 
     /**
@@ -27,7 +28,7 @@ class NewsResource extends JsonResource
             'slug' => $this->slug,
             'title' => $this->title,
             'excerpt' => $this->excerpt,
-            'content' => $this->body($request, $this->content),
+            'content' => $this->content,
             'preview_image' => $this->mediaUrl('preview_image'),
             'main_image' => $this->mediaUrl('main_image'),
             'is_featured' => $this->is_featured,

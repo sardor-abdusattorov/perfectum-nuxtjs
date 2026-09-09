@@ -39,15 +39,12 @@ const { data } = await useAsyncData(
 const groups = computed(() => data.value ?? [])
 
 /**
- * Every language the document exists in, not only the other ones: a lone «UZ»
- * chip under a Russian paper on a Russian page reads as a label of that paper
- * and looks like a mistake. Marking the copy the page is serving turns the row
- * into what it is — a switch between the languages of one document.
+ * The language of the file the button hands over, and nothing else. Listing the
+ * other languages read as a label of the paper above it — «UZ» under a Russian
+ * document on a Russian page looked plainly wrong.
  */
-function languages(doc: DocumentItem): (DocumentDownload & { current: boolean })[] {
-  return doc.files
-    .filter(file => file.url !== null)
-    .map(file => ({ ...file, current: file.url === doc.url }))
+function language(doc: DocumentItem): string | null {
+  return doc.files.find(file => file.url === doc.url)?.language ?? null
 }
 </script>
 
@@ -93,19 +90,8 @@ function languages(doc: DocumentItem): (DocumentDownload & { current: boolean })
             <div class="doc-item__body">
               <h3 class="doc-item__name">{{ doc.name }}</h3>
               <p v-if="doc.size" class="doc-item__size">{{ doc.size }}</p>
-              <p v-if="languages(doc).length > 1" class="doc-item__langs">
-                <a
-                  v-for="file in languages(doc)"
-                  :key="file.url!"
-                  class="doc-item__lang"
-                  :class="file.current && 'doc-item__lang_current'"
-                  :href="storageUrl(file.url)"
-                  :hreflang="file.language"
-                  :aria-current="file.current ? 'true' : undefined"
-                  target="_blank"
-                  rel="noopener"
-                  :download="doc.downloadable ? '' : undefined"
-                >{{ file.language.toUpperCase() }}</a>
+              <p v-if="language(doc)" class="doc-item__langs">
+                <span class="doc-item__lang">{{ language(doc)!.toUpperCase() }}</span>
               </p>
             </div>
             <a v-if="doc.url && doc.downloadable" class="doc-item__download" :href="storageUrl(doc.url)" download>
