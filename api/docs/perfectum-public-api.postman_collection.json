@@ -280,6 +280,42 @@
       "response": []
     },
     {
+      "name": "Документы",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Locale",
+            "value": "{{locale}}",
+            "description": "ru | uz. То же самое, что ?lang=ru в адресе или \"lang\": \"ru\" в теле"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/documents",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "documents"
+          ],
+          "query": [
+            {
+              "key": "lang",
+              "value": "{{locale}}",
+              "description": "ru | uz — вместо заголовка X-Locale",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Публичные документы — оферты, условия тарифов, политики. Сгруппированы по разделам из админки; у группы есть `id` и `name`, а документы лежат в её `documents`. Документы без раздела приходят последней группой, у неё `id` и `name` равны `null`.\n\nУ каждого документа:\n\n- `url` и `size` — файл на языке запроса. Если на этом языке файла нет, приедет тот, что есть, — документ не пропадает из списка;\n- `files` — все языки, в которых документ существует, каждый со своим адресом и размером. Чтобы показать, на каком языке файл под кнопкой, ищите в `files` запись, у которой `url` совпадает с `url` документа;\n- `downloadable` — `false` значит «открывать, а не скачивать»: так заведены документы, которые должны листаться в просмотрщике.\n\nСсылки абсолютные и постоянные — сохранять их у себя не нужно, но и не вредно. Неопубликованный документ, как и документ без файла, в ответ не попадает.\n\nЭтот же адрес принимает **POST** с телом JSON — поля называются так же, что и параметры в адресе: `{\"lang\": \"uz\", \"network\": \"5g\", \"page\": 1}`. По умолчанию берите GET: только у него работает кэш на телефоне и в nginx.\n\n**Ответ 200**\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Публичная оферта\",\n      \"documents\": [\n        {\n          \"id\": 1,\n          \"name\": \"Публичная оферта\",\n          \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/oferta-ru.pdf\",\n          \"size\": \"234 КБ\",\n          \"downloadable\": true,\n          \"files\": [\n            {\n              \"language\": \"ru\",\n              \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/oferta-ru.pdf\",\n              \"size\": \"234 КБ\"\n            },\n            {\n              \"language\": \"uz\",\n              \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/oferta-uz.pdf\",\n              \"size\": \"230 КБ\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": null,\n      \"name\": null,\n      \"documents\": [\n        {\n          \"id\": 2,\n          \"name\": \"Условия тарифного плана\",\n          \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/tarify-ru.pdf\",\n          \"size\": \"99 КБ\",\n          \"downloadable\": true,\n          \"files\": [\n            {\n              \"language\": \"ru\",\n              \"url\": \"https://perfectum.uz/storage/uploads/documents/2026/09/tarify-ru.pdf\",\n              \"size\": \"99 КБ\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```"
+      },
+      "response": []
+    },
+    {
       "name": "Зона покрытия — GeoJSON слоя",
       "request": {
         "method": "GET",

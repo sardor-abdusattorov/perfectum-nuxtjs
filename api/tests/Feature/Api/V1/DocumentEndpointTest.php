@@ -183,3 +183,18 @@ it('hands the main link the file of the language being read', function (): void 
             ->assertJsonPath('data.0.documents.0.url', fn (string $url): bool => str_ends_with($url, "keling-{$locale}.pdf"));
     }
 });
+
+it('answers a json body the way it answers a query string', function (): void {
+    $category = documentCategory('dogovory');
+
+    document(['category_id' => $category->id], [
+        'ru' => 'uploads/documents/offer-ru.pdf',
+        'uz' => 'uploads/documents/offer-uz.pdf',
+    ]);
+
+    $get = $this->getJson(route('api.v1.documents', ['lang' => 'uz']))->assertOk()->json('data');
+    $post = $this->postJson(route('api.v1.documents'), ['lang' => 'uz'])->assertOk()->json('data');
+
+    expect($post)->toBe($get)
+        ->and($post[0]['documents'][0]['url'])->toEndWith('offer-uz.pdf');
+});
