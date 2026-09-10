@@ -75,7 +75,7 @@ function connect(tariff: Tariff): void {
           :class="!type && 'tariffs-list__filter_active'"
           role="tab"
           :aria-selected="!type"
-          @click="type = ''"
+          @click="type = undefined" 
         >{{ t('tariffs.all') }}</button>
 
         <button
