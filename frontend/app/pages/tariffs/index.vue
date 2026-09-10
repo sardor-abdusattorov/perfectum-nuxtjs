@@ -4,9 +4,6 @@ import type { Tariff } from '~/composables/useTariffs'
 const localePath = useLocalePath()
 const t = useT()
 
-const route = useRoute()
-const router = useRouter()
-
 const { open } = useTariffModal()
 
 useSeo({ page: 'tariffs' })
@@ -34,8 +31,10 @@ useSlider(
     grabCursor: true,
     watchOverflow: true,
 
-    // Важно:
-    // Swiper не должен блокировать клики по кнопкам и ссылкам внутри карточек
+    /*
+     * Swiper не должен блокировать обычные
+     * клики по кнопкам и ссылкам.
+     */
     preventClicks: false,
     preventClicksPropagation: false,
 
@@ -80,7 +79,7 @@ useSlider(
 )
 
 /**
- * Открытие модального окна подключения тарифа
+ * Открыть подключение тарифа
  */
 function connect(tariff: Tariff): void {
   open({
@@ -94,76 +93,34 @@ function connect(tariff: Tariff): void {
 }
 
 /**
- * Выбор категории.
+ * Смена категории.
  *
- * При смене категории сбрасываем type,
- * поскольку тип из предыдущей категории
- * может отсутствовать в новой категории.
+ * URL здесь вручную НЕ трогаем.
+ * Этим должен заниматься useTariffFilter.
  */
-async function selectCategory(id: string): Promise<void> {
+function selectCategory(id: string): void {
   if (category.value === id)
     return
 
   category.value = id
 
-  // Сбрасываем дополнительный фильтр
+  /*
+   * При смене категории убираем старый type,
+   * иначе может остаться фильтр от другой категории.
+   */
   type.value = ''
-
-  const query = {
-    ...route.query,
-    category: id,
-  }
-
-  delete query.type
-
-  await router.replace({
-    path: route.path,
-    query,
-  })
 }
 
 /**
- * Выбор типа тарифа.
+ * Смена типа.
  *
- * Пустая строка означает "Все".
+ * Пустая строка = "Все".
  */
-async function selectType(id: string): Promise<void> {
+function selectType(id: string): void {
+  if (type.value === id)
+    return
+
   type.value = id
-
-  const query = {
-    ...route.query,
-  }
-
-  if (id)
-    query.type = id
-  else
-    delete query.type
-
-  await router.replace({
-    path: route.path,
-    query,
-  })
-}
-
-/**
- * Явная навигация на тариф.
- *
- * Делаем её отдельной функцией, чтобы переход
- * не зависел от внутренних обработчиков Swiper.
- */
-async function goToTariff(slug: string): Promise<void> {
-  await navigateTo(
-    localePath(`/tariffs/${slug}`),
-  )
-}
-
-/**
- * Переход в архив тарифов
- */
-async function goToArchive(): Promise<void> {
-  await navigateTo(
-    localePath('/tariffs/archive'),
-  )
 }
 </script>
 
@@ -171,19 +128,25 @@ async function goToArchive(): Promise<void> {
   <section class="page-hero page-hero_tariffs">
     <div class="container">
       <div class="page-hero__inner">
-        <p class="page-hero__eyebrow page-hero__eyebrow_silver">
+
+        <p
+          class="page-hero__eyebrow page-hero__eyebrow_silver"
+        >
           {{ t('tariffs.eyebrow') }}
         </p>
 
         <h1
           class="page-hero__title"
-          v-html="rich(
-            t('tariffs.title'),
-            {
-              accent: 'page-hero__title-red',
-            },
-          )"
+          v-html="
+            rich(
+              t('tariffs.title'),
+              {
+                accent: 'page-hero__title-red',
+              },
+            )
+          "
         />
+
       </div>
     </div>
   </section>
@@ -198,28 +161,33 @@ async function goToArchive(): Promise<void> {
         role="tablist"
         :aria-label="t('tariffs.categories_label')"
       >
+
         <button
           v-for="item in categories"
           :key="item.id"
           type="button"
           class="tariffs-list__tab"
           :class="{
-            'tariffs-list__tab_active': item.id === category,
+            'tariffs-list__tab_active':
+              item.id === category,
           }"
           role="tab"
           :aria-selected="item.id === category"
-          @click.stop="selectCategory(item.id)"
+          @click="selectCategory(item.id)"
         >
           {{ item.name }}
         </button>
+
       </div>
 
-      <!-- Типы -->
+      <!-- Тип тарифа -->
       <div
         class="tariffs-list__filters"
         role="tablist"
         :aria-label="t('tariffs.types_label')"
       >
+
+        <!-- Все -->
         <button
           type="button"
           class="tariffs-list__filter"
@@ -228,29 +196,33 @@ async function goToArchive(): Promise<void> {
           }"
           role="tab"
           :aria-selected="!type"
-          @click.stop="selectType('')"
+          @click="selectType('')"
         >
           {{ t('tariffs.all') }}
         </button>
 
+        <!-- Остальные типы -->
         <button
           v-for="item in types"
           :key="item.id"
           type="button"
           class="tariffs-list__filter"
           :class="{
-            'tariffs-list__filter_active': item.id === type,
+            'tariffs-list__filter_active':
+              item.id === type,
           }"
           role="tab"
           :aria-selected="item.id === type"
-          @click.stop="selectType(item.id)"
+          @click="selectType(item.id)"
         >
           {{ item.name }}
         </button>
+
       </div>
 
-      <!-- Навигация слайдера -->
+      <!-- Стрелки -->
       <div class="slider-nav">
+
         <button
           type="button"
           class="slider-arrow slider-arrow_prev"
@@ -290,6 +262,7 @@ async function goToArchive(): Promise<void> {
             />
           </svg>
         </button>
+
       </div>
 
       <!-- Слайдер -->
@@ -304,6 +277,7 @@ async function goToArchive(): Promise<void> {
             :key="tariff.slug"
             class="swiper-slide"
           >
+
             <article class="tariffs-list__card">
 
               <div class="tariffs-list__card-head">
@@ -317,11 +291,13 @@ async function goToArchive(): Promise<void> {
               <div class="tariffs-list__card-body">
 
                 <div class="tariffs-list__price-row">
+
                   <span class="tariffs-list__brand">
                     {{ tariff.name }}
                   </span>
 
                   <div class="tariffs-list__price">
+
                     <span class="tariffs-list__price-value">
                       {{ tariff.price }}
                     </span>
@@ -331,6 +307,7 @@ async function goToArchive(): Promise<void> {
                       /
                       {{ tariff.price_period }}
                     </span>
+
                   </div>
                 </div>
 
@@ -341,30 +318,34 @@ async function goToArchive(): Promise<void> {
 
                 <div class="tariffs-list__actions">
 
-                  <!-- Подключить -->
                   <button
                     type="button"
                     class="tariffs-list__connect"
-                    @click.stop="connect(tariff)"
+                    @click="connect(tariff)"
                   >
                     {{ t('tariffs.connect') }}
                   </button>
 
-                  <!-- Подробнее -->
-                  <button
-                    type="button"
+                  <!-- Возвращаем обычный NuxtLink -->
+                  <NuxtLink
                     class="tariffs-list__more"
-                    @click.stop="goToTariff(tariff.slug)"
+                    :to="
+                      localePath(
+                        `/tariffs/${tariff.slug}`,
+                      )
+                    "
                   >
                     {{ t('common.read_more') }}
-                  </button>
+                  </NuxtLink>
 
                 </div>
+
               </div>
+
             </article>
+
           </div>
 
-          <!-- Нет тарифов -->
           <div
             v-if="!visible.length"
             class="swiper-slide"
@@ -379,10 +360,10 @@ async function goToArchive(): Promise<void> {
 
       <!-- Архив -->
       <div class="tariffs-list__footer">
-        <button
-          type="button"
+
+        <NuxtLink
           class="tariffs-list__archive"
-          @click="goToArchive"
+          :to="localePath('/tariffs/archive')"
         >
           {{ t('tariffs.archive') }}
 
@@ -398,7 +379,8 @@ async function goToArchive(): Promise<void> {
               stroke-linejoin="round"
             />
           </svg>
-        </button>
+        </NuxtLink>
+
       </div>
 
     </div>
