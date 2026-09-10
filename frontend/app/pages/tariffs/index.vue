@@ -5,6 +5,10 @@ const localePath = useLocalePath()
 const t = useT()
 const { open } = useTariffModal()
 
+// Добавляем роутер и текущий маршрут для безопасного сброса URL
+const route = useRoute()
+const router = useRouter()
+
 useSeo({ page: 'tariffs' })
 
 const { data } = await useTariffCatalog()
@@ -41,6 +45,13 @@ function connect(tariff: Tariff): void {
     buttons: tariff.buttons,
   })
 }
+
+// Функция для безопасного удаления фильтра type из URL
+function resetTypeFilter() {
+  const currentQuery = { ...route.query }
+  delete currentQuery.type // Полностью удаляем параметр type
+  router.push({ query: currentQuery }) // Обновляем URL
+}
 </script>
 
 <template>
@@ -69,13 +80,14 @@ function connect(tariff: Tariff): void {
       </div>
 
       <div class="tariffs-list__filters" role="tablist" :aria-label="t('tariffs.types_label')">
+        <!-- ИСПОЛЬЗУЕМ НОВУЮ ФУНКЦИЮ ЗДЕСЬ -->
         <button
           type="button"
           class="tariffs-list__filter"
           :class="!type && 'tariffs-list__filter_active'"
           role="tab"
           :aria-selected="!type"
-          @click="type = undefined" 
+          @click="resetTypeFilter" 
         >{{ t('tariffs.all') }}</button>
 
         <button
