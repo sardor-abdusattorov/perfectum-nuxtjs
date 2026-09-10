@@ -33,6 +33,36 @@ if (! function_exists('app_locales')) {
     }
 }
 
+if (! function_exists('metrics_counter_ids')) {
+    /**
+     * The panel holds the counter as the snippet Yandex hands out, which is what
+     * a manager knows how to paste. Sending a page view on a route change needs
+     * the number inside it, so it is read back out of the code — and can be typed
+     * by hand when a snippet is shaped in some way this does not recognise.
+     *
+     * @return array<int, int>
+     */
+    function metrics_counter_ids(): array
+    {
+        $typed = Settings::get('metrics.yandex_id');
+
+        if (filled($typed)) {
+            return [(int) $typed];
+        }
+
+        $html = (string) Settings::get('metrics.yandex');
+        $found = [];
+
+        foreach (['/ym\(\s*(\d{5,10})\s*,\s*[\'"]init[\'"]/', '#mc\.yandex\.(?:ru|com)/(?:metrika/)?watch/(\d{5,10})#'] as $pattern) {
+            preg_match_all($pattern, $html, $matches);
+
+            $found = [...$found, ...$matches[1]];
+        }
+
+        return array_values(array_unique(array_map('intval', $found)));
+    }
+}
+
 if (! function_exists('stored_url')) {
     function stored_url(mixed $path): ?string
     {

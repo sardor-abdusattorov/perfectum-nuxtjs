@@ -82,3 +82,15 @@ it('takes the old translation rows away, they have no reader left', function ():
 
     expect(DB::table('site_translations')->pluck('key')->all())->toBe(['footer.address']);
 });
+
+it('falls back past a locale whose tab was opened and left empty', function (): void {
+    cookieNotice([
+        'text' => ['ru' => '<p>Мы используем cookie</p>', 'uz' => ''],
+        'accept' => ['ru' => 'Принять', 'uz' => ''],
+    ]);
+
+    $this->getJson(route('api.v1.site'), ['X-Locale' => 'uz'])
+        ->assertOk()
+        ->assertJsonPath('data.settings.cookie.text', '<p>Мы используем cookie</p>')
+        ->assertJsonPath('data.settings.cookie.accept', 'Принять');
+});

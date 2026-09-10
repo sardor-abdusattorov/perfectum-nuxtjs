@@ -43,6 +43,7 @@ class SiteController
             'metrics' => [
                 'enabled' => filled(Settings::get('metrics.yandex'))
                     || filled(Settings::get('metrics.google')),
+                'yandex_ids' => metrics_counter_ids(),
             ],
             'maps' => [
                 'yandex_key' => Settings::get('maps.yandex_key') ?: null,

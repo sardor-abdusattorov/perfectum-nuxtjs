@@ -99,9 +99,8 @@ class ContentBlock extends Model
         }
 
         if (static::isTranslatable($value)) {
-            return $value[$locale]
-                ?? $value[config('app.fallback_locale')]
-                ?? reset($value);
+            return collect([$value[$locale] ?? null, $value[config('app.fallback_locale')] ?? null, ...array_values($value)])
+                ->first(fn (mixed $item): bool => filled($item)) ?? reset($value);
         }
 
         return array_map(

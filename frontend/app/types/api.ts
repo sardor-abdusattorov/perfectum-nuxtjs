@@ -18,7 +18,7 @@ export interface Settings {
   locale: string
   locales: string[]
   seo: Seo
-  metrics: { enabled: boolean }
+  metrics: { enabled: boolean, yandex_ids: number[] }
   maps: { yandex_key: string | null }
   help: { faq: boolean, numbers: boolean, contact: boolean }
   site: Record<string, string | null>

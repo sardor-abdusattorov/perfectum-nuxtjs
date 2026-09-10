@@ -8,6 +8,7 @@ use App\Models\Settings as SettingsModel;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -126,6 +127,16 @@ class Settings extends Page implements HasForms
                                     ->label(__('app.label.metrics_google'))
                                     ->rows(6)
                                     ->helperText(__('app.helper.metrics_google')),
+
+                                Placeholder::make('metrics.detected')
+                                    ->label(__('app.label.metrics_detected'))
+                                    ->content(fn (): string => implode(', ', metrics_counter_ids())
+                                        ?: __('app.label.metrics_not_detected')),
+
+                                TextInput::make('metrics.yandex_id')
+                                    ->label(__('app.label.metrics_yandex_id'))
+                                    ->numeric()
+                                    ->helperText(__('app.helper.metrics_yandex_id')),
                             ]),
 
                         Tabs\Tab::make(__('app.label.tab_maps'))
