@@ -74,10 +74,16 @@ function clear(): void {
         <div class="coverage-search__controls">
           <div class="coverage-search__find" :class="open && 'coverage-search__find_open'">
             <div class="coverage-search__field">
+              <!--
+                Человек вбивает сюда свой домашний адрес, а вебвизор пишет сессию
+                целиком. Классы Метрики ставятся на само поле: ym-disable-keys
+                заменяет введённое звёздочками, ym-hide-content размывает его в
+                записи.
+              -->
               <input
                 ref="field"
                 v-model="address"
-                class="coverage-search__input"
+                class="coverage-search__input ym-disable-keys ym-hide-content"
                 type="search"
                 :placeholder="t('coverage.address_placeholder')"
                 :aria-label="t('coverage.address')"

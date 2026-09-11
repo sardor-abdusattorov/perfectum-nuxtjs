@@ -137,10 +137,16 @@ async function submit(): Promise<void> {
             <form class="help__form" novalidate @submit.prevent="submit()">
               <div class="field">
                 <label class="field__label field__label_dark" for="help-phone">{{ t('help.contact_phone') }}</label>
+                <!--
+                  Вебвизор пишет сессию целиком, а здесь человек набирает свой
+                  номер. Классы Метрики работают только на самом поле, не на
+                  форме: ym-disable-keys заменяет введённое звёздочками,
+                  ym-hide-content размывает его в записи.
+                -->
                 <input
                   id="help-phone"
                   type="tel"
-                  class="field__input"
+                  class="field__input ym-disable-keys ym-hide-content"
                   :class="errors.phone && 'field__input_invalid'"
                   placeholder="+998 (__) ___-__-__"
                   :value="phone"
@@ -174,7 +180,7 @@ async function submit(): Promise<void> {
                 <textarea
                   id="help-message"
                   v-model="message"
-                  class="field__textarea"
+                  class="field__textarea ym-disable-keys ym-hide-content"
                   :class="errors.message && 'field__input_invalid'"
                   :placeholder="t('help.contact_message_placeholder')"
                   :maxlength="MESSAGE_LIMIT"
