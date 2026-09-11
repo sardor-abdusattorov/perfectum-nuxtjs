@@ -1,0 +1,18 @@
+[
+  {
+    "relation": [
+        "delegate_permission/common.handle_all_urls",
+        "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uz.rwc.perfectum",
+      "sha256_cert_fingerprints": [
+        "AB:B3:6B:03:06:75:D0:99:DF:15:42:6B:B5:68:70:F3:01:EB:8B:26:FB:19:0B:D4:15:D3:88:CC:31:0C:78:D9",
+        "12:5D:54:28:EF:49:42:D1:66:4F:2A:19:58:F0:F1:D8:DF:F7:2A:2F:6F:31:D5:3E:49:DD:EE:72:F9:7C:8C:D5",
+        "4C:57:2B:FB:F1:88:13:F3:FA:63:7B:77:2A:31:A8:20:6A:68:8B:7F:76:81:65:68:B2:3F:7E:2F:A5:2E:DA:33",
+        "05:B4:B0:64:E5:87:BF:D5:F7:80:CA:54:4D:E4:BE:31:01:AC:24:9B:83:CA:70:AA:92:F7:AB:CC:D8:42:05:F4"
+      ]
+    }
+  }
+]

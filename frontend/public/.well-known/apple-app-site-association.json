@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "9TSC39EZ77.uz.rwc.perfectum",
+        "paths": ["/app","/app/*"]
+      }
+    ]
+  }
+}
