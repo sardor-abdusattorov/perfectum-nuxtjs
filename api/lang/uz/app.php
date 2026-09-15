@@ -259,6 +259,7 @@ return [
         'logo' => 'Logotip',
         'name' => 'Nomi',
         'show_on_site' => 'Saytda koʻrsatish',
+        'by_link' => 'Toʻgʻridan-toʻgʻri havola orqali ochiladi',
         'created_at' => 'Yaratilgan',
         'updated_at' => 'Yangilangan',
         'tab_seo' => 'SEO',
@@ -334,6 +335,7 @@ return [
     'helper' => [
         'cdma_sections' => 'CDMA sahifasi shapkasidagi havolalar tartibi. Oʻrnini almashtirish uchun torting.',
         'preview' => 'Sahifani tashrifchi koʻradigan holida ochadi — hali chop etilmagan boʻlsa ham. Havola bir kun yashaydi, uni kelishish uchun ulashish mumkin.',
+        'preview_by_link' => 'Sahifani tashrifchi koʻradigan holida ochadi. Toʻgʻridan-toʻgʻri havola yoqilgan — manzil doimiy, muddati tugamaydi, uni kelishish uchun ulashish mumkin.',
         'in_catalog' => 'Oʻchirsangiz, kategoriya bosh sahifadan va tariflar sahifasidan yoʻqoladi; uning sahifalari va CDMA boʻlimi ishlashda davom etadi.',
         'coverage_key' => 'Lotin harflarida, masalan 5g yoki voice — qatlam shu boʻyicha yoqiladi',
         'installment_partner_logo' => 'Muddatli toʻlov oynasi uchun hamkor logotipi, PNG yoki SVG',
@@ -401,6 +403,7 @@ return [
         'og_image' => 'Havola messenjer yoki ijtimoiy tarmoqqa yuborilganda koʻrinadigan rasm. Boʻsh boʻlsa — asosiy sozlamalardagi rasm olinadi',
         'is_indexed' => 'Sahifa Google va Yandeks qidiruviga tushmasligi uchun oʻchiring',
         'if_disabled_not_shown' => 'Oʻchirilgan boʻlsa — saytda koʻrsatilmaydi',
+        'by_link' => '«Saytda koʻrsatish» oʻchirilganda ishlaydi: yangilik havola berilgan har kimda ochiladi va kelishuvni qancha kerak boʻlsa shuncha kutadi. Roʻyxatlarda, qidiruvda va Google natijalarida koʻrinmaydi',
         'hero_slides' => 'Slaydlar karusel boʻlib aylanadi, tartibini surib oʻzgartirish mumkin',
         'lead_text' => 'Telefon oʻng tomonidagi xatboshi; mobil qurilmada uning ostida chiqadi. Yonidagi doʻkon tugmalari sayt sozlamalaridan olinadi',
         'show_aside' => 'Telefondan oʻngdagi matn va doʻkon tugmalari, mobilda — telefon ostida',

@@ -17,11 +17,16 @@ trait CountsViews
      * One reader is one view for the hour that follows, so a reload, a step
      * back and the second render a client-side navigation asks for do not each
      * add one. An editor checking a draft through a preview link is not a
-     * reader at all and is left out.
+     * reader at all and is left out, and neither are the few people sent an
+     * unpublished record's address for approval.
      */
     public function registerView(Request $request): void
     {
         if (PreviewToken::requested()) {
+            return;
+        }
+
+        if ($this->isByLinkOnly()) {
             return;
         }
 

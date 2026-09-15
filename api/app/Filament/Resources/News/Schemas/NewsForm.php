@@ -68,6 +68,8 @@ class NewsForm
                             ->helperText(__('app.helper.is_featured')),
 
                         Fields::status(),
+
+                        Fields::byLink(),
                     ]),
             ]);
     }

@@ -101,6 +101,14 @@ class Fields
             ->default(true);
     }
 
+    public static function byLink(string $field = 'by_link'): Toggle
+    {
+        return Toggle::make($field)
+            ->label(__('app.label.by_link'))
+            ->helperText(__('app.helper.by_link'))
+            ->default(false);
+    }
+
     public static function multiline(string $field): RichEditor
     {
         return self::richEditor($field, 'editor-box_short')

@@ -10,7 +10,12 @@ if (!item.value) {
   throw createError({ statusCode: 404, statusMessage: 'Not Found', fatal: true })
 }
 
-useSeo({ page: 'news_item', title: () => item.value?.title ?? '' })
+useSeo({
+  page: 'news_item',
+  title: () => item.value?.title ?? '',
+  // Новость открыта только по ссылке, для согласования. В поиске ей не место.
+  robots: () => (item.value?.by_link ? 'noindex, nofollow' : undefined),
+})
 </script>
 
 <template>

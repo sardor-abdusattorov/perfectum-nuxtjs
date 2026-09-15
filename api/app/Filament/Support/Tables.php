@@ -45,6 +45,23 @@ class Tables
             ->offColor('danger');
     }
 
+    /**
+     * Off for almost every record, so it stays out of the way until someone
+     * asks for it — but it is a switch, not a badge: the whole point is to
+     * close the link again without opening the record.
+     */
+    public static function byLinkColumn(string $field = 'by_link'): ToggleColumn
+    {
+        return ToggleColumn::make($field)
+            ->label(__('app.label.by_link'))
+            ->sortable()
+            ->toggleable(isToggledHiddenByDefault: true)
+            ->onIcon('heroicon-m-link')
+            ->offIcon('heroicon-m-x-circle')
+            ->onColor('warning')
+            ->offColor('gray');
+    }
+
     public static function statusFilter(string $field = 'status'): SelectFilter
     {
         return SelectFilter::make($field)

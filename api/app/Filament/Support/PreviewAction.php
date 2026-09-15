@@ -24,11 +24,21 @@ class PreviewAction
     {
         return Action::make('preview')
             ->label(__('app.label.preview'))
-            ->tooltip(__('app.helper.preview'))
+            ->tooltip(fn (Model $record): string => __(self::permanent($record) ? 'app.helper.preview_by_link' : 'app.helper.preview'))
             ->icon(Heroicon::ArrowTopRightOnSquare)
             ->color('gray')
             ->visible(fn (Model $record): bool => self::path($record) !== null)
             ->url(fn (Model $record): string => self::url($record), shouldOpenInNewTab: true);
+    }
+
+    /**
+     * A record opened by its own address needs no token, and handing one out
+     * anyway would be the wrong thing to copy into a chat: it expires in a day
+     * and the plain address does not.
+     */
+    private static function permanent(Model $record): bool
+    {
+        return $record->isByLinkOnly();
     }
 
     private static function path(Model $record): ?string
@@ -52,9 +62,12 @@ class PreviewAction
     {
         $site = rtrim((string) config('app.frontend_url'), '/');
 
-        return $site
-            .'/'.app()->getLocale()
-            .self::path($record)
-            .'?'.PreviewToken::PARAM.'='.urlencode(PreviewToken::for($record));
+        $address = $site.'/'.app()->getLocale().self::path($record);
+
+        if (self::permanent($record)) {
+            return $address;
+        }
+
+        return $address.'?'.PreviewToken::PARAM.'='.urlencode(PreviewToken::for($record));
     }
 }

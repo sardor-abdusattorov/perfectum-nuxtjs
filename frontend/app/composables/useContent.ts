@@ -14,6 +14,7 @@ export interface NewsItem {
   preview_image: string | null
   main_image: string | null
   is_featured: boolean
+  by_link: boolean
   published_at: string | null
   category: Taxonomy | null
 }

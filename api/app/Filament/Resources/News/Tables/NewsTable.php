@@ -43,6 +43,8 @@ class NewsTable
                 Tables::viewsColumn(),
 
                 Tables::statusColumn(),
+
+                Tables::byLinkColumn(),
             ])
             ->filters([
                 Tables::networkFilter(),

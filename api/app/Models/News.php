@@ -39,6 +39,7 @@ class News extends Model
         'is_featured',
         'published_at',
         'status',
+        'by_link',
     ];
 
     public $translatable = ['title', 'excerpt', 'content'];
@@ -49,6 +50,7 @@ class News extends Model
         'is_featured' => 'boolean',
         'published_at' => 'datetime',
         'status' => 'boolean',
+        'by_link' => 'boolean',
     ];
 
     /**
@@ -74,6 +76,13 @@ class News extends Model
             ->where('status', true)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->status === true
+            && $this->published_at !== null
+            && $this->published_at->lessThanOrEqualTo(now());
     }
 
     public static function categoryModel(): string
