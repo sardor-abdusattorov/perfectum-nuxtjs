@@ -34,6 +34,35 @@ const sectionLinks = computed(() => published(sections.value.items)
   }))
   .filter(item => item.target && item.title))
 
+const anchors = computed(() => sectionLinks.value
+  .map(link => link.target)
+  .filter(target => target.startsWith('#')))
+
+const { active, activate } = useSectionSpy(anchors)
+
+const tabs = useTemplateRef('tabs')
+
+/**
+ * На телефоне панель шире экрана, и активная вкладка легко оказывается за его
+ * краем. Двигаем саму панель, а не страницу: scrollIntoView утащил бы за собой
+ * и вертикаль.
+ */
+watch(active, target => {
+  const list = tabs.value
+
+  const item = list?.querySelector<HTMLElement>(`[data-target="${target}"]`)
+
+  if (!list || !item || list.scrollWidth <= list.clientWidth) {
+    return
+  }
+
+  const shift = list.scrollLeft
+    + item.getBoundingClientRect().left - list.getBoundingClientRect().left
+    - (list.clientWidth - item.clientWidth) / 2
+
+  list.scrollTo({ left: Math.max(0, shift), behavior: 'smooth' })
+})
+
 const [
   { data: faqData },
   { data: newsData },
@@ -130,12 +159,19 @@ useSlider(serviceRail, { ...RAIL_OPTIONS, scrollbar: { el: '#cdma-services .cdma
 
 <nav class="cdma-tabs" :aria-label="t('cdma.sections_label')">
       <div class="container">
-          <ul class="cdma-tabs__list">
-              <li v-for="(link, index) in sectionLinks" :key="link.key" class="cdma-tabs__item">
+          <ul ref="tabs" class="cdma-tabs__list">
+              <li v-for="link in sectionLinks" :key="link.key" class="cdma-tabs__item" :data-target="link.target">
                   <NuxtLink v-if="!link.target.startsWith('#')" class="cdma-tabs__link" :to="localePath(link.target)">
                       {{ link.title }}
                   </NuxtLink>
-                  <a v-else class="cdma-tabs__link" :class="index === 0 && 'cdma-tabs__link_active'" :href="link.target">
+                  <a
+                    v-else
+                    class="cdma-tabs__link"
+                    :class="active === link.target && 'cdma-tabs__link_active'"
+                    :href="link.target"
+                    :aria-current="active === link.target ? 'true' : undefined"
+                    @click="activate(link.target)"
+                  >
                       {{ link.title }}
                   </a>
               </li>
