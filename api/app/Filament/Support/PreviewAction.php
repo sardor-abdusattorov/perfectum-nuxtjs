@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PreviewAction
 {
+    public const DRAFT = 'draft=1';
+
     public static function make(): Action
     {
         return Action::make('preview')
@@ -64,8 +66,13 @@ class PreviewAction
 
         $address = $site.'/'.app()->getLocale().self::path($record);
 
+        /**
+         * Метке верит серверный плагин счётчиков: несогласованный текст не
+         * должен уезжать в Яндекс.Метрику, а при включённом Вебвизоре — и
+         * содержимым страницы. Адрес работает и без неё, просто со счётчиком.
+         */
         if (self::permanent($record)) {
-            return $address;
+            return $address.'?'.self::DRAFT;
         }
 
         return $address.'?'.PreviewToken::PARAM.'='.urlencode(PreviewToken::for($record));

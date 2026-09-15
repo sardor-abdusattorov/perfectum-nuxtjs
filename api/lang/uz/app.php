@@ -260,6 +260,8 @@ return [
         'name' => 'Nomi',
         'show_on_site' => 'Saytda koʻrsatish',
         'by_link' => 'Toʻgʻridan-toʻgʻri havola orqali ochiladi',
+        'by_link_open' => 'Havola orqali ochiq',
+        'by_link_closed' => 'Yopiq',
         'created_at' => 'Yaratilgan',
         'updated_at' => 'Yangilangan',
         'tab_seo' => 'SEO',

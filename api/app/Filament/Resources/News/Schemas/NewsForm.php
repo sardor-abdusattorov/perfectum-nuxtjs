@@ -67,7 +67,8 @@ class NewsForm
                             ->label(__('app.label.is_featured'))
                             ->helperText(__('app.helper.is_featured')),
 
-                        Fields::status(),
+                        Fields::status()
+                            ->live(),
 
                         Fields::byLink(),
                     ]),

@@ -101,12 +101,19 @@ class Fields
             ->default(true);
     }
 
+    /**
+     * Гаснет и блокируется, как только запись показывают на сайте: два
+     * включённых тумблера означали бы, что снятие с публикации не убирает
+     * запись, а возвращает её к чтению по ссылке.
+     */
     public static function byLink(string $field = 'by_link'): Toggle
     {
         return Toggle::make($field)
             ->label(__('app.label.by_link'))
             ->helperText(__('app.helper.by_link'))
-            ->default(false);
+            ->default(false)
+            ->disabled(fn (Get $get): bool => (bool) $get('status'))
+            ->dehydrated();
     }
 
     public static function multiline(string $field): RichEditor

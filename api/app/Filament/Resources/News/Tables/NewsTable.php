@@ -52,6 +52,8 @@ class NewsTable
                 Tables::categoryFilter(NewsCategory::class),
 
                 Tables::statusFilter(),
+
+                Tables::byLinkFilter(),
             ])
             ->recordActions(Tables::actions())
             ->toolbarActions(Tables::bulkActions());

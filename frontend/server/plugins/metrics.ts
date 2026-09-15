@@ -59,7 +59,12 @@ async function load(event: H3Event): Promise<void> {
  */
 export default defineNitroPlugin((nitro) => {
   nitro.hooks.hook('render:html', async (html, { event }) => {
-    if (getCookie(event, 'preview') || getQuery(event).preview) {
+    // `draft` — метка ссылки на согласование: запись ещё не опубликована, и её
+    // адрес с заголовком, а при включённом Вебвизоре и содержимое страницы, не
+    // должны уезжать во внешний счётчик.
+    const query = getQuery(event)
+
+    if (getCookie(event, 'preview') || query.preview || query.draft) {
       return
     }
 

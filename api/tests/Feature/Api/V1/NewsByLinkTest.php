@@ -55,15 +55,25 @@ it('keeps it out of the listing the site and the app read', function (): void {
 });
 
 /**
- * The publish date is the other way a news item stays off the site, and the
- * link has to reach past it too — that is the case the editors actually have.
+ * «Показывать на сайте» — главный рубильник, и выключенный он обязан означать,
+ * что новости на сайте нет. Оставленная включённой прямая ссылка это ломала:
+ * снятая с публикации запись возвращалась к чтению по прежнему адресу — по
+ * тому, что уже разошёлся по мессенджерам и побывал в поиске.
  */
-it('opens one whose publish date has not arrived yet', function (): void {
-    pendingNews(['status' => true, 'published_at' => now()->addWeek(), 'by_link' => true]);
+it('closes the approval link the moment the news item is published', function (): void {
+    $news = pendingNews(['by_link' => true]);
 
-    $this->getJson(route('api.v1.news.show', ['news' => 'na-soglasovanii']))->assertOk();
+    $news->update(['status' => true]);
 
-    expect($this->getJson(route('api.v1.news.index'))->json('data'))->toBe([]);
+    expect($news->fresh()->by_link)->toBeFalse();
+});
+
+it('takes an unpublished news item off the site, link or no link', function (): void {
+    $news = pendingNews(['by_link' => true, 'status' => true]);
+
+    $news->update(['status' => false]);
+
+    $this->getJson(route('api.v1.news.show', ['news' => 'na-soglasovanii']))->assertNotFound();
 });
 
 it('tells the site not to let search engines keep it', function (): void {
@@ -111,7 +121,7 @@ it('hands the panel a plain address instead of a token link', function (): void 
 
     $url = PreviewAction::make()->record($news)->getUrl();
 
-    expect($url)->toEndWith('/news/na-soglasovanii')
+    expect($url)->toContain('/news/na-soglasovanii')
         ->and($url)->not->toContain(PreviewToken::PARAM);
 });
 

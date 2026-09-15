@@ -62,6 +62,21 @@ class Tables
             ->offColor('gray');
     }
 
+    /**
+     * Открытые ссылки копятся молча: запись уходит из списков на сайте и
+     * вспомнить про неё неоткуда. Фильтр — единственный способ спросить
+     * «что у нас сейчас открыто по ссылке».
+     */
+    public static function byLinkFilter(string $field = 'by_link'): SelectFilter
+    {
+        return SelectFilter::make($field)
+            ->label(__('app.label.by_link'))
+            ->options([
+                '1' => __('app.label.by_link_open'),
+                '0' => __('app.label.by_link_closed'),
+            ]);
+    }
+
     public static function statusFilter(string $field = 'status'): SelectFilter
     {
         return SelectFilter::make($field)
