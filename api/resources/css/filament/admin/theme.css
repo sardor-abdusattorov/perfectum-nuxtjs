@@ -4,7 +4,6 @@
 @source '../../../../resources/views/filament/**/*';
 @source '../../../../resources/views/livewire/**/*';
 
-/* Slim Scrollbar Styles */
 * {
     scrollbar-width: thin;
     scrollbar-color: rgb(var(--primary-400)) transparent;
@@ -28,7 +27,6 @@
     background-color: rgb(var(--primary-500));
 }
 
-/* Dark mode scrollbar */
 .dark * {
     scrollbar-color: rgb(var(--primary-500)) transparent;
 }

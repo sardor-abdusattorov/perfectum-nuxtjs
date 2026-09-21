@@ -5,7 +5,6 @@ const localePath = useLocalePath()
 const t = useT()
 const { open } = useTariffModal()
 
-// Оставляем только route для получения текущего пути и параметров
 const route = useRoute()
 
 useSeo({ page: 'tariffs' })
@@ -45,12 +44,10 @@ function connect(tariff: Tariff): void {
   })
 }
 
-// ВАРИАНТ 1: Безопасная навигация через встроенный метод Nuxt 3
 async function resetTypeFilter() {
   const currentQuery = { ...route.query }
   delete currentQuery.type 
   
-  // Используем Nuxt-функцию navigateTo вместо прямого обращения к роутеру
   await navigateTo({
     path: route.path,
     query: currentQuery

@@ -4,18 +4,47 @@ globs: database/migrations/**
 
 # Migrations
 
-## One migration per table
+## The site is live — never rebuild the schema
 
-A table is described by its own `create_*` migration and nothing else. Adding
-a column means editing that file, not writing `add_column_to_*`.
+`migrate:fresh` and `project:init` drop every table. Both are reachable on the
+production server, and the deploy takes no backup and cannot roll back. The
+database holds thousands of applications from real visitors; there is nowhere
+to get them from again.
 
-The project is re-initialised from scratch (`project:init`), so incremental
-migrations buy nothing and leave the schema spread across files. This holds
-for published package migrations too — those were folded into their `create`
-file already.
+This rule used to say the opposite — edit the `create_*` migration and run
+`php artisan migrate:fresh --seed`. That was written while the project was
+still being built from scratch. It has been wrong since launch: Laravel never
+re-opens a migration it has recorded, so a column added to `create_*` reaches
+a fresh clone and never reaches production, and the rebuild that would fix
+that erases the site.
 
-After changing a `create_*` migration, the schema has to be rebuilt:
+## A change to a live table gets its own migration
 
+Add the column in a new file, guarded so it is safe to run twice and safe on a
+database that already has it:
+
+```php
+public function up(): void
+{
+    if (Schema::hasColumn('news', 'by_link')) {
+        return;
+    }
+
+    Schema::table('news', function (Blueprint $table): void {
+        $table->boolean('by_link')->default(false)->after('status');
+    });
+}
 ```
-php artisan migrate:fresh --seed
-```
+
+Give existing rows the behaviour they had before the column existed — a
+default, or a backfill in the same migration. `2026_09_04_120000_add_network_to_faqs.php`
+does both and is the pattern to copy; `2026_09_15_120000_add_by_link_to_news.php`
+is the smaller version.
+
+The deploy runs `php artisan project:update`, which applies migrations with
+`--force` and clears the caches. Nothing else is needed.
+
+## The `create_*` files describe the original schema, not the current one
+
+Leave them as they are. Reading them alone will not tell you what a table
+looks like today — check the later migrations too, or ask the database.
