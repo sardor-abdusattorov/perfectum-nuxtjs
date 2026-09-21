@@ -323,3 +323,29 @@ it('keeps the body out of the other feeds', function (): void {
         ->assertOk()
         ->assertJsonPath('data.content', '<p>Условия</p>');
 });
+
+/**
+ * Переводимая колонка лежит в базе целым JSON, и поиск подстрокой по ней
+ * отвечал не то: по «ru» совпадал ключ и возвращались все записи, а по
+ * узбекскому слову находилась запись, текста которой русскоязычный посетитель
+ * не видит.
+ */
+it('searches inside the language the visitor is reading', function (): void {
+    news(['slug' => 'pervaya', 'title' => ['ru' => 'Технические работы', 'uz' => 'Texnik ishlar']]);
+    news(['slug' => 'vtoraya', 'title' => ['ru' => 'Новый тариф', 'uz' => 'Yangi tarif']]);
+
+    $found = fn (array $query, array $headers = []) => $this
+        ->getJson(route('api.v1.news.index', $query), $headers)
+        ->assertOk()
+        ->json('data.*.slug');
+
+    expect($found(['search' => 'Технические']))->toBe(['pervaya'])
+        ->and($found(['search' => 'Texnik'], ['X-Locale' => 'uz']))->toBe(['pervaya']);
+});
+
+it('does not hand back every record for the name of a language', function (): void {
+    news(['slug' => 'pervaya']);
+    news(['slug' => 'vtoraya']);
+
+    expect($this->getJson(route('api.v1.news.index', ['search' => 'ru']))->assertOk()->json('data'))->toBe([]);
+});

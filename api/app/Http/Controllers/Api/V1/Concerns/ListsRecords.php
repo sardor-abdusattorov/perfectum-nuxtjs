@@ -27,7 +27,7 @@ trait ListsRecords
                 $builder->where(function (Builder $inner) use ($searchable, $search): void {
                     foreach ($searchable as $column) {
                         if (! str_contains($column, '.')) {
-                            $inner->orWhere($column, 'like', "%{$search}%");
+                            $inner->orWhere($this->searchedIn($inner, $column), 'like', "%{$search}%");
 
                             continue;
                         }
@@ -36,7 +36,7 @@ trait ListsRecords
 
                         $inner->orWhereHas(
                             $relation,
-                            fn (Builder $related) => $related->where($field, 'like', "%{$search}%"),
+                            fn (Builder $related) => $related->where($this->searchedIn($related, $field), 'like', "%{$search}%"),
                         );
                     }
                 });
@@ -48,6 +48,25 @@ trait ListsRecords
     protected function network(Request $request): ?Network
     {
         return Network::tryFrom($this->scalar($request, 'network'));
+    }
+
+    /**
+     * Переводимая колонка лежит в базе целым JSON — {"ru":"…","uz":"…"} — и
+     * поиск по ней подстрокой отвечал не то: запрос «ru» совпадал с ключом и
+     * возвращал вообще все записи, а русскоязычный посетитель находил записи
+     * по узбекскому тексту, которого не видит. Ищем внутри своей локали.
+     */
+    private function searchedIn(Builder $query, string $column): string
+    {
+        $model = $query->getModel();
+
+        $translatable = method_exists($model, 'getTranslatableAttributes')
+            ? $model->getTranslatableAttributes()
+            : [];
+
+        return in_array($column, $translatable, true)
+            ? $column.'->'.app()->getLocale()
+            : $column;
     }
 
     private function searchTerm(Request $request): string

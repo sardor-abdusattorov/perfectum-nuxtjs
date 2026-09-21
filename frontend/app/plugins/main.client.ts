@@ -71,16 +71,6 @@ function initBlock1() {
     start();
   }
 
-  const cookies = document.querySelector(".cookies");
-  if (cookies) {
-    const accept = cookies.querySelector(".cookies__accept");
-    if (accept) {
-      accept.addEventListener("click", function () {
-        cookies.classList.add("cookies_hidden");
-      });
-    }
-  }
-
   const dials = document.querySelectorAll(".features__dial");
   if (dials.length) {
     const SIZE = 450;
@@ -218,57 +208,6 @@ function initBlock2() {
     const centred =
       active.offsetLeft - (nav.clientWidth - active.offsetWidth) / 2;
     nav.scrollLeft = Math.max(0, Math.min(centred, overflow));
-  });
-
-  document.querySelectorAll(".filter-search").forEach(function (fs) {
-    const section = fs.closest("section") || document;
-    const grid = section.querySelector(
-      ".promo-grid, .news-grid, .services__grid, .faq-accordion, .brand-grid"
-    );
-    if (!grid) return;
-    const chips = fs.querySelectorAll(".filter-search__chip");
-    const input = fs.querySelector(".filter-search__input");
-    const cards = Array.prototype.slice.call(grid.children);
-    let activeCat = "";
-    let query = "";
-
-    function cardCategory(card) {
-      const el = card.querySelector(
-        ".promo-card__cat, .news-card__cat, .service-card__cat, .brand-card__cat"
-      );
-      return el ? el.textContent.trim().toLowerCase() : "";
-    }
-    function chipLabel(chip) {
-      return chip.textContent.replace(/\s*\d+\s*$/, "").trim().toLowerCase();
-    }
-    function apply() {
-      cards.forEach(function (card) {
-        let show = true;
-        const cat = cardCategory(card);
-        if (activeCat && cat && cat !== activeCat) show = false;
-        if (query && card.textContent.toLowerCase().indexOf(query) === -1) show = false;
-        card.style.display = show ? "" : "none";
-      });
-    }
-    chips.forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        chips.forEach(function (c) {
-          c.classList.remove("filter-search__chip_active");
-          c.setAttribute("aria-selected", "false");
-        });
-        chip.classList.add("filter-search__chip_active");
-        chip.setAttribute("aria-selected", "true");
-        const label = chipLabel(chip);
-        activeCat = label === "все" ? "" : label;
-        apply();
-      });
-    });
-    if (input) {
-      input.addEventListener("input", function () {
-        query = input.value.trim().toLowerCase();
-        apply();
-      });
-    }
   });
 }
 

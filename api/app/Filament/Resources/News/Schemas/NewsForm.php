@@ -61,7 +61,8 @@ class NewsForm
                             ->label(__('app.label.published_at'))
                             ->helperText(__('app.helper.published_at'))
                             ->seconds(false)
-                            ->default(now()),
+                            ->default(now())
+                            ->required(),
 
                         Toggle::make('is_featured')
                             ->label(__('app.label.is_featured'))

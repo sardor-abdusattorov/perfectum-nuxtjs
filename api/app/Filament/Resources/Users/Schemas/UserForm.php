@@ -58,7 +58,12 @@ class UserForm
                             ->relationship(
                                 'roles',
                                 'name',
-                                fn (Builder $query): Builder => $query->where('name', '!=', Utils::getPanelUserRoleName()),
+                                fn (Builder $query): Builder => $query
+                                    ->where('name', '!=', Utils::getPanelUserRoleName())
+                                    ->unless(
+                                        auth()->user()?->hasRole(Utils::getSuperAdminName()),
+                                        fn (Builder $query): Builder => $query->where('name', '!=', Utils::getSuperAdminName()),
+                                    ),
                             ),
                     ]),
             ]);

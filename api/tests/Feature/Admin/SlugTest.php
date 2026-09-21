@@ -109,6 +109,7 @@ it('regenerates the slug when it is cleared while editing', function (): void {
         'title' => ['ru' => 'Переименована позже', 'uz' => 'Edi'],
         'content' => ['ru' => '<p>x</p>'],
         'slug' => 'old-address',
+        'published_at' => now()->subDay(),
         'status' => true,
     ]);
 

@@ -34,6 +34,37 @@ it('stores the maps key from the settings page where the site can read it', func
         ->assertJsonPath('data.settings.maps.yandex_key', 'abc-123');
 });
 
+/**
+ * Заголовок и описание уходили в ключи seo.title.ru и seo.title.uz, за
+ * которыми никто не приходит, а сайт всё это время показывал заводское имя из
+ * APP_NAME. В админке при этом текст выглядел сохранённым.
+ */
+it('puts the seo tab where the site actually reads it', function (): void {
+    $this->actingAs(panelUser(['View:Settings']));
+
+    Livewire::test(Settings::class)
+        ->fillForm([
+            'seo.title' => ['ru' => 'Перфектум 5G', 'uz' => 'Perfectum 5G'],
+            'seo.description' => ['ru' => 'Оператор связи', 'uz' => 'Aloqa operatori'],
+            'seo.keywords' => ['ru' => '5G, интернет', 'uz' => '5G, internet'],
+        ])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    SettingsModel::forgetValues();
+
+    expect(SettingsModel::get('seo.title'))->toBe(['ru' => 'Перфектум 5G', 'uz' => 'Perfectum 5G']);
+
+    $this->getJson(route('api.v1.site'))
+        ->assertOk()
+        ->assertJsonPath('data.settings.seo.title', 'Перфектум 5G')
+        ->assertJsonPath('data.settings.seo.description', 'Оператор связи');
+
+    $this->getJson(route('api.v1.site'), ['X-Locale' => 'uz'])
+        ->assertOk()
+        ->assertJsonPath('data.settings.seo.title', 'Perfectum 5G');
+});
+
 it('changes the name and the password on the profile page', function (): void {
     $user = panelUser();
     $this->actingAs($user);

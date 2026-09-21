@@ -2,6 +2,8 @@ import type { H3Event } from 'h3'
 
 const TTL = 60_000
 
+const RETRY = 10_000
+
 const PRECONNECT = '<link rel="preconnect" href="https://mc.yandex.ru" crossorigin>'
   + '<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>'
 
@@ -12,7 +14,7 @@ interface Snippet {
 
 let cache: Snippet | null = null
 let fetchedAt = 0
-let refreshing = false
+let loading: Promise<void> | null = null
 
 /**
  * The counter code is whatever the panel was given — Yandex hands out a block
@@ -48,8 +50,25 @@ async function load(event: H3Event): Promise<void> {
   catch (error) {
     console.warn('[metrics] не удалось получить код счётчиков:', error)
 
-    fetchedAt = Date.now() - TTL + 10_000
+    fetchedAt = Date.now() - TTL + RETRY
   }
+}
+
+/**
+ * Отсрочка после отказа и один запрос на всех. Иначе, пока `/metrics` лежит,
+ * каждый рендер уходил в него заново и ждал три секунды таймаута — сайт
+ * замедлялся весь, из-за кода, без которого он прекрасно рисуется.
+ */
+function ready(event: H3Event): Promise<void> | null {
+  if (Date.now() - fetchedAt <= (cache ? TTL : TTL - RETRY)) {
+    return null
+  }
+
+  loading ??= load(event).finally(() => {
+    loading = null
+  })
+
+  return loading
 }
 
 /**
@@ -68,15 +87,12 @@ export default defineNitroPlugin((nitro) => {
       return
     }
 
-    if (!cache) {
-      await load(event)
-    }
-    else if (Date.now() - fetchedAt > TTL && !refreshing) {
-      refreshing = true
+    const pending = ready(event)
 
-      load(event).finally(() => {
-        refreshing = false
-      })
+    // Первый посетитель ждёт код, остальные получают страницу с тем, что есть,
+    // и обновление догоняет их к следующему запросу.
+    if (pending && !cache) {
+      await pending
     }
 
     if (!cache?.head) {

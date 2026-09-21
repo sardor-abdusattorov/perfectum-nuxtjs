@@ -189,14 +189,28 @@ class Settings extends Page implements HasForms
         foreach ($data as $key => $value) {
             $fullKey = $prefix ? "{$prefix}.{$key}" : $key;
 
-            if (is_array($value) && ! $this->isAssociativeArray($value)) {
-                SettingsModel::set($fullKey, $value);
-            } elseif (is_array($value)) {
+            if (is_array($value) && $this->isAssociativeArray($value) && ! $this->isTranslated($value)) {
                 $this->saveSettings($value, $fullKey);
-            } else {
-                SettingsModel::set($fullKey, $value);
+
+                continue;
             }
+
+            SettingsModel::set($fullKey, $value);
         }
+    }
+
+    /**
+     * Переводимое поле приходит с вкладок локалей как ['ru' => …, 'uz' => …], и
+     * его нужно положить целиком: Settings::seo() читает `seo.title` массивом.
+     * Провалившись внутрь, страница писала `seo.title.ru` — ключ, за которым
+     * никто не приходит, и заголовок сайта оставался заводским, хотя форма
+     * показывала сохранённый текст.
+     *
+     * @param  array<string, mixed>  $value
+     */
+    protected function isTranslated(array $value): bool
+    {
+        return array_diff(array_keys($value), app_locales()) === [];
     }
 
     protected function isAssociativeArray(array $arr): bool
