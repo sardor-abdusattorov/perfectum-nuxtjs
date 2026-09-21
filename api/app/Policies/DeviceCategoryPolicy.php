@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\DeviceCategory;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class DeviceCategoryPolicy
 {
     use HandlesAuthorization;
-    
+
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:DeviceCategory');
@@ -71,5 +71,4 @@ class DeviceCategoryPolicy
     {
         return $authUser->can('Reorder:DeviceCategory');
     }
-
 }

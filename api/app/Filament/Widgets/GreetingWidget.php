@@ -9,7 +9,7 @@ class GreetingWidget extends Widget
 {
     protected string $view = 'filament.widgets.greeting-widget';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function getGreeting(): string
     {
