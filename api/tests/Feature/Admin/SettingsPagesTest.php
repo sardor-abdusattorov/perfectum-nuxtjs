@@ -53,7 +53,8 @@ it('puts the seo tab where the site actually reads it', function (): void {
 
     SettingsModel::forgetValues();
 
-    expect(SettingsModel::get('seo.title'))->toBe(['ru' => 'Перфектум 5G', 'uz' => 'Perfectum 5G']);
+    expect(array_filter(SettingsModel::get('seo.title'), 'filled'))
+        ->toBe(['ru' => 'Перфектум 5G', 'uz' => 'Perfectum 5G']);
 
     $this->getJson(route('api.v1.site'))
         ->assertOk()

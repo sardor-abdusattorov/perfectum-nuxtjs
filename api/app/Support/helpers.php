@@ -25,11 +25,41 @@ use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('app_locales')) {
     /**
+     * Языки контента: вкладки переводимых полей, ключи в JSON-колонках, локаль,
+     * которую можно запросить у API по имени. Самый широкий из трёх списков.
+     *
      * @return array<int, string>
      */
     function app_locales(): array
     {
         return config('app.locales', [config('app.locale')]);
+    }
+}
+
+if (! function_exists('panel_locales')) {
+    /**
+     * Языки интерфейса админки. Уже контентных: локаль попадает сюда только
+     * когда для неё есть каталог lang/<код>.
+     *
+     * @return array<int, string>
+     */
+    function panel_locales(): array
+    {
+        return config('app.panel_locales', app_locales());
+    }
+}
+
+if (! function_exists('site_locales')) {
+    /**
+     * Языки, которые сайт отдаёт по адресу. Зеркало i18n.locales из
+     * frontend/nuxt.config.ts. Контент может быть написан раньше, чем язык
+     * здесь появится, — это и есть промежуток между «заполняем» и «показываем».
+     *
+     * @return array<int, string>
+     */
+    function site_locales(): array
+    {
+        return config('app.site_locales', app_locales());
     }
 }
 

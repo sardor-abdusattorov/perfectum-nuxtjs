@@ -104,13 +104,35 @@ return [
     | Supported Locales
     |--------------------------------------------------------------------------
     |
-    | Every locale the admin panel and the site content are translated into.
-    | Used by the language switcher, the translatable form tabs and the
-    | translation cache invalidation helpers.
+    | Three lists, because they answer three different questions.
+    |
+    | `locales` is the content: the locale tabs of a translatable field, the
+    | keys inside the JSON columns, the locale a public request may ask for by
+    | name. This is the list that grows when one more language of content is
+    | wanted, and content may be written long before the site shows it. Order
+    | counts — the tabs are drawn in it, and Slug takes the first filled
+    | translation from it.
+    |
+    | `panel_locales` is the language of the admin interface. A locale belongs
+    | here only once lang/<code> exists, otherwise the panel turns into half
+    | Russian, half English.
+    |
+    | `site_locales` is what the site serves under a URL prefix. It mirrors
+    | i18n.locales in frontend/nuxt.config.ts and decides only one thing: the
+    | locale of a request that named none. Guessing over the content list
+    | instead would answer an English browser in a language the site has no
+    | pages for.
+    |
+    | `panel_locales`, `site_locales` and `required_locales` stay subsets of
+    | `locales`, and `locale` belongs to all of them.
     |
     */
 
-    'locales' => ['ru', 'uz'],
+    'locales' => ['ru', 'uz', 'en'],
+
+    'panel_locales' => ['ru', 'uz'],
+
+    'site_locales' => ['ru', 'uz'],
 
     'required_locales' => ['ru', 'uz'],
 

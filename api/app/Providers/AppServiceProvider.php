@@ -165,11 +165,16 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('upstream', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
     }
 
+    /**
+     * Единственное место, где список локалей означает язык интерфейса. Он свой,
+     * а не контентный: контент можно набивать на языке, перевода панели на
+     * который ещё нет, — и наоборот.
+     */
     private function configureLanguageSwitch(): void
     {
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(app_locales())
+                ->locales(panel_locales())
                 ->labels($this->localeLabels())
                 ->visible(outsidePanels: true)
                 ->outsidePanelPlacement(Placement::TopStart, PlacementMode::Pinned)

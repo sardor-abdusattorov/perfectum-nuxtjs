@@ -27,9 +27,26 @@ class RichContentStateCast implements StateCast
         'tableHeader',
     ];
 
+    /**
+     * @var array<int, string>
+     */
+    private const EMPTY_HTML = ['', '<p></p>'];
+
+    /**
+     * Нетронутый редактор отдаёт не пустую строку, а документ с одним пустым
+     * абзацем, то есть «<p></p>». Для spatie это заполненное значение, и откат
+     * на русский выключается: достаточно открыть запись и нажать «Сохранить»,
+     * не заходя на вкладку нового языка, — и на ней окажется русский заголовок
+     * над пустым телом. Ни ошибки, ни записи в журнале.
+     *
+     * Сверяемся именно с пустым документом, а не через strip_tags: тело из
+     * одной картинки тоже сводится к пустоте, а картинки в редактор грузят.
+     */
     public function get(mixed $state): mixed
     {
-        return $state;
+        return is_string($state) && in_array(trim($state), self::EMPTY_HTML, true)
+            ? null
+            : $state;
     }
 
     public function set(mixed $state): mixed

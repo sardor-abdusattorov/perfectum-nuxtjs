@@ -7,3 +7,4 @@
 | [site-translations.md](site-translations.md) | site translation seeder, model and resource |
 | [admin-forms.md](admin-forms.md) | `app/Filament/**`, `app/Support/Slug.php` |
 | [comments.md](comments.md) | `config/**`, `bootstrap/**`, `app/**`, `resources/**` |
+| [locales.md](locales.md) | `config/app.php`, `app/Support/helpers.php`, `app/Http/Middleware/SetLocale.php` |
