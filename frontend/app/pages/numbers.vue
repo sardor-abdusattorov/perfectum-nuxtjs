@@ -170,21 +170,23 @@ function onCellKeydown(index: number, event: KeyboardEvent): void {
           </label>
 
           <form class="numbers__mask" @submit.prevent="submitMask()">
-            <span class="numbers__mask-prefix">(80)</span>
-            <input
-              v-for="(cell, index) in cells"
-              :key="index"
-              ref="inputs"
-              type="text"
-              inputmode="numeric"
-              class="numbers__mask-cell"
-              maxlength="1"
-              placeholder="*"
-              :value="cell"
-              :aria-label="t('numbers.digit')"
-              @input="onCell(index, $event)"
-              @keydown="onCellKeydown(index, $event)"
-            />
+            <div class="numbers__mask-row">
+              <span class="numbers__mask-prefix">(80)</span>
+              <input
+                v-for="(cell, index) in cells"
+                :key="index"
+                ref="inputs"
+                type="text"
+                inputmode="numeric"
+                class="numbers__mask-cell"
+                maxlength="1"
+                placeholder="*"
+                :value="cell"
+                :aria-label="t('numbers.digit')"
+                @input="onCell(index, $event)"
+                @keydown="onCellKeydown(index, $event)"
+              />
+            </div>
             <button type="submit" class="numbers__submit">
               <svg viewBox="0 0 20 20" fill="none">
                 <circle cx="9" cy="9" r="6.2" stroke="currentColor" stroke-width="1.8" />

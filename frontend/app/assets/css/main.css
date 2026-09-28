@@ -3360,6 +3360,20 @@ sup {
   display: none;
   align-items: center;
   gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Ячейки живут в своей строке, кнопка — снаружи. Иначе на узком экране
+   flex-wrap переносил последнюю ячейку вниз вместо того, чтобы дать всем
+   сжаться: при разрешённом переносе браузер сначала переносит и лишь потом
+   сжимает. */
+.numbers .numbers__mask-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .numbers .numbers__mask-prefix {
@@ -8808,9 +8822,14 @@ select {
     font-size: 14px;
     border-radius: 8px;
   }
+  .numbers .numbers__mask-row {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
   .numbers .numbers__mask-cell {
-    flex: 1 1 0;
+    flex: 0 1 54px;
     width: auto;
+    max-width: 54px;
     min-width: 0;
     height: 32px;
     font-size: 14px;
@@ -9775,15 +9794,24 @@ select {
     padding: 0;
     font-size: 14px;
   }
+  .numbers .numbers__mask-row {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    gap: 2px;
+  }
+  /* 36px — желаемая ширина, не обязательная: на узком экране семь ячеек с
+     префиксом в неё не укладывались, и последняя срывалась под маску. */
   .numbers .numbers__mask-cell {
-    flex: 0 0 36px;
-    width: 36px;
+    flex: 0 1 36px;
+    width: auto;
+    max-width: 36px;
+    min-width: 0;
     height: 31px;
     font-size: 14px;
   }
   .numbers .numbers__mask-cell:nth-of-type(4),
   .numbers .numbers__mask-cell:nth-of-type(6) {
-    margin-left: 14px;
+    margin-left: 8px;
   }
   .numbers .numbers__submit {
     height: 32px;
